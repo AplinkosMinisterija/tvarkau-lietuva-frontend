@@ -1,0 +1,22 @@
+<html>
+<head>
+    <title>reCAPTCHA</title>
+    <script src="https://www.google.com/recaptcha/api.js?hl=lt" async defer>
+    </script>
+</head>
+<body style='background-color: rgb(255, 255, 255);'>
+<div style='height: 30px;'></div>
+<form action="?" method="POST">
+    <div class="g-recaptcha"
+         data-sitekey="6LeeRn0nAAAAAPQmb0aJ6oLhU8MZtEH_MKCFnaEg"
+         data-callback="captchaCallback"></div>
+</form>
+<script>
+    function captchaCallback(response){
+      window.parent.postMessage(response, "*");
+      if(typeof Captcha!=="undefined"){
+        Captcha.postMessage(response);
+      }
+    }
+  </script>
+</body>

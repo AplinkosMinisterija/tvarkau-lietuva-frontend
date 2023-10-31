@@ -1,0 +1,38 @@
+name: admin
+description: Admin package
+version: 0.0.1
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.0.0 <3.13.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  core:
+    path: ../../core
+  core_ui:
+    path: ../../core_ui
+  domain:
+    path: ../../domain
+
+  flutter_bloc: ^7.3.3
+  loading_animation_widget: ^1.2.0+4
+  google_maps_flutter_web: ^0.3.2+2
+  cupertino_icons: ^1.0.2
+  openid_client: ^0.4.6
+  google_fonts: ^4.0.3
+  google_maps_flutter: ^2.2.3
+  auto_size_text: ^3.0.0
+  universal_io: ^2.2.0
+  aad_oauth: ^0.4.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+

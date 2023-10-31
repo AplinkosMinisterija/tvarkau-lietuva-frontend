@@ -1,0 +1,1 @@
+class BackendException implements Exception {}
