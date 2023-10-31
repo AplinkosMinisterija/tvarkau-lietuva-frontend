@@ -13,8 +13,8 @@ jobs:
     name: Dart analyze
     runs-on: ubuntu-latest
     permissions:
-      contents: read
       security-events: write
+      contents: read
       actions: read
     steps:
       - name: Checkout
@@ -27,4 +27,16 @@ jobs:
           cache: true
 
       - name: Analyze project
-        run: flutter analyze
+        run: flutter analyze > flutter-lints.txt || true
+
+      - name: Flutter Analyze to SARIF
+        uses: advanced-security/dart-analyzer-sarif@v1
+        with:
+          input: flutter-lints.txt
+          output: flutter-lints.sarif
+
+      - name: Upload SARIF
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: flutter-lints.sarif
+          category: flutter-lints
