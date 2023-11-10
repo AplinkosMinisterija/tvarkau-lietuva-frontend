@@ -19,7 +19,7 @@ class _MaintenenceScreenState extends State<MaintenenceScreen> {
   Widget build(BuildContext context) {
     return Title(
       title: "Tvarkau Lietuvą",
-      color: Colors.redAccent,
+      color: Colors.green,
       child: Scaffold(
         body: CupertinoPageScaffold(
           child: LayoutBuilder(
