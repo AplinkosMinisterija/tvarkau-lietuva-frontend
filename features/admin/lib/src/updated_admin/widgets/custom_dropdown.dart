@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:dropdown_button2/dropdown_button2.dart';
 import '../common/custom_colors.dart';
 import '../common/custom_styles.dart';
 
@@ -25,20 +25,12 @@ class CustomDropdown<T> extends StatelessWidget {
         color: CustomColors.redMedium,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: DropdownButton<T>(
+      child: DropdownButton2<T>(
         items: items,
         onChanged: onChanged,
-        borderRadius: BorderRadius.circular(4),
-        icon: const Padding(
-          padding: EdgeInsets.only(left: 12),
-          child: Icon(
-            Icons.expand_more_rounded,
-            color: CustomColors.red,
-            size: 20,
-          ),
+        iconStyleData: const IconStyleData(
+          iconEnabledColor: CustomColors.red,
         ),
-        iconSize: 20,
-        iconEnabledColor: CustomColors.red,
         underline: const SizedBox(),
         style: CustomStyles.body2.copyWith(
           color: CustomColors.red,
