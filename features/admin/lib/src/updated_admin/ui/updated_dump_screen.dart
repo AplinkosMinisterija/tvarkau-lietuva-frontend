@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../common/custom_colors.dart';
 import '../common/custom_styles.dart';
 import '../common/extensions.dart';
 import '../widgets/base_admin_screen.dart';
 import '../widgets/base_dump_info.dart';
+import '../widgets/custom_button.dart';
 import '../widgets/custom_switch.dart';
 import '../widgets/custom_text_button.dart';
 import '../widgets/dump_tabs.dart';
 import '../widgets/header.dart';
-import '../widgets/custom_button.dart';
-import '../common/custom_colors.dart';
 
 class UpdatedDumpScreen extends StatefulWidget {
   const UpdatedDumpScreen({
@@ -199,7 +199,9 @@ class _UpdatedDumpScreenState extends State<UpdatedDumpScreen> {
                           ),
                         ),
                         40.widthBox,
-                        const DumpTabs(),
+                        DumpTabs(
+                          dump: dump,
+                        ),
                       ],
                     )
                   ],

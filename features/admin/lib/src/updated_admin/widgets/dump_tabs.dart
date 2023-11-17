@@ -1,3 +1,4 @@
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 
 import '../common/custom_colors.dart';
@@ -20,7 +21,9 @@ extension TabTypeX on TabType {
 }
 
 class DumpTabs extends StatefulWidget {
-  const DumpTabs({super.key});
+  const DumpTabs({super.key, required this.dump});
+
+  final ReportModel dump;
 
   @override
   State<DumpTabs> createState() => _DumpTabsState();
@@ -32,7 +35,10 @@ class _DumpTabsState extends State<DumpTabs> {
   Widget get currentTab {
     return switch (selected) {
       TabType.aad => const AddAnswerTab(),
-      TabType.history => const HistoricDataTab(),
+      TabType.history => HistoricDataTab(
+          historicData: widget.dump.historyData ?? [],
+          statusRecords: widget.dump.statusRecords ?? [],
+        ),
     };
   }
 
