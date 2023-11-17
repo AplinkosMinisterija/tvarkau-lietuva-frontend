@@ -14,7 +14,8 @@ class BaseDumpInfo extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _BuildColumn(title: 'Data', value: dump.reportDate.toString()),
-        _BuildColumn(title: 'El. paštas', value: dump.email ?? ''), //TODO check
+        if (dump.email != null)
+          _BuildColumn(title: 'El. paštas', value: dump.email!), //TODO check
         _BuildColumn(title: 'Platuma', value: dump.reportLat.toString()),
         _BuildColumn(title: 'Ilguma', value: dump.reportLong.toString()),
       ],
