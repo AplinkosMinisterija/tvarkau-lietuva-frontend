@@ -1,3 +1,4 @@
+import 'package:domain/report/report_library.dart';
 import 'package:flutter/material.dart';
 
 import '../common/custom_colors.dart';
@@ -5,7 +6,14 @@ import '../common/custom_styles.dart';
 import '../common/extensions.dart';
 
 class HistoricDataTab extends StatefulWidget {
-  const HistoricDataTab({super.key});
+  const HistoricDataTab({
+    super.key,
+    required this.historicData,
+    required this.statusRecords,
+  });
+
+  final List<HistoryData> historicData;
+  final List<StatusRecords> statusRecords;
 
   @override
   State<HistoricDataTab> createState() => _HistoricDataTabState();
@@ -15,10 +23,17 @@ class _HistoricDataTabState extends State<HistoricDataTab>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController;
 
+  int _tabIndex = 0;
+
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 2, vsync: this)
+      ..addListener(() {
+        setState(() {
+          _tabIndex = _tabController.index;
+        });
+      });
   }
 
   @override
@@ -39,7 +54,10 @@ class _HistoricDataTabState extends State<HistoricDataTab>
             controller: _tabController,
           ),
           32.heightBox,
-          const Expanded(child: _BuildHistoricData()),
+          if (_tabIndex == 0)
+            Expanded(child: _BuildHistoricData(widget.historicData))
+          else
+            Expanded(child: _BuildStatusRecords(widget.statusRecords))
         ],
       ),
     );
@@ -101,110 +119,245 @@ class _BuildTab extends StatelessWidget {
 }
 
 class _BuildHistoricData extends StatelessWidget {
-  const _BuildHistoricData();
+  const _BuildHistoricData(this.historicData);
+
+  final List<HistoryData> historicData;
 
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
+    return SingleChildScrollView(
       child: Column(children: [
-        _BuildDataCard(
-            date: '2023-08-01 13:37', email: 'vardenis.pavardenis@gmail.com'),
-        _BuildDataCard(
-            date: '2023-08-01 13:37', email: 'vardenis.pavardenis@gmail.com'),
-        _BuildDataCard(
-            date: '2023-08-01 13:37', email: 'vardenis.pavardenis@gmail.com'),
+        for (final data in historicData) _BuildHistoricDataCard(data: data),
       ]),
     );
   }
 }
 
-class _BuildDataCard extends StatelessWidget {
-  const _BuildDataCard({
-    required this.date,
-    required this.email,
-  });
+class _BuildStatusRecords extends StatelessWidget {
+  const _BuildStatusRecords(this.statusRecords);
 
-  final String date;
-  final String email;
+  final List<StatusRecords> statusRecords;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Column(
-          children: [
-            Container(
-              height: 40,
-              width: 40,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: CustomColors.white,
+    return SingleChildScrollView(
+      child: Column(children: [
+        for (final data in statusRecords) _BuildStatusRecordCard(data: data),
+      ]),
+    );
+  }
+}
+
+class DottedLineVerticalPainter extends CustomPainter {
+  final double dashWidth;
+  final double dashSpace;
+  final Paint pnt;
+
+  DottedLineVerticalPainter(
+      {this.dashWidth = 4, this.dashSpace = 4.0, Color color = Colors.black})
+      : pnt = Paint()
+          ..color = color
+          ..strokeWidth = 1;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    double startY = 0;
+    while (startY < size.height) {
+      canvas.drawLine(Offset(0, startY), Offset(0, startY + dashWidth), pnt);
+      startY += dashWidth + dashSpace;
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
+  }
+}
+
+class _BuildHistoricDataCard extends StatelessWidget {
+  const _BuildHistoricDataCard({
+    required this.data,
+  });
+
+  final HistoryData data;
+
+  @override
+  Widget build(BuildContext context) {
+    return IntrinsicHeight(
+      child: Row(
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                height: 40,
+                width: 40,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: CustomColors.white,
+                ),
+                child: const Icon(
+                  Icons.refresh,
+                  color: CustomColors.primary,
+                  size: 20,
+                ),
               ),
-              child: const Icon(
-                Icons.refresh,
-                color: CustomColors.primary,
-                size: 20,
-              ),
-            ),
-            // const Expanded(
-            //     child: DottedLine(
-            //   direction: Axis.vertical,
-            //   dashColor: CustomColors.primary,
-            // )),
-            Expanded(
-              child: Container(
-                width: 1,
-                color: CustomColors.primary,
-              ),
-            )
-          ],
-        ),
-        24.widthBox,
-        Expanded(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              date,
-              style: CustomStyles.body1.copyWith(
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            Text(
-              email,
-              style: CustomStyles.body2,
-            ),
-            10.heightBox,
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 12,
-                vertical: 8,
-              ),
-              decoration: BoxDecoration(
-                color: CustomColors.white,
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Pakeistas pranešimo statusas',
-                    style: CustomStyles.body2.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
+              // const Expanded(
+              //     child: DottedLine(
+              //   direction: Axis.vertical,
+              //   dashColor: CustomColors.primary,
+              // )),
+              Expanded(
+                child: CustomPaint(
+                  painter: DottedLineVerticalPainter(
+                    color: CustomColors.white,
                   ),
-                  2.heightBox,
-                  Text(
-                    'Gautas',
-                    style: CustomStyles.body2,
-                  )
-                ],
+                  size: const Size(1, double.infinity),
+                ),
+              )
+            ],
+          ),
+          24.widthBox,
+          Expanded(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                data.date ?? '',
+                style: CustomStyles.body1.copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-            ),
-            20.heightBox,
-          ],
-        ))
-      ],
+              Text(
+                data.user ?? '',
+                style: CustomStyles.body2,
+              ),
+              for (final edit in (data.edits ?? <Edits>[])) ...[
+                10.heightBox,
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color: CustomColors.white,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            edit.field ?? '',
+                            style: CustomStyles.body2.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                      2.heightBox,
+                      Text(
+                        edit.change ?? '',
+                        style: CustomStyles.body2,
+                      )
+                    ],
+                  ),
+                ),
+              ]
+            ],
+          ))
+        ],
+      ),
+    );
+  }
+}
+
+class _BuildStatusRecordCard extends StatelessWidget {
+  const _BuildStatusRecordCard({
+    required this.data,
+  });
+
+  final StatusRecords data;
+
+  @override
+  Widget build(BuildContext context) {
+    return IntrinsicHeight(
+      child: Row(
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                height: 40,
+                width: 40,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: CustomColors.white,
+                ),
+                child: const Icon(
+                  Icons.refresh,
+                  color: CustomColors.primary,
+                  size: 20,
+                ),
+              ),
+              // const Expanded(
+              //     child: DottedLine(
+              //   direction: Axis.vertical,
+              //   dashColor: CustomColors.primary,
+              // )),
+              Expanded(
+                child: CustomPaint(
+                  painter: DottedLineVerticalPainter(
+                    color: CustomColors.white,
+                  ),
+                  size: const Size(1, double.infinity),
+                ),
+              )
+            ],
+          ),
+          24.widthBox,
+          Expanded(
+              child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                data.date ?? '',
+                style: CustomStyles.body1.copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              10.heightBox,
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
+                decoration: BoxDecoration(
+                  color: CustomColors.white,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          data.status ?? '',
+                          style: CustomStyles.body2.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              20.heightBox,
+            ],
+          ))
+        ],
+      ),
     );
   }
 }

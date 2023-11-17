@@ -59,8 +59,20 @@ class _BuildStatusSection extends StatelessWidget {
           style: CustomStyles.body2,
         ),
         CustomDropdown(
-          items: const [],
-          onChanged: (value) {},
+          items: const [
+            DropdownMenuItem(
+              value: 0,
+              child: Text('Nepatvirtintas'),
+            ),
+            DropdownMenuItem(
+              value: 1,
+              child: Text('Patvirtintas'),
+            ),
+          ],
+          onChanged: (value) {
+            //TODO Add logic
+          },
+          value: 1,
         ),
       ],
     );
