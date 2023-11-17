@@ -58,7 +58,10 @@ class _BuildStatusSection extends StatelessWidget {
           'Statusas',
           style: CustomStyles.body2,
         ),
-        const CustomDropdown(),
+        CustomDropdown(
+          items: const [],
+          onChanged: (value) {},
+        ),
       ],
     );
   }
