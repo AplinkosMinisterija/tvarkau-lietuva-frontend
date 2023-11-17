@@ -24,7 +24,8 @@ class UpdatedAdminScreen extends StatelessWidget {
           refId: "REF123",
           status: "Aptarnaujama",
           phone: "+37061234567",
-          comment: "Komentaras apie įvykį",
+          comment:
+              "Šiandien, apsilankius miške, pastebėjau išmestus šiferio lakštus. Jų gana nemažas kiekis, maždaug apie 100 lakštų. Jie išmėtyti po gana didelę teritoriją. Kartu su šiferio lakštais yra išmesti ir seni baldai bei buitinė technika.",
           workingHours: "I-V 8:00-17:00",
           moreInformation: "Papildoma informacija",
           imageUrls: [
