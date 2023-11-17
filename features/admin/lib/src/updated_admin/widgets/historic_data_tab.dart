@@ -25,6 +25,7 @@ class _HistoricDataTabState extends State<HistoricDataTab>
   Widget build(BuildContext context) {
     return Container(
       height: 550,
+      width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.vertical(
@@ -128,78 +129,82 @@ class _BuildDataCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IntrinsicHeight(
-      child: Row(
-        children: [
-          Column(
-            children: [
-              Container(
-                height: 40,
-                width: 40,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: CustomColors.white,
-                ),
-                child: const Icon(
-                  Icons.refresh,
-                  color: CustomColors.primary,
-                  size: 20,
-                ),
+    return Row(
+      children: [
+        Column(
+          children: [
+            Container(
+              height: 40,
+              width: 40,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: CustomColors.white,
               ),
-              Expanded(
-                child: Container(
-                  width: 1,
-                  color: CustomColors.primary,
-                ),
-              )
-            ],
-          ),
-          24.widthBox,
-          Expanded(
+              child: const Icon(
+                Icons.refresh,
+                color: CustomColors.primary,
+                size: 20,
+              ),
+            ),
+            // const Expanded(
+            //     child: DottedLine(
+            //   direction: Axis.vertical,
+            //   dashColor: CustomColors.primary,
+            // )),
+            Expanded(
+              child: Container(
+                width: 1,
+                color: CustomColors.primary,
+              ),
+            )
+          ],
+        ),
+        24.widthBox,
+        Expanded(
+            child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              date,
+              style: CustomStyles.body1.copyWith(
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            Text(
+              email,
+              style: CustomStyles.body2,
+            ),
+            10.heightBox,
+            Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 8,
+              ),
+              decoration: BoxDecoration(
+                color: CustomColors.white,
+                borderRadius: BorderRadius.circular(4),
+              ),
               child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                date,
-                style: CustomStyles.body1.copyWith(
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              Text(
-                email,
-                style: CustomStyles.body2,
-              ),
-              10.heightBox,
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                  vertical: 8,
-                ),
-                decoration: BoxDecoration(
-                  color: CustomColors.white,
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Column(
-                  children: [
-                    Text(
-                      'Pakeistas pranešimo statusas',
-                      style: CustomStyles.body2.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Pakeistas pranešimo statusas',
+                    style: CustomStyles.body2.copyWith(
+                      fontWeight: FontWeight.w600,
                     ),
-                    2.heightBox,
-                    Text(
-                      'Gautas',
-                      style: CustomStyles.body2,
-                    )
-                  ],
-                ),
+                  ),
+                  2.heightBox,
+                  Text(
+                    'Gautas',
+                    style: CustomStyles.body2,
+                  )
+                ],
               ),
-              20.heightBox,
-            ],
-          ))
-        ],
-      ),
+            ),
+            20.heightBox,
+          ],
+        ))
+      ],
     );
   }
 }

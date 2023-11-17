@@ -1,10 +1,12 @@
-// Openapi Generator last run: : 2023-12-22T14:23:05.164952
 import 'package:core_ui/core_ui.dart';
 import 'package:dashboard/dashboard_screen.dart';
+import 'package:dashboard/src/adding_report/ui/adding_screen.dart';
+import 'package:dashboard/src/report_information/ui/information_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:admin/admin_screen.dart';
-import 'package:openapi_generator_annotations/openapi_generator_annotations.dart';
+import 'package:dashboard/src/report_information/ui/information_screen.dart';
+import 'package:dashboard/src/adding_report/ui/adding_screen.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:dashboard/dashboard.dart';
 
@@ -39,10 +41,18 @@ class AadApp extends StatelessWidget {
         builder: (context, state) => const DashboardScreen(),
       ),
       GoRoute(
-        name: 'admin',
-        path: '/admin',
-        builder: (context, state) => const AdminScreen(),
-      ),
+          name: 'admin',
+          path: '/admin',
+          builder: (context, state) => const AdminScreen(),
+          routes: [
+            GoRoute(
+                name: 'dump',
+                path: 'dump/:id',
+                builder: (context, state) {
+                  // final dump = state.extra as ReportModel;
+                  return const UpdatedDumpScreen();
+                }),
+          ]),
       GoRoute(
         name: 'report',
         path: '/pranesimas',
