@@ -1,10 +1,10 @@
 name: admin
 description: Admin package
 version: 0.0.1
-publish_to: 'none'
+publish_to: "none"
 
 environment:
-  sdk: '>=3.0.0 <3.13.0'
+  sdk: ">=3.0.0 <3.13.0"
   flutter: ">=1.17.0"
 
 dependencies:
@@ -31,6 +31,7 @@ dependencies:
   auto_size_text: ^3.0.0
   universal_io: ^2.2.0
   aad_oauth: ^0.4.4
+  dropdown_button2: ^2.3.9
 
 dev_dependencies:
   flutter_test:
@@ -39,4 +40,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-

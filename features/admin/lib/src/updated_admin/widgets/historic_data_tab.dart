@@ -365,7 +365,7 @@ class _BuildStatusRecordCard extends StatelessWidget {
                   ],
                 ),
               ),
-              20.heightBox,
+              if (!isLast) 20.heightBox,
             ],
           ))
         ],
