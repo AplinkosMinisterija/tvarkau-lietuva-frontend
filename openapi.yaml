@@ -1,0 +1,457 @@
+openapi: 3.0.0
+paths:
+  /healthcheck:
+    get:
+      operationId: AppController_healthCheck
+      parameters: [ ]
+      responses:
+        '200':
+          description: ''
+  /admin/reports:
+    get:
+      operationId: AdminController_getAllReports
+      parameters: [ ]
+      responses:
+        '200':
+          description: All reports have been successfully found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FullReportDto'
+      tags: &ref_0
+        - admin
+    patch:
+      operationId: AdminController_updateReport
+      parameters: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateReportDto'
+      responses:
+        '200':
+          description: Report has been successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullReportDto'
+      tags: *ref_0
+  /admin/reports/deleted:
+    get:
+      operationId: AdminController_getAllDeletedReports
+      parameters: [ ]
+      responses:
+        '200':
+          description: All deleted reports have been successfully found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FullReportDto'
+      tags: *ref_0
+  /admin/dumps:
+    get:
+      operationId: AdminController_getAllDumps
+      parameters: [ ]
+      responses:
+        '200':
+          description: All dumps have been successfully found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FullDumpDto'
+      tags: *ref_0
+    patch:
+      operationId: AdminController_updateDump
+      parameters: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDumpDto'
+      responses:
+        '200':
+          description: Dump has been successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullDumpDto'
+      tags: *ref_0
+    post:
+      operationId: AdminController_createDump
+      parameters: [ ]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDumpDto'
+      responses:
+        '200':
+          description: Dump has been successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullDumpDto'
+      tags: *ref_0
+  /dumps:
+    get:
+      operationId: DumpController_getAllVisibleDumps
+      parameters: [ ]
+      responses:
+        '200':
+          description: All visible dumps have been successfully found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DumpDto'
+      tags:
+        - dumps
+  /reports:
+    post:
+      operationId: ReportController_createNewReport
+      parameters: [ ]
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateReportDto'
+      responses:
+        '200':
+          description: New Report has been successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicReportDto'
+      tags: &ref_1
+        - reports
+    get:
+      operationId: ReportController_getAllPublicReports
+      parameters: [ ]
+      responses:
+        '200':
+          description: All visible reports have been successfully found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PublicReportDto'
+      tags: *ref_1
+  /reports/{refId}:
+    get:
+      operationId: ReportController_getReportById
+      parameters:
+        - name: refId
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Report has been successfully found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PublicReportDto'
+        '404':
+          description: Report not found
+      tags: *ref_1
+info:
+  title: Tvarkau Lietuva API
+  description: API skirtas Tvarkau Lietuva projektui
+  version: '1.0'
+  contact: { }
+tags: [ ]
+servers: [ ]
+components:
+  schemas:
+    FullReportDto:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+        refId:
+          type: string
+        reportLong:
+          type: number
+        reportLat:
+          type: number
+        email:
+          type: string
+        isVisible:
+          type: boolean
+        isDeleted:
+          type: boolean
+        comment:
+          type: string
+        status:
+          type: string
+        reportDate:
+          format: date-time
+          type: string
+        officerImageUrls:
+          type: array
+          items:
+            type: string
+        imageUrls:
+          type: array
+          items:
+            type: string
+        historyData:
+          type: array
+          items:
+            type: string
+        statusRecords:
+          type: array
+          items:
+            type: string
+      required:
+        - _id
+        - name
+        - type
+        - refId
+        - reportLong
+        - reportLat
+        - email
+        - isVisible
+        - isDeleted
+        - comment
+        - status
+        - reportDate
+        - officerImageUrls
+        - imageUrls
+        - historyData
+        - statusRecords
+    UpdateReportDto:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        reportLong:
+          type: number
+        reportLat:
+          type: number
+        isVisible:
+          type: boolean
+        isDeleted:
+          type: boolean
+        comment:
+          type: string
+        status:
+          type: string
+        officerImageUrls:
+          type: array
+          items:
+            type: string
+        imageUrls:
+          type: array
+          items:
+            type: string
+      required:
+        - _id
+        - name
+        - reportLong
+        - reportLat
+        - isVisible
+        - isDeleted
+        - comment
+        - status
+        - officerImageUrls
+        - imageUrls
+    FullDumpDto:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+        reportLong:
+          type: number
+        reportLat:
+          type: number
+        address:
+          type: string
+        phone:
+          type: string
+        workingHours:
+          type: string
+        moreInformation:
+          type: string
+      required:
+        - _id
+        - name
+        - type
+        - reportLong
+        - reportLat
+        - address
+        - phone
+        - workingHours
+        - moreInformation
+    UpdateDumpDto:
+      type: object
+      properties:
+        _id:
+          type: string
+        name:
+          type: string
+        reportLong:
+          type: number
+        reportLat:
+          type: number
+        isVisible:
+          type: boolean
+        address:
+          type: string
+        phone:
+          type: string
+        workingHours:
+          type: string
+        moreInformation:
+          type: string
+      required:
+        - _id
+        - name
+        - reportLong
+        - reportLat
+        - isVisible
+        - address
+        - phone
+        - workingHours
+        - moreInformation
+    CreateDumpDto:
+      type: object
+      properties:
+        name:
+          type: string
+        reportLong:
+          type: number
+        reportLat:
+          type: number
+        address:
+          type: string
+        phone:
+          type: string
+        workingHours:
+          type: string
+        moreInformation:
+          type: string
+      required:
+        - name
+        - reportLong
+        - reportLat
+        - address
+        - phone
+        - workingHours
+        - moreInformation
+    DumpDto:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        reportLong:
+          type: number
+        reportLat:
+          type: number
+        address:
+          type: string
+        phone:
+          type: string
+        workingHours:
+          type: string
+        moreInformation:
+          type: string
+      required:
+        - name
+        - type
+        - reportLong
+        - reportLat
+        - address
+        - phone
+        - workingHours
+        - moreInformation
+    CreateReportDto:
+      type: object
+      properties:
+        name:
+          type: string
+        reportLong:
+          type: number
+        reportLat:
+          type: number
+        email:
+          type: string
+        imageUrls:
+          type: array
+          items:
+            type: string
+      required:
+        - name
+        - reportLong
+        - reportLat
+        - email
+        - imageUrls
+    PublicReportDto:
+      type: object
+      properties:
+        name:
+          type: string
+        type:
+          type: string
+        refId:
+          type: string
+        reportLong:
+          type: number
+        reportLat:
+          type: number
+        comment:
+          type: string
+        status:
+          type: string
+        reportDate:
+          format: date-time
+          type: string
+        officerImageUrls:
+          type: array
+          items:
+            type: string
+        imageUrls:
+          type: array
+          items:
+            type: string
+        statusRecords:
+          type: array
+          items:
+            type: string
+      required:
+        - name
+        - type
+        - refId
+        - reportLong
+        - reportLat
+        - comment
+        - status
+        - reportDate
+        - officerImageUrls
+        - imageUrls
+        - statusRecords

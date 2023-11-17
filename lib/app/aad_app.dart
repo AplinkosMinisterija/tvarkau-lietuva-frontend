@@ -5,8 +5,19 @@ import 'package:go_router/go_router.dart';
 import 'package:admin/admin_screen.dart';
 import 'package:dashboard/src/report_information/ui/information_screen.dart';
 import 'package:dashboard/src/adding_report/ui/adding_screen.dart';
+import 'package:openapi_generator_annotations/openapi_generator_annotations.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
+@Openapi(
+  additionalProperties: DioProperties(
+    pubName: 'api_client',
+    pubAuthor: 'Aplinkos apsaugos departamentas',
+  ),
+  inputSpecFile: 'openapi.yaml',
+  generatorName: Generator.dio,
+  useNextGen: true,
+  outputDirectory: 'api_client',
+)
 class AadApp extends StatelessWidget {
   AadApp({
     Key? key,
