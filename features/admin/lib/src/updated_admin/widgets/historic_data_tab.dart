@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:domain/report/report_library.dart';
 import 'package:flutter/material.dart';
 
@@ -127,7 +128,10 @@ class _BuildHistoricData extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(children: [
-        for (final data in historicData) _BuildHistoricDataCard(data: data),
+        ...historicData.mapIndexed((index, e) => _BuildHistoricDataCard(
+              data: e,
+              isLast: index == historicData.length - 1,
+            ))
       ]),
     );
   }
@@ -142,7 +146,10 @@ class _BuildStatusRecords extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(children: [
-        for (final data in statusRecords) _BuildStatusRecordCard(data: data),
+        ...statusRecords.mapIndexed((index, e) => _BuildStatusRecordCard(
+              data: e,
+              isLast: index == statusRecords.length - 1,
+            ))
       ]),
     );
   }
@@ -177,9 +184,11 @@ class DottedLineVerticalPainter extends CustomPainter {
 class _BuildHistoricDataCard extends StatelessWidget {
   const _BuildHistoricDataCard({
     required this.data,
+    required this.isLast,
   });
 
   final HistoryData data;
+  final bool isLast;
 
   @override
   Widget build(BuildContext context) {
@@ -264,7 +273,8 @@ class _BuildHistoricDataCard extends StatelessWidget {
                     ],
                   ),
                 ),
-              ]
+              ],
+              if (!isLast) 20.heightBox,
             ],
           ))
         ],
@@ -276,9 +286,11 @@ class _BuildHistoricDataCard extends StatelessWidget {
 class _BuildStatusRecordCard extends StatelessWidget {
   const _BuildStatusRecordCard({
     required this.data,
+    required this.isLast,
   });
 
   final StatusRecords data;
+  final bool isLast;
 
   @override
   Widget build(BuildContext context) {
