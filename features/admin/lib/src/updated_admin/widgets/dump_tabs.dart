@@ -44,8 +44,14 @@ class _DumpTabsState extends State<DumpTabs> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 480,
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: CustomColors.primary,
+      ),
+      constraints: const BoxConstraints(
+        maxWidth: 480,
+      ),
       child: Column(
         children: [
           _BuildCustomTabs(
