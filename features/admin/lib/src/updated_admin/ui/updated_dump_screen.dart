@@ -13,6 +13,7 @@ import '../widgets/custom_switch.dart';
 import '../widgets/custom_text_button.dart';
 import '../widgets/dump_tabs.dart';
 import '../widgets/header.dart';
+import '../widgets/image_preview.dart';
 
 class UpdatedDumpScreen extends StatefulWidget {
   const UpdatedDumpScreen({
@@ -155,55 +156,28 @@ class _UpdatedDumpScreenState extends State<UpdatedDumpScreen> {
                       ],
                     ),
                     48.heightBox,
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              BaseDumpInfo(
-                                dump: dump,
-                              ),
-                              16.heightBox,
-                              _BuildMap(
-                                height: height.toDouble(),
-                                markers: markers,
-                                initialTarget: LatLng(
-                                  dump.reportLat,
-                                  dump.reportLong,
-                                ),
-                              ),
-                              32.heightBox,
-                              if (dump.comment != null)
-                                Text(
-                                  dump.comment!,
-                                  style: CustomStyles.body1,
-                                ),
-                              if (dump.imageUrls != null &&
-                                  dump.imageUrls!.isNotEmpty) ...[
-                                15.heightBox,
-                                _BuildImages(
-                                  imageUrls: dump.imageUrls!,
-                                )
-                              ],
-                              24.heightBox,
-                              CustomButton(
-                                  text: 'Trinti pranešimą',
-                                  buttonType: ButtonType.outlined,
-                                  color: CustomColors.red,
-                                  onPressed: () {
-                                    //TODO Add logic
-                                  }),
-                            ],
-                          ),
-                        ),
-                        40.widthBox,
-                        DumpTabs(
+                    Builder(builder: (context) {
+                      final width = MediaQuery.of(context).size.width;
+                      if (width < 700) {
+                        return _BuildMobileLayout(
                           dump: dump,
-                        ),
-                      ],
-                    )
+                          markers: markers,
+                          height: height.toDouble(),
+                        );
+                      } else if (width < 1000) {
+                        return _BuildTabletLayout(
+                          dump: dump,
+                          markers: markers,
+                          height: height.toDouble(),
+                        );
+                      } else {
+                        return _BuildDesktopLayout(
+                          dump: dump,
+                          markers: markers,
+                          height: height.toDouble(),
+                        );
+                      }
+                    })
                   ],
                 ),
               ),
@@ -230,14 +204,24 @@ class _BuildImages extends StatelessWidget {
       alignment: WrapAlignment.start,
       children: [
         ...imageUrls.map((e) {
-          return ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: SizedBox(
-              width: 100,
-              height: 100,
-              child: Image.network(
-                e,
-                fit: BoxFit.cover,
+          return GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                PageRouteBuilder(
+                  opaque: false,
+                  pageBuilder: (_, __, ___) => ImagePreview(imageUrl: e),
+                ),
+              );
+            },
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: SizedBox(
+                width: 100,
+                height: 100,
+                child: Image.network(
+                  e,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           );
@@ -270,6 +254,198 @@ class _BuildMap extends StatelessWidget {
           zoom: 13,
         ),
       ),
+    );
+  }
+}
+
+class _BuildMobileLayout extends StatelessWidget {
+  const _BuildMobileLayout(
+      {required this.dump, required this.markers, required this.height});
+
+  final ReportModel dump;
+  final Set<Marker> markers;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            BaseDumpInfo(
+              dump: dump,
+            ),
+            16.heightBox,
+            _BuildMap(
+              height: height.toDouble(),
+              markers: markers,
+              initialTarget: LatLng(
+                dump.reportLat,
+                dump.reportLong,
+              ),
+            ),
+            32.heightBox,
+            if (dump.comment != null)
+              Text(
+                dump.comment!,
+                style: CustomStyles.body1,
+              ),
+            if (dump.imageUrls != null && dump.imageUrls!.isNotEmpty) ...[
+              15.heightBox,
+              _BuildImages(
+                imageUrls: dump.imageUrls!,
+              )
+            ],
+          ],
+        ),
+        40.heightBox,
+        DumpTabs(
+          dump: dump,
+        ),
+        24.heightBox,
+        CustomButton(
+            text: 'Trinti pranešimą',
+            buttonType: ButtonType.outlined,
+            color: CustomColors.red,
+            onPressed: () {
+              //TODO Add logic
+            }),
+      ],
+    );
+  }
+}
+
+class _BuildTabletLayout extends StatelessWidget {
+  const _BuildTabletLayout(
+      {required this.dump, required this.markers, required this.height});
+
+  final ReportModel dump;
+  final Set<Marker> markers;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            BaseDumpInfo(
+              dump: dump,
+            ),
+            16.heightBox,
+            _BuildMap(
+              height: height.toDouble(),
+              markers: markers,
+              initialTarget: LatLng(
+                dump.reportLat,
+                dump.reportLong,
+              ),
+            ),
+            32.heightBox,
+          ],
+        ),
+        40.heightBox,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (dump.comment != null)
+                    Text(
+                      dump.comment!,
+                      style: CustomStyles.body1,
+                    ),
+                  if (dump.imageUrls != null && dump.imageUrls!.isNotEmpty) ...[
+                    15.heightBox,
+                    _BuildImages(
+                      imageUrls: dump.imageUrls!,
+                    )
+                  ],
+                ],
+              ),
+            ),
+            8.widthBox,
+            DumpTabs(
+              dump: dump,
+            ),
+          ],
+        ),
+        24.heightBox,
+        CustomButton(
+            text: 'Trinti pranešimą',
+            buttonType: ButtonType.outlined,
+            color: CustomColors.red,
+            onPressed: () {
+              //TODO Add logic
+            }),
+      ],
+    );
+  }
+}
+
+class _BuildDesktopLayout extends StatelessWidget {
+  const _BuildDesktopLayout(
+      {required this.dump, required this.markers, required this.height});
+
+  final ReportModel dump;
+  final Set<Marker> markers;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              BaseDumpInfo(
+                dump: dump,
+              ),
+              16.heightBox,
+              _BuildMap(
+                height: height.toDouble(),
+                markers: markers,
+                initialTarget: LatLng(
+                  dump.reportLat,
+                  dump.reportLong,
+                ),
+              ),
+              32.heightBox,
+              if (dump.comment != null)
+                Text(
+                  dump.comment!,
+                  style: CustomStyles.body1,
+                ),
+              if (dump.imageUrls != null && dump.imageUrls!.isNotEmpty) ...[
+                15.heightBox,
+                _BuildImages(
+                  imageUrls: dump.imageUrls!,
+                )
+              ],
+              24.heightBox,
+              CustomButton(
+                  text: 'Trinti pranešimą',
+                  buttonType: ButtonType.outlined,
+                  color: CustomColors.red,
+                  onPressed: () {
+                    //TODO Add logic
+                  }),
+            ],
+          ),
+        ),
+        40.widthBox,
+        DumpTabs(
+          dump: dump,
+        ),
+      ],
     );
   }
 }
