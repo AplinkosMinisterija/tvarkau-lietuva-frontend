@@ -90,7 +90,6 @@ class _MainTrashMapState extends State<MainTrashMap> {
                           TileLayer(
                             urlTemplate:
                                 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                            tileProvider: CancellableNetworkTileProvider(),
                           ),
                           RichAttributionWidget(
                             animationConfig: const ScaleRAWA(),
