@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AdminSaveButton extends StatefulWidget {
   const AdminSaveButton({
+    super.key,
     required this.width,
     required this.onPressed,
   });

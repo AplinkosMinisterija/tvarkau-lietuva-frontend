@@ -7,7 +7,6 @@ import 'package:core_ui/core_ui.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
-import 'package:vector_math/vector_math.dart' as math;
 
 class InformationScreenMobile extends StatefulWidget {
   const InformationScreenMobile({
@@ -196,7 +195,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                           child: FittedBox(
                             fit: BoxFit.fitWidth,
                             child: Text(
-                              '#TLP-A${str}${widget.report.refId!.toUpperCase()}',
+                              '#TLP-A$str${widget.report.refId!.toUpperCase()}',
                               style: GoogleFonts.roboto(
                                   fontSize: 32,
                                   fontWeight: FontWeight.w600,
@@ -1024,7 +1023,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
         unformattedImageUrl.endsWith('.heif')) {
       var convertedString =
           unformattedImageUrl.substring(0, unformattedImageUrl.length - 5);
-      convertedString = convertedString + '.jpg';
+      convertedString = '$convertedString.jpg';
       return convertedString;
     } else {
       return unformattedImageUrl;

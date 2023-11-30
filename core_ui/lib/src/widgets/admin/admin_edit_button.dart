@@ -7,6 +7,7 @@ import 'dumps/dump_edit_form.dart';
 
 class AdminEditButton extends StatefulWidget {
   const AdminEditButton({
+    super.key,
     required this.width,
     required this.onPressed,
     required this.report,

@@ -1,9 +1,9 @@
 import 'package:core_ui/src/widgets/main_screen/mobile/report_type_switcher_button_mobile.dart';
-import 'package:core_ui/src/widgets/main_screen/report_type_switcher_button.dart';
 import 'package:flutter/material.dart';
 
 class ReportTypeSwitcherMobile extends StatelessWidget {
   const ReportTypeSwitcherMobile({
+    super.key,
     required this.width,
     required this.isShowDumps,
     required this.onReportTypeChange,

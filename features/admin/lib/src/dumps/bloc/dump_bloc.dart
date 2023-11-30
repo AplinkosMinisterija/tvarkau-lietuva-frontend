@@ -22,15 +22,8 @@ class DumpBloc extends Bloc<DumpEvent, DumpState> {
       emit(
         LoadingState(),
       );
-      final MapperFactory mapper = MapperFactory();
-      final ApiProviderBase apiProviderBase = ApiProviderBase(
-          baseUrl: HttpApiConstants.devBaseUrl, errorHandler: ErrorHandler());
-      final ApiProvider apiProvider = ApiProvider(
-        mapper: mapper,
-        apiProviderBase: apiProviderBase,
-      );
-      final List<ReportModel> dumpReports =
-          await apiProvider.getAllVisibleDumpReports();
+
+      final List<ReportModel> dumpReports = [];
       emit(
         ContentState(
           dumpReports: dumpReports,
@@ -51,15 +44,14 @@ class DumpBloc extends Bloc<DumpEvent, DumpState> {
       emit(
         LoadingState(),
       );
-      final MapperFactory mapper = MapperFactory();
       final ApiProviderBase apiProviderBase = ApiProviderBase(
-          baseUrl: HttpApiConstants.devBaseUrl, errorHandler: ErrorHandler());
+        baseUrl: HttpApiConstants.devBaseUrl,
+      );
       final ApiProvider apiProvider = ApiProvider(
-        mapper: mapper,
         apiProviderBase: apiProviderBase,
       );
 
-      var response = await apiProvider.updateDumpReport(
+      await apiProvider.updateDumpReport(
           id: event.id,
           name: event.name,
           moreInformation: event.moreInformation,

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:domain/domain.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:gallery_image_viewer/gallery_image_viewer.dart';
 
 import '../admin_save_button.dart';
 

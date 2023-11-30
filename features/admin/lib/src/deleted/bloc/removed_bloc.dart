@@ -2,6 +2,7 @@ import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:data/data.dart';
 import 'package:http/http.dart' as https;
+
 part 'removed_event.dart';
 
 part 'removed_state.dart';
@@ -22,11 +23,10 @@ class RemovedBloc extends Bloc<RemovedEvent, RemovedState> {
       emit(
         LoadingState(),
       );
-      final MapperFactory mapper = MapperFactory();
       final ApiProviderBase apiProviderBase = ApiProviderBase(
-          baseUrl: HttpApiConstants.devBaseUrl, errorHandler: ErrorHandler());
+        baseUrl: HttpApiConstants.devBaseUrl,
+      );
       final ApiProvider apiProvider = ApiProvider(
-        mapper: mapper,
         apiProviderBase: apiProviderBase,
       );
 
@@ -52,15 +52,14 @@ class RemovedBloc extends Bloc<RemovedEvent, RemovedState> {
       emit(
         LoadingState(),
       );
-      final MapperFactory mapper = MapperFactory();
       final ApiProviderBase apiProviderBase = ApiProviderBase(
-          baseUrl: HttpApiConstants.devBaseUrl, errorHandler: ErrorHandler());
+        baseUrl: HttpApiConstants.devBaseUrl,
+      );
       final ApiProvider apiProvider = ApiProvider(
-        mapper: mapper,
         apiProviderBase: apiProviderBase,
       );
 
-      var response = await apiProvider.updateTrashReport(
+      await apiProvider.updateTrashReport(
         id: event.id,
         name: event.name,
         reportLong: event.reportLong,

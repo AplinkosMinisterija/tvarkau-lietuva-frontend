@@ -4,6 +4,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class ImageCollage extends StatelessWidget {
   const ImageCollage({
+    super.key,
     required this.width,
     required this.imageBytes,
   });
@@ -31,8 +32,8 @@ class ImageCollage extends StatelessWidget {
 
 List<Widget> getImageWidgets(List<Uint8List> imageByte) {
   List<Image> imageList = [];
-  imageByte.forEach((element) {
+  for (var element in imageByte) {
     imageList.add(Image.memory(element));
-  });
+  }
   return imageList;
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class CategoryTypeSwitcher extends StatelessWidget {
   const CategoryTypeSwitcher({
+    super.key,
     required this.width,
     required this.activeCategory,
     required this.onCategoryTypeChange,

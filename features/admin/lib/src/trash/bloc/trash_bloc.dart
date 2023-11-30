@@ -23,11 +23,10 @@ class TrashBloc extends Bloc<TrashEvent, TrashState> {
       emit(
         LoadingState(),
       );
-      final MapperFactory mapper = MapperFactory();
       final ApiProviderBase apiProviderBase = ApiProviderBase(
-          baseUrl: HttpApiConstants.devBaseUrl, errorHandler: ErrorHandler());
+        baseUrl: HttpApiConstants.devBaseUrl,
+      );
       final ApiProvider apiProvider = ApiProvider(
-        mapper: mapper,
         apiProviderBase: apiProviderBase,
       );
       final List<ReportModel>? trashReports =
@@ -56,15 +55,14 @@ class TrashBloc extends Bloc<TrashEvent, TrashState> {
       emit(
         LoadingState(),
       );
-      final MapperFactory mapper = MapperFactory();
       final ApiProviderBase apiProviderBase = ApiProviderBase(
-          baseUrl: HttpApiConstants.devBaseUrl, errorHandler: ErrorHandler());
+        baseUrl: HttpApiConstants.devBaseUrl,
+      );
       final ApiProvider apiProvider = ApiProvider(
-        mapper: mapper,
         apiProviderBase: apiProviderBase,
       );
 
-      var response = await apiProvider.updateTrashReport(
+      await apiProvider.updateTrashReport(
         id: event.id,
         name: event.name,
         editor: event.editor,

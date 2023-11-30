@@ -1,7 +1,6 @@
 import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:data/data.dart';
-import 'package:http/src/response.dart' as http;
 import 'package:http/http.dart' as https;
 
 part 'adding_event.dart';
@@ -20,18 +19,16 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
     LoadData _,
     Emitter<AddingState> emit,
   ) async {
-
     try {
-      final MapperFactory mapper = MapperFactory();
       final ApiProviderBase apiProviderBase = ApiProviderBase(
-          baseUrl: HttpApiConstants.devBaseUrl, errorHandler: ErrorHandler());
+        baseUrl: HttpApiConstants.devBaseUrl,
+      );
       final ApiProvider apiProvider = ApiProvider(
-        mapper: mapper,
         apiProviderBase: apiProviderBase,
       );
 
       final List<ReportModel> trashReports =
-      await apiProvider.getAllVisibleTrashReports();
+          await apiProvider.getAllVisibleTrashReports();
 
       emit(
         ContentState(
@@ -53,22 +50,20 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
       emit(
         LoadingState(),
       );
-      final MapperFactory mapper = MapperFactory();
       final ApiProviderBase apiProviderBase = ApiProviderBase(
-          baseUrl: HttpApiConstants.devBaseUrl, errorHandler: ErrorHandler());
+        baseUrl: HttpApiConstants.devBaseUrl,
+      );
       final ApiProvider apiProvider = ApiProvider(
-        mapper: mapper,
         apiProviderBase: apiProviderBase,
       );
 
-      var response = await apiProvider.sendNewTrashReport(
+      await apiProvider.sendNewTrashReport(
         emailValue: event.emailValue,
         textValue: event.textValue,
         selectedLat: event.selectedLat,
         selectedLong: event.selectedLong,
         imageFiles: event.imageFiles,
       );
-
 
       emit(
         ConfirmationState(),

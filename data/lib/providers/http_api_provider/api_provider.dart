@@ -1,22 +1,17 @@
 import 'dart:convert';
 import 'package:data/data.dart';
-import 'package:data/entities/entities.dart';
 import 'package:domain/domain.dart' as domain;
 import 'package:core/core.dart';
 import 'package:domain/report/report_library.dart';
 import 'package:http/http.dart' as http2;
-import '../../queries/api_query.dart';
 import 'package:openid_client/openid_client.dart';
+import 'package:api_client/api_client.dart';
 
 class ApiProvider {
-  final MapperFactory _mapper;
-  final ApiProviderBase _apiProviderBase;
 
   ApiProvider({
-    required MapperFactory mapper,
     required ApiProviderBase apiProviderBase,
-  })  : _mapper = mapper,
-        _apiProviderBase = apiProviderBase;
+  });
 
   Future<List<domain.ReportModel>?> getAllTrashReports() async {
     final String authKey = await SecureStorageProvider().getJwtToken();
@@ -79,42 +74,65 @@ class ApiProvider {
   }
 
   Future<List<domain.ReportModel>> getAllDumpReports() async {
-    final String authKey = await SecureStorageProvider().getJwtToken();
+    //final String authKey = await SecureStorageProvider().getJwtToken();
 
-    Map<String, String> headers = {
-      'content-type': 'application/json',
-      'accept': 'application/json',
-      'auth-token': authKey.toString()
-    };
-    final List<dynamic> response = await _apiProviderBase.get(
-      null,
-      ApiQuery(
-        body: null,
-        params: headers,
-        endpointPostfix: HttpApiConstants.dumps,
-      ),
-    );
+    // Map<String, String> headers = {
+    //   'content-type': 'application/json',
+    //   'accept': 'application/json',
+    //   'auth-token': authKey.toString()
+    // };
+    // final List<dynamic> response = await _apiProviderBase.get(
+    //   null,
+    //   ApiQuery(
+    //     body: null,
+    //     params: headers,
+    //     endpointPostfix: HttpApiConstants.dumps,
+    //   ),
+    // );
+    // response.length;
 
-    final List<ReportEntity> convertedResponse = response
-        .map((e) => ReportEntity.fromJson(e as Map<String, dynamic>))
-        .toList();
-    return _mapper.reportMapper.fromList(convertedResponse);
+    // final List<ReportEntity> convertedResponse = response
+    //     .map((e) => ReportEntity.fromJson(e as Map<String, dynamic>))
+    //     .toList();
+    // return _mapper.reportMapper.fromList(convertedResponse);
+    return [
+      domain.ReportModel(
+          reportLat: 20,
+          name: '',
+          id: '',
+          reportLong: 20,
+          isVisible: false,
+          refId: '',
+          status: '',
+          isDeleted: false,
+          reportDate: '',
+          type: '')
+    ];
   }
 
-  Future<List<domain.ReportModel>> getAllVisibleDumpReports() async {
-    final List<dynamic> response = await _apiProviderBase.get(
-      null,
-      ApiQuery(
-        body: null,
-        params: null,
-        endpointPostfix: HttpApiConstants.visibleDumps,
-      ),
-    );
+  Future<List<DumpDto>> getAllVisibleDumpReports() async {
+    final api = ApiClient(
+            basePathOverride:
+                'https://stingray-app-d7ve9.ondigitalocean.app/tvarkau-lietuva-api2')
+        .getDumpsApi();
+    //final String accessToken = accessToken_example; // String | Access token used for authorization
+    //final CreateDumpDto createDumpDto = ; // CreateDumpDto |
 
-    final List<ReportEntity> convertedResponse = response
-        .map((e) => ReportEntity.fromJson(e as Map<String, dynamic>))
-        .toList();
-    return _mapper.reportMapper.fromList(convertedResponse);
+    final response = await api.dumpControllerGetAllVisibleDumps();
+    return response.data!.toList();
+    // final List<dynamic> response = await _apiProviderBase.get(
+    //   null,
+    //   ApiQuery(
+    //     body: null,
+    //     params: null,
+    //     endpointPostfix: HttpApiConstants.visibleDumps,
+    //   ),
+    // );
+    //
+    // final List<ReportEntity> convertedResponse = response
+    //     .map((e) => ReportEntity.fromJson(e as Map<String, dynamic>))
+    //     .toList();
+    // return _mapper.reportMapper.fromList(convertedResponse);
   }
 
   Future<(UserInfo, String?)> getUserInfo(String accessToken) async {

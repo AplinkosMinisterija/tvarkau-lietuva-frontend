@@ -7,6 +7,7 @@ import 'package:domain/domain.dart';
 
 class AdminReportsEntryRow extends StatefulWidget {
   const AdminReportsEntryRow({
+    super.key,
     required this.width,
     required this.report,
     required this.onUpdate,
@@ -87,7 +88,7 @@ class _AdminReportsEntryRowState extends State<AdminReportsEntryRow> {
               SizedBox(
                 width: widget.width * 0.0963,
                 child: AutoSizeText(
-                  widget.report.name ?? '',
+                  widget.report.name,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 3,
                   style: GoogleFonts.raleway(
@@ -170,8 +171,7 @@ class _AdminReportsEntryRowState extends State<AdminReportsEntryRow> {
 
   AutoSizeText getStatusText(String status) {
     String statusText = widget.report.status[0].toUpperCase() +
-            widget.report.status.substring(1) ??
-        '';
+        widget.report.status.substring(1);
     if (status == 'gautas') {
       return AutoSizeText(
         statusText,

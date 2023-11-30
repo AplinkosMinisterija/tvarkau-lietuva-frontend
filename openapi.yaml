@@ -1,16 +1,20 @@
 openapi: 3.0.0
 paths:
-  /healthcheck:
-    get:
-      operationId: AppController_healthCheck
-      parameters: [ ]
-      responses:
-        '200':
-          description: ''
   /admin/reports:
     get:
       operationId: AdminController_getAllReports
-      parameters: [ ]
+      parameters:
+        - name: isDeleted
+          required: true
+          in: query
+          schema:
+            type: boolean
+        - name: access-token
+          in: header
+          description: Access token used for authorization
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: All reports have been successfully found
@@ -22,13 +26,21 @@ paths:
                   $ref: '#/components/schemas/FullReportDto'
       tags: &ref_0
         - admin
-    patch:
+      security: &ref_1
+        - bearer: []
+    post:
       operationId: AdminController_updateReport
-      parameters: [ ]
+      parameters:
+        - name: access-token
+          in: header
+          description: Access token used for authorization
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:
-          application/json:
+          multipart/form-data:
             schema:
               $ref: '#/components/schemas/UpdateReportDto'
       responses:
@@ -39,24 +51,17 @@ paths:
               schema:
                 $ref: '#/components/schemas/FullReportDto'
       tags: *ref_0
-  /admin/reports/deleted:
-    get:
-      operationId: AdminController_getAllDeletedReports
-      parameters: [ ]
-      responses:
-        '200':
-          description: All deleted reports have been successfully found
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/FullReportDto'
-      tags: *ref_0
+      security: *ref_1
   /admin/dumps:
     get:
       operationId: AdminController_getAllDumps
-      parameters: [ ]
+      parameters:
+        - name: access-token
+          in: header
+          description: Access token used for authorization
+          required: true
+          schema:
+            type: string
       responses:
         '200':
           description: All dumps have been successfully found
@@ -67,26 +72,16 @@ paths:
                 items:
                   $ref: '#/components/schemas/FullDumpDto'
       tags: *ref_0
-    patch:
-      operationId: AdminController_updateDump
-      parameters: [ ]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/UpdateDumpDto'
-      responses:
-        '200':
-          description: Dump has been successfully updated
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FullDumpDto'
-      tags: *ref_0
+      security: *ref_1
     post:
       operationId: AdminController_createDump
-      parameters: [ ]
+      parameters:
+        - name: access-token
+          in: header
+          description: Access token used for authorization
+          required: true
+          schema:
+            type: string
       requestBody:
         required: true
         content:
@@ -101,10 +96,11 @@ paths:
               schema:
                 $ref: '#/components/schemas/FullDumpDto'
       tags: *ref_0
+      security: *ref_1
   /dumps:
     get:
       operationId: DumpController_getAllVisibleDumps
-      parameters: [ ]
+      parameters: []
       responses:
         '200':
           description: All visible dumps have been successfully found
@@ -119,7 +115,7 @@ paths:
   /reports:
     post:
       operationId: ReportController_createNewReport
-      parameters: [ ]
+      parameters: []
       requestBody:
         required: true
         content:
@@ -133,11 +129,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PublicReportDto'
-      tags: &ref_1
+      tags: &ref_2
         - reports
     get:
       operationId: ReportController_getAllPublicReports
-      parameters: [ ]
+      parameters: []
       responses:
         '200':
           description: All visible reports have been successfully found
@@ -147,7 +143,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/PublicReportDto'
-      tags: *ref_1
+      tags: *ref_2
   /reports/{refId}:
     get:
       operationId: ReportController_getReportById
@@ -166,16 +162,61 @@ paths:
                 $ref: '#/components/schemas/PublicReportDto'
         '404':
           description: Report not found
-      tags: *ref_1
+      tags: *ref_2
 info:
   title: Tvarkau Lietuva API
   description: API skirtas Tvarkau Lietuva projektui
   version: '1.0'
-  contact: { }
-tags: [ ]
-servers: [ ]
+  contact: {}
+tags: []
+servers: []
 components:
+  securitySchemes:
+    access-token:
+      scheme: Bearer
+      bearerFormat: Bearer
+      description: 'Please enter token in following format: Bearer <JWT>'
+      name: Authorization
+      type: http
+      in: Header
   schemas:
+    HistoryEditsDto:
+      type: object
+      properties:
+        field:
+          type: string
+        change:
+          type: string
+      required:
+        - field
+        - change
+    HistoryDataDto:
+      type: object
+      properties:
+        user:
+          type: string
+        date:
+          format: date-time
+          type: string
+        edits:
+          type: array
+          items:
+            $ref: '#/components/schemas/HistoryEditsDto'
+      required:
+        - user
+        - date
+        - edits
+    StatusRecordsDto:
+      type: object
+      properties:
+        status:
+          type: string
+        date:
+          format: date-time
+          type: string
+      required:
+        - status
+        - date
     FullReportDto:
       type: object
       properties:
@@ -187,9 +228,9 @@ components:
           type: string
         refId:
           type: string
-        reportLong:
+        longitude:
           type: number
-        reportLat:
+        latitude:
           type: number
         email:
           type: string
@@ -215,18 +256,18 @@ components:
         historyData:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/HistoryDataDto'
         statusRecords:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/StatusRecordsDto'
       required:
         - _id
         - name
         - type
         - refId
-        - reportLong
-        - reportLat
+        - longitude
+        - latitude
         - email
         - isVisible
         - isDeleted
@@ -240,13 +281,15 @@ components:
     UpdateReportDto:
       type: object
       properties:
-        _id:
+        editor:
+          type: string
+        refId:
           type: string
         name:
           type: string
-        reportLong:
+        longitude:
           type: number
-        reportLat:
+        latitude:
           type: number
         isVisible:
           type: boolean
@@ -264,29 +307,36 @@ components:
           type: array
           items:
             type: string
+        images:
+          type: array
+          items:
+            type: string
+            format: binary
       required:
-        - _id
+        - editor
+        - refId
         - name
-        - reportLong
-        - reportLat
+        - longitude
+        - latitude
         - isVisible
         - isDeleted
         - comment
         - status
         - officerImageUrls
         - imageUrls
+        - images
     FullDumpDto:
       type: object
       properties:
-        _id:
+        refId:
           type: string
         name:
           type: string
         type:
           type: string
-        reportLong:
+        longitude:
           type: number
-        reportLat:
+        latitude:
           type: number
         address:
           type: string
@@ -297,11 +347,11 @@ components:
         moreInformation:
           type: string
       required:
-        - _id
+        - refId
         - name
         - type
-        - reportLong
-        - reportLat
+        - longitude
+        - latitude
         - address
         - phone
         - workingHours
@@ -313,9 +363,9 @@ components:
           type: string
         name:
           type: string
-        reportLong:
+        longitude:
           type: number
-        reportLat:
+        latitude:
           type: number
         isVisible:
           type: boolean
@@ -330,8 +380,8 @@ components:
       required:
         - _id
         - name
-        - reportLong
-        - reportLat
+        - longitude
+        - latitude
         - isVisible
         - address
         - phone
@@ -375,8 +425,10 @@ components:
           type: number
         address:
           type: string
+          nullable: true
         phone:
           type: string
+          nullable: true
         workingHours:
           type: string
         moreInformation:
@@ -395,22 +447,23 @@ components:
       properties:
         name:
           type: string
-        reportLong:
+        longitude:
           type: number
-        reportLat:
+        latitude:
           type: number
         email:
           type: string
-        imageUrls:
+        images:
           type: array
           items:
             type: string
+            format: binary
       required:
         - name
-        - reportLong
-        - reportLat
+        - longitude
+        - latitude
         - email
-        - imageUrls
+        - images
     PublicReportDto:
       type: object
       properties:
@@ -420,9 +473,9 @@ components:
           type: string
         refId:
           type: string
-        reportLong:
+        longitude:
           type: number
-        reportLat:
+        latitude:
           type: number
         comment:
           type: string
@@ -442,13 +495,13 @@ components:
         statusRecords:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/StatusRecordsDto'
       required:
         - name
         - type
         - refId
-        - reportLong
-        - reportLat
+        - longitude
+        - latitude
         - comment
         - status
         - reportDate

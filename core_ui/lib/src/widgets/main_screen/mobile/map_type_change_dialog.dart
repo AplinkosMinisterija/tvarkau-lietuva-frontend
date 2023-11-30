@@ -66,7 +66,7 @@ class _MapTypeChangeDialogState extends State<MapTypeChangeDialog> {
                               onTap: () {
                                 Navigator.of(context).pop();
                               },
-                              child: Icon(
+                              child: const Icon(
                                 Icons.close,
                                 size: 24,
                               ))

@@ -1,6 +1,4 @@
-import 'package:core/constants/global_constants.dart';
 import 'package:core/core.dart';
-import 'package:core/utils/captcha_dialog.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -36,8 +34,8 @@ class AddingScreenWeb extends StatefulWidget {
 }
 
 class _AddingScreenWebState extends State<AddingScreenWeb> {
-  List<List<int>> _selectedImages = [];
-  List<Uint8List> _fileBytes = [];
+  final List<List<int>> _selectedImages = [];
+  final List<Uint8List> _fileBytes = [];
   List<http.MultipartFile> multipartList = [];
 
   Future<void> getMultipleImageInfos() async {
@@ -45,13 +43,13 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
         GlobalConstants.maxAllowedImageCount);
 
     if (images != null) {
-      setState(() {
+      setState(() async {
         _selectedImages.addAll(images);
         _fileBytes.addAll(images);
-        _selectedImages.forEach((element) async {
-          multipartList.add(await http.MultipartFile.fromBytes('image', element,
+        for (var element in _selectedImages) {
+          multipartList.add(http.MultipartFile.fromBytes('image', element,
               contentType: MediaType("image", "jpg"), filename: 'name.jpg'));
-        });
+        }
         if (_selectedImages.length > 4 && _selectedImages.isNotEmpty) {
           for (int i = 0; i < _selectedImages.length - 4; i++) {
             _selectedImages.removeAt(0);
@@ -108,7 +106,7 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
       addCustomIcon();
     });
     int index = 0;
-    widget.reports.forEach((element) {
+    for (var element in widget.reports) {
       markers.add(
         Marker(
           markerId: MarkerId(
@@ -121,7 +119,7 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
         ),
       );
       index++;
-    });
+    }
     currentItem = 'Šiukšlinimas gamtoje';
     dropDownItems.add(DropdownMenuItem(
       value: 'Šiukšlinimas gamtoje',
@@ -409,7 +407,7 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
                                         return 'Prašome įvesti el. pašto adresą';
                                       } else if (RegExp(
                                               r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-                                          .hasMatch(value!)) {
+                                          .hasMatch(value)) {
                                         return null;
                                       } else {
                                         return 'Prašome įvesti teisingą el. pašto adresą';

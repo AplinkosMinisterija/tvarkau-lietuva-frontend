@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ImageAddButtonAdmin extends StatefulWidget {
   const ImageAddButtonAdmin({
+    super.key,
     required this.width,
     required this.title,
     required this.onTap,

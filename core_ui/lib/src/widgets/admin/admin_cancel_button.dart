@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AdminCancelButton extends StatefulWidget {
   const AdminCancelButton({
+    super.key,
     required this.width,
     required this.onPressed,
   });

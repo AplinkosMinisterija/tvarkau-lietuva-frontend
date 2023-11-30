@@ -6,6 +6,7 @@ import 'deleted/table/deleted_edit_form.dart';
 
 class AdminDeletedEditButton extends StatefulWidget {
   const AdminDeletedEditButton({
+    super.key,
     required this.width,
     required this.onPressed,
     required this.report,

@@ -1,9 +1,9 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ReportTitleBar extends StatelessWidget {
   const ReportTitleBar({
+    super.key,
     required this.width,
   });
 
@@ -13,7 +13,7 @@ class ReportTitleBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Container(
+        SizedBox(
           width: width * 0.0963,
           child: Text(
             'Pranešimo data\nir laikas',

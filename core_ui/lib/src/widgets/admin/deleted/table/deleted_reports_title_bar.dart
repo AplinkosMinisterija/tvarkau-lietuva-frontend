@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class DeletedReportsTitleBar extends StatelessWidget {
   const DeletedReportsTitleBar({
+    super.key,
     required this.width,
   });
 
@@ -13,7 +14,7 @@ class DeletedReportsTitleBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        SizedBox(width: width*0.01),
+        SizedBox(width: width * 0.01),
         SizedBox(
           width: width * 0.0963,
           child: AutoSizeText(

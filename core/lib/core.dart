@@ -1,7 +1,5 @@
 library core;
 
-export 'package:core/di/app_di.dart';
-export 'package:core/di/data_di.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:flutter_dotenv/flutter_dotenv.dart';
 

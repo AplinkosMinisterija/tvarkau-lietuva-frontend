@@ -3,10 +3,10 @@ import 'package:domain/report/report_library.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:domain/domain.dart';
-import '../information_window/custom_info_window.dart';
 
 class MainTrashMapMobile extends StatefulWidget {
   const MainTrashMapMobile({
+    super.key,
     required this.width,
     required this.trashReports,
     required this.isHovering,
@@ -55,7 +55,7 @@ class _MainTrashMapMobileState extends State<MainTrashMapMobile> {
             onTap: () {
               _customTrashInfoWindowController.addInfoWindow!(
                 InfoTrashWindowBox(
-                    title: element.name ?? '',
+                    title: element.name,
                     imageUrls: element.imageUrls ?? [],
                     status: element.status,
                     date: element.reportDate,

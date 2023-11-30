@@ -32,6 +32,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.0"
+  api_client:
+    dependency: "direct main"
+    description:
+      path: api_client
+      relative: true
+    source: path
+    version: "1.0.0"
   archive:
     dependency: transitive
     description:
@@ -849,6 +856,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  one_of:
+    dependency: transitive
+    description:
+      name: one_of
+      sha256: "25fe0fcf181e761c6fcd604caf9d5fdf952321be17584ba81c72c06bdaa511f0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.5.0"
+  one_of_serializer:
+    dependency: transitive
+    description:
+      name: one_of_serializer
+      sha256: "3f3dfb5c1578ba3afef1cb47fcc49e585e797af3f2b6c2cc7ed90aad0c5e7b83"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.5.0"
   openapi_generator:
     dependency: "direct dev"
     description:

@@ -1,18 +1,14 @@
-import 'package:core_ui/src/widgets/admin/reports/table/admin_reports_entry_row.dart';
-import 'package:core_ui/src/widgets/admin/reports/table/admin_reports_title_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:domain/domain.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 import '../../../../core_ui.dart';
-import '../reports/table/report_edit_form.dart';
-import 'admin_dumps_entry_row.dart';
-import 'admin_dumps_title_bar.dart';
 import 'dump_edit_form.dart';
 
 class AdminDumpsTable extends StatefulWidget {
   const AdminDumpsTable({
+    super.key,
     required this.width,
     required this.dumps,
     required this.onUpdate,
@@ -95,7 +91,7 @@ class _AdminDumpsTableState extends State<AdminDumpsTable> {
               allowSorting: false,
               allowFiltering: true,
               width: widget.width * 0.07,
-              filterIconPadding: EdgeInsets.symmetric(horizontal: 2.0),
+              filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
               label: Container(
                   padding: const EdgeInsets.only(left: 5),
                   alignment: Alignment.center,
@@ -109,7 +105,7 @@ class _AdminDumpsTableState extends State<AdminDumpsTable> {
               allowSorting: false,
               allowFiltering: true,
               width: widget.width * 0.07,
-              filterIconPadding: EdgeInsets.symmetric(horizontal: 2.0),
+              filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
               label: Container(
                   padding: const EdgeInsets.only(left: 5),
                   alignment: Alignment.center,

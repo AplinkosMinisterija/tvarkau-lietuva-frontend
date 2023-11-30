@@ -1,9 +1,9 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ReportTypeSwitcherButton extends StatefulWidget {
   const ReportTypeSwitcherButton({
+    super.key,
     required this.width,
     required this.height,
     required this.buttonText,
@@ -18,7 +18,8 @@ class ReportTypeSwitcherButton extends StatefulWidget {
   final VoidCallback onPressed;
 
   @override
-  State<ReportTypeSwitcherButton> createState() => _ReportTypeSwitcherButtonState();
+  State<ReportTypeSwitcherButton> createState() =>
+      _ReportTypeSwitcherButtonState();
 }
 
 class _ReportTypeSwitcherButtonState extends State<ReportTypeSwitcherButton> {
@@ -28,18 +29,19 @@ class _ReportTypeSwitcherButtonState extends State<ReportTypeSwitcherButton> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: widget.onPressed,
-      onHover: (bool isHover){
+      onHover: (bool isHover) {
         setState(() {
-          inactiveBackgroundColor = isHover
-              ? const Color(0xffb7b7b7)
-              : const Color(0xffe3e3e3);
+          inactiveBackgroundColor =
+              isHover ? const Color(0xffb7b7b7) : const Color(0xffe3e3e3);
         });
       },
       child: Container(
         width: widget.width,
         height: widget.height,
         decoration: BoxDecoration(
-          color: widget.isActive ? const Color(0xffff6a3d) : inactiveBackgroundColor,
+          color: widget.isActive
+              ? const Color(0xffff6a3d)
+              : inactiveBackgroundColor,
           borderRadius: BorderRadius.circular(10),
         ),
         padding: EdgeInsets.all(widget.width * 0.1),

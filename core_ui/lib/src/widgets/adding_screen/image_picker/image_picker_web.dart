@@ -8,11 +8,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 
-import 'src/Models/Types.dart';
+import 'src/models/types.dart';
 import 'src/extensions/file_extensions.dart' show FileModifier;
 import 'src/web_image_picker.dart';
 
-export 'src/Models/Types.dart';
+export 'src/models/types.dart';
 
 class ImagePickerWeb {
   static void registerWith(Registrar registrar) {
@@ -53,15 +53,9 @@ class ImagePickerWeb {
       Future.wait(resultFuture).then((results) => completer.complete(results));
     }
 
-    // Cancel event management inspired by:
-    // https://github.com/miguelpruivo/flutter_file_picker/blob/master/lib/src/file_picker_web.dart
     void cancelledEventListener(html.Event e) {
       html.window.removeEventListener('focus', cancelledEventListener);
-
-      // This listener is called before the input changed event,
-      // and the `uploadInput.files` value is still null
-      // Wait for results from js to dart
-      Future.delayed(Duration(milliseconds: 500)).then((value) {
+      Future.delayed(const Duration(milliseconds: 500)).then((value) {
         if (!changeEventTriggered) {
           changeEventTriggered = true;
           completer.complete(null);
@@ -108,15 +102,10 @@ class ImagePickerWeb {
           .then((results) => completer.complete(results));
     }
 
-    // Cancel event management inspired by:
-    // https://github.com/miguelpruivo/flutter_file_picker/blob/master/lib/src/file_picker_web.dart
     void cancelledEventListener(html.Event e) {
       html.window.removeEventListener('focus', cancelledEventListener);
 
-      // This listener is called before the input changed event,
-      // and the `uploadInput.files` value is still null
-      // Wait for results from js to dart
-      Future.delayed(Duration(milliseconds: 500)).then((value) {
+      Future.delayed(const Duration(milliseconds: 500)).then((value) {
         if (!changeEventTriggered) {
           changeEventTriggered = true;
           completer.complete(null);

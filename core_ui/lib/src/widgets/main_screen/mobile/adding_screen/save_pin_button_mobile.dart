@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class SavePinButtonMobile extends StatefulWidget {
   const SavePinButtonMobile({
+    super.key,
     required this.width,
     required this.isActive,
     required this.onTap,

@@ -26,12 +26,12 @@ class AppMessageNotifier extends NavigatorObserver {
   }
 
   void showMessageFromLocalization(String key) {
-    final BuildContext context = _scaffoldKey!.currentContext!;
     _scaffoldKey?.currentState!.showSnackBar(
       const SnackBar(
         content: Text(''),
       ),
     );
+
   }
 
   void updateScaffoldKey() {

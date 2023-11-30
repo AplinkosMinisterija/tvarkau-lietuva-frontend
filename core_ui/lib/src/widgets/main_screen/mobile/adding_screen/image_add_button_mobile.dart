@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ImageAddButtonMobile extends StatefulWidget {
   const ImageAddButtonMobile({
+    super.key,
     required this.width,
     required this.title,
     required this.onTap,

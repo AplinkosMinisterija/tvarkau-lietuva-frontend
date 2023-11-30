@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'report_entry_row.dart';
-import 'report_title_bar.dart';
 import 'package:domain/domain.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class ReportTable extends StatefulWidget {
   const ReportTable({
+    super.key,
     required this.width,
     required this.reports,
     required this.onInformationTap,

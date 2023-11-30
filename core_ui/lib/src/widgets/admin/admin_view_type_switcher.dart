@@ -1,9 +1,9 @@
 import 'package:core_ui/src/widgets/admin/admin_view_switcher_button.dart';
-import 'package:core_ui/src/widgets/main_screen/report_type_switcher_button.dart';
 import 'package:flutter/material.dart';
 
 class AdminViewTypeSwitcher extends StatelessWidget {
   const AdminViewTypeSwitcher({
+    super.key,
     required this.width,
     required this.activeView,
     required this.onViewTypeChange,

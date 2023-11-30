@@ -1,12 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core_ui/src/widgets/admin/admin_edit_button.dart';
-import 'package:core_ui/src/widgets/admin/admin_save_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:domain/domain.dart';
 
 class AdminDumpsEntryRow extends StatefulWidget {
   const AdminDumpsEntryRow({
+    super.key,
     required this.width,
     required this.report,
     required this.onUpdate,

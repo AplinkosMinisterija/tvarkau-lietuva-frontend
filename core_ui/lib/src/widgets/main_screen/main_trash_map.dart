@@ -1,14 +1,12 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/report/report_library.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:domain/domain.dart';
-import 'information_window/custom_info_window.dart';
 
 class MainTrashMap extends StatefulWidget {
   const MainTrashMap({
+    super.key,
     required this.width,
     required this.trashReports,
     required this.isHovering,
@@ -56,7 +54,7 @@ class _MainTrashMapState extends State<MainTrashMap> {
             onTap: () {
               _customTrashInfoWindowController.addInfoWindow!(
                 InfoTrashWindowBox(
-                    title: element.name ?? '',
+                    title: element.name,
                     imageUrls: element.imageUrls ?? [],
                     status: element.status,
                     date: element.reportDate,

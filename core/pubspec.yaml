@@ -1,6 +1,7 @@
 name: core
 description: core module for the project
 version: 1.0.0+1
+publish_to: none
 
 environment:
   sdk: '>=3.0.0 <3.13.0'

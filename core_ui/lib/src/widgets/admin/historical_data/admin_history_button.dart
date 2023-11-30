@@ -6,6 +6,7 @@ import 'history_form.dart';
 
 class AdminHistoryButton extends StatefulWidget {
   const AdminHistoryButton({
+    super.key,
     required this.width,
     required this.onPressed,
     required this.report,

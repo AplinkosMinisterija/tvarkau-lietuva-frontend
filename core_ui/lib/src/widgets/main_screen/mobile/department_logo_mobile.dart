@@ -1,12 +1,8 @@
-import 'package:auto_size_text/auto_size_text.dart';
-import 'package:core_ui/core_ui.dart';
-import 'package:core/core.dart';
-import 'package:core/utils/url_launcher.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class DepartmentLogoMobile extends StatelessWidget {
   const DepartmentLogoMobile({
+    super.key,
     required this.width,
     required this.onTap,
   });

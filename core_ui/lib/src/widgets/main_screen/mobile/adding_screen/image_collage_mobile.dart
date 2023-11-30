@@ -4,6 +4,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class ImageCollageMobile extends StatefulWidget {
   const ImageCollageMobile({
+    super.key,
     required this.width,
     required this.imageBytes,
     this.onTap,
@@ -54,13 +55,13 @@ class _ImageCollageMobileState extends State<ImageCollageMobile> {
 
 List<Widget> getImageWidget(List<Uint8List> imageByte, double dimensions) {
   List<Image> imageList = [];
-  imageByte.forEach((element) {
+  for (var element in imageByte) {
     imageList.add(Image.memory(
       element,
       height: dimensions,
       width: dimensions,
       fit: BoxFit.fill,
     ));
-  });
+  }
   return imageList;
 }

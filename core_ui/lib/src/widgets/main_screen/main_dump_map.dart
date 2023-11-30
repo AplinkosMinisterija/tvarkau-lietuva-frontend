@@ -1,14 +1,11 @@
-import 'package:auto_size_text/auto_size_text.dart';
+import 'package:api_client/api_client.dart';
 import 'package:core_ui/core_ui.dart';
-import 'package:domain/report/report_library.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:domain/domain.dart';
-import 'information_window/custom_info_window.dart';
 
 class MainDumpMap extends StatefulWidget {
   const MainDumpMap({
+    super.key,
     required this.width,
     required this.dumpReports,
     required this.isHovering,
@@ -17,7 +14,7 @@ class MainDumpMap extends StatefulWidget {
   });
 
   final double width;
-  final List<ReportModel> dumpReports;
+  final List<DumpDto> dumpReports;
   final ValueChanged<bool> isHovering;
   final ValueChanged<bool> onReportTypeChange;
   final bool isShowDumps;
@@ -34,47 +31,45 @@ class _MainDumpMapState extends State<MainDumpMap> {
   Set<Marker> _dumpMarkers = {};
   late bool isMapHover;
 
-  voidAddDumpMarkers() {
+  voidAddDumpMarkers() async {
     int index = 1000;
     Set<Marker> tempDumpMarkers = {};
-    widget.dumpReports.forEach(
-      (element) async {
-        tempDumpMarkers.add(
-          Marker(
-              markerId: MarkerId(
-                element.name.toString() + index.toString(),
-              ),
-              position: LatLng(
-                element.reportLat,
-                element.reportLong,
-              ),
-              icon: await BitmapDescriptor.fromAssetImage(
-                  const ImageConfiguration(size: Size(50, 50)),
-                  'assets/svg/dump_icon.svg'),
-              onTap: () {
-                _customDumpInfoWindowController.addInfoWindow!(
-                  InfoDumpWindowBox(
-                    title: element.name ?? '',
-                    address: element.address ?? '',
-                    phone: element.phone ?? '',
-                    workingHours: element.workingHours ?? '',
-                    moreInformation: element.moreInformation ?? '',
-                    isHovering: (bool value) {
-                      setState(() {
-                        isMapHover = value;
-                      });
-                    },
-                  ),
-                  LatLng(
-                    element.reportLat,
-                    element.reportLong,
-                  ),
-                );
-              }),
-        );
-        index++;
-      },
-    );
+    for (var element in widget.dumpReports) {
+      tempDumpMarkers.add(
+        Marker(
+            markerId: MarkerId(
+              element.name.toString() + index.toString(),
+            ),
+            position: LatLng(
+              element.reportLat.toDouble(),
+              element.reportLong.toDouble(),
+            ),
+            icon: await BitmapDescriptor.fromAssetImage(
+                const ImageConfiguration(size: Size(50, 50)),
+                'assets/svg/dump_icon.svg'),
+            onTap: () {
+              _customDumpInfoWindowController.addInfoWindow!(
+                InfoDumpWindowBox(
+                  title: element.name,
+                  address: element.address ?? '',
+                  phone: element.phone ?? '',
+                  workingHours: element.workingHours,
+                  moreInformation: element.moreInformation,
+                  isHovering: (bool value) {
+                    setState(() {
+                      isMapHover = value;
+                    });
+                  },
+                ),
+                LatLng(
+                  element.reportLat.toDouble(),
+                  element.reportLong.toDouble(),
+                ),
+              );
+            }),
+      );
+      index++;
+    }
     setState(() {
       _dumpMarkers = tempDumpMarkers;
     });

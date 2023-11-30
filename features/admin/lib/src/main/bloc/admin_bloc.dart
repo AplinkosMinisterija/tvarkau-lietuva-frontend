@@ -36,11 +36,10 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
             color: AppTheme.mainThemeColor, size: 150),
       );
       var oauth = AadOAuth(config);
-      final MapperFactory mapper = MapperFactory();
       final ApiProviderBase apiProviderBase = ApiProviderBase(
-          baseUrl: HttpApiConstants.devBaseUrl, errorHandler: ErrorHandler());
+        baseUrl: HttpApiConstants.devBaseUrl,
+      );
       final ApiProvider apiProvider = ApiProvider(
-        mapper: mapper,
         apiProviderBase: apiProviderBase,
       );
 
@@ -88,7 +87,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
       config.webUseRedirect = false;
       var oauth = AadOAuth(config);
       SecureStorageProvider().deleteJwtToken();
-      final result = await oauth.logout();
+      await oauth.logout();
       var accessToken = await oauth.getAccessToken();
       if (accessToken != null) {
         emit(
@@ -122,7 +121,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
       config.webUseRedirect = false;
       var oauth = AadOAuth(config);
 
-      final result = await oauth.login();
+      await oauth.login();
       var accessToken = await oauth.getAccessToken();
 
       if (accessToken != null) {

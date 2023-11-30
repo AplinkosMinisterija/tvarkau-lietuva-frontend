@@ -6,7 +6,7 @@ class LoadingState implements HomeState {}
 
 class ContentState implements HomeState {
   final List<ReportModel> trashReports;
-  final List<ReportModel> dumpReports;
+  final List<DumpDto> dumpReports;
 
   ContentState({
     required this.trashReports,

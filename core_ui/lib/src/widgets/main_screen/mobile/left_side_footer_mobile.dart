@@ -4,6 +4,7 @@ import 'package:core/core.dart';
 
 class LeftSideFooterMobile extends StatelessWidget {
   const LeftSideFooterMobile({
+    super.key,
     required this.width,
   });
 
@@ -48,7 +49,7 @@ class LeftSideFooterMobile extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(width: width*0.05),
+            SizedBox(width: width * 0.05),
             SizedBox(
               width: width * 0.2,
               child: FittedBox(
@@ -59,7 +60,7 @@ class LeftSideFooterMobile extends StatelessWidget {
                       'TELEFONAS:',
                       style: GoogleFonts.roboto(
                         fontWeight: FontWeight.w600,
-                        color: Color(0x660a3328),
+                        color: const Color(0x660a3328),
                       ),
                     ),
                     SelectionArea(
@@ -68,12 +69,12 @@ class LeftSideFooterMobile extends StatelessWidget {
                         style: GoogleFonts.roboto(fontWeight: FontWeight.w500),
                       ),
                     ),
-                    SizedBox(height: width*0.01),
+                    SizedBox(height: width * 0.01),
                     Text(
                       'EL. PAŠTAS:',
                       style: GoogleFonts.roboto(
                         fontWeight: FontWeight.w600,
-                        color: Color(0x660a3328),
+                        color: const Color(0x660a3328),
                       ),
                     ),
                     SelectionArea(
@@ -86,7 +87,7 @@ class LeftSideFooterMobile extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(width: width*0.05),
+            SizedBox(width: width * 0.05),
             Column(
               children: <Widget>[
                 InkWell(
