@@ -207,41 +207,8 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                         child: ClipRRect(
                           borderRadius:
                               const BorderRadius.all(Radius.circular(8)),
-                          child: Stack(
-                            children: [
-                              GoogleMap(
-                                mapType: _currentMapType,
-                                initialCameraPosition: _initialCameraPosition,
-                                markers: markers,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    bottom: 110, right: 10),
-                                child: Align(
-                                    alignment: Alignment.bottomRight,
-                                    child: GoogleMapTypeButton(
-                                      height: 40,
-                                      width: 40,
-                                      onPressed: () {
-                                        showDialog<String>(
-                                            context: context,
-                                            builder: (BuildContext context) =>
-                                                MapTypeChangeDialog(
-                                                    width: widget.width,
-                                                    currentMapType:
-                                                        _currentMapType,
-                                                    onHover: (isHover) {},
-                                                    onChangeTap:
-                                                        (MapType mapType) {
-                                                      setState(() {
-                                                        _currentMapType =
-                                                            mapType;
-                                                      });
-                                                    }));
-                                      },
-                                    )),
-                              ),
-                            ],
+                          child: ReportMap(
+                            report: widget.report,
                           ),
                         ),
                       ),

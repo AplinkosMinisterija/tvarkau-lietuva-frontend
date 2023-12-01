@@ -10,6 +10,13 @@ export 'src/widgets/app_error_dialog.dart';
 export 'src/widgets/app_loader.dart';
 export 'src/widgets/error_reload_widget.dart';
 
+// Map
+export 'src/widgets/map/osm_map.dart';
+export 'src/widgets/map/reports_map.dart';
+export 'src/widgets/map/dumps_map.dart';
+export 'src/widgets/map/report_map.dart';
+export 'src/widgets/map/map_zoom_in_out_buttons.dart';
+
 //Adding screen
 export 'src/widgets/adding_screen/cancel_button.dart';
 export 'src/widgets/adding_screen/mark_button.dart';
@@ -28,7 +35,6 @@ export 'src/widgets/main_screen/footer/left_side_footer.dart';
 export 'src/widgets/main_screen/footer/right_side_footer.dart';
 export 'src/widgets/main_screen/mobile/footer_mobile.dart';
 export 'src/widgets/main_screen/mobile/footer/footer_contacts_mobile_test.dart';
-
 
 //Main screen
 export 'src/widgets/main_screen/mobile/location_search_button.dart';
@@ -80,5 +86,3 @@ export 'src/widgets/admin/reports/map/admin_trash_map.dart';
 export 'src/widgets/admin/deleted/table/deleted_reports_table.dart';
 export 'src/widgets/admin/admin_delete_button.dart';
 export 'src/widgets/admin/admin_deleted_edit_button.dart';
-
-

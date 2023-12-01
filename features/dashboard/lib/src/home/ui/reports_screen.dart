@@ -127,9 +127,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                     });
                                   },
                                   onInformationTap: (String refId) {
-                                    widget.onInformationTap(
-                                      refId
-                                    );
+                                    widget.onInformationTap(refId);
                                   },
                                 ),
                           SizedBox(
@@ -144,8 +142,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                   width: constraints.maxWidth,
                                   reports: widget.trashReports,
                                   onInformationTap: (refId) {
-                                    widget.onInformationTap(
-                                        refId);
+                                    widget.onInformationTap(refId);
                                   },
                                 ),
                           const Divider(
@@ -195,9 +192,11 @@ class _ReportsScreenState extends State<ReportsScreen> {
                           Align(
                             alignment: Alignment.topLeft,
                             child: DepartmentLogoMobile(
-                                width: constraints.maxWidth,onTap: (){
-                              LaunchUrl().launch('https://aad.lrv.lt/');
-                            },),
+                              width: constraints.maxWidth,
+                              onTap: () {
+                                LaunchUrl().launch('https://aad.lrv.lt/');
+                              },
+                            ),
                           ),
                           SizedBox(height: constraints.maxWidth * 0.0889),
                           TitleWidgetMobile(width: constraints.maxWidth),
