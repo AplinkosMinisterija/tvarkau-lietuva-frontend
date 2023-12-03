@@ -338,6 +338,8 @@ components:
           type: number
         latitude:
           type: number
+        isVisible:
+          type: boolean
         address:
           type: string
         phone:
@@ -352,6 +354,7 @@ components:
         - type
         - longitude
         - latitude
+        - isVisible
         - address
         - phone
         - workingHours

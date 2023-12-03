@@ -23,15 +23,10 @@ class RemovedBloc extends Bloc<RemovedEvent, RemovedState> {
       emit(
         LoadingState(),
       );
-      final ApiProviderBase apiProviderBase = ApiProviderBase(
-        baseUrl: HttpApiConstants.devBaseUrl,
-      );
-      final ApiProvider apiProvider = ApiProvider(
-        apiProviderBase: apiProviderBase,
-      );
+
 
       final List<ReportModel> trashReports =
-          await apiProvider.getAllRemovedReports();
+          await ApiProvider().getAllRemovedReports();
       emit(
         ContentState(
           trashReports: trashReports,
@@ -52,14 +47,9 @@ class RemovedBloc extends Bloc<RemovedEvent, RemovedState> {
       emit(
         LoadingState(),
       );
-      final ApiProviderBase apiProviderBase = ApiProviderBase(
-        baseUrl: HttpApiConstants.devBaseUrl,
-      );
-      final ApiProvider apiProvider = ApiProvider(
-        apiProviderBase: apiProviderBase,
-      );
 
-      await apiProvider.updateTrashReport(
+
+      await ApiProvider().updateTrashReport(
         id: event.id,
         name: event.name,
         reportLong: event.reportLong,
@@ -73,7 +63,7 @@ class RemovedBloc extends Bloc<RemovedEvent, RemovedState> {
       );
 
       final List<ReportModel> trashReports =
-          await apiProvider.getAllRemovedReports();
+          await ApiProvider().getAllRemovedReports();
       emit(
         ContentState(
           trashReports: trashReports,

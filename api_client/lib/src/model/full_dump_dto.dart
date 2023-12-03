@@ -16,6 +16,7 @@ part 'full_dump_dto.g.dart';
 /// * [type]
 /// * [longitude]
 /// * [latitude]
+/// * [isVisible]
 /// * [address]
 /// * [phone]
 /// * [workingHours]
@@ -36,6 +37,9 @@ abstract class FullDumpDto implements Built<FullDumpDto, FullDumpDtoBuilder> {
 
   @BuiltValueField(wireName: r'latitude')
   num get latitude;
+
+  @BuiltValueField(wireName: r'isVisible')
+  bool get isVisible;
 
   @BuiltValueField(wireName: r'address')
   String get address;
@@ -96,6 +100,11 @@ class _$FullDumpDtoSerializer implements PrimitiveSerializer<FullDumpDto> {
     yield serializers.serialize(
       object.latitude,
       specifiedType: const FullType(num),
+    );
+    yield r'isVisible';
+    yield serializers.serialize(
+      object.isVisible,
+      specifiedType: const FullType(bool),
     );
     yield r'address';
     yield serializers.serialize(
@@ -176,6 +185,13 @@ class _$FullDumpDtoSerializer implements PrimitiveSerializer<FullDumpDto> {
             specifiedType: const FullType(num),
           ) as num;
           result.latitude = valueDes;
+          break;
+        case r'isVisible':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(bool),
+          ) as bool;
+          result.isVisible = valueDes;
           break;
         case r'address':
           final valueDes = serializers.deserialize(

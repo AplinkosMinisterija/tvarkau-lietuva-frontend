@@ -1,3 +1,4 @@
+import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:dashboard/src/home/bloc/home_bloc.dart';
@@ -22,10 +23,9 @@ class HomeScreen extends StatelessWidget {
             return BlocBuilder<HomeBloc, HomeState>(
               builder: (BuildContext context, HomeState state) {
                 if (state is ContentState) {
-                  final List<ReportModel> trashReports = state.trashReports;
                   final dumpReports = state.dumpReports;
                   return ReportsScreen(
-                    trashReports: trashReports,
+                    trashReports: state.trashReports,
                     dumpReports: dumpReports,
                     onAddTap: (double width, double height) {
                       context.goNamed('newReport');

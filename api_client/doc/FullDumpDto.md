@@ -13,6 +13,7 @@ Name | Type | Description | Notes
 **type** | **String** |  | 
 **longitude** | **num** |  | 
 **latitude** | **num** |  | 
+**isVisible** | **bool** |  | 
 **address** | **String** |  | 
 **phone** | **String** |  | 
 **workingHours** | **String** |  | 

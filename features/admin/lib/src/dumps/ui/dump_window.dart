@@ -23,10 +23,9 @@ class DumpWindow extends StatelessWidget {
             return BlocBuilder<DumpBloc, DumpState>(
               builder: (BuildContext context, DumpState state) {
                 if (state is ContentState) {
-                  final List<ReportModel> dumpReports = state.dumpReports;
                   return AdminDumpsTable(
                     width: screenWidth,
-                    dumps: dumpReports,
+                    dumps: state.dumpReports,
                     onUpdate: (updatedModel) {
                       Navigator.of(context).pop();
                       context.read<DumpBloc>().add(UpdateDump(

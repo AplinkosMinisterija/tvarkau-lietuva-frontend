@@ -22,13 +22,8 @@ class InformationBloc extends Bloc<InformationEvent, InformationState> {
     Emitter<InformationState> emit,
   ) async {
     try {
-      final ApiProviderBase apiProviderBase = ApiProviderBase(
-        baseUrl: HttpApiConstants.devBaseUrl,
-      );
-      final ApiProvider apiProvider = ApiProvider(
-        apiProviderBase: apiProviderBase,
-      );
-      final ReportModel trashReport = await apiProvider.getOneTrashReport(
+
+      final ReportModel trashReport = await ApiProvider().getOneTrashReport(
         event.refId,
       );
       emit(

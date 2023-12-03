@@ -15,7 +15,7 @@ class ReportsScreen extends StatefulWidget {
     super.key,
   });
 
-  final List<ReportModel> trashReports;
+  final List<PublicReportDto> trashReports;
   final List<DumpDto> dumpReports;
   final Function(double, double) onAddTap;
   final Function(String) onInformationTap;

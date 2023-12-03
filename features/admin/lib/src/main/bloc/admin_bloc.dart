@@ -36,19 +36,14 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
             color: AppTheme.mainThemeColor, size: 150),
       );
       var oauth = AadOAuth(config);
-      final ApiProviderBase apiProviderBase = ApiProviderBase(
-        baseUrl: HttpApiConstants.devBaseUrl,
-      );
-      final ApiProvider apiProvider = ApiProvider(
-        apiProviderBase: apiProviderBase,
-      );
+
 
       var hasCachedAccountInformation = await oauth.hasCachedAccountInformation;
       if (hasCachedAccountInformation) {
         var accessToken = await oauth.getAccessToken();
         if (accessToken != null && accessToken != '') {
           (UserInfo, String?) userInfo =
-              await apiProvider.getUserInfo(accessToken);
+              await ApiProvider().getUserInfo(accessToken);
 
           if (userInfo.$2 != null) {
             await SecureStorageProvider().setJwtToken(userInfo.$2 ?? '');

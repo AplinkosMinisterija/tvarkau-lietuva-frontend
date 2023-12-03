@@ -1,3 +1,4 @@
+import 'package:api_client/api_client.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +24,7 @@ class AddingScreenMobile extends StatefulWidget {
 
   final double width;
   final double height;
-  final List<ReportModel> reports;
+  final List<PublicReportDto> reports;
   final Function(String, String, double, double, List<http.MultipartFile>)
       onAddTap;
   final VoidCallback onDataSecurityTap;
@@ -96,8 +97,8 @@ class _AddingScreenMobileState extends State<AddingScreenMobile> {
             element.name + index.toString(),
           ),
           position: LatLng(
-            element.reportLat,
-            element.reportLong,
+            element.latitude.toDouble(),
+            element.longitude.toDouble(),
           ),
         ),
       );

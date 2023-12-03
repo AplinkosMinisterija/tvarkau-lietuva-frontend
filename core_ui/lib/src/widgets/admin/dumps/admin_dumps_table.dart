@@ -1,3 +1,4 @@
+import 'package:api_client/api_client.dart';
 import 'package:flutter/material.dart';
 import 'package:domain/domain.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -15,7 +16,7 @@ class AdminDumpsTable extends StatefulWidget {
   });
 
   final double width;
-  final List<ReportModel> dumps;
+  final List<FullDumpDto> dumps;
   final Function(ReportModel) onUpdate;
 
   @override
@@ -23,7 +24,7 @@ class AdminDumpsTable extends StatefulWidget {
 }
 
 class _AdminDumpsTableState extends State<AdminDumpsTable> {
-  List<ReportModel> dumps = <ReportModel>[];
+  List<FullDumpDto> dumps = <FullDumpDto>[];
   late DumpDataSourceAdmin dumpDataSource;
 
   @override
@@ -51,8 +52,8 @@ class _AdminDumpsTableState extends State<AdminDumpsTable> {
                   .effectiveRows[details.rowColumnIndex.rowIndex - 1]
                   .getCells()[0]
                   .value;
-              ReportModel selectedReport =
-                  dumps.firstWhere((element) => element.id == onTapRef);
+              FullDumpDto selectedReport =
+                  dumps.firstWhere((element) => element.refId == onTapRef);
               _addEditDialogBuilder(context, widget.width, selectedReport);
             }
           }
@@ -154,7 +155,7 @@ class _AdminDumpsTableState extends State<AdminDumpsTable> {
   }
 
   Future<void> _addEditDialogBuilder(
-      BuildContext context, double width, ReportModel dump) {
+      BuildContext context, double width, FullDumpDto dump) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -191,23 +192,23 @@ class _AdminDumpsTableState extends State<AdminDumpsTable> {
 }
 
 class DumpDataSourceAdmin extends DataGridSource {
-  DumpDataSourceAdmin({required List<ReportModel> dumpData}) {
+  DumpDataSourceAdmin({required List<FullDumpDto> dumpData}) {
     _dumpData = dumpData
         .map<DataGridRow>((e) => DataGridRow(cells: [
-              DataGridCell<String>(columnName: 'id', value: e.id),
+              DataGridCell<String>(columnName: 'id', value: e.refId),
               DataGridCell<String>(columnName: 'name', value: e.name),
               DataGridCell<String>(
                   columnName: 'info', value: e.moreInformation),
               DataGridCell<String>(
                   columnName: 'lat',
-                  value: e.reportLat.toString().length > 6
-                      ? e.reportLat.toString().substring(0, 7)
-                      : e.reportLat.toString()),
+                  value: e.latitude.toString().length > 6
+                      ? e.latitude.toString().substring(0, 7)
+                      : e.latitude.toString()),
               DataGridCell<String>(
                   columnName: 'long',
-                  value: e.reportLong.toString().length > 6
-                      ? e.reportLong.toString().substring(0, 7)
-                      : e.reportLong.toString()),
+                  value: e.longitude.toString().length > 6
+                      ? e.longitude.toString().substring(0, 7)
+                      : e.longitude.toString()),
               DataGridCell<String>(columnName: 'phone', value: e.phone ?? ''),
               DataGridCell<String>(
                   columnName: 'visibility',

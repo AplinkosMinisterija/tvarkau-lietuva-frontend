@@ -1,3 +1,4 @@
+import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
@@ -24,7 +25,7 @@ class AddingScreenWeb extends StatefulWidget {
 
   final double width;
   final double height;
-  final List<ReportModel> reports;
+  final List<PublicReportDto> reports;
   final Function(String, String, double, double, List<http.MultipartFile>)
       onAddTap;
   final VoidCallback onDataSecurityTap;
@@ -113,8 +114,8 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
             element.name + index.toString(),
           ),
           position: LatLng(
-            element.reportLat,
-            element.reportLong,
+            element.latitude.toDouble(),
+            element.longitude.toDouble(),
           ),
         ),
       );

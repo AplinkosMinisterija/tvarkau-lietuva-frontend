@@ -1,3 +1,4 @@
+import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:data/data.dart';
@@ -20,15 +21,10 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
     Emitter<AddingState> emit,
   ) async {
     try {
-      final ApiProviderBase apiProviderBase = ApiProviderBase(
-        baseUrl: HttpApiConstants.devBaseUrl,
-      );
-      final ApiProvider apiProvider = ApiProvider(
-        apiProviderBase: apiProviderBase,
-      );
 
-      final List<ReportModel> trashReports =
-          await apiProvider.getAllVisibleTrashReports();
+
+      final List<PublicReportDto> trashReports =
+          await ApiProvider().getAllVisibleTrashReports();
 
       emit(
         ContentState(
@@ -54,7 +50,6 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
         baseUrl: HttpApiConstants.devBaseUrl,
       );
       final ApiProvider apiProvider = ApiProvider(
-        apiProviderBase: apiProviderBase,
       );
 
       await apiProvider.sendNewTrashReport(

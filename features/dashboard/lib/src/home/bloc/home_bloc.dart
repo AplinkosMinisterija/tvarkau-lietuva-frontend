@@ -19,17 +19,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     Emitter<HomeState> emit,
   ) async {
     try {
-      final ApiProviderBase apiProviderBase = ApiProviderBase(
-        baseUrl: HttpApiConstants.devBaseUrl,
-      );
-      final ApiProvider apiProvider = ApiProvider(
-        apiProviderBase: apiProviderBase,
-      );
 
-      final List<ReportModel> trashReports =
-          await apiProvider.getAllVisibleTrashReports();
+      final List<PublicReportDto> trashReports =
+          await ApiProvider().getAllVisibleTrashReports();
       final List<DumpDto> dumpReports =
-          await apiProvider.getAllVisibleDumpReports();
+          await ApiProvider().getAllVisibleDumpReports();
       emit(
         ContentState(
           trashReports: trashReports,
@@ -37,6 +31,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         ),
       );
     } catch (e) {
+      print(e);
       emit(
         ErrorState(errorMessage: 'Netikėta klaida'),
       );

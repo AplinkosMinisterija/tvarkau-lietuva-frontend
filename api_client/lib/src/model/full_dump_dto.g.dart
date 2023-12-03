@@ -18,6 +18,8 @@ class _$FullDumpDto extends FullDumpDto {
   @override
   final num latitude;
   @override
+  final bool isVisible;
+  @override
   final String address;
   @override
   final String phone;
@@ -35,6 +37,7 @@ class _$FullDumpDto extends FullDumpDto {
       required this.type,
       required this.longitude,
       required this.latitude,
+      required this.isVisible,
       required this.address,
       required this.phone,
       required this.workingHours,
@@ -46,6 +49,8 @@ class _$FullDumpDto extends FullDumpDto {
     BuiltValueNullFieldError.checkNotNull(
         longitude, r'FullDumpDto', 'longitude');
     BuiltValueNullFieldError.checkNotNull(latitude, r'FullDumpDto', 'latitude');
+    BuiltValueNullFieldError.checkNotNull(
+        isVisible, r'FullDumpDto', 'isVisible');
     BuiltValueNullFieldError.checkNotNull(address, r'FullDumpDto', 'address');
     BuiltValueNullFieldError.checkNotNull(phone, r'FullDumpDto', 'phone');
     BuiltValueNullFieldError.checkNotNull(
@@ -70,6 +75,7 @@ class _$FullDumpDto extends FullDumpDto {
         type == other.type &&
         longitude == other.longitude &&
         latitude == other.latitude &&
+        isVisible == other.isVisible &&
         address == other.address &&
         phone == other.phone &&
         workingHours == other.workingHours &&
@@ -84,6 +90,7 @@ class _$FullDumpDto extends FullDumpDto {
     _$hash = $jc(_$hash, type.hashCode);
     _$hash = $jc(_$hash, longitude.hashCode);
     _$hash = $jc(_$hash, latitude.hashCode);
+    _$hash = $jc(_$hash, isVisible.hashCode);
     _$hash = $jc(_$hash, address.hashCode);
     _$hash = $jc(_$hash, phone.hashCode);
     _$hash = $jc(_$hash, workingHours.hashCode);
@@ -100,6 +107,7 @@ class _$FullDumpDto extends FullDumpDto {
           ..add('type', type)
           ..add('longitude', longitude)
           ..add('latitude', latitude)
+          ..add('isVisible', isVisible)
           ..add('address', address)
           ..add('phone', phone)
           ..add('workingHours', workingHours)
@@ -131,6 +139,10 @@ class FullDumpDtoBuilder implements Builder<FullDumpDto, FullDumpDtoBuilder> {
   num? get latitude => _$this._latitude;
   set latitude(num? latitude) => _$this._latitude = latitude;
 
+  bool? _isVisible;
+  bool? get isVisible => _$this._isVisible;
+  set isVisible(bool? isVisible) => _$this._isVisible = isVisible;
+
   String? _address;
   String? get address => _$this._address;
   set address(String? address) => _$this._address = address;
@@ -160,6 +172,7 @@ class FullDumpDtoBuilder implements Builder<FullDumpDto, FullDumpDtoBuilder> {
       _type = $v.type;
       _longitude = $v.longitude;
       _latitude = $v.latitude;
+      _isVisible = $v.isVisible;
       _address = $v.address;
       _phone = $v.phone;
       _workingHours = $v.workingHours;
@@ -196,6 +209,8 @@ class FullDumpDtoBuilder implements Builder<FullDumpDto, FullDumpDtoBuilder> {
                 longitude, r'FullDumpDto', 'longitude'),
             latitude: BuiltValueNullFieldError.checkNotNull(
                 latitude, r'FullDumpDto', 'latitude'),
+            isVisible: BuiltValueNullFieldError.checkNotNull(
+                isVisible, r'FullDumpDto', 'isVisible'),
             address: BuiltValueNullFieldError.checkNotNull(
                 address, r'FullDumpDto', 'address'),
             phone: BuiltValueNullFieldError.checkNotNull(

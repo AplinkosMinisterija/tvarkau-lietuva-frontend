@@ -18,6 +18,8 @@ dependencies:
     path: ../../domain
   data:
     path: ../../data
+  api_client:
+    path: ../../api_client
 
   flutter_bloc: ^7.3.3
   loading_animation_widget: ^1.2.0+4

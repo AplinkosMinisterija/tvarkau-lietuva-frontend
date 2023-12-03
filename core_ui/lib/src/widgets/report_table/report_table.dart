@@ -1,3 +1,4 @@
+import 'package:api_client/api_client.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:domain/domain.dart';
@@ -12,7 +13,7 @@ class ReportTable extends StatefulWidget {
   });
 
   final double width;
-  final List<ReportModel> reports;
+  final List<PublicReportDto> reports;
   final Function(String) onInformationTap;
 
   @override
@@ -20,7 +21,7 @@ class ReportTable extends StatefulWidget {
 }
 
 class _ReportTableState extends State<ReportTable> {
-  List<ReportModel> reports = <ReportModel>[];
+  List<PublicReportDto> reports = <PublicReportDto>[];
   late ReportDataSource reportDataSource;
 
   @override
@@ -131,16 +132,16 @@ String getFormattedDate(String unformattedDate) {
 }
 
 class ReportDataSource extends DataGridSource {
-  ReportDataSource({required List<ReportModel> reportData}) {
+  ReportDataSource({required List<PublicReportDto> reportData}) {
     _reportData = reportData
         .map<DataGridRow>((e) => DataGridRow(cells: [
               DataGridCell<String>(columnName: 'ref', value: e.refId),
               DataGridCell<String>(
                   columnName: 'id',
                   value:
-                      'TLP-A${'0' * (8 - e.refId!.length)}${e.refId!.toUpperCase()}'),
+                      'TLP-A${'0' * (8 - e.refId.length)}${e.refId.toUpperCase()}'),
               DataGridCell<String>(
-                  columnName: 'date', value: getFormattedDate(e.reportDate)),
+                  columnName: 'date', value: getFormattedDate(e.reportDate.toString())),
               DataGridCell<String>(columnName: 'name', value: e.name),
               DataGridCell<String>(columnName: 'comment', value: e.comment),
               DataGridCell<String>(columnName: 'status', value: e.status),
