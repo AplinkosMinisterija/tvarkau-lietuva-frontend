@@ -41,7 +41,7 @@ class RightSideFooterMobile extends StatelessWidget {
                 child: FittedBox(
                   fit: BoxFit.fitWidth,
                   child: Text(
-                    'Tai bandomoji sistemos versija, skirta viešinti visus Aplinkos\napsaugos departamentui žinomas ir potencialiai nelegalias\natliekų susidarymo vietas. Sistemoje suteikiama galimybė\nvisuomenei pranešti apie dar neužfiksuotas vietas, bei sekti\njų nagrinėjimo situaciją.',
+                    'Tai bandomoji sistemos versija, skirta viešinti visas Aplinkos\napsaugos departamentui žinomas ir potencialiai nelegalias\natliekų susidarymo vietas. Sistemoje suteikiama galimybė\nvisuomenei pranešti apie dar neužfiksuotas vietas bei sekti\njų nagrinėjimo situaciją.',
                     style: GoogleFonts.raleway(
                       fontWeight: FontWeight.w500,
                       color: Colors.black,

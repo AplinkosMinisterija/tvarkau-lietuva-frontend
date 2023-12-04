@@ -30,7 +30,7 @@ class FooterDescriptionMobile extends StatelessWidget {
             child: FittedBox(
               fit: BoxFit.fitWidth,
               child: Text(
-                'Tai bandomoji sistemos versija, skirta viešinti visus\nAplinkos apsaugos departamentui žinomas ir potencialiai\nnelegalias atliekų susidarymo vietas. Sistemoje suteikiama\ngalimybė visuomenei pranešti apie dar neužfiksuotas vietas,\nbei sekti jų nagrinėjimo situaciją.',
+                'Tai bandomoji sistemos versija, skirta viešinti visas\nAplinkos apsaugos departamentui žinomas ir potencialiai\nnelegalias atliekų susidarymo vietas. Sistemoje suteikiama\ngalimybė visuomenei pranešti apie dar neužfiksuotas vietas\nbei sekti jų nagrinėjimo situaciją.',
                 textAlign: TextAlign.left,
                 style: GoogleFonts.roboto(
                   fontSize: width * 0.03333,
