@@ -2,12 +2,23 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../widgets/base_admin_screen.dart';
+import '../widgets/header.dart';
+import '../widgets/updated_report_type_switch.dart';
+import '../widgets/updated_admin_view_type_switch.dart';
+
+import '../common/extensions.dart';
+import '../common/custom_styles.dart';
+import '../common/custom_colors.dart';
+
+import '../widgets/custom_switch.dart';
 import '../widgets/custom_button.dart';
 
 class UpdatedAdminScreen extends StatelessWidget {
   const UpdatedAdminScreen({
     Key? key,
   }) : super(key: key);
+  final name = 'Vardas Pavardė';
+  final email = 'vardas.pavarde@gmail.com';
 
   List<ReportModel> get mockReportModels => [
         ReportModel(
@@ -59,20 +70,70 @@ class UpdatedAdminScreen extends StatelessWidget {
         child: Padding(
       padding: const EdgeInsets.symmetric(),
       child: Center(
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 500,
-            ),
-            CustomButton(
-              text: 'Eiti i report',
-              onPressed: () {
-                context.goNamed('dump',
-                    extra: mockReportModels.first,
-                    pathParameters: {'id': mockReportModels.first.id});
-              },
-            ),
-          ],
+        child: Container(
+          constraints: const BoxConstraints(
+            maxWidth: 1300,
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Header(
+                email: email,
+                name: name,
+                onLogout: () {
+                  //TODO: Add logout logic
+                },
+              ),
+              48.heightBox,
+              Text("Administracinė konsolė", style: CustomStyles.h2),
+              40.heightBox,
+              Row(
+                children: [
+                  UpdatedReportTypeSwitch(
+                    isShowDumps: true,
+                    onReportTypeChange: (value) {
+                      //TODO: Add logic
+                    },
+                  ),
+                  20.widthBox,
+                  CustomSwitch(
+                    value: true,
+                    width: 64,
+                    height: 32,
+                    activeThumbColor: CustomColors.orange,
+                    activeTrackColor: CustomColors.white,
+                    inactiveTrackColor: CustomColors.white.withOpacity(.1),
+                    inactiveThumbColor: CustomColors.primary.withOpacity(.4),
+                    onChanged: (value) {
+                      //TODO Add logic
+                    },
+                  ),
+                  12.widthBox,
+                  Text(
+                    "Rodyti ištrintus pranešimus",
+                    style:
+                        CustomStyles.body2.copyWith(color: CustomColors.white),
+                  ),
+                  const Spacer(),
+                  UpdatedAdminViewTypeSwitch(
+                    isMapView: true,
+                    onIsMapViewChange: (value) {
+                      //TODO: Add logic
+                    },
+                  ),
+                ],
+              ),
+              // CustomButton(
+              //   text: 'Eiti i report',
+              //   onPressed: () {
+              //     context.goNamed('dump',
+              //         extra: mockReportModels.first,
+              //         pathParameters: {'id': mockReportModels.first.id});
+              //   },
+              // ),
+            ],
+          ),
         ),
       ),
     ));
