@@ -307,6 +307,7 @@ class _UpdatedAdminScreenState extends State<UpdatedAdminScreen> {
                       ),
                     ],
                   ),
+                  12.heightBox,
                   if (isMapView)
                     _BuildMap(
                       height: height.toDouble(),
@@ -317,12 +318,8 @@ class _UpdatedAdminScreenState extends State<UpdatedAdminScreen> {
                     )
                   else
                     AdminTable(
+                      isShowDumps: isShowDumps,
                       reports: isShowDumps ? mockDumpModels : mockReportModels,
-                      // onReportClick: (reportModel) {
-                      //   context.goNamed('dump',
-                      //       extra: reportModel,
-                      //       pathParameters: {'id': reportModel.id});
-                      // },
                     ),
                   // CustomButton(
                   //   text: 'Eiti i report',

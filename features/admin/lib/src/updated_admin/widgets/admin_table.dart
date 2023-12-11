@@ -1,5 +1,6 @@
 import 'package:domain/report/report_library.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
@@ -8,77 +9,106 @@ import '../common/custom_styles.dart';
 import './custom_button.dart';
 
 class AdminTable extends StatelessWidget {
-  const AdminTable({super.key, required this.reports});
+  const AdminTable({
+    super.key,
+    required this.reports,
+    required this.isShowDumps,
+  });
 
   final List<ReportModel> reports;
+
+  final bool isShowDumps;
 
   @override
   Widget build(BuildContext context) {
     return SfDataGridTheme(
-      data: SfDataGridThemeData(headerColor: Colors.white),
-      child: SfDataGrid(
-        source: ReportDataSourceAdmin(reportData: reports),
-        columnWidthMode: ColumnWidthMode.fill,
-        allowSorting: true,
-        allowFiltering: true,
-        columns: [
-          GridColumn(
+      data: SfDataGridThemeData(
+        headerColor: Colors.white,
+        gridLineColor: CustomColors.greyMedium,
+        gridLineStrokeWidth: 1,
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: SfDataGrid(
+          source: ReportDataSourceAdmin(
+            reportData: reports,
+            context: context,
+            isShowDumps: isShowDumps,
+          ),
+          columnWidthMode: ColumnWidthMode.fill,
+          allowSorting: true,
+          allowFiltering: true,
+          rowHeight: 64,
+          columns: [
+            GridColumn(
               columnName: 'ref',
               allowSorting: false,
               allowFiltering: false,
               visible: false,
-              label: Container()),
-          GridColumn(
-            columnName: 'id',
-            allowSorting: false,
-            allowFiltering: false,
-            label: const _BuildHeaderLabel('Pranešimo ID'),
-          ),
-          GridColumn(
-            columnName: 'date',
-            allowSorting: false,
-            allowFiltering: false,
-            label: const _BuildHeaderLabel('Data ir laikas'),
-          ),
-          GridColumn(
-            columnName: 'lat',
-            allowSorting: true,
-            allowFiltering: false,
-            filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
-            label: const _BuildHeaderLabel('Platuma'),
-          ),
-          GridColumn(
-            columnName: 'long',
-            allowSorting: false,
-            allowFiltering: true,
-            filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
-            label: const _BuildHeaderLabel('Ilguma'),
-          ),
-          GridColumn(
-            columnName: 'name',
-            allowSorting: false,
-            allowFiltering: false,
-            label: const _BuildHeaderLabel('Turinys'),
-          ),
-          GridColumn(
-            columnName: 'status',
-            allowSorting: false,
-            allowFiltering: false,
-            label: const _BuildHeaderLabel('Statusas'),
-          ),
-          GridColumn(
-            columnName: 'visibility',
-            allowSorting: false,
-            allowFiltering: false,
-            label: const _BuildHeaderLabel('Matomumas'),
-          ),
-          GridColumn(
-            columnName: 'edit',
-            allowSorting: false,
-            allowFiltering: false,
-            label: const _BuildHeaderLabel('Veiksmai'),
-          ),
-        ],
+              label: Container(),
+            ),
+            GridColumn(
+              columnName: 'id',
+              allowSorting: false,
+              allowFiltering: false,
+              width: 160,
+              label: const _BuildHeaderLabel('Pranešimo ID'),
+            ),
+            GridColumn(
+              columnName: 'date',
+              allowSorting: false,
+              allowFiltering: false,
+              width: 160,
+              label: const _BuildHeaderLabel('Data ir laikas'),
+            ),
+            GridColumn(
+              columnName: 'lat',
+              allowSorting: true,
+              allowFiltering: false,
+              width: 110,
+              filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
+              label: const _BuildHeaderLabel('Platuma'),
+            ),
+            GridColumn(
+              columnName: 'long',
+              allowSorting: false,
+              allowFiltering: true,
+              width: 110,
+              filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
+              label: const _BuildHeaderLabel('Ilguma'),
+            ),
+            GridColumn(
+              columnName: 'name',
+              allowSorting: false,
+              allowFiltering: false,
+              columnWidthMode: ColumnWidthMode.fill,
+              label: const _BuildHeaderLabel('Turinys'),
+            ),
+            GridColumn(
+              columnName: 'status',
+              allowSorting: false,
+              allowFiltering: false,
+              width: 140,
+              label: const _BuildHeaderLabel('Statusas'),
+            ),
+            GridColumn(
+              columnName: 'visibility',
+              allowSorting: false,
+              allowFiltering: false,
+              width: 140,
+              label: const _BuildHeaderLabel('Matomumas'),
+            ),
+            GridColumn(
+              columnName: 'edit',
+              allowSorting: false,
+              allowFiltering: false,
+              width: 160,
+              label: const _BuildHeaderLabel('Veiksmai'),
+            ),
+          ],
+          gridLinesVisibility: GridLinesVisibility.horizontal,
+          headerGridLinesVisibility: GridLinesVisibility.none,
+        ),
       ),
     );
   }
@@ -89,12 +119,16 @@ String getFormattedDateAdmin(String unformattedDate) {
       DateTime.parse(unformattedDate).add(const Duration(hours: 3));
   String day = formattedDate.toString().substring(0, 10);
   String hour = formattedDate.toString().substring(11, 16);
-  return '$day\n$hour';
+  return '$day $hour';
 }
 
 class ReportDataSourceAdmin extends DataGridSource {
-  ReportDataSourceAdmin({required List<ReportModel> reportData}) {
-    _reportData = reportData
+  ReportDataSourceAdmin({
+    required this.reportData,
+    required this.context,
+    required this.isShowDumps,
+  }) {
+    _reportGridCells = reportData
         .map<DataGridRow>((e) => DataGridRow(cells: [
               DataGridCell<String>(columnName: 'ref', value: e.refId),
               DataGridCell<String>(
@@ -124,10 +158,15 @@ class ReportDataSourceAdmin extends DataGridSource {
         .toList();
   }
 
-  List<DataGridRow> _reportData = [];
+  List<DataGridRow> _reportGridCells = [];
+
+  final List<ReportModel> reportData;
+
+  final BuildContext context;
+  final bool isShowDumps;
 
   @override
-  List<DataGridRow> get rows => _reportData;
+  List<DataGridRow> get rows => _reportGridCells;
 
   @override
   DataGridRowAdapter buildRow(DataGridRow row) {
@@ -144,6 +183,7 @@ class ReportDataSourceAdmin extends DataGridSource {
         cells: row.getCells().map<Widget>((e) {
       return Container(
         color: getRowBackgroundColor(),
+        padding: const EdgeInsets.only(left: 24),
         alignment: Alignment.centerLeft,
         child: e.columnName == 'status'
             ? _BuildStatus(status: e.value)
@@ -158,7 +198,19 @@ class ReportDataSourceAdmin extends DataGridSource {
                         textStyle: CustomStyles.button2.copyWith(
                           color: CustomColors.primary,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          final int index = effectiveRows.indexOf(row);
+                          final ReportModel report = reportData[index];
+                          if (isShowDumps) {
+                            context.goNamed('dump',
+                                extra: report,
+                                pathParameters: {'id': report.id});
+                          } else {
+                            context.goNamed('report_admin',
+                                extra: report,
+                                pathParameters: {'id': report.id});
+                          }
+                        },
                         icon: const Icon(
                           Icons.edit,
                           size: 14,
@@ -169,6 +221,7 @@ class ReportDataSourceAdmin extends DataGridSource {
                     : SelectionArea(
                         child: Text(e.value.toString(),
                             overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
                             maxLines: 2,
                             style: CustomStyles.button1.copyWith(
                               color: CustomColors.black,
@@ -227,7 +280,7 @@ TextStyle getStatusBoxTextStyleAdmin(Color textColor) {
 }
 
 class _BuildStatus extends StatelessWidget {
-  const _BuildStatus({super.key, required this.status});
+  const _BuildStatus({required this.status});
 
   final String status;
 
@@ -256,7 +309,7 @@ class _BuildStatus extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: color.withOpacity(.2),
+        color: color.withOpacity(.1),
         borderRadius: BorderRadius.circular(4),
         border: Border.all(
           width: 1,
@@ -274,7 +327,7 @@ class _BuildStatus extends StatelessWidget {
 }
 
 class _BuildHeaderLabel extends StatelessWidget {
-  const _BuildHeaderLabel(this.label, {super.key});
+  const _BuildHeaderLabel(this.label);
 
   final String label;
 
@@ -282,6 +335,7 @@ class _BuildHeaderLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.centerLeft,
+      padding: const EdgeInsets.only(left: 24),
       child: Text(
         label,
         style: CustomStyles.button2.copyWith(
