@@ -1,17 +1,15 @@
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import '../widgets/base_admin_screen.dart';
-import '../widgets/header.dart';
-import '../widgets/updated_report_type_switch.dart';
-import '../widgets/updated_admin_view_type_switch.dart';
 
-import '../common/extensions.dart';
-import '../common/custom_styles.dart';
 import '../common/custom_colors.dart';
-
+import '../common/custom_styles.dart';
+import '../common/extensions.dart';
+import '../widgets/admin_table.dart';
+import '../widgets/base_admin_screen.dart';
 import '../widgets/custom_switch.dart';
-import '../widgets/custom_button.dart';
+import '../widgets/header.dart';
+import '../widgets/updated_admin_view_type_switch.dart';
+import '../widgets/updated_report_type_switch.dart';
 
 class UpdatedAdminScreen extends StatelessWidget {
   const UpdatedAdminScreen({
@@ -33,7 +31,7 @@ class UpdatedAdminScreen extends StatelessWidget {
           email: "pavyzdys@el.pastas.lt",
           address: "Vilnius, Lietuva",
           refId: "REF123",
-          status: "Aptarnaujama",
+          status: "gautas",
           phone: "+37061234567",
           comment:
               "Šiandien, apsilankius miške, pastebėjau išmestus šiferio lakštus. Jų gana nemažas kiekis, maždaug apie 100 lakštų. Jie išmėtyti po gana didelę teritoriją. Kartu su šiferio lakštais yra išmesti ir seni baldai bei buitinė technika.",
@@ -123,6 +121,14 @@ class UpdatedAdminScreen extends StatelessWidget {
                     },
                   ),
                 ],
+              ),
+              AdminTable(
+                reports: mockReportModels,
+                // onReportClick: (reportModel) {
+                //   context.goNamed('dump',
+                //       extra: reportModel,
+                //       pathParameters: {'id': reportModel.id});
+                // },
               ),
               // CustomButton(
               //   text: 'Eiti i report',

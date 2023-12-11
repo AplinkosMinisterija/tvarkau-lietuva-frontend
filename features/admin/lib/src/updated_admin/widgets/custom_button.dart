@@ -16,6 +16,7 @@ class CustomButton extends StatelessWidget {
     this.borderRadius = const BorderRadius.all(Radius.circular(4)),
     this.textStyle,
     this.icon,
+    this.padding,
   });
 
   final ButtonType buttonType;
@@ -27,6 +28,7 @@ class CustomButton extends StatelessWidget {
   final BorderRadius borderRadius;
   final TextStyle? textStyle;
   final Widget? icon;
+  final EdgeInsets? padding;
 
   BoxDecoration get _boxDecoration {
     switch (buttonType) {
@@ -60,14 +62,15 @@ class CustomButton extends StatelessWidget {
                 : color.withOpacity(0.05),
             onTap: onPressed,
             child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+              padding: padding ??
+                  const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
               child: Center(
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     if (icon != null) ...[
                       icon!,
-                      8.widthBox,
+                      4.widthBox,
                     ],
                     Text(text,
                         style: textStyle ??

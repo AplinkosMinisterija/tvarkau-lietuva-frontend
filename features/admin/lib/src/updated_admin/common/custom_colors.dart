@@ -10,4 +10,6 @@ class CustomColors {
   static const Color redLight = Color(0xFFFDE6E6);
   static const Color white = Color(0xFFffffff);
   static const Color black = Color(0xFF000000);
+  static const Color blue = Color(0xFF097EDF);
+  static const Color green = Color(0xFF00AE06);
 }
