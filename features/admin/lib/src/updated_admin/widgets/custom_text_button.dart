@@ -39,7 +39,10 @@ class CustomTextButton extends StatelessWidget {
             ],
             Text(
               text,
-              style: textStyle ?? CustomStyles.button1,
+              style: textStyle ??
+                  CustomStyles.body1.copyWith(
+                    color: CustomColors.white,
+                  ),
             ),
           ],
         ),

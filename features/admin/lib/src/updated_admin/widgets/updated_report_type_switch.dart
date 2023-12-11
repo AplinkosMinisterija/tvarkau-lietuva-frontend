@@ -61,7 +61,7 @@ class _BuildButton extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: isActive ? CustomColors.orange : CustomColors.white,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(4),
       ),
       child: Material(
         type: MaterialType.transparency,
