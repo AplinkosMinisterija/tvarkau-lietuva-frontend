@@ -15,17 +15,17 @@ import '../widgets/dump_tabs.dart';
 import '../widgets/header.dart';
 import '../widgets/image_preview.dart';
 
-class UpdatedDumpScreen extends StatefulWidget {
-  const UpdatedDumpScreen({
+class UpdatedReportScreen extends StatefulWidget {
+  const UpdatedReportScreen({
     // required this.dump,
     Key? key,
   }) : super(key: key);
 
   @override
-  State<UpdatedDumpScreen> createState() => _UpdatedDumpScreenState();
+  State<UpdatedReportScreen> createState() => _UpdatedReportScreenState();
 }
 
-class _UpdatedDumpScreenState extends State<UpdatedDumpScreen> {
+class _UpdatedReportScreenState extends State<UpdatedReportScreen> {
   //* Debuginant nepareina extra(mock model) per router ant hot reload
   List<ReportModel> get mockReportModels => [
         ReportModel(
@@ -103,9 +103,9 @@ class _UpdatedDumpScreenState extends State<UpdatedDumpScreen> {
     return Scaffold(
       body: LayoutBuilder(
         builder: (context, constraints) {
-          const minHeight = 300;
-          final height = constraints.maxHeight * .6 > minHeight
-              ? constraints.maxHeight * .6
+          const minHeight = 250;
+          final height = constraints.maxHeight * .25 > minHeight
+              ? constraints.maxHeight * .25
               : minHeight;
           return BaseAdminScreen(
             child: Center(
@@ -138,7 +138,7 @@ class _UpdatedDumpScreenState extends State<UpdatedDumpScreen> {
                     17.heightBox,
                     Row(
                       children: [
-                        Text(dump.name, style: CustomStyles.h2),
+                        Text(dump.id, style: CustomStyles.h2),
                         16.widthBox,
                         CustomSwitch(
                           value: dump.isVisible ?? false,
@@ -148,7 +148,7 @@ class _UpdatedDumpScreenState extends State<UpdatedDumpScreen> {
                         ),
                         8.widthBox,
                         Text(
-                          '${(dump.isVisible ?? false) ? '' : 'Ne'}${(dump.isVisible ?? false) ? "R" : "r"}odomas žemėlapyje',
+                          'Pranešimas ${(dump.isVisible ?? false) ? '' : 'ne'}rodomas',
                           style: CustomStyles.body2.copyWith(
                             color: CustomColors.white,
                           ),
@@ -158,8 +158,14 @@ class _UpdatedDumpScreenState extends State<UpdatedDumpScreen> {
                     48.heightBox,
                     Builder(builder: (context) {
                       final width = MediaQuery.of(context).size.width;
-                      if (width < 1000) {
+                      if (width < 700) {
                         return _BuildMobileLayout(
+                          dump: dump,
+                          markers: markers,
+                          height: height.toDouble(),
+                        );
+                      } else if (width < 1000) {
+                        return _BuildTabletLayout(
                           dump: dump,
                           markers: markers,
                           height: height.toDouble(),
@@ -179,6 +185,48 @@ class _UpdatedDumpScreenState extends State<UpdatedDumpScreen> {
           );
         },
       ),
+    );
+  }
+}
+
+class _BuildImages extends StatelessWidget {
+  const _BuildImages({
+    required this.imageUrls,
+  });
+
+  final List<String> imageUrls;
+
+  @override
+  Widget build(BuildContext context) {
+    return Wrap(
+      spacing: 16,
+      runSpacing: 16,
+      alignment: WrapAlignment.start,
+      children: [
+        ...imageUrls.map((e) {
+          return GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                PageRouteBuilder(
+                  opaque: false,
+                  pageBuilder: (_, __, ___) => ImagePreview(imageUrl: e),
+                ),
+              );
+            },
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: SizedBox(
+                width: 100,
+                height: 100,
+                child: Image.network(
+                  e,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          );
+        })
+      ],
     );
   }
 }
@@ -226,6 +274,69 @@ class _BuildMobileLayout extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            BaseDumpInfo(
+              dump: dump,
+            ),
+            16.heightBox,
+            _BuildMap(
+              height: height.toDouble(),
+              markers: markers,
+              initialTarget: LatLng(
+                dump.reportLat,
+                dump.reportLong,
+              ),
+            ),
+            32.heightBox,
+            if (dump.comment != null)
+              Text(
+                dump.comment!,
+                style: CustomStyles.body1,
+              ),
+            if (dump.imageUrls != null && dump.imageUrls!.isNotEmpty) ...[
+              15.heightBox,
+              _BuildImages(
+                imageUrls: dump.imageUrls!,
+              )
+            ],
+          ],
+        ),
+        40.heightBox,
+        DumpTabs(
+          dump: dump,
+        ),
+        24.heightBox,
+        CustomButton(
+            text: 'Trinti pranešimą',
+            buttonType: ButtonType.outlined,
+            color: CustomColors.red,
+            onPressed: () {
+              //TODO Add logic
+            }),
+      ],
+    );
+  }
+}
+
+class _BuildTabletLayout extends StatelessWidget {
+  const _BuildTabletLayout(
+      {required this.dump, required this.markers, required this.height});
+
+  final ReportModel dump;
+  final Set<Marker> markers;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            BaseDumpInfo(
+              dump: dump,
+            ),
+            16.heightBox,
             _BuildMap(
               height: height.toDouble(),
               markers: markers,
@@ -237,22 +348,50 @@ class _BuildMobileLayout extends StatelessWidget {
             32.heightBox,
           ],
         ),
-        24.heightBox,
-        const _BuildForm(
-          isMobile: true,
+        40.heightBox,
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (dump.comment != null)
+                    Text(
+                      dump.comment!,
+                      style: CustomStyles.body1,
+                    ),
+                  if (dump.imageUrls != null && dump.imageUrls!.isNotEmpty) ...[
+                    15.heightBox,
+                    _BuildImages(
+                      imageUrls: dump.imageUrls!,
+                    )
+                  ],
+                ],
+              ),
+            ),
+            8.widthBox,
+            DumpTabs(
+              dump: dump,
+            ),
+          ],
         ),
         24.heightBox,
+        CustomButton(
+            text: 'Trinti pranešimą',
+            buttonType: ButtonType.outlined,
+            color: CustomColors.red,
+            onPressed: () {
+              //TODO Add logic
+            }),
       ],
     );
   }
 }
 
 class _BuildDesktopLayout extends StatelessWidget {
-  const _BuildDesktopLayout({
-    required this.dump,
-    required this.markers,
-    required this.height,
-  });
+  const _BuildDesktopLayout(
+      {required this.dump, required this.markers, required this.height});
 
   final ReportModel dump;
   final Set<Marker> markers;
@@ -264,117 +403,47 @@ class _BuildDesktopLayout extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-          child: _BuildMap(
-            height: height.toDouble(),
-            markers: markers,
-            initialTarget: LatLng(
-              dump.reportLat,
-              dump.reportLong,
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              BaseDumpInfo(
+                dump: dump,
+              ),
+              16.heightBox,
+              _BuildMap(
+                height: height.toDouble(),
+                markers: markers,
+                initialTarget: LatLng(
+                  dump.reportLat,
+                  dump.reportLong,
+                ),
+              ),
+              32.heightBox,
+              if (dump.comment != null)
+                Text(
+                  dump.comment!,
+                  style: CustomStyles.body1,
+                ),
+              if (dump.imageUrls != null && dump.imageUrls!.isNotEmpty) ...[
+                15.heightBox,
+                _BuildImages(
+                  imageUrls: dump.imageUrls!,
+                )
+              ],
+              24.heightBox,
+              CustomButton(
+                  text: 'Trinti pranešimą',
+                  buttonType: ButtonType.outlined,
+                  color: CustomColors.red,
+                  onPressed: () {
+                    //TODO Add logic
+                  }),
+            ],
           ),
         ),
         40.widthBox,
-        const _BuildForm(
-          isMobile: false,
-        ),
-      ],
-    );
-  }
-}
-
-class _BuildForm extends StatelessWidget {
-  const _BuildForm({
-    required this.isMobile,
-  });
-
-  final bool isMobile;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(24),
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(8)),
-        color: CustomColors.grey,
-      ),
-      constraints: BoxConstraints(maxWidth: isMobile ? double.infinity : 480),
-      child: Column(
-        children: [
-          const _BuildInput(label: 'Aikštelės pavadinimas'),
-          16.heightBox,
-          Row(
-            // mainAxisSize: MainAxisSize.min,
-            children: [
-              const Expanded(child: _BuildInput(label: 'Ilguma')),
-              16.widthBox,
-              const Expanded(child: _BuildInput(label: 'Platuma')),
-            ],
-          ),
-          16.heightBox,
-          const _BuildInput(label: 'Aikštelės informacija'),
-          16.heightBox,
-          const _BuildInput(label: 'Telefono numeris'),
-          16.heightBox,
-          const _BuildInput(
-            label: 'Darbo valandos',
-            maxLines: 5,
-          ),
-          40.heightBox,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              CustomButton(
-                text: 'Atšaukti',
-                buttonType: ButtonType.outlined,
-                onPressed: () {},
-              ),
-              16.widthBox,
-              CustomButton(
-                text: 'Išsaugoti',
-                onPressed: () {},
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class _BuildInput extends StatelessWidget {
-  const _BuildInput({
-    required this.label,
-    this.maxLines = 1,
-  });
-
-  final String label;
-  final int maxLines;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: CustomStyles.body2,
-        ),
-        4.heightBox,
-        ClipRRect(
-          borderRadius: BorderRadius.circular(4),
-          child: TextField(
-            decoration: InputDecoration(
-                hoverColor: CustomColors.primary.withOpacity(0.05),
-                fillColor: CustomColors.white,
-                filled: true,
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 8,
-                  vertical: maxLines > 1 ? 16 : 0,
-                )),
-            style: CustomStyles.body2,
-            maxLines: maxLines,
-          ),
+        DumpTabs(
+          dump: dump,
         ),
       ],
     );

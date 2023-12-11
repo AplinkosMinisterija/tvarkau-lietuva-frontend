@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../common/custom_colors.dart';
+import '../common/extensions.dart';
 
 class UpdatedAdminViewTypeSwitch extends StatelessWidget {
   const UpdatedAdminViewTypeSwitch({
@@ -20,7 +21,6 @@ class UpdatedAdminViewTypeSwitch extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(4),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _BuildButton(
@@ -28,8 +28,9 @@ class UpdatedAdminViewTypeSwitch extends StatelessWidget {
             onPressed: () {
               onIsMapViewChange(false);
             },
-            icon: Icons.bar_chart,
+            icon: Icons.table_chart_outlined,
           ),
+          4.widthBox,
           _BuildButton(
             isActive: isMapView,
             onPressed: () {
@@ -55,14 +56,25 @@ class _BuildButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onPressed,
-      child: Container(
-        decoration: BoxDecoration(
-          color: isActive ? const Color(0xffff6a3d) : CustomColors.white,
-          borderRadius: BorderRadius.circular(10),
+    return Container(
+      decoration: BoxDecoration(
+        color: isActive ? const Color(0xffff6a3d) : CustomColors.white,
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(4),
+          onTap: onPressed,
+          child: Padding(
+            padding: const EdgeInsets.all(4),
+            child: Icon(
+              icon,
+              size: 24,
+              color: isActive ? CustomColors.white : CustomColors.black,
+            ),
+          ),
         ),
-        child: Icon(icon),
       ),
     );
   }

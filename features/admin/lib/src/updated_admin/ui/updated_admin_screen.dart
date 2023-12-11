@@ -11,11 +11,18 @@ import '../widgets/header.dart';
 import '../widgets/updated_admin_view_type_switch.dart';
 import '../widgets/updated_report_type_switch.dart';
 
-class UpdatedAdminScreen extends StatelessWidget {
+class UpdatedAdminScreen extends StatefulWidget {
   const UpdatedAdminScreen({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<UpdatedAdminScreen> createState() => _UpdatedAdminScreenState();
+}
+
+class _UpdatedAdminScreenState extends State<UpdatedAdminScreen> {
   final name = 'Vardas Pavardė';
+
   final email = 'vardas.pavarde@gmail.com';
 
   List<ReportModel> get mockReportModels => [
@@ -62,6 +69,10 @@ class UpdatedAdminScreen extends StatelessWidget {
         // ... Two more ReportModel instances
       ];
 
+  bool isShowDumps = true;
+  bool isMapView = false;
+  bool isShowDeleted = false;
+
   @override
   Widget build(BuildContext context) {
     return BaseAdminScreen(
@@ -89,14 +100,16 @@ class UpdatedAdminScreen extends StatelessWidget {
               Row(
                 children: [
                   UpdatedReportTypeSwitch(
-                    isShowDumps: true,
+                    isShowDumps: isShowDumps,
                     onReportTypeChange: (value) {
-                      //TODO: Add logic
+                      setState(() {
+                        isShowDumps = value;
+                      });
                     },
                   ),
                   20.widthBox,
                   CustomSwitch(
-                    value: true,
+                    value: isShowDeleted,
                     width: 64,
                     height: 32,
                     activeThumbColor: CustomColors.orange,
@@ -104,7 +117,9 @@ class UpdatedAdminScreen extends StatelessWidget {
                     inactiveTrackColor: CustomColors.white.withOpacity(.1),
                     inactiveThumbColor: CustomColors.primary.withOpacity(.4),
                     onChanged: (value) {
-                      //TODO Add logic
+                      setState(() {
+                        isShowDeleted = value;
+                      });
                     },
                   ),
                   12.widthBox,
@@ -115,9 +130,11 @@ class UpdatedAdminScreen extends StatelessWidget {
                   ),
                   const Spacer(),
                   UpdatedAdminViewTypeSwitch(
-                    isMapView: true,
+                    isMapView: isMapView,
                     onIsMapViewChange: (value) {
-                      //TODO: Add logic
+                      setState(() {
+                        isMapView = value;
+                      });
                     },
                   ),
                 ],

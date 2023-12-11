@@ -1,3 +1,7 @@
+import 'package:admin/admin_screen.dart';
+import 'package:admin/src/updated_admin/ui/updated_report_screen.dart';
+import 'package:admin/src/updated_admin/ui/updated_dump_screen.dart';
+
 import 'package:core_ui/core_ui.dart';
 import 'package:dashboard/dashboard_screen.dart';
 import 'package:dashboard/src/adding_report/ui/adding_screen.dart';
@@ -8,7 +12,6 @@ import 'package:admin/admin_screen.dart';
 import 'package:dashboard/src/report_information/ui/information_screen.dart';
 import 'package:dashboard/src/adding_report/ui/adding_screen.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:dashboard/dashboard.dart';
 
 @Openapi(
   additionalProperties: DioProperties(
@@ -45,6 +48,13 @@ class AadApp extends StatelessWidget {
           path: '/admin',
           builder: (context, state) => const AdminScreen(),
           routes: [
+            GoRoute(
+                name: 'report_admin',
+                path: 'report/:id',
+                builder: (context, state) {
+                  // final dump = state.extra as ReportModel;
+                  return const UpdatedReportScreen();
+                }),
             GoRoute(
                 name: 'dump',
                 path: 'dump/:id',
