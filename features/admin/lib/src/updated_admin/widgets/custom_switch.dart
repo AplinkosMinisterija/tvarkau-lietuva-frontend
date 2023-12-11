@@ -6,16 +6,29 @@ class CustomSwitch extends StatelessWidget {
     super.key,
     required this.value,
     required this.onChanged,
+    this.activeTrackColor = CustomColors.primaryLight,
+    this.inactiveTrackColor = CustomColors.redLight,
+    this.activeThumbColor = CustomColors.primary,
+    this.inactiveThumbColor = CustomColors.red,
+    this.width = 48,
+    this.height = 24,
   });
 
   final bool value;
   final void Function(bool)? onChanged;
 
+  final Color activeTrackColor;
+  final Color inactiveTrackColor;
+  final Color activeThumbColor;
+  final Color inactiveThumbColor;
+  final double width;
+  final double height;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 48,
-      height: 24,
+      width: width,
+      height: height,
       child: FittedBox(
         fit: BoxFit.fitWidth,
         child: Theme(
@@ -25,16 +38,16 @@ class CustomSwitch extends StatelessWidget {
             trackOutlineColor: MaterialStateProperty.all(Colors.transparent),
             trackColor: MaterialStateProperty.resolveWith((states) {
               if (states.contains(MaterialState.selected)) {
-                return CustomColors.primaryLight;
+                return activeTrackColor;
               } else {
-                return CustomColors.redLight;
+                return inactiveTrackColor;
               }
             }),
             thumbColor: MaterialStateProperty.resolveWith((states) {
               if (states.contains(MaterialState.selected)) {
-                return CustomColors.primary;
+                return activeThumbColor;
               } else {
-                return CustomColors.red;
+                return inactiveThumbColor;
               }
             }),
             value: value,
