@@ -7,17 +7,13 @@ import '../common/custom_colors.dart';
 import '../common/custom_styles.dart';
 import '../common/extensions.dart';
 import '../widgets/base_admin_screen.dart';
-import '../widgets/base_dump_info.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_switch.dart';
 import '../widgets/custom_text_button.dart';
-import '../widgets/dump_tabs.dart';
 import '../widgets/header.dart';
-import '../widgets/image_preview.dart';
 
 class UpdatedDumpScreen extends StatefulWidget {
   const UpdatedDumpScreen({
-    // required this.dump,
     Key? key,
   }) : super(key: key);
 
@@ -26,7 +22,6 @@ class UpdatedDumpScreen extends StatefulWidget {
 }
 
 class _UpdatedDumpScreenState extends State<UpdatedDumpScreen> {
-  //* Debuginant nepareina extra(mock model) per router ant hot reload
   List<ReportModel> get mockReportModels => [
         ReportModel(
           id: "#TL20230001",
@@ -303,7 +298,6 @@ class _BuildForm extends StatelessWidget {
           const _BuildInput(label: 'Aikštelės pavadinimas'),
           16.heightBox,
           Row(
-            // mainAxisSize: MainAxisSize.min,
             children: [
               const Expanded(child: _BuildInput(label: 'Ilguma')),
               16.widthBox,
