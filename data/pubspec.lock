@@ -32,6 +32,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.13.0"
+  api_client:
+    dependency: "direct main"
+    description:
+      path: "../api_client"
+      relative: true
+    source: path
+    version: "1.0.0"
   archive:
     dependency: transitive
     description:
@@ -858,14 +865,38 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
-  openid_client:
+  one_of:
     dependency: transitive
     description:
-      name: openid_client
-      sha256: "514c0ba645b81029c28999831a70cb055dda1a3bc60be759a04d2556f60ec960"
+      name: one_of
+      sha256: "25fe0fcf181e761c6fcd604caf9d5fdf952321be17584ba81c72c06bdaa511f0"
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.7"
+    version: "1.5.0"
+  one_of_serializer:
+    dependency: transitive
+    description:
+      name: one_of_serializer
+      sha256: "3f3dfb5c1578ba3afef1cb47fcc49e585e797af3f2b6c2cc7ed90aad0c5e7b83"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.5.0"
+  openapi_generator_annotations:
+    dependency: transitive
+    description:
+      name: openapi_generator_annotations
+      sha256: "46f1fb675029d78e19ce9143e70ce414d738b0f6c45c49c004b4b3afdb405a5c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.13.1"
+  openid_client:
+    dependency: "direct main"
+    description:
+      name: openid_client
+      sha256: "043878e907b7a1b460b54fb7b3b27b101cf70d4ac28b32a2db87ae67dbaed611"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.8"
   package_config:
     dependency: transitive
     description:

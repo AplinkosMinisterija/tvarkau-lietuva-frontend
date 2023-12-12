@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class AddingInformationHeader extends StatelessWidget {
   const AddingInformationHeader({
+    super.key,
     required this.width,
   });
 

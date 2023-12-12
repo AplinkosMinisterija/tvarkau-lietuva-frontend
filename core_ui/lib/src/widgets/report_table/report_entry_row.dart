@@ -1,10 +1,10 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:domain/domain.dart';
 
 class ReportEntryRow extends StatelessWidget {
   const ReportEntryRow({
+    super.key,
     required this.width,
     required this.report,
     required this.onInformationTap,
@@ -44,7 +44,7 @@ class ReportEntryRow extends StatelessWidget {
                     SizedBox(
                       width: width * 0.1926,
                       child: Text(
-                        report.name ?? '',
+                        report.name,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 3,
                         textAlign: TextAlign.center,
@@ -106,7 +106,7 @@ class ReportEntryRow extends StatelessWidget {
   }
 
   Text getStatusText(String status) {
-    String statusText = status[0].toUpperCase() + status.substring(1) ?? '';
+    String statusText = status[0].toUpperCase() + status.substring(1);
     Color textColor;
     if (status == 'gautas') {
       textColor = Colors.red;
@@ -116,9 +116,9 @@ class ReportEntryRow extends StatelessWidget {
       textColor = Colors.blue;
     } else if (status == 'nepasitvirtino') {
       textColor = Colors.grey;
-    }else if (status == 'sutvarkyta') {
+    } else if (status == 'sutvarkyta') {
       textColor = Colors.green;
-    }else {
+    } else {
       textColor = Colors.black;
     }
     return Text(

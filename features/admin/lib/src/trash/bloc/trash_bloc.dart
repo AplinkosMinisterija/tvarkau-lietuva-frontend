@@ -23,15 +23,9 @@ class TrashBloc extends Bloc<TrashEvent, TrashState> {
       emit(
         LoadingState(),
       );
-      final MapperFactory mapper = MapperFactory();
-      final ApiProviderBase apiProviderBase = ApiProviderBase(
-          baseUrl: HttpApiConstants.devBaseUrl, errorHandler: ErrorHandler());
-      final ApiProvider apiProvider = ApiProvider(
-        mapper: mapper,
-        apiProviderBase: apiProviderBase,
-      );
+
       final List<ReportModel>? trashReports =
-          await apiProvider.getAllTrashReports();
+          await ApiProvider().getAllTrashReports();
       if (trashReports != null) {
         emit(
           ContentState(
@@ -56,15 +50,9 @@ class TrashBloc extends Bloc<TrashEvent, TrashState> {
       emit(
         LoadingState(),
       );
-      final MapperFactory mapper = MapperFactory();
-      final ApiProviderBase apiProviderBase = ApiProviderBase(
-          baseUrl: HttpApiConstants.devBaseUrl, errorHandler: ErrorHandler());
-      final ApiProvider apiProvider = ApiProvider(
-        mapper: mapper,
-        apiProviderBase: apiProviderBase,
-      );
 
-      var response = await apiProvider.updateTrashReport(
+
+      await ApiProvider().updateTrashReport(
         id: event.id,
         name: event.name,
         editor: event.editor,
@@ -78,7 +66,7 @@ class TrashBloc extends Bloc<TrashEvent, TrashState> {
       );
 
       final List<ReportModel>? trashReports =
-          await apiProvider.getAllTrashReports();
+          await ApiProvider().getAllTrashReports();
       if (trashReports != null) {
         emit(
           ContentState(

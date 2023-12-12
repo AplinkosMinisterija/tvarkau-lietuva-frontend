@@ -10,6 +10,7 @@ import 'package:domain/domain.dart';
 
 class AdminTrashMap extends StatefulWidget {
   const AdminTrashMap({
+    super.key,
     required this.width,
     required this.trashReports,
     required this.isHovering,
@@ -20,7 +21,6 @@ class AdminTrashMap extends StatefulWidget {
   final List<ReportModel> trashReports;
   final ValueChanged<bool> isHovering;
   final Function(ReportModel, List<http.MultipartFile>) onUpdate;
-
 
   @override
   State<AdminTrashMap> createState() => _AdminTrashMapState();

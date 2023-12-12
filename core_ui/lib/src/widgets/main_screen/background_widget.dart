@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class BackgroundWidget extends StatelessWidget {
   const BackgroundWidget({
+    super.key,
     required this.width,
   });
 

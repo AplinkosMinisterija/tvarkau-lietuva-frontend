@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:dashboard/dashboard_screen.dart';
 
 class RoutePageGenerator {
   static Page<dynamic> generateRoute(String routeName) {

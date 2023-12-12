@@ -1,10 +1,8 @@
 import 'package:admin/src/dumps/ui/dump_window.dart';
 import 'package:admin/src/trash/ui/trash_window.dart';
 import 'package:admin/src/deleted/ui/removed_window.dart';
-import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:core_ui/core_ui.dart';
-import 'package:domain/domain.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:openid_client/openid_client.dart';
 

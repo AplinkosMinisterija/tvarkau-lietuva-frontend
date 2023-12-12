@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class InstructionsWidget extends StatelessWidget {
   const InstructionsWidget({
+    super.key,
     required this.width,
   });
 
@@ -12,7 +13,9 @@ class InstructionsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(width * 0.0083),
-      margin: EdgeInsets.only(top: width * 0.0167,),
+      margin: EdgeInsets.only(
+        top: width * 0.0167,
+      ),
       height: width * 0.0838,
       width: width * 0.6,
       decoration: BoxDecoration(

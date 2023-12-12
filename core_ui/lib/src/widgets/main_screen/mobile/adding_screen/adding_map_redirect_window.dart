@@ -1,11 +1,9 @@
-import 'dart:async';
-
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class AddingMapRedirectWindow extends StatefulWidget {
   const AddingMapRedirectWindow({
+    super.key,
     required this.width,
     required this.marker,
   });
@@ -53,8 +51,8 @@ class _AddingMapRedirectWindowState extends State<AddingMapRedirectWindow> {
       animate();
     } else {
       viewPosition =
-          CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 6.2);
-      if (marker.length != 0) {
+          const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 6.2);
+      if (marker.isNotEmpty) {
         animate();
       }
       marker.clear();

@@ -1,6 +1,7 @@
 import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:data/data.dart';
+import 'package:api_client/api_client.dart';
 
 part 'dump_event.dart';
 
@@ -22,15 +23,8 @@ class DumpBloc extends Bloc<DumpEvent, DumpState> {
       emit(
         LoadingState(),
       );
-      final MapperFactory mapper = MapperFactory();
-      final ApiProviderBase apiProviderBase = ApiProviderBase(
-          baseUrl: HttpApiConstants.devBaseUrl, errorHandler: ErrorHandler());
-      final ApiProvider apiProvider = ApiProvider(
-        mapper: mapper,
-        apiProviderBase: apiProviderBase,
-      );
-      final List<ReportModel> dumpReports =
-          await apiProvider.getAllVisibleDumpReports();
+
+      final List<FullDumpDto> dumpReports = [];
       emit(
         ContentState(
           dumpReports: dumpReports,
@@ -51,15 +45,9 @@ class DumpBloc extends Bloc<DumpEvent, DumpState> {
       emit(
         LoadingState(),
       );
-      final MapperFactory mapper = MapperFactory();
-      final ApiProviderBase apiProviderBase = ApiProviderBase(
-          baseUrl: HttpApiConstants.devBaseUrl, errorHandler: ErrorHandler());
-      final ApiProvider apiProvider = ApiProvider(
-        mapper: mapper,
-        apiProviderBase: apiProviderBase,
-      );
 
-      var response = await apiProvider.updateDumpReport(
+
+      await ApiProvider().updateDumpReport(
           id: event.id,
           name: event.name,
           moreInformation: event.moreInformation,
@@ -67,8 +55,8 @@ class DumpBloc extends Bloc<DumpEvent, DumpState> {
           phone: event.phone,
           isVisible: event.isVisible);
 
-      final List<ReportModel> dumpReports =
-          await apiProvider.getAllDumpReports();
+      final List<FullDumpDto> dumpReports =
+          await ApiProvider().getAllDumpReports();
       emit(
         ContentState(
           dumpReports: dumpReports,

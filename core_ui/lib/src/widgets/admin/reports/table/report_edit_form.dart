@@ -66,14 +66,14 @@ class _ReportEditFormState extends State<ReportEditForm> {
         GlobalConstants.maxAllowedImageCount);
 
     if (images != null) {
-      setState(() {
+      setState(() async {
         _selectedImages = images;
         _fileBytes = images;
         multipartList.clear();
-        _selectedImages!.forEach((element) async {
-          multipartList.add(await http.MultipartFile.fromBytes('image', element,
+        for (var element in _selectedImages!) {
+          multipartList.add(http.MultipartFile.fromBytes('image', element,
               contentType: MediaType("image", "jpg"), filename: 'name.jpg'));
-        });
+        }
       });
     }
   }
@@ -102,26 +102,26 @@ class _ReportEditFormState extends State<ReportEditForm> {
       ),
     );
     if (widget.report.imageUrls!.isNotEmpty) {
-      widget.report.imageUrls!.forEach((element) {
+      for (var element in widget.report.imageUrls!) {
         if (element.endsWith('.heic') || element.endsWith('.heif')) {
           var convertedString = element.substring(0, element.length - 5);
-          convertedString = convertedString + '.jpg';
+          convertedString = '$convertedString.jpg';
           _imageProviders.add(Image.network(convertedString).image);
         } else {
           _imageProviders.add(Image.network(element).image);
         }
-      });
+      }
     }
     if (widget.report.officerImageUrls!.isNotEmpty) {
-      widget.report.officerImageUrls!.forEach((element) {
+      for (var element in widget.report.officerImageUrls!) {
         if (element.endsWith('.heic') || element.endsWith('.heif')) {
           var convertedString = element.substring(0, element.length - 5);
-          convertedString = convertedString + '.jpg';
+          convertedString = '$convertedString.jpg';
           _officerImageProviders.add(Image.network(convertedString).image);
         } else {
           _officerImageProviders.add(Image.network(element).image);
         }
-      });
+      }
     }
     super.initState();
   }

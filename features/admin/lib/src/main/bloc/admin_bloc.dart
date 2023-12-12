@@ -36,20 +36,14 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
             color: AppTheme.mainThemeColor, size: 150),
       );
       var oauth = AadOAuth(config);
-      final MapperFactory mapper = MapperFactory();
-      final ApiProviderBase apiProviderBase = ApiProviderBase(
-          baseUrl: HttpApiConstants.devBaseUrl, errorHandler: ErrorHandler());
-      final ApiProvider apiProvider = ApiProvider(
-        mapper: mapper,
-        apiProviderBase: apiProviderBase,
-      );
+
 
       var hasCachedAccountInformation = await oauth.hasCachedAccountInformation;
       if (hasCachedAccountInformation) {
         var accessToken = await oauth.getAccessToken();
         if (accessToken != null && accessToken != '') {
           (UserInfo, String?) userInfo =
-              await apiProvider.getUserInfo(accessToken);
+              await ApiProvider().getUserInfo(accessToken);
 
           if (userInfo.$2 != null) {
             await SecureStorageProvider().setJwtToken(userInfo.$2 ?? '');
@@ -88,7 +82,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
       config.webUseRedirect = false;
       var oauth = AadOAuth(config);
       SecureStorageProvider().deleteJwtToken();
-      final result = await oauth.logout();
+      await oauth.logout();
       var accessToken = await oauth.getAccessToken();
       if (accessToken != null) {
         emit(
@@ -122,7 +116,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
       config.webUseRedirect = false;
       var oauth = AadOAuth(config);
 
-      final result = await oauth.login();
+      await oauth.login();
       var accessToken = await oauth.getAccessToken();
 
       if (accessToken != null) {

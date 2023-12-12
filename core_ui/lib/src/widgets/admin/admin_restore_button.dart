@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AdminRestoreButton extends StatefulWidget {
   const AdminRestoreButton({
+    super.key,
     required this.width,
     required this.onPressed,
   });

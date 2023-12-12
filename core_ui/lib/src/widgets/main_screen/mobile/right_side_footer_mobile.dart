@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class RightSideFooterMobile extends StatelessWidget {
   const RightSideFooterMobile({
+    super.key,
     required this.width,
   });
 

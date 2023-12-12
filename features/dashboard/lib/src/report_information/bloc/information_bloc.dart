@@ -1,7 +1,6 @@
 import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:data/data.dart';
-import 'package:flutter/cupertino.dart';
 
 part 'information_event.dart';
 
@@ -9,8 +8,10 @@ part 'information_state.dart';
 
 class InformationBloc extends Bloc<InformationEvent, InformationState> {
   final String refId;
-  InformationBloc({required this.refId,}) : super(LoadingState()) {
 
+  InformationBloc({
+    required this.refId,
+  }) : super(LoadingState()) {
     on<LoadData>(_onLoadData);
     on<ReloadPage>(_onReloadEvent);
     add(LoadData(refId: refId));
@@ -21,14 +22,10 @@ class InformationBloc extends Bloc<InformationEvent, InformationState> {
     Emitter<InformationState> emit,
   ) async {
     try {
-      final MapperFactory mapper = MapperFactory();
-      final ApiProviderBase apiProviderBase = ApiProviderBase(
-          baseUrl: HttpApiConstants.devBaseUrl, errorHandler: ErrorHandler());
-      final ApiProvider apiProvider = ApiProvider(
-        mapper: mapper,
-        apiProviderBase: apiProviderBase,
+
+      final ReportModel trashReport = await ApiProvider().getOneTrashReport(
+        event.refId,
       );
-      final ReportModel trashReport = await apiProvider.getOneTrashReport(event.refId,);
       emit(
         ContentState(
           trashReport: trashReport,
@@ -40,7 +37,6 @@ class InformationBloc extends Bloc<InformationEvent, InformationState> {
       );
     }
   }
-
 
   Future<void> _onReloadEvent(
     ReloadPage _,

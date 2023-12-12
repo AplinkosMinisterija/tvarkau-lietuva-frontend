@@ -1,12 +1,11 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'map_type_switcher_button.dart';
 
 class MapTypeSwitcher extends StatefulWidget {
   const MapTypeSwitcher({
+    super.key,
     required this.width,
     required this.onMapTypeChange,
     required this.currentMapType,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class ReportTypeSwitcher extends StatelessWidget {
   const ReportTypeSwitcher({
+    super.key,
     required this.width,
     required this.isShowDumps,
     required this.onReportTypeChange,

@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 
 class AdminTrashWindowBox extends StatelessWidget {
   AdminTrashWindowBox({
+    super.key,
     required this.title,
     required this.imageUrls,
     required this.status,
@@ -27,9 +28,9 @@ class AdminTrashWindowBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (imageUrls!.isNotEmpty) {
-      imageUrls!.forEach((element) {
+      for (var element in imageUrls!) {
         _imageProviders.add(Image.network(element).image);
-      });
+      }
     }
 
     return Container(

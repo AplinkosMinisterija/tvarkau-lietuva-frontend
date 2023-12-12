@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class Copyright extends StatelessWidget {
   const Copyright({
+    super.key,
     required this.width,
   });
 

@@ -2,6 +2,7 @@ import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:data/data.dart';
 import 'package:http/http.dart' as https;
+
 part 'removed_event.dart';
 
 part 'removed_state.dart';
@@ -22,16 +23,10 @@ class RemovedBloc extends Bloc<RemovedEvent, RemovedState> {
       emit(
         LoadingState(),
       );
-      final MapperFactory mapper = MapperFactory();
-      final ApiProviderBase apiProviderBase = ApiProviderBase(
-          baseUrl: HttpApiConstants.devBaseUrl, errorHandler: ErrorHandler());
-      final ApiProvider apiProvider = ApiProvider(
-        mapper: mapper,
-        apiProviderBase: apiProviderBase,
-      );
+
 
       final List<ReportModel> trashReports =
-          await apiProvider.getAllRemovedReports();
+          await ApiProvider().getAllRemovedReports();
       emit(
         ContentState(
           trashReports: trashReports,
@@ -52,15 +47,9 @@ class RemovedBloc extends Bloc<RemovedEvent, RemovedState> {
       emit(
         LoadingState(),
       );
-      final MapperFactory mapper = MapperFactory();
-      final ApiProviderBase apiProviderBase = ApiProviderBase(
-          baseUrl: HttpApiConstants.devBaseUrl, errorHandler: ErrorHandler());
-      final ApiProvider apiProvider = ApiProvider(
-        mapper: mapper,
-        apiProviderBase: apiProviderBase,
-      );
 
-      var response = await apiProvider.updateTrashReport(
+
+      await ApiProvider().updateTrashReport(
         id: event.id,
         name: event.name,
         reportLong: event.reportLong,
@@ -74,7 +63,7 @@ class RemovedBloc extends Bloc<RemovedEvent, RemovedState> {
       );
 
       final List<ReportModel> trashReports =
-          await apiProvider.getAllRemovedReports();
+          await ApiProvider().getAllRemovedReports();
       emit(
         ContentState(
           trashReports: trashReports,

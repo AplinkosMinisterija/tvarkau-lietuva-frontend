@@ -7,6 +7,7 @@ class ErrorReloadWidget extends StatelessWidget {
   final String? errorText;
 
   const ErrorReloadWidget({
+    super.key,
     this.onPressed,
     this.errorText,
   });
@@ -19,15 +20,15 @@ class ErrorReloadWidget extends StatelessWidget {
         children: <Widget>[
           const Spacer(),
           Container(
-            padding: EdgeInsets.only(top: 35),
+            padding: const EdgeInsets.only(top: 35),
             child: Column(
               children: <Widget>[
-                Icon(
+                const Icon(
                   Icons.error,
                   size: 50,
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     vertical: 18,
                     horizontal: 80,
                   ),
@@ -44,7 +45,7 @@ class ErrorReloadWidget extends StatelessWidget {
           ),
           const Spacer(),
           Padding(
-            padding: EdgeInsets.all(24),
+            padding: const EdgeInsets.all(24),
             child: AppButton(
               text: 'Perkrauti',
               backgroundColor: AppTheme.buttonDarkBgColor,

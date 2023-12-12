@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ChangeVisibilityButtonMobile extends StatefulWidget {
   const ChangeVisibilityButtonMobile({
+    super.key,
     required this.width,
     required this.isActive,
     required this.onTap,

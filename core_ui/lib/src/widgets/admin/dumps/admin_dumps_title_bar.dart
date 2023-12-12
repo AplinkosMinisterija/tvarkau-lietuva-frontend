@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AdminDumpsTitleBar extends StatelessWidget {
   const AdminDumpsTitleBar({
+    super.key,
     required this.width,
   });
 

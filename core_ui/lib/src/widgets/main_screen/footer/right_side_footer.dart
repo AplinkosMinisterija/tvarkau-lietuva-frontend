@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class RightSideFooter extends StatelessWidget {
   const RightSideFooter({
+    super.key,
     required this.width,
     required this.onDataSecurityTap,
   });

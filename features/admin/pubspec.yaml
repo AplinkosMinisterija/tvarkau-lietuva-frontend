@@ -16,6 +16,10 @@ dependencies:
     path: ../../core_ui
   domain:
     path: ../../domain
+  data:
+    path: ../../data
+  api_client:
+    path: ../../api_client
 
   flutter_bloc: ^7.3.3
   loading_animation_widget: ^1.2.0+4
@@ -28,6 +32,7 @@ dependencies:
   universal_io: ^2.2.0
   aad_oauth: ^0.4.4
   dropdown_button2: ^2.3.9
+  http: ^0.13.6
 
 dev_dependencies:
   flutter_test:

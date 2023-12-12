@@ -1,5 +1,3 @@
-import 'package:core_ui/src/widgets/admin/deleted/table/deleted_reports_entry_row.dart';
-import 'package:core_ui/src/widgets/admin/deleted/table/deleted_reports_title_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:domain/domain.dart';
 import 'package:http/http.dart' as http;
@@ -10,6 +8,7 @@ import 'deleted_edit_form.dart';
 
 class DeletedReportsTable extends StatefulWidget {
   const DeletedReportsTable({
+    super.key,
     required this.width,
     required this.reports,
     required this.onUpdate,
@@ -97,7 +96,7 @@ class _DeletedReportsTableState extends State<DeletedReportsTable> {
               allowSorting: false,
               allowFiltering: true,
               width: widget.width * 0.07,
-              filterIconPadding: EdgeInsets.symmetric(horizontal: 2.0),
+              filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
               label: Container(
                   padding: const EdgeInsets.only(left: 5),
                   alignment: Alignment.center,
@@ -111,7 +110,7 @@ class _DeletedReportsTableState extends State<DeletedReportsTable> {
               allowSorting: false,
               allowFiltering: true,
               width: widget.width * 0.07,
-              filterIconPadding: EdgeInsets.symmetric(horizontal: 2.0),
+              filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
               label: Container(
                   padding: const EdgeInsets.only(left: 5),
                   alignment: Alignment.center,

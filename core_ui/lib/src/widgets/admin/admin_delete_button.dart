@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AdminDeleteButton extends StatefulWidget {
   const AdminDeleteButton({
+    super.key,
     required this.width,
     required this.onPressed,
   });

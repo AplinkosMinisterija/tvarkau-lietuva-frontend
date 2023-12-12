@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class CancelButton extends StatelessWidget {
   const CancelButton({
+    super.key,
     required this.width,
     required this.onTap,
   });
@@ -17,7 +18,8 @@ class CancelButton extends StatelessWidget {
       child: Container(
         width: width * 0.049,
         height: width * 0.0307,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(12), color: Colors.white),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12), color: Colors.white),
         child: Center(
           child: SizedBox(
             width: width * 0.0323,

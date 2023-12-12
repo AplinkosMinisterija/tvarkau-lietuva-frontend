@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ExitHeader extends StatelessWidget {
   const ExitHeader({
+    super.key,
     required this.width,
     required this.onTap,
   });

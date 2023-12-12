@@ -1,12 +1,13 @@
+import 'package:api_client/api_client.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/report/report_library.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:domain/domain.dart';
-import '../information_window/custom_info_window.dart';
 
 class MainTrashMapMobile extends StatefulWidget {
   const MainTrashMapMobile({
+    super.key,
     required this.width,
     required this.trashReports,
     required this.isHovering,
@@ -16,7 +17,7 @@ class MainTrashMapMobile extends StatefulWidget {
   });
 
   final double width;
-  final List<ReportModel> trashReports;
+  final List<PublicReportDto> trashReports;
   final ValueChanged<bool> isHovering;
   final ValueChanged<bool> onReportTypeChange;
   final bool isShowDumps;
@@ -46,8 +47,8 @@ class _MainTrashMapMobileState extends State<MainTrashMapMobile> {
               element.name.toString() + index.toString(),
             ),
             position: LatLng(
-              element.reportLat,
-              element.reportLong,
+              element.latitude.toDouble(),
+              element.longitude.toDouble(),
             ),
             icon: await BitmapDescriptor.fromAssetImage(
                 const ImageConfiguration(size: Size(25, 30)),
@@ -55,17 +56,17 @@ class _MainTrashMapMobileState extends State<MainTrashMapMobile> {
             onTap: () {
               _customTrashInfoWindowController.addInfoWindow!(
                 InfoTrashWindowBox(
-                    title: element.name ?? '',
-                    imageUrls: element.imageUrls ?? [],
+                    title: element.name,
+                    imageUrls: element.imageUrls.toList(),
                     status: element.status,
-                    date: element.reportDate,
-                    reportId: element.refId ?? '',
+                    date: element.reportDate.toString(),
+                    reportId: element.refId,
                     onTap: () {
-                      widget.onInformationTap(element.refId ?? '1');
+                      widget.onInformationTap(element.refId);
                     }),
                 LatLng(
-                  element.reportLat,
-                  element.reportLong,
+                  element.latitude.toDouble(),
+                  element.longitude.toDouble(),
                 ),
               );
             }),

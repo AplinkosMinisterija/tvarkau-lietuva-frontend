@@ -189,7 +189,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                             child: FittedBox(
                               fit: BoxFit.fitWidth,
                               child: Text(
-                                '#TLP-A${str}${widget.report.refId!.toUpperCase()}',
+                                '#TLP-A$str${widget.report.refId!.toUpperCase()}',
                                 style: GoogleFonts.roboto(
                                     fontSize: 32,
                                     fontWeight: FontWeight.w600,
@@ -955,7 +955,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
         unformattedImageUrl.endsWith('.heif')) {
       var convertedString =
           unformattedImageUrl.substring(0, unformattedImageUrl.length - 5);
-      convertedString = convertedString + '.jpg';
+      convertedString = '$convertedString.jpg';
       return convertedString;
     } else {
       return unformattedImageUrl;
