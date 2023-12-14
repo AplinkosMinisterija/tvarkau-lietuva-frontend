@@ -12,24 +12,31 @@ class ApiProvider {
 
   final dumpsApi = ApiClient(
           basePathOverride:
-      'http://localhost:3000/api'
+      'http://localhost:3000'
               //'https://stingray-app-d7ve9.ondigitalocean.app/tvarkau-lietuva-api2'
   )
       .getDumpsApi();
 
   final reportsApi = ApiClient(
           basePathOverride:
-      'http://localhost:3000/api'
+      'http://localhost:3000'
               //'https://stingray-app-d7ve9.ondigitalocean.app/tvarkau-lietuva-api2'
       )
       .getReportsApi();
 
   final adminApi = ApiClient(
           basePathOverride:
-      'http://localhost:3000/api'
+      'http://localhost:3000'
              // 'https://stingray-app-d7ve9.ondigitalocean.app/tvarkau-lietuva-api2'
   )
       .getAdminApi();
+
+  final authApi = ApiClient(
+      basePathOverride:
+      'http://localhost:3000'
+    // 'https://stingray-app-d7ve9.ondigitalocean.app/tvarkau-lietuva-api2'
+  )
+      .getAuthApi();
 
   Future<List<domain.ReportModel>?> getAllTrashReports() async {
     final String authKey = await SecureStorageProvider().getJwtToken();
@@ -51,19 +58,22 @@ class ApiProvider {
     }
   }
 
-  Future<ReportModel> getOneTrashReport(String refId) async {
-    Map<String, String> headers = {
-      'content-type': 'application/json',
-      'accept': 'application/json',
-      'refId': refId
-    };
-    http2.Response response = await http2.get(
-      Uri.parse(HttpApiConstants.fullOneTrashReportUrl),
-      headers: headers,
-    );
-    ReportModel convertedResponse =
-        ReportModel.fromJson(jsonDecode(response.body));
-    return convertedResponse;
+  Future<PublicReportDto> getOneTrashReport(String refId) async {
+    final response = await reportsApi.reportControllerGetReportById(refId: int.parse(refId));
+    print(response.data);
+    return response.data!;
+    // Map<String, String> headers = {
+    //   'content-type': 'application/json',
+    //   'accept': 'application/json',
+    //   'refId': refId
+    // };
+    // http2.Response response = await http2.get(
+    //   Uri.parse(HttpApiConstants.fullOneTrashReportUrl),
+    //   headers: headers,
+    // );
+    // ReportModel convertedResponse =
+    //     ReportModel.fromJson(jsonDecode(response.body));
+    // return convertedResponse;
   }
 
   Future<List<ReportModel>> getAllRemovedReports() async {
@@ -85,7 +95,7 @@ class ApiProvider {
 
   Future<List<PublicReportDto>> getAllVisibleTrashReports() async {
     final response = await reportsApi.reportControllerGetAllPublicReports();
-    return response.data!.toList();
+    return response.data!.toList();//TODO: add error handling
   }
 
   Future<List<FullDumpDto>> getAllDumpReports() async {
@@ -100,19 +110,25 @@ class ApiProvider {
     return response.data!.toList();
   }
 
-  Future<(UserInfo, String?)> getUserInfo(String accessToken) async {
-    Map<String, String> body = {
-      "token": accessToken,
-    };
-    Map<String, String> headers = {"content-type": "application/json"};
-    final http2.Response response = await http2.post(
-        Uri.parse(HttpApiConstants.fullAuthUrl),
-        headers: headers,
-        body: jsonEncode(body));
-    var authToken = response.headers["auth-token"];
-    final UserInfo convertedResponse =
-        UserInfo.fromJson(json.decode(response.body));
-    return (convertedResponse, authToken);
+
+  Future<LogInDto> getUserInfo(String accessToken) async {
+
+
+    final response = await authApi.authControllerLogin(loginRequestDto: LoginRequestDto((builder)=>builder.accessKey = accessToken));
+    return response.data!;
+    // print(response1);
+    // Map<String, String> body = {
+    //   "token": accessToken,
+    // };
+    // Map<String, String> headers = {"content-type": "application/json"};
+    // final http2.Response response = await http2.post(
+    //     Uri.parse(HttpApiConstants.fullAuthUrl),
+    //     headers: headers,
+    //     body: jsonEncode(body));
+    // var authToken = response.headers["auth-token"];
+    // final UserInfo convertedResponse =
+    //     UserInfo.fromJson(json.decode(response.body));
+    // return (convertedResponse, authToken);
   }
 
   Future<http2.Response> sendNewTrashReport({

@@ -7,7 +7,7 @@ class LoadingState implements AdminState {}
 class LogingState implements AdminState {}
 
 class ContentState implements AdminState {
-  final UserInfo userInfo;
+  final LogInDto userInfo;
 
   ContentState({required this.userInfo});
 }

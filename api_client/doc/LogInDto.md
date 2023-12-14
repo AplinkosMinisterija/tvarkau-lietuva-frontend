@@ -1,4 +1,4 @@
-# api_client.model.DumpDto
+# api_client.model.LogInDto
 
 ## Load the model package
 ```dart
@@ -9,13 +9,8 @@ import 'package:api_client/api.dart';
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **String** |  | 
-**type** | **String** |  | 
-**reportLong** | **double** |  | 
-**reportLat** | **double** |  | 
-**address** | **String** |  | 
-**phone** | **String** |  | 
-**workingHours** | **String** |  | 
-**moreInformation** | **String** |  | 
+**email** | **String** |  | 
+**accessKey** | **String** |  | 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

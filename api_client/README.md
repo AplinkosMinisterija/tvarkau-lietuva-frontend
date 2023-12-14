@@ -69,6 +69,7 @@ Class | Method | HTTP request | Description
 [*AdminApi*](doc/AdminApi.md) | [**adminControllerGetAllDumps**](doc/AdminApi.md#admincontrollergetalldumps) | **GET** /admin/dumps | 
 [*AdminApi*](doc/AdminApi.md) | [**adminControllerGetAllReports**](doc/AdminApi.md#admincontrollergetallreports) | **GET** /admin/reports | 
 [*AdminApi*](doc/AdminApi.md) | [**adminControllerUpdateReport**](doc/AdminApi.md#admincontrollerupdatereport) | **POST** /admin/reports | 
+[*AuthApi*](doc/AuthApi.md) | [**authControllerLogin**](doc/AuthApi.md#authcontrollerlogin) | **POST** /auth/login | 
 [*DumpsApi*](doc/DumpsApi.md) | [**dumpControllerGetAllVisibleDumps**](doc/DumpsApi.md#dumpcontrollergetallvisibledumps) | **GET** /dumps | 
 [*ReportsApi*](doc/ReportsApi.md) | [**reportControllerCreateNewReport**](doc/ReportsApi.md#reportcontrollercreatenewreport) | **POST** /reports | 
 [*ReportsApi*](doc/ReportsApi.md) | [**reportControllerGetAllPublicReports**](doc/ReportsApi.md#reportcontrollergetallpublicreports) | **GET** /reports | 
@@ -83,6 +84,8 @@ Class | Method | HTTP request | Description
  - [FullReportDto](doc/FullReportDto.md)
  - [HistoryDataDto](doc/HistoryDataDto.md)
  - [HistoryEditsDto](doc/HistoryEditsDto.md)
+ - [LogInDto](doc/LogInDto.md)
+ - [LoginRequestDto](doc/LoginRequestDto.md)
  - [PublicReportDto](doc/PublicReportDto.md)
  - [StatusRecordsDto](doc/StatusRecordsDto.md)
  - [UpdateDumpDto](doc/UpdateDumpDto.md)

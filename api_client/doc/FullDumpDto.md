@@ -11,8 +11,8 @@ Name | Type | Description | Notes
 **refId** | **String** |  | 
 **name** | **String** |  | 
 **type** | **String** |  | 
-**longitude** | **num** |  | 
-**latitude** | **num** |  | 
+**longitude** | **double** |  | 
+**latitude** | **double** |  | 
 **isVisible** | **bool** |  | 
 **address** | **String** |  | 
 **phone** | **String** |  | 

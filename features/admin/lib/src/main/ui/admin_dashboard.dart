@@ -1,6 +1,7 @@
 import 'package:admin/src/dumps/ui/dump_window.dart';
 import 'package:admin/src/trash/ui/trash_window.dart';
 import 'package:admin/src/deleted/ui/removed_window.dart';
+import 'package:api_client/api_client.dart';
 import 'package:flutter/material.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,7 +15,7 @@ class AdminDashboard extends StatefulWidget {
   });
 
   final VoidCallback onLogout;
-  final UserInfo userInfo;
+  final LogInDto userInfo;
 
   @override
   State<AdminDashboard> createState() => _AdminDashboardState();
@@ -32,9 +33,8 @@ class _AdminDashboardState extends State<AdminDashboard> {
   @override
   void initState() {
     isMapHover = false;
-    var userInfo = UserInfo.fromJson(widget.userInfo.toJson());
-    name = userInfo['displayName'];
-    email = userInfo['mail'];
+    name = widget.userInfo.name;
+    email = widget.userInfo.email;
     super.initState();
   }
 

@@ -12,9 +12,9 @@ class _$DumpDto extends DumpDto {
   @override
   final String type;
   @override
-  final num reportLong;
+  final double reportLong;
   @override
-  final num reportLat;
+  final double reportLat;
   @override
   final String? address;
   @override
@@ -109,13 +109,13 @@ class DumpDtoBuilder implements Builder<DumpDto, DumpDtoBuilder> {
   String? get type => _$this._type;
   set type(String? type) => _$this._type = type;
 
-  num? _reportLong;
-  num? get reportLong => _$this._reportLong;
-  set reportLong(num? reportLong) => _$this._reportLong = reportLong;
+  double? _reportLong;
+  double? get reportLong => _$this._reportLong;
+  set reportLong(double? reportLong) => _$this._reportLong = reportLong;
 
-  num? _reportLat;
-  num? get reportLat => _$this._reportLat;
-  set reportLat(num? reportLat) => _$this._reportLat = reportLat;
+  double? _reportLat;
+  double? get reportLat => _$this._reportLat;
+  set reportLat(double? reportLat) => _$this._reportLat = reportLat;
 
   String? _address;
   String? get address => _$this._address;

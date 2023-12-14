@@ -23,9 +23,8 @@ class MainAdminScreen extends StatelessWidget {
             return BlocBuilder<AdminBloc, AdminState>(
               builder: (BuildContext context, AdminState state) {
                 if (state is ContentState) {
-                  final UserInfo userInfo = state.userInfo;
                   return AdminDashboard(
-                    userInfo: userInfo,
+                    userInfo: state.userInfo,
                     onLogout: () {
                       context.read<AdminBloc>().add(
                             LogOut(),

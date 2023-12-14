@@ -10,6 +10,7 @@ import 'package:api_client/src/auth/basic_auth.dart';
 import 'package:api_client/src/auth/bearer_auth.dart';
 import 'package:api_client/src/auth/oauth.dart';
 import 'package:api_client/src/api/admin_api.dart';
+import 'package:api_client/src/api/auth_api.dart';
 import 'package:api_client/src/api/dumps_api.dart';
 import 'package:api_client/src/api/reports_api.dart';
 
@@ -82,6 +83,12 @@ class ApiClient {
   /// by doing that all interceptors will not be executed
   AdminApi getAdminApi() {
     return AdminApi(dio, serializers);
+  }
+
+  /// Get AuthApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  AuthApi getAuthApi() {
+    return AuthApi(dio, serializers);
   }
 
   /// Get DumpsApi instance, base route and serializer can be overridden by a given but be careful,

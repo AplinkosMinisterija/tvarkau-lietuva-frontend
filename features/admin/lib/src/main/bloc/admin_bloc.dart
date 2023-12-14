@@ -1,5 +1,6 @@
 import 'package:aad_oauth/aad_oauth.dart';
 import 'package:aad_oauth/model/config.dart';
+import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:data/data.dart';
@@ -37,19 +38,18 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
       );
       var oauth = AadOAuth(config);
 
-
       var hasCachedAccountInformation = await oauth.hasCachedAccountInformation;
       if (hasCachedAccountInformation) {
         var accessToken = await oauth.getAccessToken();
         if (accessToken != null && accessToken != '') {
-          (UserInfo, String?) userInfo =
-              await ApiProvider().getUserInfo(accessToken);
-
-          if (userInfo.$2 != null) {
-            await SecureStorageProvider().setJwtToken(userInfo.$2 ?? '');
-            emit(ContentState(userInfo: userInfo.$1));
-          } else {
-            emit(LogingState());
+          try {
+            LogInDto userInfo = await ApiProvider().getUserInfo(accessToken);
+            await SecureStorageProvider().setJwtToken(userInfo.accessKey);
+            emit(ContentState(userInfo: userInfo));
+          } catch (e) {
+            emit(
+              ErrorState(errorMessage: 'Something went wrong'),
+            );
           }
         } else {
           emit(LogingState());

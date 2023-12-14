@@ -1,3 +1,4 @@
+import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:data/data.dart';
@@ -23,7 +24,7 @@ class InformationBloc extends Bloc<InformationEvent, InformationState> {
   ) async {
     try {
 
-      final ReportModel trashReport = await ApiProvider().getOneTrashReport(
+      final PublicReportDto trashReport = await ApiProvider().getOneTrashReport(
         event.refId,
       );
       emit(

@@ -12,8 +12,8 @@ Name | Type | Description | Notes
 **name** | **String** |  | 
 **type** | **String** |  | 
 **refId** | **String** |  | 
-**longitude** | **num** |  | 
-**latitude** | **num** |  | 
+**longitude** | **double** |  | 
+**latitude** | **double** |  | 
 **email** | **String** |  | 
 **isVisible** | **bool** |  | 
 **isDeleted** | **bool** |  | 

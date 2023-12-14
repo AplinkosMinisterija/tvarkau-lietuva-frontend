@@ -163,6 +163,25 @@ paths:
         '404':
           description: Report not found
       tags: *ref_2
+  /auth/login:
+    post:
+      operationId: AuthController_login
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequestDto'
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogInDto'
+      tags:
+        - auth
 info:
   title: Tvarkau Lietuva API
   description: API skirtas Tvarkau Lietuva projektui
@@ -230,8 +249,10 @@ components:
           type: string
         longitude:
           type: number
+          format: double
         latitude:
           type: number
+          format: double
         email:
           type: string
         isVisible:
@@ -336,8 +357,10 @@ components:
           type: string
         longitude:
           type: number
+          format: double
         latitude:
           type: number
+          format: double
         isVisible:
           type: boolean
         address:
@@ -424,8 +447,10 @@ components:
           type: string
         reportLong:
           type: number
+          format: double
         reportLat:
           type: number
+          format: double
         address:
           type: string
           nullable: true
@@ -478,8 +503,10 @@ components:
           type: string
         longitude:
           type: number
+          format: double
         latitude:
           type: number
+          format: double
         comment:
           type: string
         status:
@@ -511,3 +538,23 @@ components:
         - officerImageUrls
         - imageUrls
         - statusRecords
+    LoginRequestDto:
+      type: object
+      properties:
+        accessKey:
+          type: string
+      required:
+        - accessKey
+    LogInDto:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        accessKey:
+          type: string
+      required:
+        - name
+        - email
+        - accessKey

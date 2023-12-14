@@ -14,9 +14,9 @@ class _$PublicReportDto extends PublicReportDto {
   @override
   final String refId;
   @override
-  final num longitude;
+  final double longitude;
   @override
-  final num latitude;
+  final double latitude;
   @override
   final String comment;
   @override
@@ -143,13 +143,13 @@ class PublicReportDtoBuilder
   String? get refId => _$this._refId;
   set refId(String? refId) => _$this._refId = refId;
 
-  num? _longitude;
-  num? get longitude => _$this._longitude;
-  set longitude(num? longitude) => _$this._longitude = longitude;
+  double? _longitude;
+  double? get longitude => _$this._longitude;
+  set longitude(double? longitude) => _$this._longitude = longitude;
 
-  num? _latitude;
-  num? get latitude => _$this._latitude;
-  set latitude(num? latitude) => _$this._latitude = latitude;
+  double? _latitude;
+  double? get latitude => _$this._latitude;
+  set latitude(double? latitude) => _$this._latitude = latitude;
 
   String? _comment;
   String? get comment => _$this._comment;

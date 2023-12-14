@@ -37,10 +37,10 @@ abstract class PublicReportDto
   String get refId;
 
   @BuiltValueField(wireName: r'longitude')
-  num get longitude;
+  double get longitude;
 
   @BuiltValueField(wireName: r'latitude')
-  num get latitude;
+  double get latitude;
 
   @BuiltValueField(wireName: r'comment')
   String get comment;
@@ -104,12 +104,12 @@ class _$PublicReportDtoSerializer
     yield r'longitude';
     yield serializers.serialize(
       object.longitude,
-      specifiedType: const FullType(num),
+      specifiedType: const FullType(double),
     );
     yield r'latitude';
     yield serializers.serialize(
       object.latitude,
-      specifiedType: const FullType(num),
+      specifiedType: const FullType(double),
     );
     yield r'comment';
     yield serializers.serialize(
@@ -190,15 +190,15 @@ class _$PublicReportDtoSerializer
         case r'longitude':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(num),
-          ) as num;
+            specifiedType: const FullType(double),
+          ) as double;
           result.longitude = valueDes;
           break;
         case r'latitude':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(num),
-          ) as num;
+            specifiedType: const FullType(double),
+          ) as double;
           result.latitude = valueDes;
           break;
         case r'comment':

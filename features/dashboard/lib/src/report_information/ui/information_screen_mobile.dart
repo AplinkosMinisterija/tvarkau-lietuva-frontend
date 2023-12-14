@@ -1,3 +1,4 @@
+import 'package:api_client/api_client.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class InformationScreenMobile extends StatefulWidget {
 
   final double width;
   final double height;
-  final ReportModel report;
+  final PublicReportDto report;
 
   @override
   State<InformationScreenMobile> createState() =>
@@ -66,9 +67,8 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
           color: Colors.black,
         ));
     span2 = TextSpan(
-        text: widget.report.comment != null && widget.report.comment != ' '
-            ? widget.report.comment!
-            : '',
+        text: widget.report.comment != ' '
+            ? widget.report.comment: '',
         style: GoogleFonts.roboto(
           fontSize: widget.width * 0.04444,
           fontWeight: FontWeight.w400,
@@ -80,18 +80,18 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
     tp2 = TextPainter(text: span2, textDirection: TextDirection.ltr);
     tp2.layout(maxWidth: widget.width);
     departmentAnswerTextLinesCount = tp2.computeLineMetrics().length;
-    if (widget.report.imageUrls!.isEmpty) {
+    if (widget.report.imageUrls.isEmpty) {
       imageLineCount = 0;
-    } else if (widget.report.imageUrls!.length < 3) {
+    } else if (widget.report.imageUrls.length < 3) {
       imageLineCount = 1;
-    } else if (widget.report.imageUrls!.length > 2) {
+    } else if (widget.report.imageUrls.length > 2) {
       imageLineCount = 2;
     }
-    strLength = 8 - widget.report.refId!.length;
+    strLength = 8 - widget.report.refId.length;
     str = '0' * strLength;
 
     _initialCameraPosition = CameraPosition(
-        target: LatLng(widget.report.reportLat, widget.report.reportLong),
+        target: LatLng(widget.report.latitude, widget.report.longitude),
         zoom: 9.0);
     _currentMapType = MapType.normal;
     markers.add(
@@ -100,8 +100,8 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
           '${widget.report.name}99899',
         ),
         position: LatLng(
-          widget.report.reportLat,
-          widget.report.reportLong,
+          widget.report.latitude,
+          widget.report.longitude,
         ),
         icon: markerIcon,
       ),
@@ -778,17 +778,17 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
   }
 
   String getFormattedDate(String status) {
-    StatusRecords? recordObject = widget.report.statusRecords
-        ?.where((element) => element.status == status)
+    StatusRecordsDto? recordObject = widget.report.statusRecords
+        .where((element) => element.status == status)
         .singleOrNull;
     String day = '';
     String hour = '';
     if (recordObject != null) {
-      day = recordObject.date!.substring(0, 10);
-      hour = recordObject.date!.substring(11, 16);
+      day = recordObject.date.toString().substring(0, 10);
+      hour = recordObject.date.toString().substring(11, 16);
     } else {
-      day = widget.report.reportDate.substring(0, 10);
-      hour = widget.report.reportDate.substring(11, 16);
+      day = widget.report.reportDate.toString().substring(0, 10);
+      hour = widget.report.reportDate.toString().substring(11, 16);
     }
     return '$day $hour';
   }

@@ -2,6 +2,7 @@
 README.md
 analysis_options.yaml
 doc/AdminApi.md
+doc/AuthApi.md
 doc/CreateDumpDto.md
 doc/DumpDto.md
 doc/DumpsApi.md
@@ -9,6 +10,8 @@ doc/FullDumpDto.md
 doc/FullReportDto.md
 doc/HistoryDataDto.md
 doc/HistoryEditsDto.md
+doc/LogInDto.md
+doc/LoginRequestDto.md
 doc/PublicReportDto.md
 doc/ReportsApi.md
 doc/StatusRecordsDto.md
@@ -16,6 +19,7 @@ doc/UpdateDumpDto.md
 lib/api_client.dart
 lib/src/api.dart
 lib/src/api/admin_api.dart
+lib/src/api/auth_api.dart
 lib/src/api/dumps_api.dart
 lib/src/api/reports_api.dart
 lib/src/api_util.dart
@@ -32,8 +36,13 @@ lib/src/model/full_dump_dto.dart
 lib/src/model/full_report_dto.dart
 lib/src/model/history_data_dto.dart
 lib/src/model/history_edits_dto.dart
+lib/src/model/log_in_dto.dart
+lib/src/model/login_request_dto.dart
 lib/src/model/public_report_dto.dart
 lib/src/model/status_records_dto.dart
 lib/src/model/update_dump_dto.dart
 lib/src/serializers.dart
 pubspec.yaml
+test/auth_api_test.dart
+test/log_in_dto_test.dart
+test/login_request_dto_test.dart

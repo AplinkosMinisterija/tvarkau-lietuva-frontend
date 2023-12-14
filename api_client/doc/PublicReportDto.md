@@ -11,8 +11,8 @@ Name | Type | Description | Notes
 **name** | **String** |  | 
 **type** | **String** |  | 
 **refId** | **String** |  | 
-**longitude** | **num** |  | 
-**latitude** | **num** |  | 
+**longitude** | **double** |  | 
+**latitude** | **double** |  | 
 **comment** | **String** |  | 
 **status** | **String** |  | 
 **reportDate** | [**DateTime**](DateTime.md) |  | 

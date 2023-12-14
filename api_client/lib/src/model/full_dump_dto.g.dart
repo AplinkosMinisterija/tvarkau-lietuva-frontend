@@ -14,9 +14,9 @@ class _$FullDumpDto extends FullDumpDto {
   @override
   final String type;
   @override
-  final num longitude;
+  final double longitude;
   @override
-  final num latitude;
+  final double latitude;
   @override
   final bool isVisible;
   @override
@@ -131,13 +131,13 @@ class FullDumpDtoBuilder implements Builder<FullDumpDto, FullDumpDtoBuilder> {
   String? get type => _$this._type;
   set type(String? type) => _$this._type = type;
 
-  num? _longitude;
-  num? get longitude => _$this._longitude;
-  set longitude(num? longitude) => _$this._longitude = longitude;
+  double? _longitude;
+  double? get longitude => _$this._longitude;
+  set longitude(double? longitude) => _$this._longitude = longitude;
 
-  num? _latitude;
-  num? get latitude => _$this._latitude;
-  set latitude(num? latitude) => _$this._latitude = latitude;
+  double? _latitude;
+  double? get latitude => _$this._latitude;
+  set latitude(double? latitude) => _$this._latitude = latitude;
 
   bool? _isVisible;
   bool? get isVisible => _$this._isVisible;

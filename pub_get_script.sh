@@ -2,6 +2,7 @@
 
 printf "aad app pub get\n"
 flutter clean && flutter clean cache && flutter pub get
+dart run build_runner build --delete-conflicting-outputs
 printf '\n\n'
 
 printf "core pub get\n"

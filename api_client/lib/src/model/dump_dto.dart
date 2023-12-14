@@ -28,10 +28,10 @@ abstract class DumpDto implements Built<DumpDto, DumpDtoBuilder> {
   String get type;
 
   @BuiltValueField(wireName: r'reportLong')
-  num get reportLong;
+  double get reportLong;
 
   @BuiltValueField(wireName: r'reportLat')
-  num get reportLat;
+  double get reportLat;
 
   @BuiltValueField(wireName: r'address')
   String? get address;
@@ -81,12 +81,12 @@ class _$DumpDtoSerializer implements PrimitiveSerializer<DumpDto> {
     yield r'reportLong';
     yield serializers.serialize(
       object.reportLong,
-      specifiedType: const FullType(num),
+      specifiedType: const FullType(double),
     );
     yield r'reportLat';
     yield serializers.serialize(
       object.reportLat,
-      specifiedType: const FullType(num),
+      specifiedType: const FullType(double),
     );
     yield r'address';
     yield object.address == null
@@ -154,15 +154,15 @@ class _$DumpDtoSerializer implements PrimitiveSerializer<DumpDto> {
         case r'reportLong':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(num),
-          ) as num;
+            specifiedType: const FullType(double),
+          ) as double;
           result.reportLong = valueDes;
           break;
         case r'reportLat':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(num),
-          ) as num;
+            specifiedType: const FullType(double),
+          ) as double;
           result.reportLat = valueDes;
           break;
         case r'address':
