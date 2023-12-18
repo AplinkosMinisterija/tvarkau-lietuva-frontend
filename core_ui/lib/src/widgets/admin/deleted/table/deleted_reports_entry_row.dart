@@ -1,3 +1,4 @@
+import 'package:api_client/api_client.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core_ui/src/widgets/admin/admin_deleted_edit_button.dart';
 import 'package:http/http.dart' as http;
@@ -14,7 +15,7 @@ class DeletedReportsEntryRow extends StatefulWidget {
   });
 
   final double width;
-  final ReportModel report;
+  final FullReportDto report;
   final Function(ReportModel, List<http.MultipartFile>) onUpdate;
 
   @override
@@ -56,7 +57,7 @@ class _DeletedReportsEntryRowState extends State<DeletedReportsEntryRow> {
               SizedBox(
                 width: widget.width * 0.0963,
                 child: AutoSizeText(
-                  widget.report.reportLong.toString().substring(0, 7),
+                  widget.report.longitude.toString().substring(0, 7),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 3,
                   style: GoogleFonts.roboto(
@@ -72,7 +73,7 @@ class _DeletedReportsEntryRowState extends State<DeletedReportsEntryRow> {
               SizedBox(
                 width: widget.width * 0.0963,
                 child: AutoSizeText(
-                  widget.report.reportLat.toString().substring(0, 7),
+                  widget.report.latitude.toString().substring(0, 7),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 3,
                   style: GoogleFonts.roboto(

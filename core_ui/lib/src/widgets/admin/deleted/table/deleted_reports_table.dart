@@ -1,3 +1,4 @@
+import 'package:api_client/api_client.dart';
 import 'package:flutter/material.dart';
 import 'package:domain/domain.dart';
 import 'package:http/http.dart' as http;
@@ -16,7 +17,7 @@ class DeletedReportsTable extends StatefulWidget {
   });
 
   final double width;
-  final List<ReportModel> reports;
+  final List<FullReportDto> reports;
   final String activeEmail;
   final Function(ReportModel, String, List<http.MultipartFile>) onUpdate;
 
@@ -25,7 +26,7 @@ class DeletedReportsTable extends StatefulWidget {
 }
 
 class _DeletedReportsTableState extends State<DeletedReportsTable> {
-  List<ReportModel> reports = <ReportModel>[];
+  List<FullReportDto> reports = <FullReportDto>[];
   late ReportDataSourceAdmin reportDataSource;
   Color backgroundColor = const Color.fromRGBO(43, 180, 12, 1.0);
 
@@ -54,7 +55,7 @@ class _DeletedReportsTableState extends State<DeletedReportsTable> {
                   .effectiveRows[details.rowColumnIndex.rowIndex - 1]
                   .getCells()[0]
                   .value;
-              ReportModel selectedReport =
+              FullReportDto selectedReport =
                   reports.firstWhere((element) => element.refId == onTapRef);
               _addEditDialogBuilder(context, widget.width, selectedReport);
             }
@@ -170,7 +171,7 @@ class _DeletedReportsTableState extends State<DeletedReportsTable> {
   }
 
   Future<void> _addEditDialogBuilder(
-      BuildContext context, double width, ReportModel report) {
+      BuildContext context, double width, FullReportDto report) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {

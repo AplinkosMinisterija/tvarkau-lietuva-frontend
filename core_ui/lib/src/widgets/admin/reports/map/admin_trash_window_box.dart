@@ -1,3 +1,4 @@
+import 'package:api_client/api_client.dart';
 import 'package:core_ui/src/widgets/admin/admin_edit_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -20,7 +21,7 @@ class AdminTrashWindowBox extends StatelessWidget {
   final double screenWidth;
   final List<String>? imageUrls;
   final String status;
-  final ReportModel report;
+  final FullReportDto report;
   final Function(ReportModel, List<http.MultipartFile>) onUpdate;
 
   final List<ImageProvider> _imageProviders = [];

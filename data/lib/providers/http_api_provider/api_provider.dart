@@ -38,29 +38,31 @@ class ApiProvider {
   )
       .getAuthApi();
 
-  Future<List<domain.ReportModel>?> getAllTrashReports() async {
+  Future<List<FullReportDto>> getAllTrashReports() async {
     final String authKey = await SecureStorageProvider().getJwtToken();
-
-    Map<String, String> headers = {
-      'content-type': 'application/json',
-      'accept': 'application/json',
-      'auth-token': authKey.toString()
-    };
-    try {
-      http2.Response response = await http2
-          .get(Uri.parse(HttpApiConstants.fullTrashUrl), headers: headers);
-      List<ReportModel> convertedResponse = List<ReportModel>.from(
-              jsonDecode(response.body).map((x) => ReportModel.fromJson(x)))
-          .toList();
-      return convertedResponse;
-    } catch (error) {
-      return null;
-    }
+    final response =
+    await adminApi.adminControllerGetAllReports(isDeleted: false, authorization: authKey);
+    return response.data!.toList();
+    //
+    // Map<String, String> headers = {
+    //   'content-type': 'application/json',
+    //   'accept': 'application/json',
+    //   'auth-token': authKey.toString()
+    // };
+    // try {
+    //   http2.Response response = await http2
+    //       .get(Uri.parse(HttpApiConstants.fullTrashUrl), headers: headers);
+    //   List<ReportModel> convertedResponse = List<ReportModel>.from(
+    //           jsonDecode(response.body).map((x) => ReportModel.fromJson(x)))
+    //       .toList();
+    //   return convertedResponse;
+    // } catch (error) {
+    //   return null;
+    // }
   }
 
   Future<PublicReportDto> getOneTrashReport(String refId) async {
     final response = await reportsApi.reportControllerGetReportById(refId: int.parse(refId));
-    print(response.data);
     return response.data!;
     // Map<String, String> headers = {
     //   'content-type': 'application/json',

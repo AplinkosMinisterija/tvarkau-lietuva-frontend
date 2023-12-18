@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:api_client/api_client.dart';
 import 'package:core/constants/global_constants.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:core_ui/src/widgets/admin/admin_cancel_button.dart';
@@ -15,7 +16,7 @@ import '../../admin_save_button.dart';
 import '../../historical_data/admin_history_button.dart';
 
 class DeletedEditForm extends StatefulWidget {
-  final ReportModel report;
+  final FullReportDto report;
   final VoidCallback onPressed;
   final Function(ReportModel, List<http.MultipartFile>) onUpdate;
 
@@ -83,10 +84,10 @@ class _DeletedEditFormState extends State<DeletedEditForm> {
   void initState() {
     currentText = widget.report.name;
     currentComment = widget.report.comment ?? '';
-    currentLong = widget.report.reportLong.toString();
-    currentLat = widget.report.reportLat.toString();
-    currentDate = widget.report.reportDate;
-    currentFormattedDate = formatDate(widget.report.reportDate);
+    currentLong = widget.report.longitude.toString();
+    currentLat = widget.report.latitude.toString();
+    currentDate = widget.report.reportDate.toString();
+    currentFormattedDate = formatDate(widget.report.reportDate.toString());
     currentStatus = widget.report.status;
     currentVisibility = widget.report.isVisible!;
 
@@ -474,7 +475,7 @@ class _DeletedEditFormState extends State<DeletedEditForm> {
                                         comment: currentComment,
                                         reportLong: double.parse(currentLong),
                                         reportLat: double.parse(currentLat),
-                                        reportDate: widget.report.reportDate,
+                                        reportDate: widget.report.reportDate.toString(),
                                         isVisible: currentVisibility,
                                         status: currentStatus,
                                         isDeleted: true,
@@ -491,9 +492,9 @@ class _DeletedEditFormState extends State<DeletedEditForm> {
                                       name: widget.report.name,
                                       type: widget.report.type,
                                       comment: widget.report.comment,
-                                      reportLong: widget.report.reportLong,
-                                      reportLat: widget.report.reportLat,
-                                      reportDate: widget.report.reportDate,
+                                      reportLong: widget.report.longitude,
+                                      reportLat: widget.report.latitude,
+                                      reportDate: widget.report.reportDate.toString(),
                                       isVisible: widget.report.isVisible,
                                       status: widget.report.status,
                                       isDeleted: false,

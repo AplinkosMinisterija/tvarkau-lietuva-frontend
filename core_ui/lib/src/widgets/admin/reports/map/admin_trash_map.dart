@@ -1,3 +1,4 @@
+import 'package:api_client/api_client.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:core_ui/src/widgets/admin/reports/map/admin_trash_window_box.dart';
@@ -18,7 +19,7 @@ class AdminTrashMap extends StatefulWidget {
   });
 
   final double width;
-  final List<ReportModel> trashReports;
+  final List<FullReportDto> trashReports;
   final ValueChanged<bool> isHovering;
   final Function(ReportModel, List<http.MultipartFile>) onUpdate;
 
@@ -44,8 +45,8 @@ class _AdminTrashMapState extends State<AdminTrashMap> {
               element.name.toString() + index.toString(),
             ),
             position: LatLng(
-              element.reportLat,
-              element.reportLong,
+              element.latitude,
+              element.longitude,
             ),
             icon: await BitmapDescriptor.fromAssetImage(
                 const ImageConfiguration(size: Size(25, 30)),
@@ -54,7 +55,7 @@ class _AdminTrashMapState extends State<AdminTrashMap> {
               _customTrashInfoWindowController.addInfoWindow!(
                 AdminTrashWindowBox(
                   title: element.name,
-                  imageUrls: element.imageUrls,
+                  imageUrls: element.imageUrls.toList(),
                   status: element.status,
                   onUpdate: (updatedModel, officerFiles) {
                     widget.onUpdate(updatedModel, officerFiles);
@@ -63,8 +64,8 @@ class _AdminTrashMapState extends State<AdminTrashMap> {
                   screenWidth: widget.width,
                 ),
                 LatLng(
-                  element.reportLat,
-                  element.reportLong,
+                  element.latitude,
+                  element.longitude,
                 ),
               );
             }),

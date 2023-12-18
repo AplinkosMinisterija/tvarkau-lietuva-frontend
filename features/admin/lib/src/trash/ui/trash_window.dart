@@ -29,11 +29,10 @@ class TrashWindow extends StatelessWidget {
             return BlocBuilder<TrashBloc, TrashState>(
               builder: (BuildContext context, TrashState state) {
                 if (state is ContentState) {
-                  final List<ReportModel> trashReports = state.trashReports;
                   return viewType == 'chart'
                       ? AdminReportsTable(
                           width: screenWidth,
-                          reports: trashReports,
+                          reports: state.trashReports,
                           onUpdate: (updatedModel, officerFiles) {
                             Navigator.of(context).pop();
                             context.read<TrashBloc>().add(

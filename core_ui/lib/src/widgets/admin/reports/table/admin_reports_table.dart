@@ -1,3 +1,4 @@
+import 'package:api_client/api_client.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core_ui/src/widgets/admin/reports/table/report_edit_form.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class AdminReportsTable extends StatefulWidget {
   });
 
   final double width;
-  final List<ReportModel> reports;
+  final List<FullReportDto> reports;
   final Function(ReportModel, List<http.MultipartFile>) onUpdate;
 
   @override
@@ -23,7 +24,7 @@ class AdminReportsTable extends StatefulWidget {
 }
 
 class _AdminReportsTableState extends State<AdminReportsTable> {
-  List<ReportModel> reports = <ReportModel>[];
+  List<FullReportDto> reports = <FullReportDto>[];
   late ReportDataSourceAdmin reportDataSource;
   Color backgroundColor = const Color.fromRGBO(43, 180, 12, 1.0);
 
@@ -52,7 +53,7 @@ class _AdminReportsTableState extends State<AdminReportsTable> {
                   .effectiveRows[details.rowColumnIndex.rowIndex - 1]
                   .getCells()[0]
                   .value;
-              ReportModel selectedReport =
+              FullReportDto selectedReport =
                   reports.firstWhere((element) => element.refId == onTapRef);
               _addEditDialogBuilder(context, widget.width, selectedReport);
             }
@@ -168,7 +169,7 @@ class _AdminReportsTableState extends State<AdminReportsTable> {
   }
 
   Future<void> _addEditDialogBuilder(
-      BuildContext context, double width, ReportModel report) {
+      BuildContext context, double width, FullReportDto report) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -213,27 +214,27 @@ String getFormattedDateAdmin(String unformattedDate) {
 }
 
 class ReportDataSourceAdmin extends DataGridSource {
-  ReportDataSourceAdmin({required List<ReportModel> reportData}) {
+  ReportDataSourceAdmin({required List<FullReportDto> reportData}) {
     _reportData = reportData
         .map<DataGridRow>((e) => DataGridRow(cells: [
               DataGridCell<String>(columnName: 'ref', value: e.refId),
               DataGridCell<String>(
                   columnName: 'id',
                   value:
-                      'TLP-A${'0' * (8 - e.refId!.length)}${e.refId!.toUpperCase()}'),
+                      'TLP-A${'0' * (8 - e.refId.length)}${e.refId.toUpperCase()}'),
               DataGridCell<String>(
                   columnName: 'date',
-                  value: getFormattedDateAdmin(e.reportDate)),
+                  value: getFormattedDateAdmin(e.reportDate.toString())),
               DataGridCell<String>(
                   columnName: 'lat',
-                  value: e.reportLat.toString().length > 6
-                      ? e.reportLat.toString().substring(0, 7)
-                      : e.reportLat.toString()),
+                  value: e.latitude.toString().length > 6
+                      ? e.latitude.toString().substring(0, 7)
+                      : e.latitude.toString()),
               DataGridCell<String>(
                   columnName: 'long',
-                  value: e.reportLong.toString().length > 6
-                      ? e.reportLong.toString().substring(0, 7)
-                      : e.reportLong.toString()),
+                  value: e.longitude.toString().length > 6
+                      ? e.longitude.toString().substring(0, 7)
+                      : e.longitude.toString()),
               DataGridCell<String>(columnName: 'name', value: e.name),
               DataGridCell<String>(columnName: 'status', value: e.status),
               DataGridCell<String>(

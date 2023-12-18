@@ -1,3 +1,4 @@
+import 'package:api_client/api_client.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:domain/domain.dart';
@@ -17,7 +18,7 @@ class AdminDeletedEditButton extends StatefulWidget {
   final String type;
   final double width;
   final VoidCallback onPressed;
-  final ReportModel report;
+  final FullReportDto report;
   final Function(ReportModel, List<http.MultipartFile>) onUpdate;
 
   @override

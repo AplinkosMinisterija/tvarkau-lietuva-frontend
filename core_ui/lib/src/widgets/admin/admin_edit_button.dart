@@ -20,7 +20,7 @@ class AdminEditButton extends StatefulWidget {
   final String type;
   final double width;
   final VoidCallback onPressed;
-  final ReportModel? report;
+  final FullReportDto? report;
   final FullDumpDto? dump;
   final Function(ReportModel, List<http.MultipartFile>) onUpdate;
 

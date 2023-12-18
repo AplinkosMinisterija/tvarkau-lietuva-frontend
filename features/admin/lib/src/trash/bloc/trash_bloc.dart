@@ -1,3 +1,4 @@
+import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:data/data.dart';
@@ -24,16 +25,16 @@ class TrashBloc extends Bloc<TrashEvent, TrashState> {
         LoadingState(),
       );
 
-      final List<ReportModel>? trashReports =
+      final List<FullReportDto> trashReports =
           await ApiProvider().getAllTrashReports();
-      if (trashReports != null) {
+      if (trashReports.isNotEmpty) {
         emit(
           ContentState(
             trashReports: trashReports,
           ),
         );
       } else {
-        emit(ErrorState(errorMessage: 'Neautorizuota'));
+        emit(ErrorState(errorMessage: 'Klaida'));
       }
     } catch (e) {
       emit(
@@ -65,16 +66,16 @@ class TrashBloc extends Bloc<TrashEvent, TrashState> {
         officerImageFiles: event.officerImageFiles,
       );
 
-      final List<ReportModel>? trashReports =
+      final List<FullReportDto> trashReports =
           await ApiProvider().getAllTrashReports();
-      if (trashReports != null) {
+      if (trashReports.isNotEmpty) {
         emit(
           ContentState(
             trashReports: trashReports,
           ),
         );
       } else {
-        emit(ErrorState(errorMessage: 'Neautorizuota'));
+        emit(ErrorState(errorMessage: 'Klaida'));
       }
     } catch (e) {
       emit(
