@@ -45,6 +45,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
           try {
             LogInDto userInfo = await ApiProvider().getUserInfo(accessToken);
             await SecureStorageProvider().setJwtToken(userInfo.accessKey);
+
             emit(ContentState(userInfo: userInfo));
           } catch (e) {
             emit(

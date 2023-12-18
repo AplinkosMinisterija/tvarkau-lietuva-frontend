@@ -42,10 +42,10 @@ abstract class FullDumpDto implements Built<FullDumpDto, FullDumpDtoBuilder> {
   bool get isVisible;
 
   @BuiltValueField(wireName: r'address')
-  String get address;
+  String? get address;
 
   @BuiltValueField(wireName: r'phone')
-  String get phone;
+  String? get phone;
 
   @BuiltValueField(wireName: r'workingHours')
   String get workingHours;
@@ -107,15 +107,19 @@ class _$FullDumpDtoSerializer implements PrimitiveSerializer<FullDumpDto> {
       specifiedType: const FullType(bool),
     );
     yield r'address';
-    yield serializers.serialize(
-      object.address,
-      specifiedType: const FullType(String),
-    );
+    yield object.address == null
+        ? null
+        : serializers.serialize(
+            object.address,
+            specifiedType: const FullType.nullable(String),
+          );
     yield r'phone';
-    yield serializers.serialize(
-      object.phone,
-      specifiedType: const FullType(String),
-    );
+    yield object.phone == null
+        ? null
+        : serializers.serialize(
+            object.phone,
+            specifiedType: const FullType.nullable(String),
+          );
     yield r'workingHours';
     yield serializers.serialize(
       object.workingHours,
@@ -196,15 +200,17 @@ class _$FullDumpDtoSerializer implements PrimitiveSerializer<FullDumpDto> {
         case r'address':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(String),
-          ) as String;
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
           result.address = valueDes;
           break;
         case r'phone':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(String),
-          ) as String;
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
           result.phone = valueDes;
           break;
         case r'workingHours':

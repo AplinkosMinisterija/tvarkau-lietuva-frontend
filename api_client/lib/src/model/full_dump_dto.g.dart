@@ -20,9 +20,9 @@ class _$FullDumpDto extends FullDumpDto {
   @override
   final bool isVisible;
   @override
-  final String address;
+  final String? address;
   @override
-  final String phone;
+  final String? phone;
   @override
   final String workingHours;
   @override
@@ -38,8 +38,8 @@ class _$FullDumpDto extends FullDumpDto {
       required this.longitude,
       required this.latitude,
       required this.isVisible,
-      required this.address,
-      required this.phone,
+      this.address,
+      this.phone,
       required this.workingHours,
       required this.moreInformation})
       : super._() {
@@ -51,8 +51,6 @@ class _$FullDumpDto extends FullDumpDto {
     BuiltValueNullFieldError.checkNotNull(latitude, r'FullDumpDto', 'latitude');
     BuiltValueNullFieldError.checkNotNull(
         isVisible, r'FullDumpDto', 'isVisible');
-    BuiltValueNullFieldError.checkNotNull(address, r'FullDumpDto', 'address');
-    BuiltValueNullFieldError.checkNotNull(phone, r'FullDumpDto', 'phone');
     BuiltValueNullFieldError.checkNotNull(
         workingHours, r'FullDumpDto', 'workingHours');
     BuiltValueNullFieldError.checkNotNull(
@@ -211,10 +209,8 @@ class FullDumpDtoBuilder implements Builder<FullDumpDto, FullDumpDtoBuilder> {
                 latitude, r'FullDumpDto', 'latitude'),
             isVisible: BuiltValueNullFieldError.checkNotNull(
                 isVisible, r'FullDumpDto', 'isVisible'),
-            address: BuiltValueNullFieldError.checkNotNull(
-                address, r'FullDumpDto', 'address'),
-            phone: BuiltValueNullFieldError.checkNotNull(
-                phone, r'FullDumpDto', 'phone'),
+            address: address,
+            phone: phone,
             workingHours: BuiltValueNullFieldError.checkNotNull(
                 workingHours, r'FullDumpDto', 'workingHours'),
             moreInformation: BuiltValueNullFieldError.checkNotNull(

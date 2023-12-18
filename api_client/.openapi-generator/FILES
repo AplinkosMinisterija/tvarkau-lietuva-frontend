@@ -43,6 +43,3 @@ lib/src/model/status_records_dto.dart
 lib/src/model/update_dump_dto.dart
 lib/src/serializers.dart
 pubspec.yaml
-test/auth_api_test.dart
-test/log_in_dto_test.dart
-test/login_request_dto_test.dart

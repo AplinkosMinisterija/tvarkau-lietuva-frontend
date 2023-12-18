@@ -47,11 +47,11 @@ import 'package:api_client/api_client.dart';
 
 
 final api = ApiClient().getAdminApi();
-final String accessToken = accessToken_example; // String | Access token used for authorization
+final String authorization = authorization_example; // String | Access token used for authorization
 final CreateDumpDto createDumpDto = ; // CreateDumpDto | 
 
 try {
-    final response = await api.adminControllerCreateDump(accessToken, createDumpDto);
+    final response = await api.adminControllerCreateDump(authorization, createDumpDto);
     print(response);
 } catch on DioError (e) {
     print("Exception when calling AdminApi->adminControllerCreateDump: $e\n");

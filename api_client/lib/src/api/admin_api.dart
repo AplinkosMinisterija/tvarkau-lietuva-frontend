@@ -24,7 +24,7 @@ class AdminApi {
   ///
   ///
   /// Parameters:
-  /// * [accessToken] - Access token used for authorization
+  /// * [authorization] - Access token used for authorization
   /// * [createDumpDto]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
@@ -36,7 +36,7 @@ class AdminApi {
   /// Returns a [Future] containing a [Response] with a [FullDumpDto] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<FullDumpDto>> adminControllerCreateDump({
-    required String accessToken,
+    required String authorization,
     required CreateDumpDto createDumpDto,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -49,7 +49,7 @@ class AdminApi {
     final _options = Options(
       method: r'POST',
       headers: <String, dynamic>{
-        r'access-token': accessToken,
+        r'authorization': authorization,
         ...?headers,
       },
       extra: <String, dynamic>{
@@ -122,7 +122,7 @@ class AdminApi {
   ///
   ///
   /// Parameters:
-  /// * [accessToken] - Access token used for authorization
+  /// * [authorization] - Access token used for authorization
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -133,7 +133,7 @@ class AdminApi {
   /// Returns a [Future] containing a [Response] with a [BuiltList<FullDumpDto>] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<BuiltList<FullDumpDto>>> adminControllerGetAllDumps({
-    required String accessToken,
+    required String authorization,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -145,7 +145,7 @@ class AdminApi {
     final _options = Options(
       method: r'GET',
       headers: <String, dynamic>{
-        r'access-token': accessToken,
+        r'authorization': authorization,
         ...?headers,
       },
       extra: <String, dynamic>{
@@ -200,7 +200,7 @@ class AdminApi {
   ///
   /// Parameters:
   /// * [isDeleted]
-  /// * [accessToken] - Access token used for authorization
+  /// * [authorization] - Access token used for authorization
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -212,7 +212,7 @@ class AdminApi {
   /// Throws [DioError] if API call or serialization fails
   Future<Response<BuiltList<FullReportDto>>> adminControllerGetAllReports({
     required bool isDeleted,
-    required String accessToken,
+    required String authorization,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -224,7 +224,7 @@ class AdminApi {
     final _options = Options(
       method: r'GET',
       headers: <String, dynamic>{
-        r'access-token': accessToken,
+        r'authorization': authorization,
         ...?headers,
       },
       extra: <String, dynamic>{
@@ -285,7 +285,7 @@ class AdminApi {
   ///
   ///
   /// Parameters:
-  /// * [accessToken] - Access token used for authorization
+  /// * [authorization] - Access token used for authorization
   /// * [editor]
   /// * [refId]
   /// * [name]
@@ -308,7 +308,7 @@ class AdminApi {
   /// Returns a [Future] containing a [Response] with a [FullReportDto] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<FullReportDto>> adminControllerUpdateReport({
-    required String accessToken,
+    required String authorization,
     required String editor,
     required String refId,
     required String name,
@@ -332,7 +332,7 @@ class AdminApi {
     final _options = Options(
       method: r'POST',
       headers: <String, dynamic>{
-        r'access-token': accessToken,
+        r'authorization': authorization,
         ...?headers,
       },
       extra: <String, dynamic>{

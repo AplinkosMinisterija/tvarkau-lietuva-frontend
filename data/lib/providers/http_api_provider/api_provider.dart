@@ -101,7 +101,7 @@ class ApiProvider {
   Future<List<FullDumpDto>> getAllDumpReports() async {
     String accessToken = await SecureStorageProvider().getJwtToken();
     final response =
-        await adminApi.adminControllerGetAllDumps(accessToken: accessToken);
+        await adminApi.adminControllerGetAllDumps(authorization: accessToken);
     return response.data!.toList();
   }
 
@@ -112,7 +112,6 @@ class ApiProvider {
 
 
   Future<LogInDto> getUserInfo(String accessToken) async {
-
 
     final response = await authApi.authControllerLogin(loginRequestDto: LoginRequestDto((builder)=>builder.accessKey = accessToken));
     return response.data!;

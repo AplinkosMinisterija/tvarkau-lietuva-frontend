@@ -45,12 +45,16 @@ class DumpWindow extends StatelessWidget {
                         color: AppTheme.mainThemeColor, size: 150),
                   );
                 } else if (state is ErrorState) {
-                  return ErrorReloadWidget(
-                    onPressed: () {
-                      context.read<DumpBloc>().add(
-                            ReloadPage(),
-                          );
-                    },
+                  return SizedBox(
+                    height: 300,
+                    width: 800,
+                    child: ErrorReloadWidget(
+                      onPressed: () {
+                        context.read<DumpBloc>().add(
+                              ReloadPage(),
+                            );
+                      },
+                    ),
                   );
                 } else {
                   return const SizedBox.shrink();

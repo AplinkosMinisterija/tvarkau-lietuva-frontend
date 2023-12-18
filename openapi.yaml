@@ -9,7 +9,7 @@ paths:
           in: query
           schema:
             type: boolean
-        - name: access-token
+        - name: authorization
           in: header
           description: Access token used for authorization
           required: true
@@ -31,7 +31,7 @@ paths:
     post:
       operationId: AdminController_updateReport
       parameters:
-        - name: access-token
+        - name: authorization
           in: header
           description: Access token used for authorization
           required: true
@@ -56,7 +56,7 @@ paths:
     get:
       operationId: AdminController_getAllDumps
       parameters:
-        - name: access-token
+        - name: authorization
           in: header
           description: Access token used for authorization
           required: true
@@ -76,7 +76,7 @@ paths:
     post:
       operationId: AdminController_createDump
       parameters:
-        - name: access-token
+        - name: authorization
           in: header
           description: Access token used for authorization
           required: true
@@ -365,8 +365,10 @@ components:
           type: boolean
         address:
           type: string
+          nullable: true
         phone:
           type: string
+          nullable: true
         workingHours:
           type: string
         moreInformation:

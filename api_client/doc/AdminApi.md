@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 
 # **adminControllerCreateDump**
-> FullDumpDto adminControllerCreateDump(accessToken, createDumpDto)
+> FullDumpDto adminControllerCreateDump(authorization, createDumpDto)
 
 
 
@@ -25,11 +25,11 @@ Method | HTTP request | Description
 import 'package:api_client/api.dart';
 
 final api = ApiClient().getAdminApi();
-final String accessToken = accessToken_example; // String | Access token used for authorization
+final String authorization = authorization_example; // String | Access token used for authorization
 final CreateDumpDto createDumpDto = ; // CreateDumpDto | 
 
 try {
-    final response = api.adminControllerCreateDump(accessToken, createDumpDto);
+    final response = api.adminControllerCreateDump(authorization, createDumpDto);
     print(response);
 } catch on DioError (e) {
     print('Exception when calling AdminApi->adminControllerCreateDump: $e\n');
@@ -40,7 +40,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **accessToken** | **String**| Access token used for authorization | 
+ **authorization** | **String**| Access token used for authorization | 
  **createDumpDto** | [**CreateDumpDto**](CreateDumpDto.md)|  | 
 
 ### Return type
@@ -59,7 +59,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminControllerGetAllDumps**
-> BuiltList<FullDumpDto> adminControllerGetAllDumps(accessToken)
+> BuiltList<FullDumpDto> adminControllerGetAllDumps(authorization)
 
 
 
@@ -68,10 +68,10 @@ No authorization required
 import 'package:api_client/api.dart';
 
 final api = ApiClient().getAdminApi();
-final String accessToken = accessToken_example; // String | Access token used for authorization
+final String authorization = authorization_example; // String | Access token used for authorization
 
 try {
-    final response = api.adminControllerGetAllDumps(accessToken);
+    final response = api.adminControllerGetAllDumps(authorization);
     print(response);
 } catch on DioError (e) {
     print('Exception when calling AdminApi->adminControllerGetAllDumps: $e\n');
@@ -82,7 +82,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **accessToken** | **String**| Access token used for authorization | 
+ **authorization** | **String**| Access token used for authorization | 
 
 ### Return type
 
@@ -100,7 +100,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminControllerGetAllReports**
-> BuiltList<FullReportDto> adminControllerGetAllReports(isDeleted, accessToken)
+> BuiltList<FullReportDto> adminControllerGetAllReports(isDeleted, authorization)
 
 
 
@@ -110,10 +110,10 @@ import 'package:api_client/api.dart';
 
 final api = ApiClient().getAdminApi();
 final bool isDeleted = true; // bool | 
-final String accessToken = accessToken_example; // String | Access token used for authorization
+final String authorization = authorization_example; // String | Access token used for authorization
 
 try {
-    final response = api.adminControllerGetAllReports(isDeleted, accessToken);
+    final response = api.adminControllerGetAllReports(isDeleted, authorization);
     print(response);
 } catch on DioError (e) {
     print('Exception when calling AdminApi->adminControllerGetAllReports: $e\n');
@@ -125,7 +125,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **isDeleted** | **bool**|  | 
- **accessToken** | **String**| Access token used for authorization | 
+ **authorization** | **String**| Access token used for authorization | 
 
 ### Return type
 
@@ -143,7 +143,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminControllerUpdateReport**
-> FullReportDto adminControllerUpdateReport(accessToken, editor, refId, name, longitude, latitude, isVisible, isDeleted, comment, status, officerImageUrls, imageUrls, images)
+> FullReportDto adminControllerUpdateReport(authorization, editor, refId, name, longitude, latitude, isVisible, isDeleted, comment, status, officerImageUrls, imageUrls, images)
 
 
 
@@ -152,7 +152,7 @@ No authorization required
 import 'package:api_client/api.dart';
 
 final api = ApiClient().getAdminApi();
-final String accessToken = accessToken_example; // String | Access token used for authorization
+final String authorization = authorization_example; // String | Access token used for authorization
 final String editor = editor_example; // String | 
 final String refId = refId_example; // String | 
 final String name = name_example; // String | 
@@ -167,7 +167,7 @@ final BuiltList<String> imageUrls = ; // BuiltList<String> |
 final BuiltList<MultipartFile> images = /path/to/file.txt; // BuiltList<MultipartFile> | 
 
 try {
-    final response = api.adminControllerUpdateReport(accessToken, editor, refId, name, longitude, latitude, isVisible, isDeleted, comment, status, officerImageUrls, imageUrls, images);
+    final response = api.adminControllerUpdateReport(authorization, editor, refId, name, longitude, latitude, isVisible, isDeleted, comment, status, officerImageUrls, imageUrls, images);
     print(response);
 } catch on DioError (e) {
     print('Exception when calling AdminApi->adminControllerUpdateReport: $e\n');
@@ -178,7 +178,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **accessToken** | **String**| Access token used for authorization | 
+ **authorization** | **String**| Access token used for authorization | 
  **editor** | **String**|  | 
  **refId** | **String**|  | 
  **name** | **String**|  | 
