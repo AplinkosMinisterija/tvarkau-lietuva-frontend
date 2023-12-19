@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:domain/domain.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart' as dio;
 import 'package:core_ui/core_ui.dart';
 import 'dart:typed_data';
 import 'package:http_parser/http_parser.dart';
@@ -25,7 +25,7 @@ class AddingScreenMobile extends StatefulWidget {
   final double width;
   final double height;
   final List<PublicReportDto> reports;
-  final Function(String, String, double, double, List<http.MultipartFile>)
+  final Function(String, String, double, double, List<dio.MultipartFile>)
       onAddTap;
   final VoidCallback onDataSecurityTap;
 
@@ -36,7 +36,7 @@ class AddingScreenMobile extends StatefulWidget {
 class _AddingScreenMobileState extends State<AddingScreenMobile> {
   final List<List<int>> _selectedImages = [];
   final List<Uint8List> _fileBytes = [];
-  List<http.MultipartFile> multipartList = [];
+  List<dio.MultipartFile> multipartList = [];
 
   Future<void> getMultipleImageInfos() async {
     List<Uint8List>? images = await ImagePickerWeb.getMultiImagesAsBytes(
@@ -47,7 +47,7 @@ class _AddingScreenMobileState extends State<AddingScreenMobile> {
         _selectedImages.addAll(images);
         _fileBytes.addAll(images);
         for (var element in _selectedImages) {
-          multipartList.add(http.MultipartFile.fromBytes('image', element,
+          multipartList.add(dio.MultipartFile.fromBytes(element,
               contentType: MediaType("image", "jpg"), filename: 'name.jpg'));
         }
         if (_selectedImages.length > 4 && _selectedImages.isNotEmpty) {

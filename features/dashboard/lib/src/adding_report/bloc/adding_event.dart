@@ -9,7 +9,7 @@ class AddReport implements AddingEvent {
   final String textValue;
   final double selectedLat;
   final double selectedLong;
-  final List<https.MultipartFile> imageFiles;
+  final List<dio.MultipartFile> imageFiles;
 
   AddReport({
     required this.emailValue,

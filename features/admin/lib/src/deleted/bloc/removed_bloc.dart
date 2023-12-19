@@ -1,3 +1,4 @@
+import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:data/data.dart';
@@ -25,7 +26,7 @@ class RemovedBloc extends Bloc<RemovedEvent, RemovedState> {
       );
 
 
-      final List<ReportModel> trashReports =
+      final List<FullReportDto> trashReports =
           await ApiProvider().getAllRemovedReports();
       emit(
         ContentState(
@@ -62,7 +63,7 @@ class RemovedBloc extends Bloc<RemovedEvent, RemovedState> {
         officerImageFiles: event.officerImageFiles,
       );
 
-      final List<ReportModel> trashReports =
+      final List<FullReportDto> trashReports =
           await ApiProvider().getAllRemovedReports();
       emit(
         ContentState(

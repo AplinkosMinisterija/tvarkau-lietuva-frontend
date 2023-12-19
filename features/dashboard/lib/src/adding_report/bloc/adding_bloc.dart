@@ -2,7 +2,7 @@ import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:data/data.dart';
-import 'package:http/http.dart' as https;
+import 'package:dio/dio.dart' as dio;
 
 part 'adding_event.dart';
 
@@ -46,13 +46,9 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
       emit(
         LoadingState(),
       );
-      final ApiProviderBase apiProviderBase = ApiProviderBase(
-        baseUrl: HttpApiConstants.devBaseUrl,
-      );
-      final ApiProvider apiProvider = ApiProvider(
-      );
 
-      await apiProvider.sendNewTrashReport(
+
+      await ApiProvider().sendNewTrashReport(
         emailValue: event.emailValue,
         textValue: event.textValue,
         selectedLat: event.selectedLat,
@@ -64,6 +60,7 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
         ConfirmationState(),
       );
     } catch (e) {
+      print(e);
       emit(
         ErrorState(errorMessage: 'Įvyko netikėta klaida'),
       );

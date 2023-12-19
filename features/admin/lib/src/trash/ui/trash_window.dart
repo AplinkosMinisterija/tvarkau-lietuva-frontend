@@ -57,7 +57,7 @@ class TrashWindow extends StatelessWidget {
                         )
                       : AdminTrashMap(
                           width: screenWidth,
-                          trashReports: trashReports,
+                          trashReports: state.trashReports,
                           isHovering: isHovering,
                           onUpdate: (updatedModel, officerFiles) {
                             Navigator.of(context).pop();

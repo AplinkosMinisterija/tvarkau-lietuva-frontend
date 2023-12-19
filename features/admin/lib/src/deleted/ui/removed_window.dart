@@ -29,10 +29,9 @@ class RemovedWindow extends StatelessWidget {
             return BlocBuilder<RemovedBloc, RemovedState>(
               builder: (BuildContext context, RemovedState state) {
                 if (state is ContentState) {
-                  final List<ReportModel> trashReports = state.trashReports;
                   return DeletedReportsTable(
                     width: screenWidth,
-                    reports: trashReports,
+                    reports: state.trashReports,
                     onUpdate: (updatedModel, editor, officerFiles) {
                       Navigator.of(context).pop();
                       context.read<RemovedBloc>().add(

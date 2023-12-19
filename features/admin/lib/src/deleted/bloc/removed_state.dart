@@ -7,7 +7,7 @@ class ReloadState implements RemovedState {}
 class LoadingState implements RemovedState {}
 
 class ContentState implements RemovedState {
-  final List<ReportModel> trashReports;
+  final List<FullReportDto> trashReports;
 
   ContentState({
     required this.trashReports,
