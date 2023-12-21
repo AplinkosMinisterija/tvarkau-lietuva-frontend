@@ -207,8 +207,10 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                         child: ClipRRect(
                           borderRadius:
                               const BorderRadius.all(Radius.circular(8)),
-                          child: ReportMap(
-                            report: widget.report,
+                          child: OSMMap(
+                            layers: [
+                              ReportLayer(report: widget.report),
+                            ],
                           ),
                         ),
                       ),

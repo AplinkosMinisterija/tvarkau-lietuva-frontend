@@ -56,11 +56,15 @@ class _MainTrashMapMobileState extends State<MainTrashMapMobile> {
                   width: widget.width * 0.911,
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(8)),
-                    child: ReportsMap(
-                      reports: widget.trashReports,
-                      onPopupTap: (report) {
-                        widget.onInformationTap(report.refId ?? '1');
-                      },
+                    child: OSMMap(
+                      layers: [
+                        ClusteredReportsLayer(
+                          reports: widget.trashReports,
+                          onTap: (report) {
+                            widget.onInformationTap(report.refId ?? '1');
+                          },
+                        )
+                      ],
                     ),
                   ),
                 ),

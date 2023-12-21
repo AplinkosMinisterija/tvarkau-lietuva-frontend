@@ -1,17 +1,16 @@
 import 'package:core/constants/global_constants.dart';
 import 'package:core/core.dart';
-import 'package:core/utils/captcha_dialog.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:domain/domain.dart';
 import 'package:http/http.dart' as http;
 import 'package:core_ui/core_ui.dart';
 import 'dart:typed_data';
 import 'package:http_parser/http_parser.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class AddingScreenWeb extends StatefulWidget {
@@ -65,34 +64,14 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
 
   bool isTermsAccepted = false;
   final _formKey = GlobalKey<FormState>();
-  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
   bool isShowMarkers = true;
   bool isMapDisabled = false;
   String currentTextValue = '';
   String currentEmailValue = '';
-  Set<Marker> markers = {};
-  List<Marker> addedMarker = [];
-  double selectedLat = 0;
-  double selectedLong = 0;
-  MapType currentMapType = MapType.normal;
-  CameraPosition _lithuaniaCameraPosition =
-      const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 7.0);
   List<DropdownMenuItem<String>> dropDownItems = [];
   late String currentItem;
 
-  late GoogleMapController mapController;
-  LatLng? _currentPosition;
-  bool _isLoading = false;
-
-  void addCustomIcon() {
-    BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(), 'assets/svg/pin_icon.svg')
-        .then((icon) {
-      setState(() {
-        markerIcon = icon;
-      });
-    });
-  }
+  LatLng? _selectedPosition;
 
   void removeSelectedImage(int imageIndex) {
     setState(() {
@@ -104,24 +83,6 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      addCustomIcon();
-    });
-    int index = 0;
-    widget.reports.forEach((element) {
-      markers.add(
-        Marker(
-          markerId: MarkerId(
-            element.name + index.toString(),
-          ),
-          position: LatLng(
-            element.reportLat,
-            element.reportLong,
-          ),
-        ),
-      );
-      index++;
-    });
     currentItem = 'Šiukšlinimas gamtoje';
     dropDownItems.add(DropdownMenuItem(
       value: 'Šiukšlinimas gamtoje',
@@ -139,42 +100,27 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
   }
 
   getLocation() async {
-    setState(() {
-      _isLoading = true;
-    });
-
     LocationPermission permission;
     permission = await Geolocator.requestPermission();
 
-    if (permission == LocationPermission.denied ||
-        permission == LocationPermission.deniedForever) {
-      setState(() {
-        _isLoading = false;
-      });
-    } else {
-      Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
-
-      LatLng location = LatLng(position.latitude, position.longitude);
+    if (permission != LocationPermission.denied &&
+        permission != LocationPermission.deniedForever) {
+      final position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
 
       setState(() {
-        selectedLat = position.latitude;
-        selectedLong = position.longitude;
-        _currentPosition = location;
-        _isLoading = false;
-        _handleTap(location);
-        _lithuaniaCameraPosition =
-            CameraPosition(target: _currentPosition!, zoom: 13);
+        _selectedPosition ??= LatLng(
+          position.latitude,
+          position.longitude,
+        );
       });
     }
   }
 
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-  }
-
   @override
   Widget build(BuildContext context) {
+    final selectedLocation = _selectedPosition;
     return Title(
       title: "Pranešti apie šiukšlinimą",
       color: Colors.green,
@@ -192,69 +138,27 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
                       SizedBox(
                         height: constraints.maxHeight,
                         width: constraints.maxWidth * 0.7,
-                        child: _isLoading
-                            ? Stack(
-                                children: [
-                                  Opacity(
-                                    opacity: 0.5,
-                                    child: GoogleMap(
-                                      onMapCreated: _onMapCreated,
-                                      buildingsEnabled: true,
-                                      initialCameraPosition:
-                                          _lithuaniaCameraPosition,
-                                      mapType: currentMapType,
-                                      onTap: null,
-                                      markers: isShowMarkers
-                                          ? markers
-                                          : addedMarker.map((e) => e).toSet(),
+                        child: OSMMap(
+                          onTap: _selectPosition,
+                          layers: [
+                            const CurrentUserLocation(),
+                            ClusteredReportsLayer(reports: widget.reports),
+                            if (selectedLocation != null)
+                              MarkerLayer(
+                                markers: [
+                                  Marker(
+                                    point: selectedLocation,
+                                    child: const Icon(
+                                      Icons.circle,
+                                      size: 20,
+                                      color: Colors.black,
                                     ),
-                                  ),
-                                  Center(
-                                    child: LoadingAnimationWidget
-                                        .staggeredDotsWave(
-                                      color: AppTheme.mainThemeColor,
-                                      size: 150,
-                                    ),
-                                  ),
+                                  )
                                 ],
                               )
-                            : GoogleMap(
-                                onMapCreated: _onMapCreated,
-                                buildingsEnabled: true,
-                                initialCameraPosition: _lithuaniaCameraPosition,
-                                mapType: currentMapType,
-                                onTap: _currentPosition == null
-                                    ? _handleTap
-                                    : null,
-                                markers: isShowMarkers
-                                    ? markers
-                                    : addedMarker.map((e) => e).toSet(),
-                              ),
+                          ],
+                        ),
                       ),
-                      _currentPosition != null
-                          ? Positioned(
-                              bottom: 155,
-                              right: 10,
-                              child: InkWell(
-                                  onTap: () {},
-                                  onHover: (isHover) {
-                                    setState(() {
-                                      isMapDisabled = isHover;
-                                    });
-                                  },
-                                  child: LocationSearchButton(
-                                    width: 40,
-                                    height: 40,
-                                    onPressed: () {
-                                      setState(() {
-                                        mapController.animateCamera(
-                                            CameraUpdate.newLatLngZoom(
-                                                _currentPosition!, 13));
-                                      });
-                                    },
-                                  )),
-                            )
-                          : const SizedBox.shrink(),
                       Positioned(
                         left: widget.width * 0.0111,
                         bottom: widget.width * 0.0111,
@@ -271,40 +175,6 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
                               isShowMarkers = !isShowMarkers;
                             });
                           },
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 110,
-                        right: 10,
-                        child: InkWell(
-                          onTap: () {},
-                          onHover: (isHover) {
-                            setState(() {
-                              isMapDisabled = isHover;
-                            });
-                          },
-                          child: GoogleMapTypeButton(
-                            height: 40,
-                            width: 40,
-                            onPressed: () {
-                              showDialog<String>(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      MapTypeChangeDialog(
-                                          width: widget.width / 2.4,
-                                          currentMapType: currentMapType,
-                                          onHover: (isHover) {
-                                            setState(() {
-                                              isMapDisabled = isHover;
-                                            });
-                                          },
-                                          onChangeTap: (MapType mapType) {
-                                            setState(() {
-                                              currentMapType = mapType;
-                                            });
-                                          }));
-                            },
-                          ),
                         ),
                       ),
                       InstructionsWidget(width: widget.width),
@@ -657,16 +527,15 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
                               width: widget.width / 3.5,
                               onTap: () async {
                                 if (_formKey.currentState!.validate() &&
-                                    selectedLat != 0 &&
-                                    selectedLong != 0 &&
+                                    _selectedPosition != null &&
                                     isTermsAccepted &&
                                     multipartList.isNotEmpty) {
                                   if (multipartList.length >= 2) {
                                     widget.onAddTap(
                                       currentEmailValue,
                                       currentTextValue,
-                                      selectedLat,
-                                      selectedLong,
+                                      _selectedPosition!.latitude,
+                                      _selectedPosition!.longitude,
                                       multipartList,
                                     );
                                   }
@@ -687,36 +556,7 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
     );
   }
 
-  _handleTap(LatLng tappedPoint) {
-    markers.removeWhere(
-        (element) => element.markerId == const MarkerId('9998999'));
-    addedMarker.removeWhere(
-        (element) => element.markerId == const MarkerId('9998999'));
-    Marker newMarker = Marker(
-      markerId: const MarkerId(
-        '9998999',
-      ),
-      icon: markerIcon,
-      position: LatLng(
-        tappedPoint.latitude,
-        tappedPoint.longitude,
-      ),
-      draggable: true,
-      onDrag: _handleDrag,
-    );
-
-    setState(() {
-      markers.add(newMarker);
-      addedMarker.add(newMarker);
-      selectedLat = tappedPoint.latitude;
-      selectedLong = tappedPoint.longitude;
-    });
-  }
-
-  _handleDrag(LatLng tappedPoint) {
-    setState(() {
-      selectedLat = tappedPoint.latitude;
-      selectedLong = tappedPoint.longitude;
-    });
+  void _selectPosition(LatLng position) {
+    setState(() => _selectedPosition = position);
   }
 }

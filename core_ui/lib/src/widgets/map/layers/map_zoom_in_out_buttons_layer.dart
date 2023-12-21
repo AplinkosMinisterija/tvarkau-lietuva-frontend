@@ -3,13 +3,13 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 
-class OSMMapZoomButtons extends StatelessWidget {
+class OSMMapZoomButtonsLayer extends StatelessWidget {
   final double minZoom;
   final double maxZoom;
 
   static const _fitBoundsPadding = EdgeInsets.all(12);
 
-  const OSMMapZoomButtons({
+  const OSMMapZoomButtonsLayer({
     super.key,
     this.minZoom = 1,
     this.maxZoom = 18,
