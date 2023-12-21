@@ -96,42 +96,24 @@ class _ReportsScreenState extends State<ReportsScreen> {
                           SizedBox(
                             height: constraints.maxWidth * 0.009,
                           ),
-                          isShowDumps
-                              ? MainDumpMap(
-                                  width: constraints.maxWidth,
-                                  onReportTypeChange: (bool value) {
-                                    setState(() {
-                                      isShowDumps = value;
-                                    });
-                                  },
-                                  isShowDumps: isShowDumps,
-                                  dumpReports: widget.dumpReports,
-                                  isHovering: (bool value) {
-                                    setState(() {
-                                      isMapHover = value;
-                                    });
-                                  },
-                                )
-                              : MainTrashMap(
-                                  width: constraints.maxWidth,
-                                  onReportTypeChange: (bool value) {
-                                    setState(() {
-                                      isShowDumps = value;
-                                    });
-                                  },
-                                  isShowDumps: isShowDumps,
-                                  trashReports: widget.trashReports,
-                                  isHovering: (bool value) {
-                                    setState(() {
-                                      isMapHover = value;
-                                    });
-                                  },
-                                  onInformationTap: (String refId) {
-                                    widget.onInformationTap(
-                                      refId
-                                    );
-                                  },
-                                ),
+                          SizedBox(
+                            width: constraints.maxWidth,
+                            // TODO Check height
+                            height: constraints.maxHeight * 0.6,
+                            child: OSMMap(
+                              layers: [
+                                isShowDumps
+                                    ? DumpsLayer(dumps: widget.dumpReports)
+                                    : ClusteredReportsLayer(
+                                        reports: widget.trashReports,
+                                        onTap: (report) {
+                                          widget.onInformationTap(
+                                              report.refId ?? '');
+                                        },
+                                      ),
+                              ],
+                            ),
+                          ),
                           SizedBox(
                             height: constraints.maxWidth * 0.0135,
                           ),
@@ -144,8 +126,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                   width: constraints.maxWidth,
                                   reports: widget.trashReports,
                                   onInformationTap: (refId) {
-                                    widget.onInformationTap(
-                                        refId);
+                                    widget.onInformationTap(refId);
                                   },
                                 ),
                           const Divider(
@@ -195,9 +176,11 @@ class _ReportsScreenState extends State<ReportsScreen> {
                           Align(
                             alignment: Alignment.topLeft,
                             child: DepartmentLogoMobile(
-                                width: constraints.maxWidth,onTap: (){
-                              LaunchUrl().launch('https://aad.lrv.lt/');
-                            },),
+                              width: constraints.maxWidth,
+                              onTap: () {
+                                LaunchUrl().launch('https://aad.lrv.lt/');
+                              },
+                            ),
                           ),
                           SizedBox(height: constraints.maxWidth * 0.0889),
                           TitleWidgetMobile(width: constraints.maxWidth),

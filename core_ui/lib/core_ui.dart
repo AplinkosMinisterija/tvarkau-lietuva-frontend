@@ -10,6 +10,14 @@ export 'src/widgets/app_error_dialog.dart';
 export 'src/widgets/app_loader.dart';
 export 'src/widgets/error_reload_widget.dart';
 
+// Map
+export 'src/widgets/map/osm_map.dart';
+export 'src/widgets/map/layers/clustered_reports_layer.dart';
+export 'src/widgets/map/layers/current_user_location_layer.dart';
+export 'src/widgets/map/layers/report_layer.dart';
+export 'src/widgets/map/layers/dumps_layer.dart';
+export 'src/widgets/map/layers/map_zoom_in_out_buttons_layer.dart';
+
 //Adding screen
 export 'src/widgets/adding_screen/cancel_button.dart';
 export 'src/widgets/adding_screen/mark_button.dart';
@@ -29,7 +37,6 @@ export 'src/widgets/main_screen/footer/right_side_footer.dart';
 export 'src/widgets/main_screen/mobile/footer_mobile.dart';
 export 'src/widgets/main_screen/mobile/footer/footer_contacts_mobile_test.dart';
 
-
 //Main screen
 export 'src/widgets/main_screen/mobile/location_search_button.dart';
 export 'src/widgets/main_screen/background_widget.dart';
@@ -37,8 +44,6 @@ export 'src/widgets/main_screen/information_window/custom_info_window.dart';
 export 'src/widgets/main_screen/department_logo.dart';
 export 'src/widgets/main_screen/information_window/info_trash_window_box.dart';
 export 'src/widgets/main_screen/information_window/info_dump_window_box.dart';
-export 'src/widgets/main_screen/main_dump_map.dart';
-export 'src/widgets/main_screen/main_trash_map.dart';
 export 'src/widgets/main_screen/map_type_switcher.dart';
 export 'src/widgets/main_screen/map_type_switcher_button.dart';
 export 'src/widgets/main_screen/title_widget.dart';
@@ -80,5 +85,3 @@ export 'src/widgets/admin/reports/map/admin_trash_map.dart';
 export 'src/widgets/admin/deleted/table/deleted_reports_table.dart';
 export 'src/widgets/admin/admin_delete_button.dart';
 export 'src/widgets/admin/admin_deleted_edit_button.dart';
-
-
