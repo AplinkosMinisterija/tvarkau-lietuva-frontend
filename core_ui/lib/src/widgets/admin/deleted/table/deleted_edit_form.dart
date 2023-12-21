@@ -9,7 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:domain/domain.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:gallery_image_viewer/gallery_image_viewer.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart' as dio;
 import 'package:http_parser/http_parser.dart';
 import '../../admin_restore_button.dart';
 import '../../admin_save_button.dart';
@@ -18,7 +18,7 @@ import '../../historical_data/admin_history_button.dart';
 class DeletedEditForm extends StatefulWidget {
   final FullReportDto report;
   final VoidCallback onPressed;
-  final Function(ReportModel, List<http.MultipartFile>) onUpdate;
+  final Function(ReportModel, List<dio.MultipartFile>) onUpdate;
 
   const DeletedEditForm({
     required this.report,
@@ -61,7 +61,7 @@ class _DeletedEditFormState extends State<DeletedEditForm> {
 
   List<List<int>>? _selectedImages;
   List<Uint8List>? _fileBytes;
-  List<http.MultipartFile> multipartList = [];
+  List<dio.MultipartFile> multipartList = [];
 
   Future<void> getMultipleImageInfos() async {
     List<Uint8List>? images = await ImagePickerWeb.getMultiImagesAsBytes(
@@ -72,8 +72,8 @@ class _DeletedEditFormState extends State<DeletedEditForm> {
         _selectedImages = images;
         _fileBytes = images;
         multipartList.clear();
-        for(var element in _selectedImages!){
-          multipartList.add(http.MultipartFile.fromBytes('image', element,
+        for (var element in _selectedImages!) {
+          multipartList.add(dio.MultipartFile.fromBytes(element,
               contentType: MediaType("image", "jpg"), filename: 'name.jpg'));
         }
       });
@@ -475,7 +475,8 @@ class _DeletedEditFormState extends State<DeletedEditForm> {
                                         comment: currentComment,
                                         reportLong: double.parse(currentLong),
                                         reportLat: double.parse(currentLat),
-                                        reportDate: widget.report.reportDate.toString(),
+                                        reportDate:
+                                            widget.report.reportDate.toString(),
                                         isVisible: currentVisibility,
                                         status: currentStatus,
                                         isDeleted: true,
@@ -494,7 +495,8 @@ class _DeletedEditFormState extends State<DeletedEditForm> {
                                       comment: widget.report.comment,
                                       reportLong: widget.report.longitude,
                                       reportLat: widget.report.latitude,
-                                      reportDate: widget.report.reportDate.toString(),
+                                      reportDate:
+                                          widget.report.reportDate.toString(),
                                       isVisible: widget.report.isVisible,
                                       status: widget.report.status,
                                       isDeleted: false,

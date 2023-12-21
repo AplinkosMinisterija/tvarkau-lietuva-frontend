@@ -1,8 +1,7 @@
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
-import 'package:domain/domain.dart';
 import 'package:data/data.dart';
-import 'package:http/http.dart' as https;
+import 'package:dio/dio.dart' as dio;
 
 part 'removed_event.dart';
 
@@ -24,7 +23,6 @@ class RemovedBloc extends Bloc<RemovedEvent, RemovedState> {
       emit(
         LoadingState(),
       );
-
 
       final List<FullReportDto> trashReports =
           await ApiProvider().getAllRemovedReports();
@@ -49,9 +47,9 @@ class RemovedBloc extends Bloc<RemovedEvent, RemovedState> {
         LoadingState(),
       );
 
-
       await ApiProvider().updateTrashReport(
         id: event.id,
+        refId: event.refId,
         name: event.name,
         reportLong: event.reportLong,
         reportLat: event.reportLat,
@@ -61,6 +59,8 @@ class RemovedBloc extends Bloc<RemovedEvent, RemovedState> {
         isDeleted: event.isDeleted,
         editor: event.editor,
         officerImageFiles: event.officerImageFiles,
+        officerImageUrls: event.officerImageUrls,
+        imageUrls: event.imageUrls,
       );
 
       final List<FullReportDto> trashReports =

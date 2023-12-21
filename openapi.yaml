@@ -97,6 +97,31 @@ paths:
                 $ref: '#/components/schemas/FullDumpDto'
       tags: *ref_0
       security: *ref_1
+  /admin/dumps/update:
+    post:
+      operationId: AdminController_updateDump
+      parameters:
+        - name: authorization
+          in: header
+          description: Access token used for authorization
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateDumpDto'
+      responses:
+        '200':
+          description: Dump has been successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullDumpDto'
+      tags: *ref_0
+      security: *ref_1
   /dumps:
     get:
       operationId: DumpController_getAllVisibleDumps

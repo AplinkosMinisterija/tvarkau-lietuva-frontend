@@ -1,7 +1,7 @@
 import 'package:api_client/api_client.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core_ui/src/widgets/admin/admin_deleted_edit_button.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:domain/domain.dart';
@@ -16,7 +16,7 @@ class DeletedReportsEntryRow extends StatefulWidget {
 
   final double width;
   final FullReportDto report;
-  final Function(ReportModel, List<http.MultipartFile>) onUpdate;
+  final Function(ReportModel, List<dio.MultipartFile>) onUpdate;
 
   @override
   State<DeletedReportsEntryRow> createState() => _DeletedReportsEntryRowState();

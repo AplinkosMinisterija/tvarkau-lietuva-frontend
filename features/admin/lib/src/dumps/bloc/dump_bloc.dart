@@ -23,7 +23,8 @@ class DumpBloc extends Bloc<DumpEvent, DumpState> {
       emit(
         LoadingState(),
       );
-      final List<FullDumpDto> dumpReports = await ApiProvider().getAllDumpReports();
+      final List<FullDumpDto> dumpReports =
+          await ApiProvider().getAllDumpReports();
       emit(
         ContentState(
           dumpReports: dumpReports,
@@ -45,14 +46,17 @@ class DumpBloc extends Bloc<DumpEvent, DumpState> {
         LoadingState(),
       );
 
-
       await ApiProvider().updateDumpReport(
-          id: event.id,
-          name: event.name,
-          moreInformation: event.moreInformation,
-          workingHours: event.workingHours,
-          phone: event.phone,
-          isVisible: event.isVisible);
+        id: event.id,
+        name: event.name,
+        moreInformation: event.moreInformation,
+        workingHours: event.workingHours,
+        phone: event.phone,
+        isVisible: event.isVisible,
+        longitude: event.longitude,
+        latitude: event.latitude,
+        address: event.address,
+      );
 
       final List<FullDumpDto> dumpReports =
           await ApiProvider().getAllDumpReports();

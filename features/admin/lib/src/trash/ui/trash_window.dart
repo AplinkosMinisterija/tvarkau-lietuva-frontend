@@ -38,6 +38,7 @@ class TrashWindow extends StatelessWidget {
                             context.read<TrashBloc>().add(
                                   UpdateReport(
                                     id: updatedModel.id,
+                                    refId: updatedModel.id,
                                     name: updatedModel.name,
                                     reportLong: updatedModel.reportLong,
                                     reportLat: updatedModel.reportLat,
@@ -50,6 +51,8 @@ class TrashWindow extends StatelessWidget {
                                         ? "true"
                                         : "false",
                                     editor: activeEmail,
+                                    imageUrls: updatedModel.imageUrls ?? [],
+                                    officerImageUrls: updatedModel.officerImageUrls??[],
                                     officerImageFiles: officerFiles,
                                   ),
                                 );
@@ -64,6 +67,7 @@ class TrashWindow extends StatelessWidget {
                             context.read<TrashBloc>().add(
                                   UpdateReport(
                                     id: updatedModel.id,
+                                    refId: updatedModel.id,
                                     name: updatedModel.name,
                                     reportLong: updatedModel.reportLong,
                                     reportLat: updatedModel.reportLat,
@@ -77,6 +81,8 @@ class TrashWindow extends StatelessWidget {
                                         : "false",
                                     editor: activeEmail,
                                     officerImageFiles: officerFiles,
+                                    officerImageUrls: updatedModel.officerImageUrls??[],
+                                    imageUrls: updatedModel.imageUrls??[],
                                   ),
                                 );
                           },

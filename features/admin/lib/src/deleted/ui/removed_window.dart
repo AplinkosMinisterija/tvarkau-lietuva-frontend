@@ -37,6 +37,7 @@ class RemovedWindow extends StatelessWidget {
                       context.read<RemovedBloc>().add(
                             UpdateReport(
                               id: updatedModel.id,
+                              refId: updatedModel.id,
                               name: updatedModel.name,
                               reportLong: updatedModel.reportLong,
                               reportLat: updatedModel.reportLat,
@@ -47,6 +48,8 @@ class RemovedWindow extends StatelessWidget {
                               isDeleted:
                                   updatedModel.isDeleted! ? "true" : "false",
                               editor: editor,
+                              imageUrls: updatedModel.imageUrls??[],
+                              officerImageUrls: updatedModel.officerImageUrls??[],
                               officerImageFiles: officerFiles,
                             ),
                           );

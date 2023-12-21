@@ -12,6 +12,7 @@ Method | HTTP request | Description
 [**adminControllerCreateDump**](AdminApi.md#admincontrollercreatedump) | **POST** /admin/dumps | 
 [**adminControllerGetAllDumps**](AdminApi.md#admincontrollergetalldumps) | **GET** /admin/dumps | 
 [**adminControllerGetAllReports**](AdminApi.md#admincontrollergetallreports) | **GET** /admin/reports | 
+[**adminControllerUpdateDump**](AdminApi.md#admincontrollerupdatedump) | **POST** /admin/dumps/update | 
 [**adminControllerUpdateReport**](AdminApi.md#admincontrollerupdatereport) | **POST** /admin/reports | 
 
 
@@ -138,6 +139,49 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminControllerUpdateDump**
+> FullDumpDto adminControllerUpdateDump(authorization, updateDumpDto)
+
+
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+
+final api = ApiClient().getAdminApi();
+final String authorization = authorization_example; // String | Access token used for authorization
+final UpdateDumpDto updateDumpDto = ; // UpdateDumpDto | 
+
+try {
+    final response = api.adminControllerUpdateDump(authorization, updateDumpDto);
+    print(response);
+} catch on DioError (e) {
+    print('Exception when calling AdminApi->adminControllerUpdateDump: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **authorization** | **String**| Access token used for authorization | 
+ **updateDumpDto** | [**UpdateDumpDto**](UpdateDumpDto.md)|  | 
+
+### Return type
+
+[**FullDumpDto**](FullDumpDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

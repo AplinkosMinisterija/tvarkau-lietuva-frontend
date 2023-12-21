@@ -68,6 +68,7 @@ Class | Method | HTTP request | Description
 [*AdminApi*](doc/AdminApi.md) | [**adminControllerCreateDump**](doc/AdminApi.md#admincontrollercreatedump) | **POST** /admin/dumps | 
 [*AdminApi*](doc/AdminApi.md) | [**adminControllerGetAllDumps**](doc/AdminApi.md#admincontrollergetalldumps) | **GET** /admin/dumps | 
 [*AdminApi*](doc/AdminApi.md) | [**adminControllerGetAllReports**](doc/AdminApi.md#admincontrollergetallreports) | **GET** /admin/reports | 
+[*AdminApi*](doc/AdminApi.md) | [**adminControllerUpdateDump**](doc/AdminApi.md#admincontrollerupdatedump) | **POST** /admin/dumps/update | 
 [*AdminApi*](doc/AdminApi.md) | [**adminControllerUpdateReport**](doc/AdminApi.md#admincontrollerupdatereport) | **POST** /admin/reports | 
 [*AuthApi*](doc/AuthApi.md) | [**authControllerLogin**](doc/AuthApi.md#authcontrollerlogin) | **POST** /auth/login | 
 [*DumpsApi*](doc/DumpsApi.md) | [**dumpControllerGetAllVisibleDumps**](doc/DumpsApi.md#dumpcontrollergetallvisibledumps) | **GET** /dumps | 

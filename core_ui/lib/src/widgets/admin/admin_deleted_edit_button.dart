@@ -2,7 +2,7 @@ import 'package:api_client/api_client.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:domain/domain.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart' as dio;
 import 'deleted/table/deleted_edit_form.dart';
 
 class AdminDeletedEditButton extends StatefulWidget {
@@ -19,7 +19,7 @@ class AdminDeletedEditButton extends StatefulWidget {
   final double width;
   final VoidCallback onPressed;
   final FullReportDto report;
-  final Function(ReportModel, List<http.MultipartFile>) onUpdate;
+  final Function(ReportModel, List<dio.MultipartFile>) onUpdate;
 
   @override
   State<AdminDeletedEditButton> createState() => _AdminDeletedEditButtonState();

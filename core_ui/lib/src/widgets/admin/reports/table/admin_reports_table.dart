@@ -4,7 +4,7 @@ import 'package:core_ui/src/widgets/admin/reports/table/report_edit_form.dart';
 import 'package:flutter/material.dart';
 import 'package:domain/domain.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart' as dio;
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class AdminReportsTable extends StatefulWidget {
@@ -17,7 +17,7 @@ class AdminReportsTable extends StatefulWidget {
 
   final double width;
   final List<FullReportDto> reports;
-  final Function(ReportModel, List<http.MultipartFile>) onUpdate;
+  final Function(ReportModel, List<dio.MultipartFile>) onUpdate;
 
   @override
   State<AdminReportsTable> createState() => _AdminReportsTableState();

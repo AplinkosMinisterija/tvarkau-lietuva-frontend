@@ -25,7 +25,6 @@ dependencies:
     path: ../api_client
 
   dio: ^5.2.1+1
-  http: ^0.13.6
   crypto: ^3.0.2
   equatable: ^2.0.3
   flutter_uxcam: ^2.2.2

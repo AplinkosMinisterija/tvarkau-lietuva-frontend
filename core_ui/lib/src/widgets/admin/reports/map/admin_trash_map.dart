@@ -3,7 +3,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:core_ui/src/widgets/admin/reports/map/admin_trash_window_box.dart';
 import 'package:domain/report/report_library.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -21,7 +21,7 @@ class AdminTrashMap extends StatefulWidget {
   final double width;
   final List<FullReportDto> trashReports;
   final ValueChanged<bool> isHovering;
-  final Function(ReportModel, List<http.MultipartFile>) onUpdate;
+  final Function(ReportModel, List<dio.MultipartFile>) onUpdate;
 
   @override
   State<AdminTrashMap> createState() => _AdminTrashMapState();

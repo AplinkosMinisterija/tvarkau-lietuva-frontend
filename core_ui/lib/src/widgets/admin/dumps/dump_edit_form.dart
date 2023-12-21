@@ -190,6 +190,7 @@ class _DumpEditFormState extends State<DumpEditForm> {
                                   reportDate: '',
                                   isVisible: currentVisibility,
                                   status: '',
+                                  address: widget.report.address,
                                   moreInformation: currentInformation,
                                   workingHours: currentWorkingHours,
                                   phone: currentPhone,

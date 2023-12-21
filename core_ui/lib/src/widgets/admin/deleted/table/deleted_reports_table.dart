@@ -1,7 +1,7 @@
 import 'package:api_client/api_client.dart';
 import 'package:flutter/material.dart';
 import 'package:domain/domain.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart' as dio;
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 import '../../../../../core_ui.dart';
@@ -19,7 +19,7 @@ class DeletedReportsTable extends StatefulWidget {
   final double width;
   final List<FullReportDto> reports;
   final String activeEmail;
-  final Function(ReportModel, String, List<http.MultipartFile>) onUpdate;
+  final Function(ReportModel, String, List<dio.MultipartFile>) onUpdate;
 
   @override
   State<DeletedReportsTable> createState() => _DeletedReportsTableState();

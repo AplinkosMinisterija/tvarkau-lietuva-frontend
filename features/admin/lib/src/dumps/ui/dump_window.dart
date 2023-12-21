@@ -36,6 +36,9 @@ class DumpWindow extends StatelessWidget {
                             phone: updatedModel.phone ?? '',
                             isVisible:
                                 updatedModel.isVisible! ? "true" : "false",
+                            longitude: updatedModel.reportLong,
+                        latitude: updatedModel.reportLat,
+                        address: updatedModel.address ?? '',
                           ));
                     },
                   );

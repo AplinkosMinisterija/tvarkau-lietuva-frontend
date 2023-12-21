@@ -3,7 +3,7 @@ import 'package:core_ui/src/widgets/admin/reports/table/report_edit_form.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:domain/domain.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart' as dio;
 import 'dumps/dump_edit_form.dart';
 
 class AdminEditButton extends StatefulWidget {
@@ -22,7 +22,7 @@ class AdminEditButton extends StatefulWidget {
   final VoidCallback onPressed;
   final FullReportDto? report;
   final FullDumpDto? dump;
-  final Function(ReportModel, List<http.MultipartFile>) onUpdate;
+  final Function(ReportModel, List<dio.MultipartFile>) onUpdate;
 
   @override
   State<AdminEditButton> createState() => _AdminEditButtonState();

@@ -31,7 +31,6 @@ dependencies:
   auto_size_text: ^3.0.0
   universal_io: ^2.2.0
   aad_oauth: ^0.4.4
-  http: ^0.13.6
 
 dev_dependencies:
   flutter_test:

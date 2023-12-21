@@ -1,8 +1,7 @@
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
-import 'package:domain/domain.dart';
 import 'package:data/data.dart';
-import 'package:http/http.dart' as https;
+import 'package:dio/dio.dart' as dio;
 
 part 'trash_event.dart';
 
@@ -52,9 +51,9 @@ class TrashBloc extends Bloc<TrashEvent, TrashState> {
         LoadingState(),
       );
 
-
       await ApiProvider().updateTrashReport(
         id: event.id,
+        refId: event.refId,
         name: event.name,
         editor: event.editor,
         reportLong: event.reportLong,
@@ -64,11 +63,14 @@ class TrashBloc extends Bloc<TrashEvent, TrashState> {
         isVisible: event.isVisible,
         isDeleted: event.isDeleted,
         officerImageFiles: event.officerImageFiles,
+        officerImageUrls: event.officerImageUrls,
+        imageUrls: event.imageUrls,
       );
 
       final List<FullReportDto> trashReports =
           await ApiProvider().getAllTrashReports();
       if (trashReports.isNotEmpty) {
+
         emit(
           ContentState(
             trashReports: trashReports,

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gallery_image_viewer/gallery_image_viewer.dart';
 import 'package:domain/domain.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart' as dio;
 
 class AdminTrashWindowBox extends StatelessWidget {
   AdminTrashWindowBox({
@@ -22,7 +22,7 @@ class AdminTrashWindowBox extends StatelessWidget {
   final List<String>? imageUrls;
   final String status;
   final FullReportDto report;
-  final Function(ReportModel, List<http.MultipartFile>) onUpdate;
+  final Function(ReportModel, List<dio.MultipartFile>) onUpdate;
 
   final List<ImageProvider> _imageProviders = [];
 
