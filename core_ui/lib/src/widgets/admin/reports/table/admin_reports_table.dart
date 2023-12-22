@@ -37,65 +37,79 @@ class _AdminReportsTableState extends State<AdminReportsTable> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: widget.width,
-      height: widget.width * 0.5,
-      color: Colors.white,
-      child: SfDataGrid(
-        source: reportDataSource,
-        columnWidthMode: ColumnWidthMode.fill,
-        allowSorting: true,
-        allowFiltering: true,
-        onCellTap: (DataGridCellDetails details) {
-          if (details.rowColumnIndex.rowIndex != 0) {
-            if (details.column.columnName == 'edit') {
-              String onTapRef = reportDataSource
-                  .effectiveRows[details.rowColumnIndex.rowIndex - 1]
-                  .getCells()[0]
-                  .value;
-              FullReportDto selectedReport =
-                  reports.firstWhere((element) => element.refId == onTapRef);
-              _addEditDialogBuilder(context, widget.width, selectedReport);
-            }
-          }
-        },
-        columns: <GridColumn>[
-          GridColumn(
-              columnName: 'ref',
-              allowSorting: false,
-              allowFiltering: false,
-              visible: false,
-              width: widget.width * 0.001,
-              label: Container()),
-          GridColumn(
-              columnName: 'id',
-              allowSorting: true,
-              allowFiltering: true,
-              width: widget.width * 0.12,
-              label: Container(
-                  padding: const EdgeInsets.all(8.0),
-                  alignment: Alignment.center,
-                  child: const Text(
-                    'Pranešimo ID',
-                  ))),
-          GridColumn(
-              columnName: 'date',
-              allowSorting: true,
-              allowFiltering: false,
-              width: widget.width * 0.1,
-              label: Container(
-                  padding: const EdgeInsets.all(0.0),
-                  alignment: Alignment.center,
-                  child: const Text(
-                    'Pranešimo data ir laikas',
-                    textAlign: TextAlign.start,
-                  ))),
-          GridColumn(
-              columnName: 'lat',
-              allowSorting: false,
-              allowFiltering: true,
-              width: widget.width * 0.07,
-              filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
+    return Column(
+      children: [
+        Text(
+          reportDataSource.effectiveRows.isEmpty
+              ? 'Pranešimų skaičius: ' + reportDataSource.rows.length.toString()
+              : 'Pranešimų skaičius: ' +
+                  reportDataSource.effectiveRows.length.toString(),
+          style: GoogleFonts.roboto(
+              color: Colors.white, fontWeight: FontWeight.w400, fontSize: 20),
+        ),
+        const SizedBox(height: 20),
+        Container(
+          width: widget.width,
+          height: widget.width * 0.5,
+          color: Colors.white,
+          child: SfDataGrid(
+            source: reportDataSource,
+            columnWidthMode: ColumnWidthMode.fill,
+            allowSorting: true,
+            allowFiltering: true,
+            onFilterChanged: (DataGridFilterChangeDetails details) {
+              setState(() {});
+            },
+            onCellTap: (DataGridCellDetails details) {
+              if (details.rowColumnIndex.rowIndex != 0) {
+                if (details.column.columnName == 'edit') {
+                  String onTapRef = reportDataSource
+                      .effectiveRows[details.rowColumnIndex.rowIndex - 1]
+                      .getCells()[0]
+                      .value;
+                  FullReportDto selectedReport = reports
+                      .firstWhere((element) => element.refId == onTapRef);
+                  _addEditDialogBuilder(context, widget.width, selectedReport);
+                }
+              }
+            },
+            columns: <GridColumn>[
+              GridColumn(
+                  columnName: 'ref',
+                  allowSorting: false,
+                  allowFiltering: false,
+                  visible: false,
+                  width: widget.width * 0.001,
+                  label: Container()),
+              GridColumn(
+                  columnName: 'id',
+                  allowSorting: true,
+                  allowFiltering: true,
+                  width: widget.width * 0.12,
+                  label: Container(
+                      padding: const EdgeInsets.all(8.0),
+                      alignment: Alignment.center,
+                      child: const Text(
+                        'Pranešimo ID',
+                      ))),
+              GridColumn(
+                  columnName: 'date',
+                  allowSorting: true,
+                  allowFiltering: false,
+                  width: widget.width * 0.1,
+                  label: Container(
+                      padding: const EdgeInsets.all(0.0),
+                      alignment: Alignment.center,
+                      child: const Text(
+                        'Pranešimo data ir laikas',
+                        textAlign: TextAlign.start,
+                      ))),
+              GridColumn(
+                  columnName: 'lat',
+                  allowSorting: false,
+                  allowFiltering: true,
+                  width: widget.width * 0.07,
+                  filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
               label: Container(
                   padding: const EdgeInsets.only(left: 5),
                   alignment: Alignment.center,
@@ -164,7 +178,8 @@ class _AdminReportsTableState extends State<AdminReportsTable> {
                     textAlign: TextAlign.center,
                   ))),
         ],
-      ),
+      ),),
+      ],
     );
   }
 

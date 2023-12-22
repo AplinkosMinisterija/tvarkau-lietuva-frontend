@@ -42,7 +42,7 @@ class RightSideFooter extends StatelessWidget {
               child: FittedBox(
                 fit: BoxFit.fitWidth,
                 child: Text(
-                  'Tai bandomoji sistemos versija, skirta viešinti visus Aplinkos apsaugos \ndepartamentui žinomas ir potencialiai nelegalias atliekų susidarymo vietas. \nSistemoje suteikiama galimybė visuomenei pranešti apie dar neužfiksuotas vietas, \nbei sekti jų nagrinėjimo situaciją.',
+                  'Tai bandomoji sistemos versija, skirta viešinti visas Aplinkos apsaugos \ndepartamentui žinomas ir potencialiai nelegalias atliekų susidarymo vietas. \nSistemoje suteikiama galimybė visuomenei pranešti apie dar neužfiksuotas vietas \nbei sekti jų nagrinėjimo situaciją.',
                   style: GoogleFonts.raleway(
                     fontWeight: FontWeight.w500,
                     color: Colors.black,
