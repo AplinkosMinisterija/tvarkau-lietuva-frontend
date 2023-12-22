@@ -25,7 +25,6 @@ class AdminApi {
   ///
   ///
   /// Parameters:
-  /// * [authorization] - Access token used for authorization
   /// * [createDumpDto]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
@@ -37,7 +36,6 @@ class AdminApi {
   /// Returns a [Future] containing a [Response] with a [FullDumpDto] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<FullDumpDto>> adminControllerCreateDump({
-    required String authorization,
     required CreateDumpDto createDumpDto,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -48,13 +46,18 @@ class AdminApi {
   }) async {
     final _path = r'/admin/dumps';
     final _options = Options(
-      method: r'POST',
+      method: r'PUT',
       headers: <String, dynamic>{
-        r'authorization': authorization,
         ...?headers,
       },
       extra: <String, dynamic>{
-        'secure': <Map<String, String>>[],
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'Bearer',
+            'name': 'bearer',
+          },
+        ],
         ...?extra,
       },
       contentType: 'application/json',
@@ -123,7 +126,6 @@ class AdminApi {
   ///
   ///
   /// Parameters:
-  /// * [authorization] - Access token used for authorization
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -134,7 +136,6 @@ class AdminApi {
   /// Returns a [Future] containing a [Response] with a [BuiltList<FullDumpDto>] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<BuiltList<FullDumpDto>>> adminControllerGetAllDumps({
-    required String authorization,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -146,11 +147,16 @@ class AdminApi {
     final _options = Options(
       method: r'GET',
       headers: <String, dynamic>{
-        r'authorization': authorization,
         ...?headers,
       },
       extra: <String, dynamic>{
-        'secure': <Map<String, String>>[],
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'Bearer',
+            'name': 'bearer',
+          },
+        ],
         ...?extra,
       },
       validateStatus: validateStatus,
@@ -201,7 +207,6 @@ class AdminApi {
   ///
   /// Parameters:
   /// * [isDeleted]
-  /// * [authorization] - Access token used for authorization
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -213,7 +218,6 @@ class AdminApi {
   /// Throws [DioError] if API call or serialization fails
   Future<Response<BuiltList<FullReportDto>>> adminControllerGetAllReports({
     required bool isDeleted,
-    required String authorization,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -225,11 +229,16 @@ class AdminApi {
     final _options = Options(
       method: r'GET',
       headers: <String, dynamic>{
-        r'authorization': authorization,
         ...?headers,
       },
       extra: <String, dynamic>{
-        'secure': <Map<String, String>>[],
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'Bearer',
+            'name': 'bearer',
+          },
+        ],
         ...?extra,
       },
       validateStatus: validateStatus,
@@ -286,7 +295,6 @@ class AdminApi {
   ///
   ///
   /// Parameters:
-  /// * [authorization] - Access token used for authorization
   /// * [updateDumpDto]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
@@ -298,7 +306,6 @@ class AdminApi {
   /// Returns a [Future] containing a [Response] with a [FullDumpDto] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<FullDumpDto>> adminControllerUpdateDump({
-    required String authorization,
     required UpdateDumpDto updateDumpDto,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -307,15 +314,20 @@ class AdminApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/admin/dumps/update';
+    final _path = r'/admin/dumps';
     final _options = Options(
       method: r'POST',
       headers: <String, dynamic>{
-        r'authorization': authorization,
         ...?headers,
       },
       extra: <String, dynamic>{
-        'secure': <Map<String, String>>[],
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'Bearer',
+            'name': 'bearer',
+          },
+        ],
         ...?extra,
       },
       contentType: 'application/json',
@@ -384,8 +396,6 @@ class AdminApi {
   ///
   ///
   /// Parameters:
-  /// * [authorization] - Access token used for authorization
-  /// * [editor]
   /// * [refId]
   /// * [name]
   /// * [longitude]
@@ -407,8 +417,6 @@ class AdminApi {
   /// Returns a [Future] containing a [Response] with a [FullReportDto] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<FullReportDto>> adminControllerUpdateReport({
-    required String authorization,
-    required String editor,
     required String refId,
     required String name,
     required num longitude,
@@ -431,11 +439,16 @@ class AdminApi {
     final _options = Options(
       method: r'POST',
       headers: <String, dynamic>{
-        r'authorization': authorization,
         ...?headers,
       },
       extra: <String, dynamic>{
-        'secure': <Map<String, String>>[],
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'Bearer',
+            'name': 'bearer',
+          },
+        ],
         ...?extra,
       },
       contentType: 'multipart/form-data',
@@ -446,8 +459,6 @@ class AdminApi {
 
     try {
       _bodyData = FormData.fromMap(<String, dynamic>{
-        r'editor':
-            encodeFormParameter(_serializers, editor, const FullType(String)),
         r'refId':
             encodeFormParameter(_serializers, refId, const FullType(String)),
         r'name':

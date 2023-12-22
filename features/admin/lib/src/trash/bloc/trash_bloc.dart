@@ -55,7 +55,6 @@ class TrashBloc extends Bloc<TrashEvent, TrashState> {
         id: event.id,
         refId: event.refId,
         name: event.name,
-        editor: event.editor,
         reportLong: event.reportLong,
         reportLat: event.reportLat,
         status: event.status,

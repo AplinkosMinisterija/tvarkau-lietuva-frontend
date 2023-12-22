@@ -47,7 +47,6 @@ class RemovedWindow extends StatelessWidget {
                                   updatedModel.isVisible! ? "true" : "false",
                               isDeleted:
                                   updatedModel.isDeleted! ? "true" : "false",
-                              editor: editor,
                               imageUrls: updatedModel.imageUrls??[],
                               officerImageUrls: updatedModel.officerImageUrls??[],
                               officerImageFiles: officerFiles,

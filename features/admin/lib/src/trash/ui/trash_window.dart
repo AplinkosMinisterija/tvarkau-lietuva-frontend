@@ -50,7 +50,6 @@ class TrashWindow extends StatelessWidget {
                                     isDeleted: updatedModel.isDeleted!
                                         ? "true"
                                         : "false",
-                                    editor: activeEmail,
                                     imageUrls: updatedModel.imageUrls ?? [],
                                     officerImageUrls: updatedModel.officerImageUrls??[],
                                     officerImageFiles: officerFiles,
@@ -79,7 +78,6 @@ class TrashWindow extends StatelessWidget {
                                     isDeleted: updatedModel.isDeleted!
                                         ? "true"
                                         : "false",
-                                    editor: activeEmail,
                                     officerImageFiles: officerFiles,
                                     officerImageUrls: updatedModel.officerImageUrls??[],
                                     imageUrls: updatedModel.imageUrls??[],

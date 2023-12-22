@@ -47,11 +47,10 @@ import 'package:api_client/api_client.dart';
 
 
 final api = ApiClient().getAdminApi();
-final String authorization = authorization_example; // String | Access token used for authorization
 final CreateDumpDto createDumpDto = ; // CreateDumpDto | 
 
 try {
-    final response = await api.adminControllerCreateDump(authorization, createDumpDto);
+    final response = await api.adminControllerCreateDump(createDumpDto);
     print(response);
 } catch on DioError (e) {
     print("Exception when calling AdminApi->adminControllerCreateDump: $e\n");
@@ -65,10 +64,10 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-[*AdminApi*](doc/AdminApi.md) | [**adminControllerCreateDump**](doc/AdminApi.md#admincontrollercreatedump) | **POST** /admin/dumps | 
+[*AdminApi*](doc/AdminApi.md) | [**adminControllerCreateDump**](doc/AdminApi.md#admincontrollercreatedump) | **PUT** /admin/dumps | 
 [*AdminApi*](doc/AdminApi.md) | [**adminControllerGetAllDumps**](doc/AdminApi.md#admincontrollergetalldumps) | **GET** /admin/dumps | 
 [*AdminApi*](doc/AdminApi.md) | [**adminControllerGetAllReports**](doc/AdminApi.md#admincontrollergetallreports) | **GET** /admin/reports | 
-[*AdminApi*](doc/AdminApi.md) | [**adminControllerUpdateDump**](doc/AdminApi.md#admincontrollerupdatedump) | **POST** /admin/dumps/update | 
+[*AdminApi*](doc/AdminApi.md) | [**adminControllerUpdateDump**](doc/AdminApi.md#admincontrollerupdatedump) | **POST** /admin/dumps | 
 [*AdminApi*](doc/AdminApi.md) | [**adminControllerUpdateReport**](doc/AdminApi.md#admincontrollerupdatereport) | **POST** /admin/reports | 
 [*AuthApi*](doc/AuthApi.md) | [**authControllerLogin**](doc/AuthApi.md#authcontrollerlogin) | **POST** /auth/login | 
 [*DumpsApi*](doc/DumpsApi.md) | [**dumpControllerGetAllVisibleDumps**](doc/DumpsApi.md#dumpcontrollergetallvisibledumps) | **GET** /dumps | 
@@ -96,7 +95,7 @@ Class | Method | HTTP request | Description
 
 
 Authentication schemes defined for the API:
-### access-token
+### bearer
 
 - **Type**: HTTP basic authentication
 

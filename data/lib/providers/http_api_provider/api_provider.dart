@@ -1,41 +1,66 @@
-import 'dart:convert';
 import 'package:built_collection/built_collection.dart';
 import 'package:data/data.dart';
-import 'package:dio/dio.dart' as dio;
-import 'package:domain/domain.dart' as domain;
+import 'package:dio/dio.dart';
 import 'package:core/core.dart';
-import 'package:domain/report/report_library.dart';
-import 'package:http/http.dart' as http2;
-import 'package:openid_client/openid_client.dart';
+import 'package:flutter/foundation.dart';
 import 'package:api_client/api_client.dart';
 
 class ApiProvider {
   ApiProvider();
 
-  final dumpsApi = ApiClient(basePathOverride: 'http://localhost:3000'
-          //'https://stingray-app-d7ve9.ondigitalocean.app/tvarkau-lietuva-api2'
-          )
-      .getDumpsApi();
+  final adminApiClient = ApiClient(
+    basePathOverride: GlobalConstants.basePath,
+    interceptors: [
+      InterceptorsWrapper(
+        onRequest:
+            (RequestOptions options, RequestInterceptorHandler handler) async {
+          final authKey = await SecureStorageProvider().getJwtToken();
+          if (authKey != null) {
+            options.headers['Authorization'] = 'Bearer $authKey';
+          } else {
+            throw Exception('No auth key found');
+          }
+          return handler.next(options);
+        },
+      ),
+    ],
+  );
 
-  final reportsApi = ApiClient(basePathOverride: 'http://localhost:3000'
-          //'https://stingray-app-d7ve9.ondigitalocean.app/tvarkau-lietuva-api2'
-          )
-      .getReportsApi();
+  final dumpsApi = ApiClient(
+    basePathOverride: GlobalConstants.basePath,
+  ).getDumpsApi();
 
-  final adminApi = ApiClient(basePathOverride: 'http://localhost:3000'
-          // 'https://stingray-app-d7ve9.ondigitalocean.app/tvarkau-lietuva-api2'
-          )
-      .getAdminApi();
+  final reportsApi = ApiClient(
+    basePathOverride: GlobalConstants.basePath,
+  ).getReportsApi();
 
-  final authApi = ApiClient(basePathOverride: 'http://localhost:3000'
-          // 'https://stingray-app-d7ve9.ondigitalocean.app/tvarkau-lietuva-api2'
-          )
-      .getAuthApi();
+  final adminApi = ApiClient(
+    basePathOverride: GlobalConstants.basePath,
+    interceptors: [
+      InterceptorsWrapper(
+        onRequest:
+            (RequestOptions options, RequestInterceptorHandler handler) async {
+          final authKey = await SecureStorageProvider().getJwtToken();
+          if (authKey != null) {
+            options.headers['Authorization'] = 'Bearer $authKey';
+          } else {
+            throw Exception('No auth key found');
+          }
+          return handler.next(options);
+        },
+      ),
+      if (kDebugMode) LogInterceptor(responseBody: false)
+    ],
+  ).getAdminApi();
+
+  final authApi = ApiClient(
+    basePathOverride: GlobalConstants.basePath,
+  ).getAuthApi();
 
   Future<List<FullReportDto>> getAllTrashReports() async {
-    final String authKey = await SecureStorageProvider().getJwtToken();
     final response = await adminApi.adminControllerGetAllReports(
-        isDeleted: false, authorization: authKey);
+      isDeleted: false,
+    );
     return response.data!.toList();
   }
 
@@ -46,9 +71,9 @@ class ApiProvider {
   }
 
   Future<List<FullReportDto>> getAllRemovedReports() async {
-    final String authKey = await SecureStorageProvider().getJwtToken();
     final response = await adminApi.adminControllerGetAllReports(
-        isDeleted: true, authorization: authKey);
+      isDeleted: true,
+    );
     return response.data!.toList();
   }
 
@@ -58,15 +83,14 @@ class ApiProvider {
   }
 
   Future<List<FullDumpDto>> getAllDumpReports() async {
-    String accessToken = await SecureStorageProvider().getJwtToken();
-    final response =
-        await adminApi.adminControllerGetAllDumps(authorization: accessToken);
+    final response = await adminApi.adminControllerGetAllDumps();
     return response.data!.toList();
   }
 
-  Future<List<DumpDto>> getAllVisibleDumpReports() async {
-    final response = await dumpsApi.dumpControllerGetAllVisibleDumps();
-    return response.data!.toList();
+  Future<List<DumpDto>> getAllVisibleDumpReports() {
+    return dumpsApi
+        .dumpControllerGetAllVisibleDumps()
+        .then((r) => r.data!.toList());
   }
 
   Future<LogInDto> getUserInfo(String accessToken) async {
@@ -81,7 +105,7 @@ class ApiProvider {
     required String textValue,
     required double selectedLat,
     required double selectedLong,
-    required List<dio.MultipartFile> imageFiles,
+    required List<MultipartFile> imageFiles,
   }) async {
     final response = await reportsApi.reportControllerCreateNewReport(
         name: textValue,
@@ -102,16 +126,11 @@ class ApiProvider {
     required String comment,
     required String isVisible,
     required String isDeleted,
-    required String editor,
     required List<String> imageUrls,
     required List<String> officerImageUrls,
-    required List<dio.MultipartFile> officerImageFiles,
+    required List<MultipartFile> officerImageFiles,
   }) async {
-    final String authKey = await SecureStorageProvider().getJwtToken();
-
     final response = await adminApi.adminControllerUpdateReport(
-        authorization: authKey,
-        editor: editor,
         refId: refId,
         name: name,
         longitude: reportLong,
@@ -120,9 +139,9 @@ class ApiProvider {
         isDeleted: isDeleted == "true" ? true : false,
         comment: comment,
         status: status,
-        officerImageUrls: BuiltList(officerImageUrls),
-        imageUrls: BuiltList(imageUrls),
-        images: BuiltList(officerImageFiles));
+        officerImageUrls: officerImageUrls.toBuiltList(),
+        imageUrls: imageUrls.toBuiltList(),
+        images: officerImageFiles.toBuiltList());
     return response.data!;
   }
 
@@ -137,10 +156,7 @@ class ApiProvider {
     required String phone,
     required String isVisible,
   }) async {
-    final String authKey = await SecureStorageProvider().getJwtToken();
-
     final response = await adminApi.adminControllerUpdateDump(
-        authorization: authKey,
         updateDumpDto: UpdateDumpDto((builder) => {
               builder.id = id,
               builder.address = address,

@@ -16,7 +16,6 @@ class UpdateReport implements TrashEvent {
   final String comment;
   final String isVisible;
   final String isDeleted;
-  final String editor;
   final List<String> imageUrls;
   final List<String> officerImageUrls;
   final List<dio.MultipartFile> officerImageFiles;
@@ -31,7 +30,6 @@ class UpdateReport implements TrashEvent {
     required this.comment,
     required this.isVisible,
     required this.isDeleted,
-    required this.editor,
     required this.imageUrls,
     required this.officerImageUrls,
     required this.officerImageFiles,

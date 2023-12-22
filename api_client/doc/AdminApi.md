@@ -9,28 +9,30 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**adminControllerCreateDump**](AdminApi.md#admincontrollercreatedump) | **POST** /admin/dumps | 
+[**adminControllerCreateDump**](AdminApi.md#admincontrollercreatedump) | **PUT** /admin/dumps | 
 [**adminControllerGetAllDumps**](AdminApi.md#admincontrollergetalldumps) | **GET** /admin/dumps | 
 [**adminControllerGetAllReports**](AdminApi.md#admincontrollergetallreports) | **GET** /admin/reports | 
-[**adminControllerUpdateDump**](AdminApi.md#admincontrollerupdatedump) | **POST** /admin/dumps/update | 
+[**adminControllerUpdateDump**](AdminApi.md#admincontrollerupdatedump) | **POST** /admin/dumps | 
 [**adminControllerUpdateReport**](AdminApi.md#admincontrollerupdatereport) | **POST** /admin/reports | 
 
 
 # **adminControllerCreateDump**
-> FullDumpDto adminControllerCreateDump(authorization, createDumpDto)
+> FullDumpDto adminControllerCreateDump(createDumpDto)
 
 
 
 ### Example
 ```dart
 import 'package:api_client/api.dart';
+// TODO Configure HTTP basic authorization: bearer
+//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').username = 'YOUR_USERNAME'
+//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').password = 'YOUR_PASSWORD';
 
 final api = ApiClient().getAdminApi();
-final String authorization = authorization_example; // String | Access token used for authorization
 final CreateDumpDto createDumpDto = ; // CreateDumpDto | 
 
 try {
-    final response = api.adminControllerCreateDump(authorization, createDumpDto);
+    final response = api.adminControllerCreateDump(createDumpDto);
     print(response);
 } catch on DioError (e) {
     print('Exception when calling AdminApi->adminControllerCreateDump: $e\n');
@@ -41,7 +43,6 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **authorization** | **String**| Access token used for authorization | 
  **createDumpDto** | [**CreateDumpDto**](CreateDumpDto.md)|  | 
 
 ### Return type
@@ -50,7 +51,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearer](../README.md#bearer)
 
 ### HTTP request headers
 
@@ -60,19 +61,21 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminControllerGetAllDumps**
-> BuiltList<FullDumpDto> adminControllerGetAllDumps(authorization)
+> BuiltList<FullDumpDto> adminControllerGetAllDumps()
 
 
 
 ### Example
 ```dart
 import 'package:api_client/api.dart';
+// TODO Configure HTTP basic authorization: bearer
+//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').username = 'YOUR_USERNAME'
+//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').password = 'YOUR_PASSWORD';
 
 final api = ApiClient().getAdminApi();
-final String authorization = authorization_example; // String | Access token used for authorization
 
 try {
-    final response = api.adminControllerGetAllDumps(authorization);
+    final response = api.adminControllerGetAllDumps();
     print(response);
 } catch on DioError (e) {
     print('Exception when calling AdminApi->adminControllerGetAllDumps: $e\n');
@@ -80,10 +83,7 @@ try {
 ```
 
 ### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **authorization** | **String**| Access token used for authorization | 
+This endpoint does not need any parameter.
 
 ### Return type
 
@@ -91,7 +91,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearer](../README.md#bearer)
 
 ### HTTP request headers
 
@@ -101,20 +101,22 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminControllerGetAllReports**
-> BuiltList<FullReportDto> adminControllerGetAllReports(isDeleted, authorization)
+> BuiltList<FullReportDto> adminControllerGetAllReports(isDeleted)
 
 
 
 ### Example
 ```dart
 import 'package:api_client/api.dart';
+// TODO Configure HTTP basic authorization: bearer
+//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').username = 'YOUR_USERNAME'
+//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').password = 'YOUR_PASSWORD';
 
 final api = ApiClient().getAdminApi();
 final bool isDeleted = true; // bool | 
-final String authorization = authorization_example; // String | Access token used for authorization
 
 try {
-    final response = api.adminControllerGetAllReports(isDeleted, authorization);
+    final response = api.adminControllerGetAllReports(isDeleted);
     print(response);
 } catch on DioError (e) {
     print('Exception when calling AdminApi->adminControllerGetAllReports: $e\n');
@@ -126,7 +128,6 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **isDeleted** | **bool**|  | 
- **authorization** | **String**| Access token used for authorization | 
 
 ### Return type
 
@@ -134,7 +135,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearer](../README.md#bearer)
 
 ### HTTP request headers
 
@@ -144,20 +145,22 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminControllerUpdateDump**
-> FullDumpDto adminControllerUpdateDump(authorization, updateDumpDto)
+> FullDumpDto adminControllerUpdateDump(updateDumpDto)
 
 
 
 ### Example
 ```dart
 import 'package:api_client/api.dart';
+// TODO Configure HTTP basic authorization: bearer
+//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').username = 'YOUR_USERNAME'
+//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').password = 'YOUR_PASSWORD';
 
 final api = ApiClient().getAdminApi();
-final String authorization = authorization_example; // String | Access token used for authorization
 final UpdateDumpDto updateDumpDto = ; // UpdateDumpDto | 
 
 try {
-    final response = api.adminControllerUpdateDump(authorization, updateDumpDto);
+    final response = api.adminControllerUpdateDump(updateDumpDto);
     print(response);
 } catch on DioError (e) {
     print('Exception when calling AdminApi->adminControllerUpdateDump: $e\n');
@@ -168,7 +171,6 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **authorization** | **String**| Access token used for authorization | 
  **updateDumpDto** | [**UpdateDumpDto**](UpdateDumpDto.md)|  | 
 
 ### Return type
@@ -177,7 +179,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearer](../README.md#bearer)
 
 ### HTTP request headers
 
@@ -187,17 +189,18 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminControllerUpdateReport**
-> FullReportDto adminControllerUpdateReport(authorization, editor, refId, name, longitude, latitude, isVisible, isDeleted, comment, status, officerImageUrls, imageUrls, images)
+> FullReportDto adminControllerUpdateReport(refId, name, longitude, latitude, isVisible, isDeleted, comment, status, officerImageUrls, imageUrls, images)
 
 
 
 ### Example
 ```dart
 import 'package:api_client/api.dart';
+// TODO Configure HTTP basic authorization: bearer
+//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').username = 'YOUR_USERNAME'
+//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').password = 'YOUR_PASSWORD';
 
 final api = ApiClient().getAdminApi();
-final String authorization = authorization_example; // String | Access token used for authorization
-final String editor = editor_example; // String | 
 final String refId = refId_example; // String | 
 final String name = name_example; // String | 
 final num longitude = 8.14; // num | 
@@ -211,7 +214,7 @@ final BuiltList<String> imageUrls = ; // BuiltList<String> |
 final BuiltList<MultipartFile> images = /path/to/file.txt; // BuiltList<MultipartFile> | 
 
 try {
-    final response = api.adminControllerUpdateReport(authorization, editor, refId, name, longitude, latitude, isVisible, isDeleted, comment, status, officerImageUrls, imageUrls, images);
+    final response = api.adminControllerUpdateReport(refId, name, longitude, latitude, isVisible, isDeleted, comment, status, officerImageUrls, imageUrls, images);
     print(response);
 } catch on DioError (e) {
     print('Exception when calling AdminApi->adminControllerUpdateReport: $e\n');
@@ -222,8 +225,6 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **authorization** | **String**| Access token used for authorization | 
- **editor** | **String**|  | 
  **refId** | **String**|  | 
  **name** | **String**|  | 
  **longitude** | **num**|  | 
@@ -242,7 +243,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-No authorization required
+[bearer](../README.md#bearer)
 
 ### HTTP request headers
 

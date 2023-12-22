@@ -9,12 +9,6 @@ paths:
           in: query
           schema:
             type: boolean
-        - name: authorization
-          in: header
-          description: Access token used for authorization
-          required: true
-          schema:
-            type: string
       responses:
         '200':
           description: All reports have been successfully found
@@ -30,13 +24,7 @@ paths:
         - bearer: []
     post:
       operationId: AdminController_updateReport
-      parameters:
-        - name: authorization
-          in: header
-          description: Access token used for authorization
-          required: true
-          schema:
-            type: string
+      parameters: []
       requestBody:
         required: true
         content:
@@ -55,13 +43,7 @@ paths:
   /admin/dumps:
     get:
       operationId: AdminController_getAllDumps
-      parameters:
-        - name: authorization
-          in: header
-          description: Access token used for authorization
-          required: true
-          schema:
-            type: string
+      parameters: []
       responses:
         '200':
           description: All dumps have been successfully found
@@ -74,39 +56,8 @@ paths:
       tags: *ref_0
       security: *ref_1
     post:
-      operationId: AdminController_createDump
-      parameters:
-        - name: authorization
-          in: header
-          description: Access token used for authorization
-          required: true
-          schema:
-            type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateDumpDto'
-      responses:
-        '200':
-          description: Dump has been successfully created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/FullDumpDto'
-      tags: *ref_0
-      security: *ref_1
-  /admin/dumps/update:
-    post:
       operationId: AdminController_updateDump
-      parameters:
-        - name: authorization
-          in: header
-          description: Access token used for authorization
-          required: true
-          schema:
-            type: string
+      parameters: []
       requestBody:
         required: true
         content:
@@ -116,6 +67,24 @@ paths:
       responses:
         '200':
           description: Dump has been successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullDumpDto'
+      tags: *ref_0
+      security: *ref_1
+    put:
+      operationId: AdminController_createDump
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDumpDto'
+      responses:
+        '200':
+          description: Dump has been successfully created
           content:
             application/json:
               schema:
@@ -216,11 +185,10 @@ tags: []
 servers: []
 components:
   securitySchemes:
-    access-token:
+    bearer:
       scheme: Bearer
-      bearerFormat: Bearer
+      bearerFormat: JWT
       description: 'Please enter token in following format: Bearer <JWT>'
-      name: Authorization
       type: http
       in: Header
   schemas:
@@ -327,8 +295,6 @@ components:
     UpdateReportDto:
       type: object
       properties:
-        editor:
-          type: string
         refId:
           type: string
         name:
@@ -359,7 +325,6 @@ components:
             type: string
             format: binary
       required:
-        - editor
         - refId
         - name
         - longitude

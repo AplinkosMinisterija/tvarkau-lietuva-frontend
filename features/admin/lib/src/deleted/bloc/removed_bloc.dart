@@ -57,7 +57,6 @@ class RemovedBloc extends Bloc<RemovedEvent, RemovedState> {
         comment: event.comment,
         isVisible: event.isVisible,
         isDeleted: event.isDeleted,
-        editor: event.editor,
         officerImageFiles: event.officerImageFiles,
         officerImageUrls: event.officerImageUrls,
         imageUrls: event.imageUrls,

@@ -4,7 +4,6 @@ export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:flutter_dotenv/flutter_dotenv.dart';
 
 export 'constants/global_constants.dart';
-export 'constants/http_api_constants.dart';
 export 'errors/app_exception.dart';
 export 'errors/backend_exception.dart';
 export 'errors/no_internet_exception.dart';

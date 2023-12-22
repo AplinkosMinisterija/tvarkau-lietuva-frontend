@@ -16,7 +16,6 @@ class UpdateReport implements RemovedEvent {
   final String comment;
   final String isVisible;
   final String isDeleted;
-  final String editor;
   final List<String> imageUrls;
   final List<String> officerImageUrls;
 
@@ -32,7 +31,6 @@ class UpdateReport implements RemovedEvent {
     required this.comment,
     required this.isVisible,
     required this.isDeleted,
-    required this.editor,
     required this.imageUrls,
     required this.officerImageUrls,
 
