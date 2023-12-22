@@ -1,14 +1,14 @@
+import 'package:api_client/api_client.dart';
 import 'package:core_ui/src/widgets/admin/admin_cancel_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:domain/domain.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:gallery_image_viewer/gallery_image_viewer.dart';
 
 import '../admin_save_button.dart';
 
 class DumpEditForm extends StatefulWidget {
-  final ReportModel report;
+  final FullDumpDto report;
   final VoidCallback onPressed;
   final Function(ReportModel) onUpdate;
 
@@ -52,8 +52,8 @@ class _DumpEditFormState extends State<DumpEditForm> {
           currentName,
         ),
         position: LatLng(
-          widget.report.reportLat,
-          widget.report.reportLong,
+          widget.report.latitude.toDouble(),
+          widget.report.longitude.toDouble(),
         ),
         icon: trashMarkerIcon,
       ),
@@ -182,14 +182,15 @@ class _DumpEditFormState extends State<DumpEditForm> {
                             onPressed: () {
                               widget.onUpdate(
                                 ReportModel(
-                                  id: widget.report.id,
+                                  id: widget.report.refId,
                                   name: currentName,
                                   type: widget.report.type,
-                                  reportLong: widget.report.reportLong,
-                                  reportLat: widget.report.reportLat,
-                                  reportDate: widget.report.reportDate,
+                                  reportLong: widget.report.longitude.toDouble(),
+                                  reportLat: widget.report.latitude.toDouble(),
+                                  reportDate: '',
                                   isVisible: currentVisibility,
                                   status: '',
+                                  address: widget.report.address,
                                   moreInformation: currentInformation,
                                   workingHours: currentWorkingHours,
                                   phone: currentPhone,
@@ -212,7 +213,7 @@ class _DumpEditFormState extends State<DumpEditForm> {
                           width: constraints.maxWidth / 5,
                           padding: const EdgeInsets.all(5),
                           child: TextFormField(
-                            initialValue: widget.report.reportLong.toString(),
+                            initialValue: widget.report.longitude.toString(),
                             enabled: false,
                             style: getInputStyle(),
                             decoration: getLabelDecoration('Aikštelės ilguma'),
@@ -223,7 +224,7 @@ class _DumpEditFormState extends State<DumpEditForm> {
                           width: constraints.maxWidth / 5,
                           padding: const EdgeInsets.all(5),
                           child: TextFormField(
-                            initialValue: widget.report.reportLat.toString(),
+                            initialValue: widget.report.latitude.toString(),
                             enabled: false,
                             style: getInputStyle(),
                             decoration: getLabelDecoration('Aikštelės platuma'),

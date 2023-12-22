@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class FooterContactsLeft extends StatelessWidget {
   const FooterContactsLeft({
+    super.key,
     required this.width,
   });
 

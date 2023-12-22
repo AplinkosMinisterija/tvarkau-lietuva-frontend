@@ -1,4 +1,3 @@
-import 'package:universal_io/io.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -38,18 +37,15 @@ class CustomInfoWindow extends StatefulWidget {
 
   const CustomInfoWindow(
     this.onChange, {
+    super.key,
     required this.controller,
     required this.leftMargin,
     required this.isDump,
     this.offset = 50,
     this.height = 50,
     this.width = 100,
-  })  : assert(controller != null),
-        assert(offset != null),
-        assert(offset >= 0),
-        assert(height != null),
+  })  : assert(offset >= 0),
         assert(height >= 0),
-        assert(width != null),
         assert(width >= 0);
 
   @override
@@ -95,8 +91,6 @@ class _CustomInfoWindowState extends State<CustomInfoWindow> {
   }
 
   void _addInfoWindow(Widget child, LatLng latLng) {
-    assert(child != null);
-    assert(latLng != null);
     _child = child;
     _latLng = latLng;
     _updateInfoWindow();

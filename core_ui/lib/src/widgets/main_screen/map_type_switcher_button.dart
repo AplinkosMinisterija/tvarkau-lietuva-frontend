@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MapTypeSwitcherButton extends StatefulWidget {
-  MapTypeSwitcherButton({
+  const MapTypeSwitcherButton({
+    super.key,
     required this.width,
     required this.title,
     required this.isActive,
@@ -13,7 +14,7 @@ class MapTypeSwitcherButton extends StatefulWidget {
   final double width;
   final String title;
   final bool isActive;
-  void Function()? onTap;
+  final void Function()? onTap;
 
   @override
   State<MapTypeSwitcherButton> createState() => _MapTypeSwitcherButtonState();

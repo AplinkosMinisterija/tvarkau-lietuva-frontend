@@ -1,6 +1,6 @@
 name: data
 description: data module for application
-
+publish_to: none
 version: 1.0.0+1
 
 
@@ -21,9 +21,10 @@ dependencies:
     path: ../features/dashboard
   tvarkau_lietuva:
     path: ..
+  api_client:
+    path: ../api_client
 
   dio: ^5.2.1+1
-  http: ^0.13.6
   crypto: ^3.0.2
   equatable: ^2.0.3
   flutter_uxcam: ^2.2.2
@@ -31,6 +32,8 @@ dependencies:
   sign_in_with_apple: ^4.1.0
   flutter_appauth: ^6.0.0
   flutter_secure_storage: ^8.0.0
+  openid_client: ^0.4.8
+  built_collection: ^5.1.1
 
 dev_dependencies:
   flutter_test:

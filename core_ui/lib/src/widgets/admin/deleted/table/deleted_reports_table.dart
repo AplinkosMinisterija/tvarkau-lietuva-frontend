@@ -1,8 +1,7 @@
-import 'package:core_ui/src/widgets/admin/deleted/table/deleted_reports_entry_row.dart';
-import 'package:core_ui/src/widgets/admin/deleted/table/deleted_reports_title_bar.dart';
+import 'package:api_client/api_client.dart';
 import 'package:flutter/material.dart';
 import 'package:domain/domain.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart' as dio;
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 import '../../../../../core_ui.dart';
@@ -10,6 +9,7 @@ import 'deleted_edit_form.dart';
 
 class DeletedReportsTable extends StatefulWidget {
   const DeletedReportsTable({
+    super.key,
     required this.width,
     required this.reports,
     required this.onUpdate,
@@ -17,16 +17,16 @@ class DeletedReportsTable extends StatefulWidget {
   });
 
   final double width;
-  final List<ReportModel> reports;
+  final List<FullReportDto> reports;
   final String activeEmail;
-  final Function(ReportModel, String, List<http.MultipartFile>) onUpdate;
+  final Function(ReportModel, String, List<dio.MultipartFile>) onUpdate;
 
   @override
   State<DeletedReportsTable> createState() => _DeletedReportsTableState();
 }
 
 class _DeletedReportsTableState extends State<DeletedReportsTable> {
-  List<ReportModel> reports = <ReportModel>[];
+  List<FullReportDto> reports = <FullReportDto>[];
   late ReportDataSourceAdmin reportDataSource;
   Color backgroundColor = const Color.fromRGBO(43, 180, 12, 1.0);
 
@@ -55,7 +55,7 @@ class _DeletedReportsTableState extends State<DeletedReportsTable> {
                   .effectiveRows[details.rowColumnIndex.rowIndex - 1]
                   .getCells()[0]
                   .value;
-              ReportModel selectedReport =
+              FullReportDto selectedReport =
                   reports.firstWhere((element) => element.refId == onTapRef);
               _addEditDialogBuilder(context, widget.width, selectedReport);
             }
@@ -97,7 +97,7 @@ class _DeletedReportsTableState extends State<DeletedReportsTable> {
               allowSorting: false,
               allowFiltering: true,
               width: widget.width * 0.07,
-              filterIconPadding: EdgeInsets.symmetric(horizontal: 2.0),
+              filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
               label: Container(
                   padding: const EdgeInsets.only(left: 5),
                   alignment: Alignment.center,
@@ -111,7 +111,7 @@ class _DeletedReportsTableState extends State<DeletedReportsTable> {
               allowSorting: false,
               allowFiltering: true,
               width: widget.width * 0.07,
-              filterIconPadding: EdgeInsets.symmetric(horizontal: 2.0),
+              filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
               label: Container(
                   padding: const EdgeInsets.only(left: 5),
                   alignment: Alignment.center,
@@ -171,7 +171,7 @@ class _DeletedReportsTableState extends State<DeletedReportsTable> {
   }
 
   Future<void> _addEditDialogBuilder(
-      BuildContext context, double width, ReportModel report) {
+      BuildContext context, double width, FullReportDto report) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {

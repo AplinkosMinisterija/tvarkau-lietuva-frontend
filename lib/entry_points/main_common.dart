@@ -1,17 +1,14 @@
 import 'dart:math';
-import 'package:core/core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:tvarkau_lietuva/app/aad_app.dart';
 import '../app/app_config.dart';
 import 'package:url_strategy/url_strategy.dart';
-import 'package:admin/src/auth/helpers/globals.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:admin/admin.dart';
 
 Future<void> mainCommon(Flavor flavor) async {
   WidgetsFlutterBinding.ensureInitialized();
-  appDI.initDependencies(flavor);
-  await dataDI.initDependencies(flavor);
   setPathUrlStrategy();
 
   if (Uri.base.toString().contains("access_token=")) {

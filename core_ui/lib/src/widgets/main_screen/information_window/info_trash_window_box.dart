@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class InfoTrashWindowBox extends StatelessWidget {
-  InfoTrashWindowBox({
+  const InfoTrashWindowBox({
+    super.key,
     required this.title,
     required this.imageUrls,
     required this.status,
@@ -113,7 +114,7 @@ class InfoTrashWindowBox extends StatelessWidget {
                 child: FittedBox(
                   fit: BoxFit.fitWidth,
                   child: Text(
-                    '#TLP-A${str}${reportId.toUpperCase()}',
+                    '#TLP-A$str${reportId.toUpperCase()}',
                     textAlign: TextAlign.left,
                     style: GoogleFonts.roboto(
                         fontWeight: FontWeight.w500, fontSize: 20),

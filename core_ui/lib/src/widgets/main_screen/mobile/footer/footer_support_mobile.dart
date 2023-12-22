@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 class FooterSupportMobile extends StatelessWidget {
   const FooterSupportMobile({
+    super.key,
     required this.width,
   });
 

@@ -1,9 +1,10 @@
+import 'package:api_client/api_client.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:domain/domain.dart';
 
 class EditHistoryColumn extends StatelessWidget {
-  final ReportModel report;
+  final FullReportDto report;
   final double width;
 
   const EditHistoryColumn({
@@ -53,7 +54,9 @@ class EditHistoryColumn extends StatelessWidget {
                           ),
                           SizedBox(width: width * 0.02),
                           Text(
-                            formatDate(report.historyData![index].date ?? ''),
+                            formatDate(report.historyData[index].date.toString()
+
+                            ),
                             style: GoogleFonts.roboto(fontSize: width * 0.05),
                           ),
                         ],
@@ -71,7 +74,7 @@ class EditHistoryColumn extends StatelessWidget {
                           ),
                         ],
                       ),
-                      getChangeBox(report.historyData![index].edits ?? [])
+                      getChangeBox(report.historyData[index].edits.toList())
                     ],
                   ),
                 ),
@@ -79,7 +82,7 @@ class EditHistoryColumn extends StatelessWidget {
             }));
   }
 
-  Widget getChangeBox(List<Edits> editData) {
+  Widget getChangeBox(List<HistoryEditsDto> editData) {
     return Container(
       height: width * 0.12 * editData.length,
       color: const Color.fromRGBO(183, 183, 183, 1.0),
@@ -90,7 +93,7 @@ class EditHistoryColumn extends StatelessWidget {
             return Padding(
               padding: EdgeInsets.symmetric(vertical: width * 0.01),
               child: getChangeWidget(
-                  editData[index].field!, editData[index].change!, context),
+                  editData[index].field, editData[index].change, context),
             );
           }),
     );

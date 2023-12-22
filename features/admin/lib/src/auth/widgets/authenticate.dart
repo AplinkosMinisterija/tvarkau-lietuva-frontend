@@ -2,8 +2,6 @@ import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:openid_client/openid_client_browser.dart' as open_id;
 import 'package:google_fonts/google_fonts.dart';
-import 'package:aad_oauth/aad_oauth.dart';
-import '../helpers/globals.dart';
 
 class Authenticate extends StatefulWidget {
   const Authenticate({super.key});
@@ -113,7 +111,5 @@ authenticate(Uri uri, String clientId, List<String> scopes) async {
 
   var authenticator = open_id.Authenticator(client, scopes: scopes);
   await authenticator.credential;
-  print(authenticator.flow.client.issuer.metadata.userinfoEndpoint.toString());
-  //print(authenticator.credential.client.);
   authenticator.authorize();
 }

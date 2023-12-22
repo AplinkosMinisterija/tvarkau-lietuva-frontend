@@ -1,7 +1,5 @@
 library core_ui;
 
-export 'src/pages/app_confirm_dialog_page.dart';
-export 'src/pages/app_error_dialog_page.dart';
 export 'src/routes/bottom_slide_route.dart';
 export 'src/theme/app_theme.dart';
 export 'src/widgets/app_button.dart';

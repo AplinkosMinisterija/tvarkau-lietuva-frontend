@@ -1,6 +1,5 @@
-import 'package:core/constants/global_constants.dart';
+import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
-import 'package:core/utils/captcha_dialog.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -8,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:domain/domain.dart';
 import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart' as dio;
 import 'package:core_ui/core_ui.dart';
 import 'dart:typed_data';
 import 'package:http_parser/http_parser.dart';
@@ -26,8 +26,8 @@ class AddingScreenWeb extends StatefulWidget {
 
   final double width;
   final double height;
-  final List<ReportModel> reports;
-  final Function(String, String, double, double, List<http.MultipartFile>)
+  final List<PublicReportDto> reports;
+  final Function(String, String, double, double, List<dio.MultipartFile>)
       onAddTap;
   final VoidCallback onDataSecurityTap;
 
@@ -36,22 +36,23 @@ class AddingScreenWeb extends StatefulWidget {
 }
 
 class _AddingScreenWebState extends State<AddingScreenWeb> {
-  List<List<int>> _selectedImages = [];
-  List<Uint8List> _fileBytes = [];
-  List<http.MultipartFile> multipartList = [];
+  final List<List<int>> _selectedImages = [];
+  final List<Uint8List> _fileBytes = [];
+  List<dio.MultipartFile> multipartList = [];
 
   Future<void> getMultipleImageInfos() async {
     List<Uint8List>? images = await ImagePickerWeb.getMultiImagesAsBytes(
         GlobalConstants.maxAllowedImageCount);
 
     if (images != null) {
-      setState(() {
+      setState(()  {
         _selectedImages.addAll(images);
         _fileBytes.addAll(images);
-        _selectedImages.forEach((element) async {
-          multipartList.add(await http.MultipartFile.fromBytes('image', element,
+        for (var element in _selectedImages) {
+          //http.MultipartFile.fromBytes(field, value)
+          multipartList.add(dio.MultipartFile.fromBytes(element,
               contentType: MediaType("image", "jpg"), filename: 'name.jpg'));
-        });
+        }
         if (_selectedImages.length > 4 && _selectedImages.isNotEmpty) {
           for (int i = 0; i < _selectedImages.length - 4; i++) {
             _selectedImages.removeAt(0);
@@ -108,20 +109,20 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
       addCustomIcon();
     });
     int index = 0;
-    widget.reports.forEach((element) {
+    for (var element in widget.reports) {
       markers.add(
         Marker(
           markerId: MarkerId(
             element.name + index.toString(),
           ),
           position: LatLng(
-            element.reportLat,
-            element.reportLong,
+            element.latitude.toDouble(),
+            element.longitude.toDouble(),
           ),
         ),
       );
       index++;
-    });
+    }
     currentItem = 'Šiukšlinimas gamtoje';
     dropDownItems.add(DropdownMenuItem(
       value: 'Šiukšlinimas gamtoje',
@@ -409,7 +410,7 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
                                         return 'Prašome įvesti el. pašto adresą';
                                       } else if (RegExp(
                                               r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-                                          .hasMatch(value!)) {
+                                          .hasMatch(value)) {
                                         return null;
                                       } else {
                                         return 'Prašome įvesti teisingą el. pašto adresą';

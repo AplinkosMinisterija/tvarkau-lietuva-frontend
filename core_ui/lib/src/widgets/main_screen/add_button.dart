@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:core_ui/core_ui.dart';
 
 class AddButton extends StatefulWidget {
   const AddButton({required this.width, required this.onTap, super.key});

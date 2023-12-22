@@ -5,6 +5,7 @@ import 'package:core_ui/core_ui.dart';
 
 class Footer extends StatelessWidget {
   const Footer({
+    super.key,
     required this.width,
     required this.onDataSecurityTap,
   });

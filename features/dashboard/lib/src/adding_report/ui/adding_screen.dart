@@ -28,11 +28,10 @@ class AddingScreen extends StatelessWidget {
             builder: (BuildContext context, AddingState state) {
               if (state is ContentState) {
                 if (width > 900) {
-                  List<ReportModel> reports = state.trashReports;
                   return AddingScreenWeb(
                     width: width,
                     height: height,
-                    reports: reports,
+                    reports: state.trashReports,
                     onAddTap: (email, text, lat, long, files) {
                       context.read<AddingBloc>().add(
                             AddReport(
@@ -52,11 +51,10 @@ class AddingScreen extends StatelessWidget {
                     },
                   );
                 } else {
-                  List<ReportModel> reports = state.trashReports;
                   return AddingScreenMobile(
                     width: width,
                     height: height,
-                    reports: reports,
+                    reports: state.trashReports,
                     onAddTap: (email, text, lat, long, files) {
                       context.read<AddingBloc>().add(
                             AddReport(

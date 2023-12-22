@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class InfoDumpWindowBox extends StatefulWidget {
-  InfoDumpWindowBox({
+  const InfoDumpWindowBox({
+    super.key,
     required this.address,
     required this.title,
     required this.phone,
@@ -42,7 +43,7 @@ class _InfoDumpWindowBoxState extends State<InfoDumpWindowBox> {
           borderRadius: BorderRadius.circular(12),
           color: Colors.white,
         ),
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Scrollbar(
           controller: _scrollController,
           thumbVisibility: true,

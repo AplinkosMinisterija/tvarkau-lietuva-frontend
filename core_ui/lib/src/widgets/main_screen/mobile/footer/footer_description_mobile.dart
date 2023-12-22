@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class FooterDescriptionMobile extends StatelessWidget {
   const FooterDescriptionMobile({
+    super.key,
     required this.width,
   });
 

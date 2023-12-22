@@ -5,7 +5,7 @@ abstract class InformationState {}
 class LoadingState implements InformationState {}
 
 class ContentState implements InformationState {
-  final ReportModel trashReport;
+  final PublicReportDto trashReport;
 
   ContentState({
     required this.trashReport,

@@ -1,7 +1,7 @@
+import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
-import 'package:domain/domain.dart';
 import 'package:data/data.dart';
-import 'package:http/http.dart' as https;
+import 'package:dio/dio.dart' as dio;
 
 part 'trash_event.dart';
 
@@ -23,23 +23,17 @@ class TrashBloc extends Bloc<TrashEvent, TrashState> {
       emit(
         LoadingState(),
       );
-      final MapperFactory mapper = MapperFactory();
-      final ApiProviderBase apiProviderBase = ApiProviderBase(
-          baseUrl: HttpApiConstants.devBaseUrl, errorHandler: ErrorHandler());
-      final ApiProvider apiProvider = ApiProvider(
-        mapper: mapper,
-        apiProviderBase: apiProviderBase,
-      );
-      final List<ReportModel>? trashReports =
-          await apiProvider.getAllTrashReports();
-      if (trashReports != null) {
+
+      final List<FullReportDto> trashReports =
+          await ApiProvider().getAllTrashReports();
+      if (trashReports.isNotEmpty) {
         emit(
           ContentState(
             trashReports: trashReports,
           ),
         );
       } else {
-        emit(ErrorState(errorMessage: 'Neautorizuota'));
+        emit(ErrorState(errorMessage: 'Klaida'));
       }
     } catch (e) {
       emit(
@@ -56,18 +50,11 @@ class TrashBloc extends Bloc<TrashEvent, TrashState> {
       emit(
         LoadingState(),
       );
-      final MapperFactory mapper = MapperFactory();
-      final ApiProviderBase apiProviderBase = ApiProviderBase(
-          baseUrl: HttpApiConstants.devBaseUrl, errorHandler: ErrorHandler());
-      final ApiProvider apiProvider = ApiProvider(
-        mapper: mapper,
-        apiProviderBase: apiProviderBase,
-      );
 
-      var response = await apiProvider.updateTrashReport(
+      await ApiProvider().updateTrashReport(
         id: event.id,
+        refId: event.refId,
         name: event.name,
-        editor: event.editor,
         reportLong: event.reportLong,
         reportLat: event.reportLat,
         status: event.status,
@@ -75,18 +62,21 @@ class TrashBloc extends Bloc<TrashEvent, TrashState> {
         isVisible: event.isVisible,
         isDeleted: event.isDeleted,
         officerImageFiles: event.officerImageFiles,
+        officerImageUrls: event.officerImageUrls,
+        imageUrls: event.imageUrls,
       );
 
-      final List<ReportModel>? trashReports =
-          await apiProvider.getAllTrashReports();
-      if (trashReports != null) {
+      final List<FullReportDto> trashReports =
+          await ApiProvider().getAllTrashReports();
+      if (trashReports.isNotEmpty) {
+
         emit(
           ContentState(
             trashReports: trashReports,
           ),
         );
       } else {
-        emit(ErrorState(errorMessage: 'Neautorizuota'));
+        emit(ErrorState(errorMessage: 'Klaida'));
       }
     } catch (e) {
       emit(

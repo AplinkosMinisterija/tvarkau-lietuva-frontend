@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class TitleWidget extends StatelessWidget {
   const TitleWidget({
+    super.key,
     required this.width,
   });
 

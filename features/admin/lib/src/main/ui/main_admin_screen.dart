@@ -1,4 +1,3 @@
-import 'package:admin/admin_screen.dart';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
@@ -24,9 +23,8 @@ class MainAdminScreen extends StatelessWidget {
             return BlocBuilder<AdminBloc, AdminState>(
               builder: (BuildContext context, AdminState state) {
                 if (state is ContentState) {
-                  final UserInfo userInfo = state.userInfo;
                   return AdminDashboard(
-                    userInfo: userInfo,
+                    userInfo: state.userInfo,
                     onLogout: () {
                       context.read<AdminBloc>().add(
                             LogOut(),

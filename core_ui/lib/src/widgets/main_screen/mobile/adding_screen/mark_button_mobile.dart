@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class MarkButtonMobile extends StatefulWidget {
   const MarkButtonMobile({
+    super.key,
     required this.width,
     required this.onTap,
     required this.isActive,

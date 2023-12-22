@@ -1,9 +1,10 @@
+import 'package:api_client/api_client.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:domain/domain.dart';
 
 class StatusHistoryColumn extends StatelessWidget {
-  final ReportModel report;
+  final FullReportDto report;
   final double width;
 
   const StatusHistoryColumn({
@@ -53,7 +54,7 @@ class StatusHistoryColumn extends StatelessWidget {
                           ),
                           SizedBox(width: width * 0.02),
                           Text(
-                            formatDate(report.statusRecords![index].date ?? ''),
+                            formatDate(report.statusRecords[index].date.toString()),
                             style: GoogleFonts.roboto(fontSize: width * 0.06),
                           ),
                         ],
@@ -66,7 +67,7 @@ class StatusHistoryColumn extends StatelessWidget {
                           ),
                           SizedBox(width: width * 0.02),
                           getStatusText(
-                              report.statusRecords![index].status ?? '')
+                              report.statusRecords[index].status)
                         ],
                       ),
                     ],

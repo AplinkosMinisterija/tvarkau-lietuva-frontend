@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 class SupportTag extends StatelessWidget {
   const SupportTag({
+    super.key,
     required this.width,
   });
 

@@ -7,7 +7,7 @@ class ReloadState implements DumpState {}
 class LoadingState implements DumpState {}
 
 class ContentState implements DumpState {
-  final List<ReportModel> dumpReports;
+  final List<FullDumpDto> dumpReports;
 
   ContentState({
     required this.dumpReports,

@@ -1,11 +1,9 @@
 import 'package:core_ui/core_ui.dart';
-import 'package:core_ui/src/widgets/main_screen/mobile/left_side_footer_mobile.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:core/core.dart';
 
 class LeftSideFooter extends StatelessWidget {
   const LeftSideFooter({
+    super.key,
     required this.width,
   });
 
@@ -14,7 +12,8 @@ class LeftSideFooter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SelectionArea(
-      child: FooterContactsMobile(width: width/2.6,)
-    );
+        child: FooterContactsMobile(
+      width: width / 2.6,
+    ));
   }
 }

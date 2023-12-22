@@ -13,6 +13,9 @@ class UpdateDump implements DumpEvent {
   final String workingHours;
   final String phone;
   final String isVisible;
+  final double longitude;
+  final double latitude;
+  final String address;
 
   UpdateDump({
     required this.id,
@@ -21,5 +24,8 @@ class UpdateDump implements DumpEvent {
     required this.workingHours,
     required this.phone,
     required this.isVisible,
+    required this.longitude,
+    required this.latitude,
+    required this.address,
   });
 }

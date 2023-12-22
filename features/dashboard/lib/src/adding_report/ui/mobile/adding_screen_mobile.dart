@@ -1,9 +1,10 @@
+import 'package:api_client/api_client.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:domain/domain.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart' as dio;
 import 'package:core_ui/core_ui.dart';
 import 'dart:typed_data';
 import 'package:http_parser/http_parser.dart';
@@ -23,8 +24,8 @@ class AddingScreenMobile extends StatefulWidget {
 
   final double width;
   final double height;
-  final List<ReportModel> reports;
-  final Function(String, String, double, double, List<http.MultipartFile>)
+  final List<PublicReportDto> reports;
+  final Function(String, String, double, double, List<dio.MultipartFile>)
       onAddTap;
   final VoidCallback onDataSecurityTap;
 
@@ -33,22 +34,22 @@ class AddingScreenMobile extends StatefulWidget {
 }
 
 class _AddingScreenMobileState extends State<AddingScreenMobile> {
-  List<List<int>> _selectedImages = [];
-  List<Uint8List> _fileBytes = [];
-  List<http.MultipartFile> multipartList = [];
+  final List<List<int>> _selectedImages = [];
+  final List<Uint8List> _fileBytes = [];
+  List<dio.MultipartFile> multipartList = [];
 
   Future<void> getMultipleImageInfos() async {
     List<Uint8List>? images = await ImagePickerWeb.getMultiImagesAsBytes(
         GlobalConstants.maxAllowedImageCount);
 
     if (images != null) {
-      setState(() {
+      setState(() async {
         _selectedImages.addAll(images);
         _fileBytes.addAll(images);
-        _selectedImages.forEach((element) async {
-          multipartList.add(await http.MultipartFile.fromBytes('image', element,
+        for (var element in _selectedImages) {
+          multipartList.add(dio.MultipartFile.fromBytes(element,
               contentType: MediaType("image", "jpg"), filename: 'name.jpg'));
-        });
+        }
         if (_selectedImages.length > 4 && _selectedImages.isNotEmpty) {
           for (int i = 0; i < _selectedImages.length - 4; i++) {
             _selectedImages.removeAt(0);
@@ -67,7 +68,7 @@ class _AddingScreenMobileState extends State<AddingScreenMobile> {
   String currentEmailValue = '';
   Set<Marker> markers = {};
   List<Marker> newMarkers = [];
-  Set<Marker> newMarker = Set();
+  Set<Marker> newMarker = {};
   double selectedLat = 0;
   double selectedLong = 0;
   List<DropdownMenuItem<String>> dropDownItems = [];
@@ -89,20 +90,20 @@ class _AddingScreenMobileState extends State<AddingScreenMobile> {
       addCustomIcon();
     });
     int index = 0;
-    widget.reports.forEach((element) {
+    for (var element in widget.reports) {
       markers.add(
         Marker(
           markerId: MarkerId(
             element.name + index.toString(),
           ),
           position: LatLng(
-            element.reportLat,
-            element.reportLong,
+            element.latitude.toDouble(),
+            element.longitude.toDouble(),
           ),
         ),
       );
       index++;
-    });
+    }
     currentItem = 'Šiukšlinimas gamtoje';
     dropDownItems.add(DropdownMenuItem(
       value: 'Šiukšlinimas gamtoje',
@@ -138,7 +139,7 @@ class _AddingScreenMobileState extends State<AddingScreenMobile> {
             return Form(
                 key: _formKey,
                 child: ListView(
-                  padding: EdgeInsets.all(widget.width * 0.0555),
+                    padding: EdgeInsets.all(widget.width * 0.0555),
                     children: <Widget>[
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -188,15 +189,14 @@ class _AddingScreenMobileState extends State<AddingScreenMobile> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        AddPinScreenMobile(
+                                    builder: (context) => AddPinScreenMobile(
                                           width: widget.width,
                                           markers: markers,
-                                          onTap: (Lat, Long, marker) {
+                                          onTap: (lat, long, marker) {
                                             setState(() {
                                               newMarker.clear();
-                                              selectedLat = Lat;
-                                              selectedLong = Long;
+                                              selectedLat = lat;
+                                              selectedLong = long;
                                               newMarker.add(marker);
                                             });
                                           },
@@ -214,11 +214,9 @@ class _AddingScreenMobileState extends State<AddingScreenMobile> {
                                   width: widget.width * 0.866,
                                   decoration: BoxDecoration(
                                       color: Colors.white,
-                                      borderRadius:
-                                          BorderRadius.circular(8)),
+                                      borderRadius: BorderRadius.circular(8)),
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Icon(
                                         Icons.add_location_sharp,
@@ -226,13 +224,11 @@ class _AddingScreenMobileState extends State<AddingScreenMobile> {
                                         color: const Color.fromRGBO(
                                             255, 106, 61, 1),
                                       ),
-                                      SizedBox(
-                                          width: widget.width * 0.0277),
+                                      SizedBox(width: widget.width * 0.0277),
                                       Text(
                                         'Pažymėkite vietą, kur aptikote šiukšles',
                                         style: GoogleFonts.roboto(
-                                            fontSize:
-                                                widget.width * 0.038888,
+                                            fontSize: widget.width * 0.038888,
                                             fontWeight: FontWeight.w400),
                                       )
                                     ],
@@ -318,7 +314,7 @@ class _AddingScreenMobileState extends State<AddingScreenMobile> {
                                 return 'Prašome įvesti el. pašto adresą';
                               } else if (RegExp(
                                       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-                                  .hasMatch(value!)) {
+                                  .hasMatch(value)) {
                                 return null;
                               } else {
                                 return 'Prašome įvesti teisingą el. pašto adresą';
@@ -417,8 +413,7 @@ class _AddingScreenMobileState extends State<AddingScreenMobile> {
                                 crossAxisCount: 2,
                                 mainAxisSpacing: 8,
                                 crossAxisSpacing: 8,
-                                physics:
-                                    const NeverScrollableScrollPhysics(),
+                                physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (context, index) {
                                   return Stack(
                                       alignment: Alignment.topRight,

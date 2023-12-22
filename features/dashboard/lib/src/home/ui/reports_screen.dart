@@ -1,3 +1,4 @@
+import 'package:api_client/api_client.dart';
 import 'package:core/utils/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:core_ui/core_ui.dart';
@@ -14,8 +15,8 @@ class ReportsScreen extends StatefulWidget {
     super.key,
   });
 
-  final List<ReportModel> trashReports;
-  final List<ReportModel> dumpReports;
+  final List<PublicReportDto> trashReports;
+  final List<DumpDto> dumpReports;
   final Function(double, double) onAddTap;
   final Function(String) onInformationTap;
   final VoidCallback onDataSecurityTap;

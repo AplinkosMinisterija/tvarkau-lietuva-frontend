@@ -1,3 +1,4 @@
+import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:domain/domain.dart';
 import 'package:data/data.dart';
@@ -18,18 +19,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     Emitter<HomeState> emit,
   ) async {
     try {
-      final MapperFactory mapper = MapperFactory();
-      final ApiProviderBase apiProviderBase = ApiProviderBase(
-          baseUrl: HttpApiConstants.devBaseUrl, errorHandler: ErrorHandler());
-      final ApiProvider apiProvider = ApiProvider(
-        mapper: mapper,
-        apiProviderBase: apiProviderBase,
-      );
 
-      final List<ReportModel> trashReports =
-          await apiProvider.getAllVisibleTrashReports();
-      final List<ReportModel> dumpReports =
-          await apiProvider.getAllVisibleDumpReports();
+      final List<PublicReportDto> trashReports =
+          await ApiProvider().getAllVisibleTrashReports();
+      final List<DumpDto> dumpReports =
+          await ApiProvider().getAllVisibleDumpReports();
       emit(
         ContentState(
           trashReports: trashReports,
@@ -37,12 +31,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         ),
       );
     } catch (e) {
+      print(e);
       emit(
         ErrorState(errorMessage: 'Netikėta klaida'),
       );
     }
   }
-
 
   Future<void> _onReloadEvent(
     ReloadPage _,

@@ -1,170 +1,124 @@
-import 'dart:convert';
+import 'package:built_collection/built_collection.dart';
 import 'package:data/data.dart';
-import 'package:data/entities/entities.dart';
-import 'package:domain/domain.dart' as domain;
+import 'package:dio/dio.dart';
 import 'package:core/core.dart';
-import 'package:domain/report/report_library.dart';
-import 'package:http/http.dart' as http2;
-import '../../queries/api_query.dart';
-import 'package:openid_client/openid_client.dart';
+import 'package:flutter/foundation.dart';
+import 'package:api_client/api_client.dart';
 
 class ApiProvider {
-  final MapperFactory _mapper;
-  final ApiProviderBase _apiProviderBase;
+  ApiProvider();
 
-  ApiProvider({
-    required MapperFactory mapper,
-    required ApiProviderBase apiProviderBase,
-  })  : _mapper = mapper,
-        _apiProviderBase = apiProviderBase;
-
-  Future<List<domain.ReportModel>?> getAllTrashReports() async {
-    final String authKey = await SecureStorageProvider().getJwtToken();
-
-    Map<String, String> headers = {
-      'content-type': 'application/json',
-      'accept': 'application/json',
-      'auth-token': authKey.toString()
-    };
-    try {
-      http2.Response response = await http2
-          .get(Uri.parse(HttpApiConstants.fullTrashUrl), headers: headers);
-      List<ReportModel> convertedResponse = List<ReportModel>.from(
-              jsonDecode(response.body).map((x) => ReportModel.fromJson(x)))
-          .toList();
-      return convertedResponse;
-    } catch (error) {
-      return null;
-    }
-  }
-
-  Future<ReportModel> getOneTrashReport(String refId) async {
-    Map<String, String> headers = {
-      'content-type': 'application/json',
-      'accept': 'application/json',
-      'refId': refId
-    };
-    http2.Response response = await http2.get(
-      Uri.parse(HttpApiConstants.fullOneTrashReportUrl),
-      headers: headers,
-    );
-    ReportModel convertedResponse =
-        ReportModel.fromJson(jsonDecode(response.body));
-    return convertedResponse;
-  }
-
-  Future<List<ReportModel>> getAllRemovedReports() async {
-    final String authKey = await SecureStorageProvider().getJwtToken();
-
-    Map<String, String> headers = {
-      'content-type': 'application/json',
-      'accept': 'application/json',
-      'auth-token': authKey.toString()
-    };
-    http2.Response response = await http2.get(
-        Uri.parse(HttpApiConstants.fullRemovedReportsUrl),
-        headers: headers);
-    List<ReportModel> convertedResponse = List<ReportModel>.from(
-        jsonDecode(response.body).map((x) => ReportModel.fromJson(x))).toList();
-
-    return convertedResponse;
-  }
-
-  Future<List<domain.ReportModel>> getAllVisibleTrashReports() async {
-    http2.Response response =
-        await http2.get(Uri.parse(HttpApiConstants.fullVisibleTrashUrl));
-    List<ReportModel> convertedResponse = List<ReportModel>.from(
-        jsonDecode(response.body).map((x) => ReportModel.fromJson(x))).toList();
-    return convertedResponse;
-  }
-
-  Future<List<domain.ReportModel>> getAllDumpReports() async {
-    final String authKey = await SecureStorageProvider().getJwtToken();
-
-    Map<String, String> headers = {
-      'content-type': 'application/json',
-      'accept': 'application/json',
-      'auth-token': authKey.toString()
-    };
-    final List<dynamic> response = await _apiProviderBase.get(
-      null,
-      ApiQuery(
-        body: null,
-        params: headers,
-        endpointPostfix: HttpApiConstants.dumps,
+  final adminApiClient = ApiClient(
+    basePathOverride: GlobalConstants.basePath,
+    interceptors: [
+      InterceptorsWrapper(
+        onRequest:
+            (RequestOptions options, RequestInterceptorHandler handler) async {
+          final authKey = await SecureStorageProvider().getJwtToken();
+          if (authKey != null) {
+            options.headers['Authorization'] = 'Bearer $authKey';
+          } else {
+            throw Exception('No auth key found');
+          }
+          return handler.next(options);
+        },
       ),
-    );
+    ],
+  );
 
-    final List<ReportEntity> convertedResponse = response
-        .map((e) => ReportEntity.fromJson(e as Map<String, dynamic>))
-        .toList();
-    return _mapper.reportMapper.fromList(convertedResponse);
-  }
+  final dumpsApi = ApiClient(
+    basePathOverride: GlobalConstants.basePath,
+  ).getDumpsApi();
 
-  Future<List<domain.ReportModel>> getAllVisibleDumpReports() async {
-    final List<dynamic> response = await _apiProviderBase.get(
-      null,
-      ApiQuery(
-        body: null,
-        params: null,
-        endpointPostfix: HttpApiConstants.visibleDumps,
+  final reportsApi = ApiClient(
+    basePathOverride: GlobalConstants.basePath,
+  ).getReportsApi();
+
+  final adminApi = ApiClient(
+    basePathOverride: GlobalConstants.basePath,
+    interceptors: [
+      InterceptorsWrapper(
+        onRequest:
+            (RequestOptions options, RequestInterceptorHandler handler) async {
+          final authKey = await SecureStorageProvider().getJwtToken();
+          if (authKey != null) {
+            options.headers['Authorization'] = 'Bearer $authKey';
+          } else {
+            throw Exception('No auth key found');
+          }
+          return handler.next(options);
+        },
       ),
+      if (kDebugMode) LogInterceptor(responseBody: false)
+    ],
+  ).getAdminApi();
+
+  final authApi = ApiClient(
+    basePathOverride: GlobalConstants.basePath,
+  ).getAuthApi();
+
+  Future<List<FullReportDto>> getAllTrashReports() async {
+    final response = await adminApi.adminControllerGetAllReports(
+      isDeleted: false,
     );
-
-    final List<ReportEntity> convertedResponse = response
-        .map((e) => ReportEntity.fromJson(e as Map<String, dynamic>))
-        .toList();
-    return _mapper.reportMapper.fromList(convertedResponse);
+    return response.data!.toList();
   }
 
-  Future<(UserInfo, String?)> getUserInfo(String accessToken) async {
-    Map<String, String> body = {
-      "token": accessToken,
-    };
-    Map<String, String> headers = {"content-type": "application/json"};
-    final http2.Response response = await http2.post(
-        Uri.parse(HttpApiConstants.fullAuthUrl),
-        headers: headers,
-        body: jsonEncode(body));
-    var authToken = response.headers["auth-token"];
-    final UserInfo convertedResponse =
-        UserInfo.fromJson(json.decode(response.body));
-    return (convertedResponse, authToken);
+  Future<PublicReportDto> getOneTrashReport(String refId) async {
+    final response =
+        await reportsApi.reportControllerGetReportById(refId: int.parse(refId));
+    return response.data!;
   }
 
-  Future<http2.Response> sendNewTrashReport({
+  Future<List<FullReportDto>> getAllRemovedReports() async {
+    final response = await adminApi.adminControllerGetAllReports(
+      isDeleted: true,
+    );
+    return response.data!.toList();
+  }
+
+  Future<List<PublicReportDto>> getAllVisibleTrashReports() async {
+    final response = await reportsApi.reportControllerGetAllPublicReports();
+    return response.data!.toList(); //TODO: add error handling
+  }
+
+  Future<List<FullDumpDto>> getAllDumpReports() async {
+    final response = await adminApi.adminControllerGetAllDumps();
+    return response.data!.toList();
+  }
+
+  Future<List<DumpDto>> getAllVisibleDumpReports() {
+    return dumpsApi
+        .dumpControllerGetAllVisibleDumps()
+        .then((r) => r.data!.toList());
+  }
+
+  Future<LogInDto> getUserInfo(String accessToken) async {
+    final response = await authApi.authControllerLogin(
+        loginRequestDto:
+            LoginRequestDto((builder) => builder.accessKey = accessToken));
+    return response.data!;
+  }
+
+  Future<PublicReportDto> sendNewTrashReport({
     required String emailValue,
     required String textValue,
     required double selectedLat,
     required double selectedLong,
-    required List<http2.MultipartFile> imageFiles,
+    required List<MultipartFile> imageFiles,
   }) async {
-    var request = http2.MultipartRequest(
-        'POST', Uri.parse(HttpApiConstants.fullTrashUrl));
-    request.headers["Content-Type"] = "multipart/form-data";
-    request.files.addAll(imageFiles);
-    request.fields['name'] = textValue;
-    request.fields['email'] = emailValue;
-    request.fields['reportLat'] = selectedLat.toString();
-    request.fields['reportLong'] = selectedLong.toString();
-    request.fields['type'] = 'trash';
-    request.fields['status'] = 'gautas';
-    request.fields['comment'] = ' ';
-    request.fields['isVisible'] = 'false';
-
-    String responseBody = '';
-    int responseStatus = 0;
-    await request.send().then((response) {
-      responseBody = response.reasonPhrase ?? 'null';
-      responseStatus = response.statusCode;
-    });
-
-    final http2.Response rspns = http2.Response(responseBody, responseStatus);
-    return rspns;
+    final response = await reportsApi.reportControllerCreateNewReport(
+        name: textValue,
+        longitude: selectedLong,
+        latitude: selectedLat,
+        email: emailValue,
+        images: BuiltList(imageFiles));
+    return response.data!;
   }
 
-  Future<http2.Response> updateTrashReport({
+  Future<FullReportDto> updateTrashReport({
     required String id,
+    required String refId,
     required String name,
     required double reportLong,
     required double reportLat,
@@ -172,66 +126,48 @@ class ApiProvider {
     required String comment,
     required String isVisible,
     required String isDeleted,
-    required String editor,
-    required List<http2.MultipartFile> officerImageFiles,
+    required List<String> imageUrls,
+    required List<String> officerImageUrls,
+    required List<MultipartFile> officerImageFiles,
   }) async {
-    final String authKey = await SecureStorageProvider().getJwtToken();
-
-    var request = http2.MultipartRequest(
-        'POST', Uri.parse(HttpApiConstants.fullTrashUpdateUrl));
-    request.headers["Content-Type"] = "multipart/form-data";
-    request.headers["auth-token"] = authKey.toString();
-    request.files.addAll(officerImageFiles);
-    request.fields['id'] = id;
-    request.fields['name'] = name;
-    request.fields['editor'] = editor;
-    request.fields['reportLong'] = reportLong.toString();
-    request.fields['reportLat'] = reportLat.toString();
-    request.fields['status'] = status;
-    request.fields['comment'] = comment;
-    request.fields['isVisible'] = isVisible;
-    request.fields['isDeleted'] = isDeleted;
-
-    String responseBody = '';
-    int responseStatus = 0;
-    await request.send().then((response) {
-      responseBody = response.reasonPhrase ?? 'null';
-      responseStatus = response.statusCode;
-    });
-
-    final http2.Response rspns = http2.Response(responseBody, responseStatus);
-    return rspns;
+    final response = await adminApi.adminControllerUpdateReport(
+        refId: refId,
+        name: name,
+        longitude: reportLong,
+        latitude: reportLat,
+        isVisible: isVisible == "true" ? true : false,
+        isDeleted: isDeleted == "true" ? true : false,
+        comment: comment,
+        status: status,
+        officerImageUrls: officerImageUrls.toBuiltList(),
+        imageUrls: imageUrls.toBuiltList(),
+        images: officerImageFiles.toBuiltList());
+    return response.data!;
   }
 
-  Future<http2.Response> updateDumpReport({
+  Future<FullDumpDto> updateDumpReport({
     required String id,
     required String name,
+    required double longitude,
+    required double latitude,
+    required String address,
     required String moreInformation,
     required String workingHours,
     required String phone,
     required String isVisible,
   }) async {
-    final String authKey = await SecureStorageProvider().getJwtToken();
-
-    Map<String, String> body = {
-      "id": id,
-      "name": name,
-      "moreInformation": moreInformation,
-      "workingHours": workingHours,
-      "phone": phone,
-      "isVisible": isVisible,
-    };
-    Map<String, String> headers = {
-      "content-type": "application/json",
-      'auth-token': authKey.toString()
-    };
-    var response = await http2.post(
-        Uri.parse(HttpApiConstants.fullDumpUpdateUrl),
-        headers: headers,
-        body: jsonEncode(body));
-
-    final http2.Response rspns =
-        http2.Response(response.body, response.statusCode);
-    return rspns;
+    final response = await adminApi.adminControllerUpdateDump(
+        updateDumpDto: UpdateDumpDto((builder) => {
+              builder.id = id,
+              builder.address = address,
+              builder.longitude = longitude,
+              builder.latitude = latitude,
+              builder.name = name,
+              builder.moreInformation = moreInformation,
+              builder.workingHours = workingHours,
+              builder.phone = phone,
+              builder.isVisible = isVisible == 'true' ? true : false,
+            }));
+    return response.data!;
   }
 }

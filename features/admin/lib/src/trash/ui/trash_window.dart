@@ -29,16 +29,16 @@ class TrashWindow extends StatelessWidget {
             return BlocBuilder<TrashBloc, TrashState>(
               builder: (BuildContext context, TrashState state) {
                 if (state is ContentState) {
-                  final List<ReportModel> trashReports = state.trashReports;
                   return viewType == 'chart'
                       ? AdminReportsTable(
                           width: screenWidth,
-                          reports: trashReports,
+                          reports: state.trashReports,
                           onUpdate: (updatedModel, officerFiles) {
                             Navigator.of(context).pop();
                             context.read<TrashBloc>().add(
                                   UpdateReport(
                                     id: updatedModel.id,
+                                    refId: updatedModel.id,
                                     name: updatedModel.name,
                                     reportLong: updatedModel.reportLong,
                                     reportLat: updatedModel.reportLat,
@@ -50,7 +50,8 @@ class TrashWindow extends StatelessWidget {
                                     isDeleted: updatedModel.isDeleted!
                                         ? "true"
                                         : "false",
-                                    editor: activeEmail,
+                                    imageUrls: updatedModel.imageUrls ?? [],
+                                    officerImageUrls: updatedModel.officerImageUrls??[],
                                     officerImageFiles: officerFiles,
                                   ),
                                 );
@@ -58,13 +59,14 @@ class TrashWindow extends StatelessWidget {
                         )
                       : AdminTrashMap(
                           width: screenWidth,
-                          trashReports: trashReports,
+                          trashReports: state.trashReports,
                           isHovering: isHovering,
                           onUpdate: (updatedModel, officerFiles) {
                             Navigator.of(context).pop();
                             context.read<TrashBloc>().add(
                                   UpdateReport(
                                     id: updatedModel.id,
+                                    refId: updatedModel.id,
                                     name: updatedModel.name,
                                     reportLong: updatedModel.reportLong,
                                     reportLat: updatedModel.reportLat,
@@ -76,8 +78,9 @@ class TrashWindow extends StatelessWidget {
                                     isDeleted: updatedModel.isDeleted!
                                         ? "true"
                                         : "false",
-                                    editor: activeEmail,
                                     officerImageFiles: officerFiles,
+                                    officerImageUrls: updatedModel.officerImageUrls??[],
+                                    imageUrls: updatedModel.imageUrls??[],
                                   ),
                                 );
                           },

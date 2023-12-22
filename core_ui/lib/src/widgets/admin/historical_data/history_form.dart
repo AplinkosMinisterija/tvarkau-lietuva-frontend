@@ -1,3 +1,4 @@
+import 'package:api_client/api_client.dart';
 import 'package:core_ui/src/widgets/admin/historical_data/edit_history_column.dart';
 import 'package:core_ui/src/widgets/admin/historical_data/status_history_column.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:domain/domain.dart';
 
 class HistoryForm extends StatelessWidget {
-  final ReportModel report;
+  final FullReportDto report;
   final VoidCallback onPressed;
 
   const HistoryForm({

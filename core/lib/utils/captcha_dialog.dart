@@ -25,7 +25,6 @@ class _CaptchaDialogState extends State<CaptchaDialog> {
     _iFrameElement.style.width = '100%';
     _iFrameElement.src = 'assets/html/recaptcha.html';
     _iFrameElement.style.border = 'none';
-    //_iFrameElement.csp = "default-src * unsafe-inline";
 
     //ignore: undefined_prefixed_name
     ui.platformViewRegistry

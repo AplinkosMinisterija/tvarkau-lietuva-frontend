@@ -5,7 +5,7 @@ abstract class AddingState {}
 class LoadingState implements AddingState {}
 
 class ContentState implements AddingState {
-  final List<ReportModel> trashReports;
+  final List<PublicReportDto> trashReports;
 
   ContentState({
     required this.trashReports,

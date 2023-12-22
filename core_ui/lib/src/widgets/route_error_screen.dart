@@ -5,7 +5,7 @@ class RouteErrorScreen extends StatelessWidget {
   final Function? onPressed;
   final String? errorText;
 
-  RouteErrorScreen({
+  const RouteErrorScreen({
     super.key,
     this.onPressed,
     this.errorText,
@@ -49,7 +49,7 @@ class RouteErrorScreen extends StatelessWidget {
             ),
             const Spacer(),
             Padding(
-              padding: EdgeInsets.all(24),
+              padding: const EdgeInsets.all(24),
               child: AppButton(
                 text: 'Grįžti',
                 backgroundColor: AppTheme.buttonDarkBgColor,

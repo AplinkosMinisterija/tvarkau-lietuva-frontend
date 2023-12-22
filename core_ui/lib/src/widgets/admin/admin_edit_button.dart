@@ -1,15 +1,18 @@
+import 'package:api_client/api_client.dart';
 import 'package:core_ui/src/widgets/admin/reports/table/report_edit_form.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:domain/domain.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart' as dio;
 import 'dumps/dump_edit_form.dart';
 
 class AdminEditButton extends StatefulWidget {
   const AdminEditButton({
+    super.key,
     required this.width,
     required this.onPressed,
-    required this.report,
+     this.report,
+    this.dump,
     required this.onUpdate,
     required this.type,
   });
@@ -17,8 +20,9 @@ class AdminEditButton extends StatefulWidget {
   final String type;
   final double width;
   final VoidCallback onPressed;
-  final ReportModel report;
-  final Function(ReportModel, List<http.MultipartFile>) onUpdate;
+  final FullReportDto? report;
+  final FullDumpDto? dump;
+  final Function(ReportModel, List<dio.MultipartFile>) onUpdate;
 
   @override
   State<AdminEditButton> createState() => _AdminEditButtonState();
@@ -90,16 +94,17 @@ class _AdminEditButtonState extends State<AdminEditButton> {
           children: [
             SizedBox(
                 width: width / 1.2,
-                child: widget.type == 'report'
+                child:
+                widget.report != null
                     ? ReportEditForm(
-                        report: widget.report,
+                        report: widget.report!,
                         onPressed: widget.onPressed,
                         onUpdate: (updatedModel, officerFiles) {
                           widget.onUpdate(updatedModel, officerFiles);
                         },
                       )
                     : DumpEditForm(
-                        report: widget.report,
+                        report: widget.dump!,
                         onPressed: widget.onPressed,
                         onUpdate: (updatedModel) {
                           widget.onUpdate(updatedModel, []);

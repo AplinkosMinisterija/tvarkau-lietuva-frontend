@@ -23,10 +23,9 @@ class DumpWindow extends StatelessWidget {
             return BlocBuilder<DumpBloc, DumpState>(
               builder: (BuildContext context, DumpState state) {
                 if (state is ContentState) {
-                  final List<ReportModel> dumpReports = state.dumpReports;
                   return AdminDumpsTable(
                     width: screenWidth,
-                    dumps: dumpReports,
+                    dumps: state.dumpReports,
                     onUpdate: (updatedModel) {
                       Navigator.of(context).pop();
                       context.read<DumpBloc>().add(UpdateDump(
@@ -37,6 +36,9 @@ class DumpWindow extends StatelessWidget {
                             phone: updatedModel.phone ?? '',
                             isVisible:
                                 updatedModel.isVisible! ? "true" : "false",
+                            longitude: updatedModel.reportLong,
+                        latitude: updatedModel.reportLat,
+                        address: updatedModel.address ?? '',
                           ));
                     },
                   );
@@ -46,12 +48,16 @@ class DumpWindow extends StatelessWidget {
                         color: AppTheme.mainThemeColor, size: 150),
                   );
                 } else if (state is ErrorState) {
-                  return ErrorReloadWidget(
-                    onPressed: () {
-                      context.read<DumpBloc>().add(
-                            ReloadPage(),
-                          );
-                    },
+                  return SizedBox(
+                    height: 300,
+                    width: 800,
+                    child: ErrorReloadWidget(
+                      onPressed: () {
+                        context.read<DumpBloc>().add(
+                              ReloadPage(),
+                            );
+                      },
+                    ),
                   );
                 } else {
                   return const SizedBox.shrink();

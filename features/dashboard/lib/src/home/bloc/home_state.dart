@@ -5,8 +5,8 @@ abstract class HomeState {}
 class LoadingState implements HomeState {}
 
 class ContentState implements HomeState {
-  final List<ReportModel> trashReports;
-  final List<ReportModel> dumpReports;
+  final List<PublicReportDto> trashReports;
+  final List<DumpDto> dumpReports;
 
   ContentState({
     required this.trashReports,

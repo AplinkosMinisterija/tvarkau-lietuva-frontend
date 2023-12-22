@@ -12,9 +12,8 @@ class SecureStorageProvider {
     );
   }
 
-  Future<String> getJwtToken() async {
-    String token = await storage.read(key: _keyJwtKey) ?? 'No data found';
-    return token;
+  Future<String?> getJwtToken()  {
+    return storage.read(key: _keyJwtKey);
   }
 
   deleteJwtToken() async {

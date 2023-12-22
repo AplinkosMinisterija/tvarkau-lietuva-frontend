@@ -1,3 +1,4 @@
+import 'package:api_client/api_client.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:domain/domain.dart';
@@ -6,6 +7,7 @@ import 'history_form.dart';
 
 class AdminHistoryButton extends StatefulWidget {
   const AdminHistoryButton({
+    super.key,
     required this.width,
     required this.onPressed,
     required this.report,
@@ -13,7 +15,7 @@ class AdminHistoryButton extends StatefulWidget {
 
   final double width;
   final VoidCallback onPressed;
-  final ReportModel report;
+  final FullReportDto report;
 
   @override
   State<AdminHistoryButton> createState() => _AdminHistoryButtonState();

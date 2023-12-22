@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class GoogleMapTypeButton extends StatefulWidget {
   const GoogleMapTypeButton({
+    super.key,
     required this.width,
     required this.height,
     required this.onPressed,

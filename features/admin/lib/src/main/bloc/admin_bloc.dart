@@ -1,5 +1,6 @@
 import 'package:aad_oauth/aad_oauth.dart';
 import 'package:aad_oauth/model/config.dart';
+import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:data/data.dart';
@@ -36,26 +37,20 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
             color: AppTheme.mainThemeColor, size: 150),
       );
       var oauth = AadOAuth(config);
-      final MapperFactory mapper = MapperFactory();
-      final ApiProviderBase apiProviderBase = ApiProviderBase(
-          baseUrl: HttpApiConstants.devBaseUrl, errorHandler: ErrorHandler());
-      final ApiProvider apiProvider = ApiProvider(
-        mapper: mapper,
-        apiProviderBase: apiProviderBase,
-      );
 
       var hasCachedAccountInformation = await oauth.hasCachedAccountInformation;
       if (hasCachedAccountInformation) {
         var accessToken = await oauth.getAccessToken();
         if (accessToken != null && accessToken != '') {
-          (UserInfo, String?) userInfo =
-              await apiProvider.getUserInfo(accessToken);
+          try {
+            LogInDto userInfo = await ApiProvider().getUserInfo(accessToken);
+            await SecureStorageProvider().setJwtToken(userInfo.accessKey);
 
-          if (userInfo.$2 != null) {
-            await SecureStorageProvider().setJwtToken(userInfo.$2 ?? '');
-            emit(ContentState(userInfo: userInfo.$1));
-          } else {
-            emit(LogingState());
+            emit(ContentState(userInfo: userInfo));
+          } catch (e) {
+            emit(
+              ErrorState(errorMessage: 'Something went wrong'),
+            );
           }
         } else {
           emit(LogingState());
@@ -88,7 +83,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
       config.webUseRedirect = false;
       var oauth = AadOAuth(config);
       SecureStorageProvider().deleteJwtToken();
-      final result = await oauth.logout();
+      await oauth.logout();
       var accessToken = await oauth.getAccessToken();
       if (accessToken != null) {
         emit(
@@ -122,7 +117,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
       config.webUseRedirect = false;
       var oauth = AadOAuth(config);
 
-      final result = await oauth.login();
+      await oauth.login();
       var accessToken = await oauth.getAccessToken();
 
       if (accessToken != null) {

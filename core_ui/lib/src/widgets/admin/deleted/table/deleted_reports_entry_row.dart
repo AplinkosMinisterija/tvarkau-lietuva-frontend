@@ -1,20 +1,22 @@
+import 'package:api_client/api_client.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:core_ui/src/widgets/admin/admin_deleted_edit_button.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart' as dio;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:domain/domain.dart';
 
 class DeletedReportsEntryRow extends StatefulWidget {
   const DeletedReportsEntryRow({
+    super.key,
     required this.width,
     required this.report,
     required this.onUpdate,
   });
 
   final double width;
-  final ReportModel report;
-  final Function(ReportModel, List<http.MultipartFile>) onUpdate;
+  final FullReportDto report;
+  final Function(ReportModel, List<dio.MultipartFile>) onUpdate;
 
   @override
   State<DeletedReportsEntryRow> createState() => _DeletedReportsEntryRowState();
@@ -55,7 +57,7 @@ class _DeletedReportsEntryRowState extends State<DeletedReportsEntryRow> {
               SizedBox(
                 width: widget.width * 0.0963,
                 child: AutoSizeText(
-                  widget.report.reportLong.toString().substring(0, 7),
+                  widget.report.longitude.toString().substring(0, 7),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 3,
                   style: GoogleFonts.roboto(
@@ -71,7 +73,7 @@ class _DeletedReportsEntryRowState extends State<DeletedReportsEntryRow> {
               SizedBox(
                 width: widget.width * 0.0963,
                 child: AutoSizeText(
-                  widget.report.reportLat.toString().substring(0, 7),
+                  widget.report.latitude.toString().substring(0, 7),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 3,
                   style: GoogleFonts.roboto(
@@ -87,7 +89,7 @@ class _DeletedReportsEntryRowState extends State<DeletedReportsEntryRow> {
               SizedBox(
                 width: widget.width * 0.0963,
                 child: AutoSizeText(
-                  widget.report.name ?? '',
+                  widget.report.name,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 3,
                   style: GoogleFonts.raleway(
@@ -170,8 +172,7 @@ class _DeletedReportsEntryRowState extends State<DeletedReportsEntryRow> {
 
   AutoSizeText getStatusText(String status) {
     String statusText = widget.report.status[0].toUpperCase() +
-            widget.report.status.substring(1) ??
-        '';
+        widget.report.status.substring(1);
     if (status == 'gautas') {
       return AutoSizeText(
         statusText,

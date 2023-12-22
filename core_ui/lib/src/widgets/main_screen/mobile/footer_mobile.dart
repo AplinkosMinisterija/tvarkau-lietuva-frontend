@@ -4,6 +4,7 @@ import 'left_side_footer_mobile.dart';
 
 class FooterMobile extends StatelessWidget {
   const FooterMobile({
+    super.key,
     required this.width,
   });
 

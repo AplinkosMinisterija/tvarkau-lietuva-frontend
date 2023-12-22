@@ -1,30 +1,30 @@
+import 'package:api_client/api_client.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:core_ui/src/widgets/admin/reports/table/admin_reports_entry_row.dart';
-import 'package:core_ui/src/widgets/admin/reports/table/admin_reports_title_bar.dart';
 import 'package:core_ui/src/widgets/admin/reports/table/report_edit_form.dart';
 import 'package:flutter/material.dart';
 import 'package:domain/domain.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart' as dio;
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class AdminReportsTable extends StatefulWidget {
   const AdminReportsTable({
+    super.key,
     required this.width,
     required this.reports,
     required this.onUpdate,
   });
 
   final double width;
-  final List<ReportModel> reports;
-  final Function(ReportModel, List<http.MultipartFile>) onUpdate;
+  final List<FullReportDto> reports;
+  final Function(ReportModel, List<dio.MultipartFile>) onUpdate;
 
   @override
   State<AdminReportsTable> createState() => _AdminReportsTableState();
 }
 
 class _AdminReportsTableState extends State<AdminReportsTable> {
-  List<ReportModel> reports = <ReportModel>[];
+  List<FullReportDto> reports = <FullReportDto>[];
   late ReportDataSourceAdmin reportDataSource;
   Color backgroundColor = const Color.fromRGBO(43, 180, 12, 1.0);
 
@@ -67,7 +67,7 @@ class _AdminReportsTableState extends State<AdminReportsTable> {
                       .effectiveRows[details.rowColumnIndex.rowIndex - 1]
                       .getCells()[0]
                       .value;
-                  ReportModel selectedReport = reports
+                  FullReportDto selectedReport = reports
                       .firstWhere((element) => element.refId == onTapRef);
                   _addEditDialogBuilder(context, widget.width, selectedReport);
                 }
@@ -109,83 +109,82 @@ class _AdminReportsTableState extends State<AdminReportsTable> {
                   allowSorting: false,
                   allowFiltering: true,
                   width: widget.width * 0.07,
-                  filterIconPadding: EdgeInsets.symmetric(horizontal: 2.0),
-                  label: Container(
-                      padding: const EdgeInsets.only(left: 5),
-                      alignment: Alignment.center,
-                      child: const Text(
-                        'Platuma',
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                      ))),
-              GridColumn(
-                  columnName: 'long',
-                  allowSorting: false,
-                  allowFiltering: true,
-                  width: widget.width * 0.07,
-                  filterIconPadding: EdgeInsets.symmetric(horizontal: 2.0),
-                  label: Container(
-                      padding: const EdgeInsets.only(left: 5),
-                      alignment: Alignment.center,
-                      child: const Text(
-                        'Ilguma',
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                      ))),
-              GridColumn(
-                  columnName: 'name',
-                  allowSorting: false,
-                  allowFiltering: true,
-                  label: Container(
-                      padding: const EdgeInsets.all(8.0),
-                      alignment: Alignment.center,
-                      child: const Text(
-                        'Pranešimo turinys',
-                        textAlign: TextAlign.center,
-                      ))),
-              GridColumn(
-                  columnName: 'status',
-                  allowSorting: true,
-                  allowFiltering: true,
-                  label: Container(
-                      padding: const EdgeInsets.all(8.0),
-                      alignment: Alignment.center,
-                      child: const Text(
-                        'Pranešimo statusas',
-                        textAlign: TextAlign.center,
-                      ))),
-              GridColumn(
-                  columnName: 'visibility',
-                  allowSorting: true,
-                  allowFiltering: true,
-                  label: Container(
-                      padding: const EdgeInsets.all(8.0),
-                      alignment: Alignment.center,
-                      child: const Text(
-                        'Matomumas',
-                        textAlign: TextAlign.center,
-                      ))),
-              GridColumn(
-                  columnName: 'edit',
-                  allowSorting: false,
-                  allowFiltering: false,
-                  width: widget.width * 0.05,
-                  label: Container(
-                      padding: const EdgeInsets.all(0.0),
-                      alignment: Alignment.center,
-                      child: const Text(
-                        'Veiksmai',
-                        textAlign: TextAlign.center,
-                      ))),
-            ],
-          ),
-        ),
+                  filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
+              label: Container(
+                  padding: const EdgeInsets.only(left: 5),
+                  alignment: Alignment.center,
+                  child: const Text(
+                    'Platuma',
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                  ))),
+          GridColumn(
+              columnName: 'long',
+              allowSorting: false,
+              allowFiltering: true,
+              width: widget.width * 0.07,
+              filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
+              label: Container(
+                  padding: const EdgeInsets.only(left: 5),
+                  alignment: Alignment.center,
+                  child: const Text(
+                    'Ilguma',
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                  ))),
+          GridColumn(
+              columnName: 'name',
+              allowSorting: false,
+              allowFiltering: true,
+              label: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  alignment: Alignment.center,
+                  child: const Text(
+                    'Pranešimo turinys',
+                    textAlign: TextAlign.center,
+                  ))),
+          GridColumn(
+              columnName: 'status',
+              allowSorting: true,
+              allowFiltering: true,
+              label: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  alignment: Alignment.center,
+                  child: const Text(
+                    'Pranešimo statusas',
+                    textAlign: TextAlign.center,
+                  ))),
+          GridColumn(
+              columnName: 'visibility',
+              allowSorting: true,
+              allowFiltering: true,
+              label: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  alignment: Alignment.center,
+                  child: const Text(
+                    'Matomumas',
+                    textAlign: TextAlign.center,
+                  ))),
+          GridColumn(
+              columnName: 'edit',
+              allowSorting: false,
+              allowFiltering: false,
+              width: widget.width * 0.05,
+              label: Container(
+                  padding: const EdgeInsets.all(0.0),
+                  alignment: Alignment.center,
+                  child: const Text(
+                    'Veiksmai',
+                    textAlign: TextAlign.center,
+                  ))),
+        ],
+      ),),
       ],
     );
   }
 
   Future<void> _addEditDialogBuilder(
-      BuildContext context, double width, ReportModel report) {
+      BuildContext context, double width, FullReportDto report) {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -230,27 +229,27 @@ String getFormattedDateAdmin(String unformattedDate) {
 }
 
 class ReportDataSourceAdmin extends DataGridSource {
-  ReportDataSourceAdmin({required List<ReportModel> reportData}) {
+  ReportDataSourceAdmin({required List<FullReportDto> reportData}) {
     _reportData = reportData
         .map<DataGridRow>((e) => DataGridRow(cells: [
               DataGridCell<String>(columnName: 'ref', value: e.refId),
               DataGridCell<String>(
                   columnName: 'id',
                   value:
-                      'TLP-A${'0' * (8 - e.refId!.length)}${e.refId!.toUpperCase()}'),
+                      'TLP-A${'0' * (8 - e.refId.length)}${e.refId.toUpperCase()}'),
               DataGridCell<String>(
                   columnName: 'date',
-                  value: getFormattedDateAdmin(e.reportDate)),
+                  value: getFormattedDateAdmin(e.reportDate.toString())),
               DataGridCell<String>(
                   columnName: 'lat',
-                  value: e.reportLat.toString().length > 6
-                      ? e.reportLat.toString().substring(0, 7)
-                      : e.reportLat.toString()),
+                  value: e.latitude.toString().length > 6
+                      ? e.latitude.toString().substring(0, 7)
+                      : e.latitude.toString()),
               DataGridCell<String>(
                   columnName: 'long',
-                  value: e.reportLong.toString().length > 6
-                      ? e.reportLong.toString().substring(0, 7)
-                      : e.reportLong.toString()),
+                  value: e.longitude.toString().length > 6
+                      ? e.longitude.toString().substring(0, 7)
+                      : e.longitude.toString()),
               DataGridCell<String>(columnName: 'name', value: e.name),
               DataGridCell<String>(columnName: 'status', value: e.status),
               DataGridCell<String>(

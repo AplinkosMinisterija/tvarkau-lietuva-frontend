@@ -1,7 +1,8 @@
+import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
-import 'package:domain/domain.dart';
 import 'package:data/data.dart';
-import 'package:http/http.dart' as https;
+import 'package:dio/dio.dart' as dio;
+
 part 'removed_event.dart';
 
 part 'removed_state.dart';
@@ -22,16 +23,9 @@ class RemovedBloc extends Bloc<RemovedEvent, RemovedState> {
       emit(
         LoadingState(),
       );
-      final MapperFactory mapper = MapperFactory();
-      final ApiProviderBase apiProviderBase = ApiProviderBase(
-          baseUrl: HttpApiConstants.devBaseUrl, errorHandler: ErrorHandler());
-      final ApiProvider apiProvider = ApiProvider(
-        mapper: mapper,
-        apiProviderBase: apiProviderBase,
-      );
 
-      final List<ReportModel> trashReports =
-          await apiProvider.getAllRemovedReports();
+      final List<FullReportDto> trashReports =
+          await ApiProvider().getAllRemovedReports();
       emit(
         ContentState(
           trashReports: trashReports,
@@ -52,16 +46,10 @@ class RemovedBloc extends Bloc<RemovedEvent, RemovedState> {
       emit(
         LoadingState(),
       );
-      final MapperFactory mapper = MapperFactory();
-      final ApiProviderBase apiProviderBase = ApiProviderBase(
-          baseUrl: HttpApiConstants.devBaseUrl, errorHandler: ErrorHandler());
-      final ApiProvider apiProvider = ApiProvider(
-        mapper: mapper,
-        apiProviderBase: apiProviderBase,
-      );
 
-      var response = await apiProvider.updateTrashReport(
+      await ApiProvider().updateTrashReport(
         id: event.id,
+        refId: event.refId,
         name: event.name,
         reportLong: event.reportLong,
         reportLat: event.reportLat,
@@ -69,12 +57,13 @@ class RemovedBloc extends Bloc<RemovedEvent, RemovedState> {
         comment: event.comment,
         isVisible: event.isVisible,
         isDeleted: event.isDeleted,
-        editor: event.editor,
         officerImageFiles: event.officerImageFiles,
+        officerImageUrls: event.officerImageUrls,
+        imageUrls: event.imageUrls,
       );
 
-      final List<ReportModel> trashReports =
-          await apiProvider.getAllRemovedReports();
+      final List<FullReportDto> trashReports =
+          await ApiProvider().getAllRemovedReports();
       emit(
         ContentState(
           trashReports: trashReports,

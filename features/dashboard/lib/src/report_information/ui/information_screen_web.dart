@@ -1,3 +1,4 @@
+import 'package:api_client/api_client.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class InformationScreenWeb extends StatefulWidget {
 
   final double width;
   final double height;
-  final ReportModel report;
+  final PublicReportDto report;
 
   @override
   State<InformationScreenWeb> createState() => _InformationScreenWebState();
@@ -67,9 +68,8 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
           color: Colors.black,
         ));
     span2 = TextSpan(
-        text: widget.report.comment != null && widget.report.comment != ' '
-            ? widget.report.comment!
-            : '',
+        text: widget.report.comment != ' '
+            ? widget.report.comment: '',
         style: GoogleFonts.roboto(
           fontSize: widget.width * 0.04444,
           fontWeight: FontWeight.w400,
@@ -81,18 +81,18 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
     tp2 = TextPainter(text: span2, textDirection: TextDirection.ltr);
     tp2.layout(maxWidth: widget.width);
     departmentAnswerTextLinesCount = tp2.computeLineMetrics().length;
-    if (widget.report.imageUrls!.isEmpty) {
+    if (widget.report.imageUrls.isEmpty) {
       imageLineCount = 0;
-    } else if (widget.report.imageUrls!.length < 3) {
+    } else if (widget.report.imageUrls.length < 3) {
       imageLineCount = 1;
-    } else if (widget.report.imageUrls!.length > 2) {
+    } else if (widget.report.imageUrls.length > 2) {
       imageLineCount = 2;
     }
-    strLength = 8 - widget.report.refId!.length;
+    strLength = 8 - widget.report.refId.length;
     str = '0' * strLength;
 
     _initialCameraPosition = CameraPosition(
-        target: LatLng(widget.report.reportLat, widget.report.reportLong),
+        target: LatLng(widget.report.latitude, widget.report.longitude),
         zoom: 9.0);
     _currentMapType = MapType.normal;
     markers.add(
@@ -101,8 +101,8 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
           '${widget.report.name}99899',
         ),
         position: LatLng(
-          widget.report.reportLat,
-          widget.report.reportLong,
+          widget.report.latitude,
+          widget.report.longitude,
         ),
         icon: markerIcon,
       ),
@@ -189,7 +189,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                             child: FittedBox(
                               fit: BoxFit.fitWidth,
                               child: Text(
-                                '#TLP-A${str}${widget.report.refId!.toUpperCase()}',
+                                '#TLP-A$str${widget.report.refId!.toUpperCase()}',
                                 style: GoogleFonts.roboto(
                                     fontSize: 32,
                                     fontWeight: FontWeight.w600,
@@ -786,18 +786,18 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
   }
 
   String getFormattedDate(String status) {
-    StatusRecords? recordObject = widget.report.statusRecords
-        ?.where((element) => element.status == status)
+    StatusRecordsDto? recordObject = widget.report.statusRecords
+        .where((element) => element.status == status)
         .singleOrNull;
     String day = '';
     String hour = '';
     if (recordObject != null) {
       DateTime formattedDate =
-          DateTime.parse(recordObject.date!).add(const Duration(hours: 3));
+          recordObject.date.add(const Duration(hours: 3));
       day = formattedDate.toString().substring(0, 10);
       hour = formattedDate.toString().substring(11, 16);
     } else {
-      DateTime formattedDate = DateTime.parse(widget.report.reportDate)
+      DateTime formattedDate = widget.report.reportDate
           .add(const Duration(hours: 3));
       day = formattedDate.toString().substring(0, 10);
       hour = formattedDate.toString().substring(11, 16);
@@ -955,7 +955,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
         unformattedImageUrl.endsWith('.heif')) {
       var convertedString =
           unformattedImageUrl.substring(0, unformattedImageUrl.length - 5);
-      convertedString = convertedString + '.jpg';
+      convertedString = '$convertedString.jpg';
       return convertedString;
     } else {
       return unformattedImageUrl;

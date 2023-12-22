@@ -1,7 +1,6 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:domain/report/report_library.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
@@ -28,17 +27,17 @@ class InformationScreen extends StatelessWidget {
               builder: (BuildContext context, InformationState state) {
                 if (state is ContentState) {
                   Size size = MediaQuery.of(context).size;
-                  ReportModel report = state.trashReport;
+
                   if (size.width > 900) {
                     return InformationScreenWeb(
                         width: size.width / 2.6,
                         height: size.height,
-                        report: report); //WEB INFO
+                        report: state.trashReport); //WEB INFO
                   } else {
                     return InformationScreenMobile(
                       width: size.width,
                       height: size.height,
-                      report: report,
+                      report: state.trashReport,
                     ); //MOBILE INFO
                   }
                 } else if (state is LoadingState) {

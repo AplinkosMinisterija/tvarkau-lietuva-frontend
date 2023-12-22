@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class LocationSearchButton extends StatefulWidget {
   const LocationSearchButton({
+    super.key,
     required this.width,
     required this.height,
     required this.onPressed,
