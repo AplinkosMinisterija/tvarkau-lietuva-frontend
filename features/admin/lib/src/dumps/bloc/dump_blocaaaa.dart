@@ -3,12 +3,12 @@ import 'package:domain/domain.dart';
 import 'package:data/data.dart';
 import 'package:api_client/api_client.dart';
 
-part 'dump_event.dart';
+part 'dump_evenaaat.dart';
 
-part 'dump_state.dart';
+part 'dump_stateaaaa.dart';
 
-class DumpBloc extends Bloc<DumpEvent, DumpState> {
-  DumpBloc() : super(LoadingState()) {
+class DumpBlocaaa extends Bloc<DumpEventaaaa, DumpStateaaa> {
+  DumpBlocaaa() : super(LoadingState()) {
     on<LoadData>(_onLoadData);
     on<UpdateDump>(_onUpdateDump);
     on<ReloadPage>(_onReloadEvent);
@@ -17,7 +17,7 @@ class DumpBloc extends Bloc<DumpEvent, DumpState> {
 
   Future<void> _onLoadData(
     LoadData _,
-    Emitter<DumpState> emit,
+    Emitter<DumpStateaaa> emit,
   ) async {
     try {
       emit(
@@ -39,7 +39,7 @@ class DumpBloc extends Bloc<DumpEvent, DumpState> {
 
   Future<void> _onUpdateDump(
     UpdateDump event,
-    Emitter<DumpState> emit,
+    Emitter<DumpStateaaa> emit,
   ) async {
     try {
       emit(
@@ -52,7 +52,7 @@ class DumpBloc extends Bloc<DumpEvent, DumpState> {
         moreInformation: event.moreInformation,
         workingHours: event.workingHours,
         phone: event.phone,
-        isVisible: event.isVisible,
+        isVisible: false,
         longitude: event.longitude,
         latitude: event.latitude,
         address: event.address,
@@ -74,7 +74,7 @@ class DumpBloc extends Bloc<DumpEvent, DumpState> {
 
   Future<void> _onReloadEvent(
     ReloadPage _,
-    Emitter<DumpState> emit,
+    Emitter<DumpStateaaa> emit,
   ) async {
     add(LoadData());
   }

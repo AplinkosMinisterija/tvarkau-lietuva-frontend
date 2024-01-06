@@ -6,11 +6,13 @@ class ReloadState implements DumpState {}
 
 class LoadingState implements DumpState {}
 
+class DoneState implements DumpState {}
+
 class ContentState implements DumpState {
-  final List<FullDumpDto> dumpReports;
+  final FullDumpDto dumpReport;
 
   ContentState({
-    required this.dumpReports,
+    required this.dumpReport,
   });
 }
 

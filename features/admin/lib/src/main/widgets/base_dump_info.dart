@@ -2,22 +2,22 @@ import 'package:domain/report/report_library.dart';
 import 'package:flutter/material.dart';
 import '../common/custom_colors.dart';
 import '../common/custom_styles.dart';
-import 'package:api_client/api_client.dart';
 
-class BaseTrashInfo extends StatelessWidget {
-  const BaseTrashInfo({super.key, required this.trash});
+class BaseDumpInfo extends StatelessWidget {
+  const BaseDumpInfo({super.key, required this.dump});
 
-  final FullReportDto trash;
+  final ReportModel dump;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _BuildColumn(title: 'Data', value: trash.reportDate.toString()),
-          _BuildColumn(title: 'El. paštas', value: trash.email),
-        _BuildColumn(title: 'Platuma', value: trash.latitude.toString()),
-        _BuildColumn(title: 'Ilguma', value: trash.longitude.toString()),
+        _BuildColumn(title: 'Data', value: dump.reportDate.toString()),
+        if (dump.email != null)
+          _BuildColumn(title: 'El. paštas', value: dump.email!), //TODO check
+        _BuildColumn(title: 'Platuma', value: dump.reportLat.toString()),
+        _BuildColumn(title: 'Ilguma', value: dump.reportLong.toString()),
       ],
     );
   }

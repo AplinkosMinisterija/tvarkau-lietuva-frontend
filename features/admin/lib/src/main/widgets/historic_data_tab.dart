@@ -1,4 +1,3 @@
-import 'package:api_client/api_client.dart';
 import 'package:collection/collection.dart';
 import 'package:domain/report/report_library.dart';
 import 'package:flutter/material.dart';
@@ -14,8 +13,8 @@ class HistoricDataTab extends StatefulWidget {
     required this.statusRecords,
   });
 
-  final List<HistoryDataDto> historicData;
-  final List<StatusRecordsDto> statusRecords;
+  final List<HistoryData> historicData;
+  final List<StatusRecords> statusRecords;
 
   @override
   State<HistoricDataTab> createState() => _HistoricDataTabState();
@@ -123,7 +122,7 @@ class _BuildTab extends StatelessWidget {
 class _BuildHistoricData extends StatelessWidget {
   const _BuildHistoricData(this.historicData);
 
-  final List<HistoryDataDto> historicData;
+  final List<HistoryData> historicData;
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +140,7 @@ class _BuildHistoricData extends StatelessWidget {
 class _BuildStatusRecords extends StatelessWidget {
   const _BuildStatusRecords(this.statusRecords);
 
-  final List<StatusRecordsDto> statusRecords;
+  final List<StatusRecords> statusRecords;
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +187,7 @@ class _BuildHistoricDataCard extends StatelessWidget {
     required this.isLast,
   });
 
-  final HistoryDataDto data;
+  final HistoryData data;
   final bool isLast;
 
   @override
@@ -233,7 +232,7 @@ class _BuildHistoricDataCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                data.date.toString(),
+                data.date ?? '',
                 style: CustomStyles.body1.copyWith(
                   fontWeight: FontWeight.w500,
                 ),
@@ -242,7 +241,7 @@ class _BuildHistoricDataCard extends StatelessWidget {
                 data.user ?? '',
                 style: CustomStyles.body2,
               ),
-              for (final edit in data.edits) ...[
+              for (final edit in (data.edits ?? <Edits>[])) ...[
                 10.heightBox,
                 Container(
                   padding: const EdgeInsets.symmetric(
@@ -290,7 +289,7 @@ class _BuildStatusRecordCard extends StatelessWidget {
     required this.isLast,
   });
 
-  final StatusRecordsDto data;
+  final StatusRecords data;
   final bool isLast;
 
   @override
@@ -335,7 +334,7 @@ class _BuildStatusRecordCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                data.date.toString(),
+                data.date ?? '',
                 style: CustomStyles.body1.copyWith(
                   fontWeight: FontWeight.w500,
                 ),

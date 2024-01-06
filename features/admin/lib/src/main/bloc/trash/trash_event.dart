@@ -2,7 +2,12 @@ part of 'trash_bloc.dart';
 
 abstract class TrashEvent {}
 
-class LoadData implements TrashEvent {}
+class LoadData implements TrashEvent {
+  final String refId;
+  LoadData({
+    required this.refId,
+  });
+}
 
 class ReloadPage implements TrashEvent {}
 

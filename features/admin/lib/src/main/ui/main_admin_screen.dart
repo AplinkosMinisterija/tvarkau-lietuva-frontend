@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-import 'package:admin/src/main/bloc/admin_bloc.dart';
-import 'package:openid_client/openid_client.dart';
+import 'package:admin/src/main/bloc/main/admin_bloc.dart';
 
-import 'admin_dashboard.dart';
+import '../../updated_admin/ui/updated_admin_screen.dart';
 
 class MainAdminScreen extends StatelessWidget {
   const MainAdminScreen({
@@ -23,8 +22,11 @@ class MainAdminScreen extends StatelessWidget {
             return BlocBuilder<AdminBloc, AdminState>(
               builder: (BuildContext context, AdminState state) {
                 if (state is ContentState) {
-                  return AdminDashboard(
-                    userInfo: state.userInfo,
+                  return UpdatedAdminScreen(
+                    name: state.userInfo.name,
+                    email: state.userInfo.email,
+                    reports: state.reports,
+                    dumps: state.dumps,
                     onLogout: () {
                       context.read<AdminBloc>().add(
                             LogOut(),

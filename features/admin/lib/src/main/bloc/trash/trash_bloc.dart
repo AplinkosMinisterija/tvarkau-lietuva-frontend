@@ -8,15 +8,19 @@ part 'trash_event.dart';
 part 'trash_state.dart';
 
 class TrashBloc extends Bloc<TrashEvent, TrashState> {
-  TrashBloc() : super(LoadingState()) {
+  final String refId;
+
+  TrashBloc({
+    required this.refId,
+  }) : super(LoadingState()) {
     on<LoadData>(_onLoadData);
     on<UpdateReport>(_onUpdateReport);
     on<ReloadPage>(_onReloadEvent);
-    add(LoadData());
+    add(LoadData(refId: refId));
   }
 
   Future<void> _onLoadData(
-    LoadData _,
+    LoadData event,
     Emitter<TrashState> emit,
   ) async {
     try {
@@ -24,17 +28,15 @@ class TrashBloc extends Bloc<TrashEvent, TrashState> {
         LoadingState(),
       );
 
-      final List<FullReportDto> trashReports =
-          await ApiProvider().getAllTrashReports();
-      if (trashReports.isNotEmpty) {
+      final FullReportDto trashReport =
+          await ApiProvider().getFullTrashReportById(event.refId);
+      
         emit(
           ContentState(
-            trashReports: trashReports,
+            trashReport: trashReport,
           ),
         );
-      } else {
-        emit(ErrorState(errorMessage: 'Klaida'));
-      }
+      
     } catch (e) {
       emit(
         ErrorState(errorMessage: 'Something went wrong'),
@@ -66,18 +68,15 @@ class TrashBloc extends Bloc<TrashEvent, TrashState> {
         imageUrls: event.imageUrls,
       );
 
-      final List<FullReportDto> trashReports =
-          await ApiProvider().getAllTrashReports();
-      if (trashReports.isNotEmpty) {
+      final FullReportDto trashReport =
+          await ApiProvider().getFullTrashReportById(event.refId);
 
         emit(
           ContentState(
-            trashReports: trashReports,
+            trashReport: trashReport,
           ),
         );
-      } else {
-        emit(ErrorState(errorMessage: 'Klaida'));
-      }
+
     } catch (e) {
       emit(
         ErrorState(errorMessage: 'Įvyko netikėta klaida'),
@@ -89,6 +88,6 @@ class TrashBloc extends Bloc<TrashEvent, TrashState> {
     ReloadPage _,
     Emitter<TrashState> emit,
   ) async {
-    add(LoadData());
+    add(LoadData(refId: refId));
   }
 }

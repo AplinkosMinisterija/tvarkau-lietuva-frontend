@@ -40,6 +40,46 @@ paths:
                 $ref: '#/components/schemas/FullReportDto'
       tags: *ref_0
       security: *ref_1
+  /admin/reports/{refId}:
+    get:
+      operationId: AdminController_getReportById
+      parameters:
+        - name: refId
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Single full report has been successfully found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullReportDto'
+        '404':
+          description: Report not found
+      tags: *ref_0
+      security: *ref_1
+  /admin/dumps/{refId}:
+    get:
+      operationId: AdminController_getDumpById
+      parameters:
+        - name: refId
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Single full dump has been successfully found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullDumpDto'
+        '404':
+          description: Dump not found
+      tags: *ref_0
+      security: *ref_1
   /admin/dumps:
     get:
       operationId: AdminController_getAllDumps
@@ -292,6 +332,44 @@ components:
         - imageUrls
         - historyData
         - statusRecords
+    FullDumpDto:
+      type: object
+      properties:
+        refId:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+        longitude:
+          type: number
+          format: double
+        latitude:
+          type: number
+          format: double
+        isVisible:
+          type: boolean
+        address:
+          type: string
+          nullable: true
+        phone:
+          type: string
+          nullable: true
+        workingHours:
+          type: string
+        moreInformation:
+          type: string
+      required:
+        - refId
+        - name
+        - type
+        - longitude
+        - latitude
+        - isVisible
+        - address
+        - phone
+        - workingHours
+        - moreInformation
     UpdateReportDto:
       type: object
       properties:
@@ -336,44 +414,6 @@ components:
         - officerImageUrls
         - imageUrls
         - images
-    FullDumpDto:
-      type: object
-      properties:
-        refId:
-          type: string
-        name:
-          type: string
-        type:
-          type: string
-        longitude:
-          type: number
-          format: double
-        latitude:
-          type: number
-          format: double
-        isVisible:
-          type: boolean
-        address:
-          type: string
-          nullable: true
-        phone:
-          type: string
-          nullable: true
-        workingHours:
-          type: string
-        moreInformation:
-          type: string
-      required:
-        - refId
-        - name
-        - type
-        - longitude
-        - latitude
-        - isVisible
-        - address
-        - phone
-        - workingHours
-        - moreInformation
     UpdateDumpDto:
       type: object
       properties:

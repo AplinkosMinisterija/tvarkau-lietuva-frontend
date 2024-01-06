@@ -1,3 +1,6 @@
+import 'package:admin/src/updated_admin/widgets/admin_table_deleted.dart';
+import 'package:admin/src/updated_admin/widgets/admin_table_dumps.dart';
+import 'package:api_client/api_client.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -6,7 +9,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../common/custom_colors.dart';
 import '../common/custom_styles.dart';
 import '../common/extensions.dart';
-import '../widgets/admin_table.dart';
+import '../widgets/admin_table_reports.dart';
 import '../widgets/base_admin_screen.dart';
 import '../widgets/custom_switch.dart';
 import '../widgets/header.dart';
@@ -15,186 +18,26 @@ import '../widgets/updated_report_type_switch.dart';
 
 class UpdatedAdminScreen extends StatefulWidget {
   const UpdatedAdminScreen({
+    required this.name,
+    required this.email,
+    required this.reports,
+    required this.dumps,
+    required this.onLogout,
     Key? key,
   }) : super(key: key);
+
+  final String name;
+  final String email;
+  final List<FullReportDto> reports;
+  final List<FullDumpDto> dumps;
+  final VoidCallback onLogout;
 
   @override
   State<UpdatedAdminScreen> createState() => _UpdatedAdminScreenState();
 }
 
 class _UpdatedAdminScreenState extends State<UpdatedAdminScreen> {
-  final name = 'Vardas Pavardė';
-
-  final email = 'vardas.pavarde@gmail.com';
-
-  List<ReportModel> get mockReportModels => [
-        ReportModel(
-          id: "1",
-          name: "Pirmas ataskaitos modelis",
-          type: "Eismo įvykis",
-          reportLong: 23.279652,
-          reportLat: 54.687157,
-          reportDate: "2021-07-20",
-          isVisible: true,
-          isDeleted: false,
-          email: "pavyzdys@el.pastas.lt",
-          address: "Vilnius, Lietuva",
-          refId: "REF123",
-          status: "gautas",
-          phone: "+37061234567",
-          comment:
-              "Šiandien, apsilankius miške, pastebėjau išmestus šiferio lakštus. Jų gana nemažas kiekis, maždaug apie 100 lakštų. Jie išmėtyti po gana didelę teritoriją. Kartu su šiferio lakštais yra išmesti ir seni baldai bei buitinė technika.",
-          workingHours: "I-V 8:00-17:00",
-          moreInformation: "Papildoma informacija",
-          imageUrls: [
-            "https://nuoroda.lt/nuotrauka1.jpg",
-            "https://nuoroda.lt/nuotrauka2.jpg",
-          ],
-          officerImageUrls: [
-            "https://nuoroda.lt/policijos_nuotrauka1.jpg",
-          ],
-          historyData: [
-            HistoryData(
-              user: "Vartotojas1",
-              date: "2021-07-21",
-              edits: [
-                Edits(field: "status", change: "Naujas statusas"),
-                Edits(field: "komentaras", change: "Atnaujintas komentaras"),
-              ],
-            ),
-          ],
-          statusRecords: [
-            StatusRecords(status: "Naujas", date: "2021-07-20"),
-            StatusRecords(status: "Aptarnaujama", date: "2021-07-21"),
-          ],
-        ),
-        // ... Two more ReportModel instances
-      ];
-  List<ReportModel> get mockDumpModels => [
-        ReportModel(
-          id: "1",
-          name: "Pirmas ataskaitos modelis",
-          type: "Eismo įvykis",
-          reportLong: 24.279652,
-          reportLat: 54.687157,
-          reportDate: "2021-07-20",
-          isVisible: true,
-          isDeleted: false,
-          email: "pavyzdys@el.pastas.lt",
-          address: "Vilnius, Lietuva",
-          refId: "REF123",
-          status: "gautas",
-          phone: "+37061234567",
-          comment:
-              "Šiandien, apsilankius miške, pastebėjau išmestus šiferio lakštus. Jų gana nemažas kiekis, maždaug apie 100 lakštų. Jie išmėtyti po gana didelę teritoriją. Kartu su šiferio lakštais yra išmesti ir seni baldai bei buitinė technika.",
-          workingHours: "I-V 8:00-17:00",
-          moreInformation: "Papildoma informacija",
-          imageUrls: [
-            "https://nuoroda.lt/nuotrauka1.jpg",
-            "https://nuoroda.lt/nuotrauka2.jpg",
-          ],
-          officerImageUrls: [
-            "https://nuoroda.lt/policijos_nuotrauka1.jpg",
-          ],
-          historyData: [
-            HistoryData(
-              user: "Vartotojas1",
-              date: "2021-07-21",
-              edits: [
-                Edits(field: "status", change: "Naujas statusas"),
-                Edits(field: "komentaras", change: "Atnaujintas komentaras"),
-              ],
-            ),
-          ],
-          statusRecords: [
-            StatusRecords(status: "Naujas", date: "2021-07-20"),
-            StatusRecords(status: "Aptarnaujama", date: "2021-07-21"),
-          ],
-        ),
-        ReportModel(
-          id: "2",
-          name: "Pirmas ataskaitos modelis",
-          type: "Eismo įvykis",
-          reportLong: 25.279652,
-          reportLat: 54.687157,
-          reportDate: "2021-07-20",
-          isVisible: true,
-          isDeleted: false,
-          email: "pavyzdys@el.pastas.lt",
-          address: "Vilnius, Lietuva",
-          refId: "REF123",
-          status: "gautas",
-          phone: "+37061234567",
-          comment:
-              "Šiandien, apsilankius miške, pastebėjau išmestus šiferio lakštus. Jų gana nemažas kiekis, maždaug apie 100 lakštų. Jie išmėtyti po gana didelę teritoriją. Kartu su šiferio lakštais yra išmesti ir seni baldai bei buitinė technika.",
-          workingHours: "I-V 8:00-17:00",
-          moreInformation: "Papildoma informacija",
-          imageUrls: [
-            "https://nuoroda.lt/nuotrauka1.jpg",
-            "https://nuoroda.lt/nuotrauka2.jpg",
-          ],
-          officerImageUrls: [
-            "https://nuoroda.lt/policijos_nuotrauka1.jpg",
-          ],
-          historyData: [
-            HistoryData(
-              user: "Vartotojas1",
-              date: "2021-07-21",
-              edits: [
-                Edits(field: "status", change: "Naujas statusas"),
-                Edits(field: "komentaras", change: "Atnaujintas komentaras"),
-              ],
-            ),
-          ],
-          statusRecords: [
-            StatusRecords(status: "Naujas", date: "2021-07-20"),
-            StatusRecords(status: "Aptarnaujama", date: "2021-07-21"),
-          ],
-        ),
-        ReportModel(
-          id: "3",
-          name: "Pirmas ataskaitos modelis",
-          type: "Eismo įvykis",
-          reportLong: 26.279652,
-          reportLat: 54.687157,
-          reportDate: "2021-07-20",
-          isVisible: true,
-          isDeleted: false,
-          email: "pavyzdys@el.pastas.lt",
-          address: "Vilnius, Lietuva",
-          refId: "REF123",
-          status: "gautas",
-          phone: "+37061234567",
-          comment:
-              "Šiandien, apsilankius miške, pastebėjau išmestus šiferio lakštus. Jų gana nemažas kiekis, maždaug apie 100 lakštų. Jie išmėtyti po gana didelę teritoriją. Kartu su šiferio lakštais yra išmesti ir seni baldai bei buitinė technika.",
-          workingHours: "I-V 8:00-17:00",
-          moreInformation: "Papildoma informacija",
-          imageUrls: [
-            "https://nuoroda.lt/nuotrauka1.jpg",
-            "https://nuoroda.lt/nuotrauka2.jpg",
-          ],
-          officerImageUrls: [
-            "https://nuoroda.lt/policijos_nuotrauka1.jpg",
-          ],
-          historyData: [
-            HistoryData(
-              user: "Vartotojas1",
-              date: "2021-07-21",
-              edits: [
-                Edits(field: "status", change: "Naujas statusas"),
-                Edits(field: "komentaras", change: "Atnaujintas komentaras"),
-              ],
-            ),
-          ],
-          statusRecords: [
-            StatusRecords(status: "Naujas", date: "2021-07-20"),
-            StatusRecords(status: "Aptarnaujama", date: "2021-07-21"),
-          ],
-        ),
-        // ... Two more ReportModel instances
-      ];
-
-  bool isShowDumps = true;
+  bool isShowDumps = false;
   bool isMapView = false;
   bool isShowDeleted = false;
   Set<Marker> reportMarkers = {};
@@ -205,24 +48,28 @@ class _UpdatedAdminScreenState extends State<UpdatedAdminScreen> {
         const ImageConfiguration(size: Size(50, 50)),
         'assets/svg/pin_icon.svg');
 
-    for (final report in mockReportModels) {
+    for (final report in widget.reports) {
       reportMarkers.add(Marker(
-        markerId: MarkerId(report.id),
-        position: LatLng(report.reportLat, report.reportLong),
+        markerId: MarkerId(report.refId),
+        position: LatLng(report.latitude, report.longitude),
         icon: description,
         onTap: () {
-          context.goNamed('report_admin',
-              extra: report, pathParameters: {'id': report.id});
+          String str = '0' * (8 - report.refId.length);
+          context.goNamed('report_admin', queryParameters: {
+            'id': 'TLP-A$str${report.refId.toUpperCase()}'
+          });
         },
       ));
     }
-    for (final dump in mockDumpModels) {
+    for (final dump in widget.dumps) {
       dumpMarkers.add(Marker(
-        markerId: MarkerId(dump.id),
-        position: LatLng(dump.reportLat, dump.reportLong),
+        markerId: MarkerId(dump.refId),
+        position: LatLng(dump.latitude, dump.longitude),
         icon: description,
         onTap: () {
-          context.goNamed('dump', extra: dump, pathParameters: {'id': dump.id});
+          context.goNamed('dump_admin', queryParameters: {
+            'id': dump.refId,
+          });
         },
       ));
     }
@@ -255,10 +102,10 @@ class _UpdatedAdminScreenState extends State<UpdatedAdminScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Header(
-                    email: email,
-                    name: name,
+                    email: widget.email,
+                    name: widget.name,
                     onLogout: () {
-                      //TODO: Add logout logic
+                      widget.onLogout();
                     },
                   ),
                   48.heightBox,
@@ -266,14 +113,22 @@ class _UpdatedAdminScreenState extends State<UpdatedAdminScreen> {
                   40.heightBox,
                   Row(
                     children: [
-                      UpdatedReportTypeSwitch(
-                        isShowDumps: isShowDumps,
-                        onReportTypeChange: (value) {
-                          setState(() {
-                            isShowDumps = value;
-                          });
-                        },
-                      ),
+                      !isShowDeleted
+                          ? UpdatedReportTypeSwitch(
+                              isShowDumps: isShowDumps,
+                              onReportTypeChange: (value) {
+                                setState(() {
+                                  isShowDumps = value;
+                                });
+                              },
+                            )
+                          : Opacity(
+                              opacity: 0.3,
+                              child: UpdatedReportTypeSwitch(
+                                isShowDumps: isShowDumps,
+                                onReportTypeChange: (value) {},
+                              ),
+                            ),
                       20.widthBox,
                       CustomSwitch(
                         value: isShowDeleted,
@@ -297,38 +152,33 @@ class _UpdatedAdminScreenState extends State<UpdatedAdminScreen> {
                             .copyWith(color: CustomColors.white),
                       ),
                       const Spacer(),
-                      UpdatedAdminViewTypeSwitch(
-                        isMapView: isMapView,
-                        onIsMapViewChange: (value) {
-                          setState(() {
-                            isMapView = value;
-                          });
-                        },
-                      ),
+                      !isShowDeleted
+                          ? UpdatedAdminViewTypeSwitch(
+                              isMapView: isMapView,
+                              onIsMapViewChange: (value) {
+                                setState(() {
+                                  isMapView = value;
+                                });
+                              },
+                            )
+                          : const SizedBox.shrink(),
                     ],
                   ),
                   12.heightBox,
-                  if (isMapView)
-                    _BuildMap(
-                      height: height.toDouble(),
-                      markers: isShowDumps ? dumpMarkers : reportMarkers,
-                      initialTarget: isShowDumps
-                          ? dumpMarkers.first.position
-                          : reportMarkers.first.position,
-                    )
-                  else
-                    AdminTable(
-                      isShowDumps: isShowDumps,
-                      reports: isShowDumps ? mockDumpModels : mockReportModels,
-                    ),
-                  // CustomButton(
-                  //   text: 'Eiti i report',
-                  //   onPressed: () {
-                  //     context.goNamed('dump',
-                  //         extra: mockReportModels.first,
-                  //         pathParameters: {'id': mockReportModels.first.id});
-                  //   },
-                  // ),
+                  !isShowDeleted
+                      ? isMapView
+                          ? _BuildMap(
+                              height: height.toDouble(),
+                              markers:
+                                  isShowDumps ? dumpMarkers : reportMarkers,
+                              initialTarget: isShowDumps
+                                  ? dumpMarkers.first.position
+                                  : reportMarkers.first.position,
+                            )
+                          : isShowDumps
+                              ? AdminTableDumps(dumps: widget.dumps)
+                              : AdminTableReports(reports: widget.reports)
+                      : const AdminTableDeleted(),
                 ],
               ),
             ),

@@ -1,3 +1,4 @@
+import 'package:api_client/api_client.dart';
 import 'package:domain/report/report_library.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -8,16 +9,14 @@ import '../common/custom_colors.dart';
 import '../common/custom_styles.dart';
 import './custom_button.dart';
 
-class AdminTable extends StatelessWidget {
-  const AdminTable({
+class AdminTableDumps extends StatelessWidget {
+  const AdminTableDumps({
     super.key,
-    required this.reports,
-    required this.isShowDumps,
+    required this.dumps,
   });
 
-  final List<ReportModel> reports;
+  final List<FullDumpDto> dumps;
 
-  final bool isShowDumps;
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +30,8 @@ class AdminTable extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         child: SfDataGrid(
           source: ReportDataSourceAdmin(
-            reportData: reports,
+            reportData: dumps,
             context: context,
-            isShowDumps: isShowDumps,
           ),
           columnWidthMode: ColumnWidthMode.fill,
           allowSorting: true,
@@ -48,19 +46,20 @@ class AdminTable extends StatelessWidget {
               label: Container(),
             ),
             GridColumn(
-              columnName: 'id',
+              columnName: 'name',
               allowSorting: false,
               allowFiltering: false,
-              width: 160,
-              label: const _BuildHeaderLabel('Pranešimo ID'),
+              columnWidthMode: ColumnWidthMode.fill,
+              label: const _BuildHeaderLabel('Aikštelės pavadinimas'),
             ),
             GridColumn(
-              columnName: 'date',
+              columnName: 'info',
               allowSorting: false,
               allowFiltering: false,
-              width: 160,
-              label: const _BuildHeaderLabel('Data ir laikas'),
+              columnWidthMode: ColumnWidthMode.fill,
+              label: const _BuildHeaderLabel('Informacija'),
             ),
+
             GridColumn(
               columnName: 'lat',
               allowSorting: true,
@@ -77,20 +76,8 @@ class AdminTable extends StatelessWidget {
               filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
               label: const _BuildHeaderLabel('Ilguma'),
             ),
-            GridColumn(
-              columnName: 'name',
-              allowSorting: false,
-              allowFiltering: false,
-              columnWidthMode: ColumnWidthMode.fill,
-              label: const _BuildHeaderLabel('Turinys'),
-            ),
-            GridColumn(
-              columnName: 'status',
-              allowSorting: false,
-              allowFiltering: false,
-              width: 140,
-              label: const _BuildHeaderLabel('Statusas'),
-            ),
+
+
             GridColumn(
               columnName: 'visibility',
               allowSorting: false,
@@ -126,33 +113,27 @@ class ReportDataSourceAdmin extends DataGridSource {
   ReportDataSourceAdmin({
     required this.reportData,
     required this.context,
-    required this.isShowDumps,
   }) {
     _reportGridCells = reportData
         .map<DataGridRow>((e) => DataGridRow(cells: [
               DataGridCell<String>(columnName: 'ref', value: e.refId),
-              DataGridCell<String>(
-                  columnName: 'id',
-                  value:
-                      'TLP-A${'0' * (8 - e.refId!.length)}${e.refId!.toUpperCase()}'),
-              DataGridCell<String>(
-                  columnName: 'date',
-                  value: getFormattedDateAdmin(e.reportDate)),
-              DataGridCell<String>(
+      DataGridCell<String>(columnName: 'name', value: e.name),
+
+      DataGridCell<String>(columnName: 'info', value: e.moreInformation),
+
+      DataGridCell<String>(
                   columnName: 'lat',
-                  value: e.reportLat.toString().length > 6
-                      ? e.reportLat.toString().substring(0, 7)
-                      : e.reportLat.toString()),
+                  value: e.latitude.toString().length > 6
+                      ? e.latitude.toString().substring(0, 7)
+                      : e.latitude.toString()),
               DataGridCell<String>(
                   columnName: 'long',
-                  value: e.reportLong.toString().length > 6
-                      ? e.reportLong.toString().substring(0, 7)
-                      : e.reportLong.toString()),
-              DataGridCell<String>(columnName: 'name', value: e.name),
-              DataGridCell<String>(columnName: 'status', value: e.status),
+                  value: e.longitude.toString().length > 6
+                      ? e.longitude.toString().substring(0, 7)
+                      : e.longitude.toString()),
               DataGridCell<String>(
                   columnName: 'visibility',
-                  value: e.isVisible! ? 'Rodomas' : 'Nerodomas'),
+                  value: e.isVisible ? 'Rodomas' : 'Nerodomas'),
               const DataGridCell<String>(columnName: 'edit', value: 'edit'),
             ]))
         .toList();
@@ -160,10 +141,9 @@ class ReportDataSourceAdmin extends DataGridSource {
 
   List<DataGridRow> _reportGridCells = [];
 
-  final List<ReportModel> reportData;
+  final List<FullDumpDto> reportData;
 
   final BuildContext context;
-  final bool isShowDumps;
 
   @override
   List<DataGridRow> get rows => _reportGridCells;
@@ -200,16 +180,11 @@ class ReportDataSourceAdmin extends DataGridSource {
                         ),
                         onPressed: () {
                           final int index = effectiveRows.indexOf(row);
-                          final ReportModel report = reportData[index];
-                          if (isShowDumps) {
-                            context.goNamed('dump',
-                                extra: report,
-                                pathParameters: {'id': report.id});
-                          } else {
-                            context.goNamed('report_admin',
-                                extra: report,
-                                pathParameters: {'id': report.id});
-                          }
+                          final FullDumpDto dump = reportData[index];
+
+                          context.goNamed('dump_admin', queryParameters: {
+                            'id': dump.refId,
+                          });
                         },
                         icon: const Icon(
                           Icons.edit,

@@ -1,16 +1,13 @@
-
+// Openapi Generator last run: : 2024-01-03T23:33:54.206452
 import 'package:admin/admin_screen.dart';
-import 'package:admin/src/updated_admin/ui/updated_report_screen.dart';
-import 'package:admin/src/updated_admin/ui/updated_dump_screen.dart';
+import 'package:admin/src/main/ui/dump_screen.dart';
+import 'package:admin/src/main/ui/trash_screen.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:dashboard/dashboard_screen.dart';
 import 'package:dashboard/src/adding_report/ui/adding_screen.dart';
 import 'package:dashboard/src/report_information/ui/information_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:admin/admin_screen.dart';
-import 'package:dashboard/src/report_information/ui/information_screen.dart';
-import 'package:dashboard/src/adding_report/ui/adding_screen.dart';
 import 'package:openapi_generator_annotations/openapi_generator_annotations.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
@@ -51,17 +48,24 @@ class AadApp extends StatelessWidget {
           routes: [
             GoRoute(
                 name: 'report_admin',
-                path: 'report/:id',
+                path: "pranesimas",
                 builder: (context, state) {
-                  // final dump = state.extra as ReportModel;
-                  return const UpdatedReportScreen();
+                  // return UpdatedReportScreen(
+                  //   reportId: state.uri.queryParameters["id"] ?? '1',
+                  // );
+                  return TrashScreen(
+                    refId: state.uri.queryParameters['id'] ?? '1',
+                  );
+                  //return Container();
                 }),
             GoRoute(
-                name: 'dump',
-                path: 'dump/:id',
+                name: 'dump_admin',
+                path: 'aikstele',
                 builder: (context, state) {
                   // final dump = state.extra as ReportModel;
-                  return const UpdatedDumpScreen();
+                  return UpdatedDumpScreen(
+                    refId: state.uri.queryParameters['id'] ?? '1',
+                  );
                 }),
           ]),
       GoRoute(

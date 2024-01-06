@@ -1,3 +1,4 @@
+import 'package:admin/src/main/ui/main_admin_screen.dart';
 import 'package:admin/src/updated_admin/ui/updated_admin_screen.dart';
 import 'package:flutter/material.dart';
 //import 'src/main/ui/main_admin_screen.dart';
@@ -10,7 +11,7 @@ class AdminScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: UpdatedAdminScreen(),
+      body: MainAdminScreen(),
       //MainAdminScreen(),
     );
   }
