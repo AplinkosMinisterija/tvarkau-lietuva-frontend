@@ -64,6 +64,20 @@ class ApiProvider {
     return response.data!.toList();
   }
 
+  Future<FullReportDto> getFullTrashReportById(String refId) async {
+    final response = await adminApi.adminControllerGetReportById(
+      refId: int.parse(refId),
+    );
+    return response.data!;
+  }
+
+  Future<FullDumpDto> getFullDumpReportById(String refId) async {
+    final response = await adminApi.adminControllerGetDumpById(
+      refId: refId,
+    );
+    return response.data!;
+  }
+
   Future<PublicReportDto> getOneTrashReport(String refId) async {
     final response =
         await reportsApi.reportControllerGetReportById(refId: int.parse(refId));
@@ -124,8 +138,8 @@ class ApiProvider {
     required double reportLat,
     required String status,
     required String comment,
-    required String isVisible,
-    required String isDeleted,
+    required bool isVisible,
+    required bool isDeleted,
     required List<String> imageUrls,
     required List<String> officerImageUrls,
     required List<MultipartFile> officerImageFiles,
@@ -135,8 +149,8 @@ class ApiProvider {
         name: name,
         longitude: reportLong,
         latitude: reportLat,
-        isVisible: isVisible == "true" ? true : false,
-        isDeleted: isDeleted == "true" ? true : false,
+        isVisible: isVisible,
+        isDeleted: isDeleted,
         comment: comment,
         status: status,
         officerImageUrls: officerImageUrls.toBuiltList(),
@@ -154,7 +168,7 @@ class ApiProvider {
     required String moreInformation,
     required String workingHours,
     required String phone,
-    required String isVisible,
+    required bool isVisible,
   }) async {
     final response = await adminApi.adminControllerUpdateDump(
         updateDumpDto: UpdateDumpDto((builder) => {
@@ -166,7 +180,7 @@ class ApiProvider {
               builder.moreInformation = moreInformation,
               builder.workingHours = workingHours,
               builder.phone = phone,
-              builder.isVisible = isVisible == 'true' ? true : false,
+              builder.isVisible = isVisible,
             }));
     return response.data!;
   }

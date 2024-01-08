@@ -7,10 +7,10 @@ class ReloadState implements TrashState {}
 class LoadingState implements TrashState {}
 
 class ContentState implements TrashState {
-  final List<FullReportDto> trashReports;
+  final FullReportDto trashReport;
 
   ContentState({
-    required this.trashReports,
+    required this.trashReport,
   });
 }
 

@@ -4,12 +4,12 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-import '../bloc/dump_bloc.dart';
+import '../bloc/dump_blocaaaa.dart';
 
-class DumpWindow extends StatelessWidget {
+class DumpWindowaaaaa extends StatelessWidget {
   final double screenWidth;
 
-  const DumpWindow({
+  const DumpWindowaaaaa({
     required this.screenWidth,
     Key? key,
   }) : super(key: key);
@@ -17,18 +17,18 @@ class DumpWindow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (BuildContext context) => DumpBloc(),
-        child: BlocBuilder<DumpBloc, DumpState>(
-          builder: (BuildContext context, DumpState state) {
-            return BlocBuilder<DumpBloc, DumpState>(
-              builder: (BuildContext context, DumpState state) {
+        create: (BuildContext context) => DumpBlocaaa(),
+        child: BlocBuilder<DumpBlocaaa, DumpStateaaa>(
+          builder: (BuildContext context, DumpStateaaa state) {
+            return BlocBuilder<DumpBlocaaa, DumpStateaaa>(
+              builder: (BuildContext context, DumpStateaaa state) {
                 if (state is ContentState) {
                   return AdminDumpsTable(
                     width: screenWidth,
                     dumps: state.dumpReports,
                     onUpdate: (updatedModel) {
                       Navigator.of(context).pop();
-                      context.read<DumpBloc>().add(UpdateDump(
+                      context.read<DumpBlocaaa>().add(UpdateDump(
                             id: updatedModel.id,
                             name: updatedModel.name,
                             moreInformation: updatedModel.moreInformation ?? '',
@@ -53,7 +53,7 @@ class DumpWindow extends StatelessWidget {
                     width: 800,
                     child: ErrorReloadWidget(
                       onPressed: () {
-                        context.read<DumpBloc>().add(
+                        context.read<DumpBlocaaa>().add(
                               ReloadPage(),
                             );
                       },

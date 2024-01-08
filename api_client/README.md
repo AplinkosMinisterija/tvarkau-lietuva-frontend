@@ -67,6 +67,8 @@ Class | Method | HTTP request | Description
 [*AdminApi*](doc/AdminApi.md) | [**adminControllerCreateDump**](doc/AdminApi.md#admincontrollercreatedump) | **PUT** /admin/dumps | 
 [*AdminApi*](doc/AdminApi.md) | [**adminControllerGetAllDumps**](doc/AdminApi.md#admincontrollergetalldumps) | **GET** /admin/dumps | 
 [*AdminApi*](doc/AdminApi.md) | [**adminControllerGetAllReports**](doc/AdminApi.md#admincontrollergetallreports) | **GET** /admin/reports | 
+[*AdminApi*](doc/AdminApi.md) | [**adminControllerGetDumpById**](doc/AdminApi.md#admincontrollergetdumpbyid) | **GET** /admin/dumps/{refId} | 
+[*AdminApi*](doc/AdminApi.md) | [**adminControllerGetReportById**](doc/AdminApi.md#admincontrollergetreportbyid) | **GET** /admin/reports/{refId} | 
 [*AdminApi*](doc/AdminApi.md) | [**adminControllerUpdateDump**](doc/AdminApi.md#admincontrollerupdatedump) | **POST** /admin/dumps | 
 [*AdminApi*](doc/AdminApi.md) | [**adminControllerUpdateReport**](doc/AdminApi.md#admincontrollerupdatereport) | **POST** /admin/reports | 
 [*AuthApi*](doc/AuthApi.md) | [**authControllerLogin**](doc/AuthApi.md#authcontrollerlogin) | **POST** /auth/login | 

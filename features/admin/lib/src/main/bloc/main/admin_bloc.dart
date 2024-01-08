@@ -46,7 +46,17 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
             LogInDto userInfo = await ApiProvider().getUserInfo(accessToken);
             await SecureStorageProvider().setJwtToken(userInfo.accessKey);
 
-            emit(ContentState(userInfo: userInfo));
+            List<FullReportDto> reports =
+                await ApiProvider().getAllTrashReports();
+            List<FullDumpDto> dumps = await ApiProvider().getAllDumpReports();
+
+            emit(
+              ContentState(
+                userInfo: userInfo,
+                reports: reports,
+                dumps: dumps,
+              ),
+            );
           } catch (e) {
             emit(
               ErrorState(errorMessage: 'Something went wrong'),

@@ -4,15 +4,15 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-import '../bloc/trash_bloc.dart';
+import '../bloc/trashaaa_bloc.dart';
 
-class TrashWindow extends StatelessWidget {
+class TrashWindowaaa extends StatelessWidget {
   final double screenWidth;
   final String viewType;
   final ValueChanged<bool> isHovering;
   final String activeEmail;
 
-  const TrashWindow({
+  const TrashWindowaaa({
     required this.screenWidth,
     required this.viewType,
     required this.isHovering,
@@ -23,11 +23,11 @@ class TrashWindow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-        create: (BuildContext context) => TrashBloc(),
-        child: BlocBuilder<TrashBloc, TrashState>(
-          builder: (BuildContext context, TrashState state) {
-            return BlocBuilder<TrashBloc, TrashState>(
-              builder: (BuildContext context, TrashState state) {
+        create: (BuildContext context) => TrashBlocaaa(),
+        child: BlocBuilder<TrashBlocaaa, TrashStateaaa>(
+          builder: (BuildContext context, TrashStateaaa state) {
+            return BlocBuilder<TrashBlocaaa, TrashStateaaa>(
+              builder: (BuildContext context, TrashStateaaa state) {
                 if (state is ContentState) {
                   return viewType == 'chart'
                       ? AdminReportsTable(
@@ -35,7 +35,7 @@ class TrashWindow extends StatelessWidget {
                           reports: state.trashReports,
                           onUpdate: (updatedModel, officerFiles) {
                             Navigator.of(context).pop();
-                            context.read<TrashBloc>().add(
+                            context.read<TrashBlocaaa>().add(
                                   UpdateReport(
                                     id: updatedModel.id,
                                     refId: updatedModel.id,
@@ -63,7 +63,7 @@ class TrashWindow extends StatelessWidget {
                           isHovering: isHovering,
                           onUpdate: (updatedModel, officerFiles) {
                             Navigator.of(context).pop();
-                            context.read<TrashBloc>().add(
+                            context.read<TrashBlocaaa>().add(
                                   UpdateReport(
                                     id: updatedModel.id,
                                     refId: updatedModel.id,
@@ -97,7 +97,7 @@ class TrashWindow extends StatelessWidget {
                     child: ErrorReloadWidget(
                       errorText: 'Autorizacijos klaida\nPrisijunkite iš naujo',
                       onPressed: () {
-                        context.read<TrashBloc>().add(
+                        context.read<TrashBlocaaa>().add(
                               ReloadPage(),
                             );
                       },

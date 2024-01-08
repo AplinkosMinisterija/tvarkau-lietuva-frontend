@@ -1,5 +1,5 @@
-import 'package:admin/src/dumps/ui/dump_window.dart';
-import 'package:admin/src/trash/ui/trash_window.dart';
+import 'package:admin/src/dumps/ui/dumpaaaa_window.dart';
+import 'package:admin/src/trash/ui/trasaaah_window.dart';
 import 'package:admin/src/deleted/ui/removed_window.dart';
 import 'package:api_client/api_client.dart';
 import 'package:flutter/material.dart';
@@ -205,7 +205,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                       height: 30,
                     ),
                     activeCategory == 'reports'
-                        ? TrashWindow(
+                        ? TrashWindowaaa(
                             screenWidth: constraints.maxWidth,
                             viewType: activeView,
                             isHovering: (isHover) {
@@ -217,7 +217,7 @@ class _AdminDashboardState extends State<AdminDashboard> {
                           )
                         : const SizedBox.shrink(),
                     activeCategory == 'dumps'
-                        ? DumpWindow(screenWidth: constraints.maxWidth)
+                        ? DumpWindowaaaaa(screenWidth: constraints.maxWidth)
                         : const SizedBox.shrink(),
                     activeCategory == 'deleted'
                         ? SizedBox(

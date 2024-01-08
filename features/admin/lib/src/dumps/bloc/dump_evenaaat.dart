@@ -1,12 +1,12 @@
-part of 'dump_bloc.dart';
+part of 'dump_blocaaaa.dart';
 
-abstract class DumpEvent {}
+abstract class DumpEventaaaa {}
 
-class LoadData implements DumpEvent {}
+class LoadData implements DumpEventaaaa {}
 
-class ReloadPage implements DumpEvent {}
+class ReloadPage implements DumpEventaaaa {}
 
-class UpdateDump implements DumpEvent {
+class UpdateDump implements DumpEventaaaa {
   final String id;
   final String name;
   final String moreInformation;
