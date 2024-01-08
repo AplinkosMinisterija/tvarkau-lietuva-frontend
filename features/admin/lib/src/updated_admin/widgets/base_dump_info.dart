@@ -9,15 +9,33 @@ class BaseTrashInfo extends StatelessWidget {
 
   final FullReportDto trash;
 
+  String getFormattedDate(DateTime unformattedDate) {
+    String formattedDate =
+        unformattedDate.add(const Duration(hours: 3)).toString();
+    String day = formattedDate.substring(0, 10);
+    String hour = formattedDate.substring(11, 16);
+    return '$day $hour';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _BuildColumn(title: 'Data', value: trash.reportDate.toString()),
-          _BuildColumn(title: 'El. paštas', value: trash.email),
-        _BuildColumn(title: 'Platuma', value: trash.latitude.toString()),
-        _BuildColumn(title: 'Ilguma', value: trash.longitude.toString()),
+        _BuildColumn(title: 'Data', value: getFormattedDate(trash.reportDate)),
+        _BuildColumn(title: 'El. paštas', value: trash.email),
+        _BuildColumn(
+          title: 'Platuma',
+          value: trash.latitude.toString().length > 6
+              ? trash.latitude.toString().substring(0, 7)
+              : trash.latitude.toString(),
+        ),
+        _BuildColumn(
+          title: 'Ilguma',
+          value: trash.longitude.toString().length > 6
+              ? trash.longitude.toString().substring(0, 7)
+              : trash.longitude.toString(),
+        ),
       ],
     );
   }
@@ -43,10 +61,12 @@ class _BuildColumn extends StatelessWidget {
             color: CustomColors.white.withOpacity(.64),
           ),
         ),
-        Text(
-          value,
-          style: CustomStyles.body1.copyWith(
-            color: CustomColors.white,
+        SelectionArea(
+          child: Text(
+            value,
+            style: CustomStyles.body1.copyWith(
+              color: CustomColors.white,
+            ),
           ),
         ),
       ],

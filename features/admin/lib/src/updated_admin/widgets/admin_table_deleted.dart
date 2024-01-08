@@ -235,8 +235,10 @@ class ReportDataSourceAdmin extends DataGridSource {
                           final int index = effectiveRows.indexOf(row);
                           final FullReportDto report = reportData[index];
 
-                          context.goNamed('report_admin',
-                              extra: report, pathParameters: {'id': report.id});
+                          String str = '0' * (8 - report.refId.length);
+                          context.goNamed('report_admin', queryParameters: {
+                            'id': 'TLP-A$str${report.refId.toUpperCase()}'
+                          });
                         },
                         icon: const Icon(
                           Icons.edit,
@@ -315,8 +317,9 @@ class _BuildStatus extends StatelessWidget {
     return switch (status) {
       'gautas' => CustomColors.red,
       'tiriamas' => CustomColors.orange,
-      'uždarytas' => CustomColors.blue,
-      'ištirtas' => CustomColors.green,
+      'sutvarkyta' => CustomColors.green,
+      'ištirtas' => CustomColors.blue,
+      'nepasitvirtino' => Colors.grey,
       _ => Colors.white,
     };
   }
@@ -326,7 +329,8 @@ class _BuildStatus extends StatelessWidget {
       'gautas' => 'Gautas',
       'tiriamas' => 'Tiriamas',
       'ištirtas' => 'Ištirtas',
-      'uždarytas' => 'Uždarytas',
+      'sutvarkyta' => 'Sutvarkyta',
+      'nepasitvirtino' => 'Nepasitvirtino',
       _ => '',
     };
   }

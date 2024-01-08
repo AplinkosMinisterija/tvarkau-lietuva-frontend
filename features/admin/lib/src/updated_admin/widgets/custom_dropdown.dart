@@ -20,20 +20,20 @@ class CustomDropdown<T> extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
         border: Border.all(
-          color: CustomColors.red,
+          color: CustomColors.white,
         ),
-        color: CustomColors.redMedium,
+        color: CustomColors.greyMedium,
         borderRadius: BorderRadius.circular(10),
       ),
       child: DropdownButton2<T>(
         items: items,
         onChanged: onChanged,
         iconStyleData: const IconStyleData(
-          iconEnabledColor: CustomColors.red,
+          iconEnabledColor: CustomColors.black,
         ),
         underline: const SizedBox(),
         style: CustomStyles.body2.copyWith(
-          color: CustomColors.red,
+          color: CustomColors.black,
         ),
         value: value,
       ),

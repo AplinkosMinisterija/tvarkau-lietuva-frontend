@@ -51,20 +51,20 @@ class TrashBlocaaa extends Bloc<TrashEventaaa, TrashStateaaa> {
         LoadingState(),
       );
 
-      await ApiProvider().updateTrashReport(
-        id: event.id,
-        refId: event.refId,
-        name: event.name,
-        reportLong: event.reportLong,
-        reportLat: event.reportLat,
-        status: event.status,
-        comment: event.comment,
-        isVisible: event.isVisible,
-        isDeleted: event.isDeleted,
-        officerImageFiles: event.officerImageFiles,
-        officerImageUrls: event.officerImageUrls,
-        imageUrls: event.imageUrls,
-      );
+      // await ApiProvider().updateTrashReport(
+      //   id: event.id,
+      //   refId: event.refId,
+      //   name: event.name,
+      //   reportLong: event.reportLong,
+      //   reportLat: event.reportLat,
+      //   status: event.status,
+      //   comment: event.comment,
+      //   isVisible: event.isVisible,
+      //   isDeleted: event.isDeleted,
+      //   officerImageFiles: event.officerImageFiles,
+      //   officerImageUrls: event.officerImageUrls,
+      //   imageUrls: event.imageUrls,
+      // );
 
       final List<FullReportDto> trashReports =
           await ApiProvider().getAllTrashReports();

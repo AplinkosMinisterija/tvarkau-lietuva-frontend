@@ -1,5 +1,9 @@
+import 'dart:typed_data';
+import 'package:http_parser/http_parser.dart';
+import 'package:core/constants/global_constants.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
-
+import 'package:dio/dio.dart' as dio;
 import '../common/custom_colors.dart';
 import '../common/custom_styles.dart';
 import '../common/extensions.dart';
@@ -7,7 +11,20 @@ import '../widgets/custom_button.dart';
 import '../widgets/custom_dropdown.dart';
 
 class AddAnswerTab extends StatelessWidget {
-  const AddAnswerTab({super.key});
+  const AddAnswerTab({
+    super.key,
+    required this.onStatusChange,
+    required this.statusValue,
+    required this.onAnswerChange,
+    required this.answerValue,
+    required this.onImageUpload,
+  });
+
+  final Function(int value) onStatusChange;
+  final int statusValue;
+  final Function(String value) onAnswerChange;
+  final String answerValue;
+  final Function(List<dio.MultipartFile>) onImageUpload;
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +38,22 @@ class AddAnswerTab extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const _BuildStatusSection(),
+          _BuildStatusSection(
+            onStatusChange: (int value) {
+              onStatusChange(value);
+            },
+            value: statusValue,
+          ),
           14.heightBox,
-          const _BuildAnswerAndImageSection(),
+          _BuildAnswerAndImageSection(
+            onAnswerChange: (String value) {
+              onAnswerChange(value);
+            },
+            answerValue: answerValue,
+            onImageUpload: (List<dio.MultipartFile> officerImages) {
+              onImageUpload(officerImages);
+            },
+          ),
           40.heightBox,
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -47,7 +77,13 @@ class AddAnswerTab extends StatelessWidget {
 }
 
 class _BuildStatusSection extends StatelessWidget {
-  const _BuildStatusSection();
+  const _BuildStatusSection({
+    required this.onStatusChange,
+    required this.value,
+  });
+
+  final Function(int value) onStatusChange;
+  final int value;
 
   @override
   Widget build(BuildContext context) {
@@ -62,25 +98,73 @@ class _BuildStatusSection extends StatelessWidget {
           items: const [
             DropdownMenuItem(
               value: 0,
-              child: Text('Nepatvirtintas'),
+              child: Text('Gautas'),
             ),
             DropdownMenuItem(
               value: 1,
-              child: Text('Patvirtintas'),
+              child: Text('Tiriamas'),
+            ),
+            DropdownMenuItem(
+              value: 2,
+              child: Text('Ištirtas'),
+            ),
+            DropdownMenuItem(
+              value: 3,
+              child: Text('Sutvarkyta'),
+            ),
+            DropdownMenuItem(
+              value: 4,
+              child: Text('Nepasitvirtino'),
             ),
           ],
           onChanged: (value) {
-            //TODO Add logic
+            onStatusChange(value ?? 1);
           },
-          value: 1,
+          value: value,
         ),
       ],
     );
   }
 }
 
-class _BuildAnswerAndImageSection extends StatelessWidget {
-  const _BuildAnswerAndImageSection();
+class _BuildAnswerAndImageSection extends StatefulWidget {
+  const _BuildAnswerAndImageSection({
+    required this.onAnswerChange,
+    required this.answerValue,
+    required this.onImageUpload,
+  });
+
+  final Function(String value) onAnswerChange;
+  final String answerValue;
+  final Function(List<dio.MultipartFile> officerImages) onImageUpload;
+
+  @override
+  State<_BuildAnswerAndImageSection> createState() =>
+      _BuildAnswerAndImageSectionState();
+}
+
+class _BuildAnswerAndImageSectionState
+    extends State<_BuildAnswerAndImageSection> {
+  List<List<int>>? _selectedImages;
+  List<Uint8List>? _fileBytes;
+  List<dio.MultipartFile> multipartList = [];
+
+  Future<void> getMultipleImageInfos() async {
+    List<Uint8List>? images = await ImagePickerWeb.getMultiImagesAsBytes(
+        GlobalConstants.maxAllowedImageCount);
+
+    if (images != null) {
+      setState(() {
+        _selectedImages = images;
+        _fileBytes = images;
+        multipartList.clear();
+        for (var element in _selectedImages!) {
+          multipartList.add(dio.MultipartFile.fromBytes(element,
+              contentType: MediaType("image", "jpg"), filename: 'name.jpg'));
+        }
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +178,11 @@ class _BuildAnswerAndImageSection extends StatelessWidget {
         4.heightBox,
         ClipRRect(
           borderRadius: BorderRadius.circular(4),
-          child: TextField(
+          child: TextFormField(
+            initialValue: widget.answerValue,
+            onChanged: (String value) {
+              widget.onAnswerChange(value);
+            },
             decoration: InputDecoration(
               hoverColor: CustomColors.primary.withOpacity(0.05),
               fillColor: CustomColors.white,
@@ -109,12 +197,21 @@ class _BuildAnswerAndImageSection extends StatelessWidget {
           'Nuotraukos',
           style: CustomStyles.body2,
         ),
-        4.heightBox,
+        5.heightBox,
+        _fileBytes != null
+            ? ImageCollageMobile(
+                width: 150,
+                imageBytes: _fileBytes!,
+              )
+            : const SizedBox.shrink(),
+        5.heightBox,
         CustomButton(
           width: null,
           buttonType: ButtonType.outlined,
-          text: 'Įkelkite nuotraukas',
-          onPressed: () {},
+          text: _fileBytes != null ? 'Keisti nuotraukas' : 'Įkelti nuotraukas',
+          onPressed: () {
+            getMultipleImageInfos();
+          },
           icon: const Icon(
             Icons.upload,
             color: CustomColors.primary,

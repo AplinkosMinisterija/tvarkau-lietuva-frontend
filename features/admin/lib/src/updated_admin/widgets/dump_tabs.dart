@@ -1,7 +1,7 @@
 import 'package:api_client/api_client.dart';
 import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
-
+import 'package:dio/dio.dart' as dio;
 import '../common/custom_colors.dart';
 import '../common/custom_styles.dart';
 import 'aad_answer_tab.dart';
@@ -22,9 +22,22 @@ extension TabTypeX on TabType {
 }
 
 class TrashTabs extends StatefulWidget {
-  const TrashTabs({super.key, required this.trash});
+  const TrashTabs(
+      {super.key,
+      required this.trash,
+      required this.onStatusChange,
+      required this.statusValue,
+      required this.onAnswerChange,
+      required this.answerValue,
+      required this.onImageUpload});
 
   final FullReportDto trash;
+  final Function(int value) onStatusChange;
+  final int statusValue;
+  final Function(String value) onAnswerChange;
+  final String answerValue;
+
+  final Function(List<dio.MultipartFile>) onImageUpload;
 
   @override
   State<TrashTabs> createState() => _TrashTabsState();
@@ -35,7 +48,19 @@ class _TrashTabsState extends State<TrashTabs> {
 
   Widget get currentTab {
     return switch (selected) {
-      TabType.aad => const AddAnswerTab(),
+      TabType.aad => AddAnswerTab(
+          onStatusChange: (int value) {
+            widget.onStatusChange(value);
+          },
+          statusValue: widget.statusValue,
+          onAnswerChange: (String value) {
+            widget.onAnswerChange(value);
+          },
+          answerValue: widget.answerValue,
+          onImageUpload: (List<dio.MultipartFile> officerImages) {
+            widget.onImageUpload(officerImages);
+          },
+        ),
       TabType.history => HistoricDataTab(
           historicData: widget.trash.historyData.toList(),
           statusRecords: widget.trash.statusRecords.toList(),

@@ -7,7 +7,7 @@ import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-
+import 'package:dio/dio.dart' as dio;
 import '../bloc/trash/trash_bloc.dart';
 
 class TrashScreen extends StatefulWidget {
@@ -46,7 +46,58 @@ class _TrashScreenState extends State<TrashScreen> {
                       onBackPress: () {
                         context.goNamed('admin');
                       },
-                      onUpdate: (FullReportDto updatedReport) {},
+                      onUpdate: (FullReportDto updatedReport,
+                          List<dio.MultipartFile> officerImages) {
+                        context.read<TrashBloc>().add(UpdateReport(
+                              id: state.trashReport.id,
+                              refId: state.trashReport.refId,
+                              name: state.trashReport.name,
+                              reportLong: state.trashReport.longitude,
+                              reportLat: state.trashReport.latitude,
+                              status: updatedReport.status,
+                              comment: updatedReport.comment,
+                              isVisible: updatedReport.isVisible,
+                              isDeleted: updatedReport.isDeleted,
+                              imageUrls: state.trashReport.imageUrls.toList(),
+                              officerImageUrls:
+                                  state.trashReport.officerImageUrls.toList(),
+                              officerImageFiles: officerImages,
+                            ));
+                      },
+                      onDelete: () {
+                        context.read<TrashBloc>().add(UpdateReport(
+                              id: state.trashReport.id,
+                              refId: state.trashReport.refId,
+                              name: state.trashReport.name,
+                              reportLong: state.trashReport.longitude,
+                              reportLat: state.trashReport.latitude,
+                              status: state.trashReport.status,
+                              comment: state.trashReport.comment,
+                              isVisible: state.trashReport.isVisible,
+                              isDeleted: true,
+                              imageUrls: state.trashReport.imageUrls.toList(),
+                              officerImageUrls:
+                                  state.trashReport.officerImageUrls.toList(),
+                              officerImageFiles: [],
+                            ));
+                      },
+                      onRestore: () {
+                        context.read<TrashBloc>().add(UpdateReport(
+                              id: state.trashReport.id,
+                              refId: state.trashReport.refId,
+                              name: state.trashReport.name,
+                              reportLong: state.trashReport.longitude,
+                              reportLat: state.trashReport.latitude,
+                              status: state.trashReport.status,
+                              comment: state.trashReport.comment,
+                              isVisible: state.trashReport.isVisible,
+                              isDeleted: false,
+                              imageUrls: state.trashReport.imageUrls.toList(),
+                              officerImageUrls:
+                                  state.trashReport.officerImageUrls.toList(),
+                              officerImageFiles: [],
+                            ));
+                      },
                     );
                     // return DumpWindow(
                     //   dump: state.dumpReport,

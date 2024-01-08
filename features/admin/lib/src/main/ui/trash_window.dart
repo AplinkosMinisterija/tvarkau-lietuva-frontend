@@ -2,7 +2,7 @@ import 'package:admin/src/main/common/extensions.dart';
 import 'package:api_client/api_client.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
+import 'package:dio/dio.dart' as dio;
 import '../../updated_admin/common/custom_colors.dart';
 import '../../updated_admin/common/custom_styles.dart';
 import '../../updated_admin/widgets/base_admin_screen.dart';
@@ -16,12 +16,16 @@ import '../../updated_admin/widgets/image_preview.dart';
 class TrashWindow extends StatefulWidget {
   final FullReportDto trash;
   final VoidCallback onBackPress;
-  final Function(FullReportDto) onUpdate;
+  final Function(FullReportDto, List<dio.MultipartFile> officerImages) onUpdate;
+  final VoidCallback onDelete;
+  final VoidCallback onRestore;
 
   const TrashWindow({
     required this.trash,
     required this.onBackPress,
     required this.onUpdate,
+    required this.onDelete,
+    required this.onRestore,
     Key? key,
   }) : super(key: key);
 
@@ -42,6 +46,8 @@ class _TrashWindowState extends State<TrashWindow> {
   String status = '';
   DateTime reportDate = DateTime.now();
   List<String> officerImageUrls = [];
+  List<dio.MultipartFile> officerImages = [];
+  int statusIndex = 0;
 
   Set<Marker> markers = {};
 
@@ -67,6 +73,9 @@ class _TrashWindowState extends State<TrashWindow> {
     isVisible = widget.trash.isVisible;
     longitude = widget.trash.longitude;
     latitude = widget.trash.latitude;
+    status = widget.trash.status;
+    comment = widget.trash.comment;
+    setInitStatusIndex(status);
     setupMarker();
     super.initState();
   }
@@ -100,7 +109,9 @@ class _TrashWindowState extends State<TrashWindow> {
                   17.heightBox,
                   Row(
                     children: [
-                      Text('TLP-A${'0' * (8 - widget.trash.refId.length)}${widget.trash.refId}', style: CustomStyles.h2),
+                      Text(
+                          'TLP-A${'0' * (8 - widget.trash.refId.length)}${widget.trash.refId}',
+                          style: CustomStyles.h2),
                       16.widthBox,
                       CustomSwitch(
                         value: isVisible,
@@ -124,12 +135,6 @@ class _TrashWindowState extends State<TrashWindow> {
                     final width = MediaQuery.of(context).size.width;
                     if (width < 700) {
                       return _buildMobileLayout(
-                        widget.trash,
-                        markers,
-                        height.toDouble(),
-                      );
-                    } else if (width < 1000) {
-                      return _buildTabletLayout(
                         widget.trash,
                         markers,
                         height.toDouble(),
@@ -184,119 +189,30 @@ class _TrashWindowState extends State<TrashWindow> {
     );
   }
 
-  //
-  // Widget _buildForm(bool isMobile) {
-  //   return Container(
-  //     padding: const EdgeInsets.all(24),
-  //     decoration: const BoxDecoration(
-  //       borderRadius: BorderRadius.all(Radius.circular(8)),
-  //       color: CustomColors.grey,
-  //     ),
-  //     constraints: BoxConstraints(maxWidth: isMobile ? double.infinity : 480),
-  //     child: Column(
-  //       children: [
-  //         _BuildInput(
-  //           label: 'Aikštelės pavadinimas',
-  //           onChanged: (value) {
-  //             setState(() {
-  //               name = value;
-  //             });
-  //           },
-  //           value: name,
-  //         ),
-  //         16.heightBox,
-  //         Row(
-  //           children: [
-  //             Expanded(
-  //                 child: _BuildInput(
-  //               label: 'Ilguma',
-  //               value: longitude.toString(),
-  //               onChanged: (value) {
-  //                 setState(() {
-  //                   longitude = double.parse(value);
-  //                 });
-  //               },
-  //             )),
-  //             16.widthBox,
-  //             Expanded(
-  //                 child: _BuildInput(
-  //               label: 'Platuma',
-  //               value: latitude.toString(),
-  //               onChanged: (value) {
-  //                 setState(() {
-  //                   latitude = double.parse(value);
-  //                 });
-  //               },
-  //             )),
-  //           ],
-  //         ),
-  //         16.heightBox,
-  //         _BuildInput(
-  //           label: 'Aikštelės informacija',
-  //           value: moreInformation,
-  //           onChanged: (value) {
-  //             setState(() {
-  //               moreInformation = value;
-  //             });
-  //           },
-  //         ),
-  //         16.heightBox,
-  //         _BuildInput(
-  //           label: 'Telefono numeris',
-  //           value: phone,
-  //           onChanged: (value) {
-  //             setState(() {
-  //               phone = value;
-  //             });
-  //           },
-  //         ),
-  //         16.heightBox,
-  //         _BuildInput(
-  //           label: 'Darbo valandos',
-  //           maxLines: 5,
-  //           value: workingHours,
-  //           onChanged: (value) {
-  //             setState(() {
-  //               workingHours = value;
-  //             });
-  //           },
-  //         ),
-  //         40.heightBox,
-  //         Row(
-  //           mainAxisAlignment: MainAxisAlignment.end,
-  //           children: [
-  //             CustomButton(
-  //               text: 'Atšaukti',
-  //               buttonType: ButtonType.outlined,
-  //               onPressed: widget.onBackPress,
-  //             ),
-  //             16.widthBox,
-  //             CustomButton(
-  //               text: 'Išsaugoti',
-  //               onPressed: () {
-  //                 widget.onUpdate(FullDumpDto((builder) => {
-  //                       builder.refId = id,
-  //                       builder.name = name,
-  //                       builder.moreInformation = moreInformation,
-  //                       builder.workingHours = workingHours,
-  //                       builder.phone = phone,
-  //                       builder.isVisible = isVisible,
-  //                       builder.latitude = latitude,
-  //                       builder.longitude = longitude,
-  //                       builder.address = address,
-  //                       builder.type = 'dump',
-  //                     }));
-  //               },
-  //             ),
-  //           ],
-  //         )
-  //       ],
-  //     ),
-  //   );
-  // }
-
   Widget _buildDesktopLayout(
       FullReportDto trash, Set<Marker> markers, double height) {
+    final List<String> imageUrls = [];
+    final List<String> officerImageUrls = [];
+    if (trash.imageUrls.isNotEmpty) {
+      for (var element in trash.imageUrls) {
+        if (element.endsWith('.heic') || element.endsWith('.heif')) {
+          var convertedString = element.substring(0, element.length - 5);
+          imageUrls.add('$convertedString.jpg');
+        } else {
+          imageUrls.add(element);
+        }
+      }
+    }
+    if (trash.officerImageUrls.isNotEmpty) {
+      for (var element in trash.officerImageUrls) {
+        if (element.endsWith('.heic') || element.endsWith('.heif')) {
+          var convertedString = element.substring(0, element.length - 5);
+          officerImageUrls.add('$convertedString.jpg');
+        } else {
+          officerImageUrls.add(element);
+        }
+      }
+    }
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -316,34 +232,108 @@ class _TrashWindowState extends State<TrashWindow> {
                   trash.longitude,
                 ),
               ),
-              32.heightBox,
+              16.heightBox,
               Text(
-                trash.comment,
+                trash.name,
                 style: CustomStyles.body1,
               ),
               if (trash.imageUrls.isNotEmpty) ...[
                 15.heightBox,
-                _buildImages(
-                  trash.imageUrls.toList(),
-                )
+                _buildImages(imageUrls)
               ],
               24.heightBox,
-              CustomButton(
-                  text: 'Trinti pranešimą',
-                  buttonType: ButtonType.outlined,
-                  color: CustomColors.red,
-                  onPressed: () {
-                    //TODO Add logic
-                  }),
+              const Divider(
+                height: 1,
+                color: Colors.grey,
+              ),
+              10.heightBox,
+              if (trash.comment != ' ' && trash.comment != '') ...[
+                Text(
+                  'AAD atsakymas ir inspektorių nuotraukos',
+                  style: CustomStyles.h2
+                      .copyWith(color: Colors.black, fontSize: 20),
+                ),
+                10.heightBox,
+                Text(
+                  trash.comment,
+                  style: CustomStyles.body1,
+                ),
+                10.heightBox,
+                trash.officerImageUrls.isNotEmpty
+                    ? _buildImages(officerImageUrls)
+                    : 10.heightBox,
+                10.heightBox,
+              ],
+              !trash.isDeleted
+                  ? CustomButton(
+                      text: 'Trinti pranešimą',
+                      buttonType: ButtonType.outlined,
+                      color: CustomColors.red,
+                      onPressed: () {
+                        widget.onDelete;
+                      })
+                  : CustomButton(
+                      text: 'Atkurti pranešimą',
+                      buttonType: ButtonType.outlined,
+                      color: CustomColors.blue,
+                      onPressed: () {
+                        widget.onRestore;
+                      }),
             ],
           ),
         ),
         40.widthBox,
         TrashTabs(
           trash: trash,
+          onStatusChange: (int value) {
+            setState(() {
+              statusIndex = value;
+              setStatusIndex(value);
+            });
+          },
+          statusValue: statusIndex,
+          onAnswerChange: (String value) {
+            setState(() {
+              comment = value;
+            });
+          },
+          answerValue: comment,
+          onImageUpload: (List<dio.MultipartFile> officerImages) {
+            setState(() {
+              officerImages = officerImages;
+            });
+          },
         ),
       ],
     );
+  }
+
+  void setInitStatusIndex(String status) {
+    if (status == 'gautas') {
+      statusIndex = 0;
+    } else if (status == 'tiriamas') {
+      statusIndex = 1;
+    } else if (status == 'ištirtas') {
+      statusIndex = 2;
+    } else if (status == 'sutvarkyta') {
+      statusIndex = 3;
+    } else if (status == 'nepasitvirtino') {
+      statusIndex = 4;
+    }
+  }
+
+  void setStatusIndex(int index) {
+    if (index == 0) {
+      status = 'gautas';
+    } else if (index == 1) {
+      status = 'tiriamas';
+    } else if (index == 2) {
+      status = 'ištirtas';
+    } else if (index == 3) {
+      status = 'sutvarkyta';
+    } else if (index == 4) {
+      status = 'nepasitvirtino';
+    }
   }
 
   Widget _buildMobileLayout(
@@ -368,7 +358,7 @@ class _TrashWindowState extends State<TrashWindow> {
             ),
             32.heightBox,
             Text(
-              trash.comment!,
+              trash.comment,
               style: CustomStyles.body1,
             ),
             if (trash.imageUrls.isNotEmpty) ...[
@@ -382,77 +372,41 @@ class _TrashWindowState extends State<TrashWindow> {
         40.heightBox,
         TrashTabs(
           trash: trash,
+          onStatusChange: (int value) {
+            setState(() {
+              statusIndex = value;
+              setStatusIndex(value);
+            });
+          },
+          statusValue: statusIndex,
+          onAnswerChange: (String value) {
+            setState(() {
+              comment = value;
+            });
+          },
+          answerValue: comment,
+          onImageUpload: (List<dio.MultipartFile> officerImages) {
+            setState(() {
+              officerImages = officerImages;
+            });
+          },
         ),
         24.heightBox,
-        CustomButton(
-            text: 'Trinti pranešimą',
-            buttonType: ButtonType.outlined,
-            color: CustomColors.red,
-            onPressed: () {
-              //TODO Add logic
-            }),
-      ],
-    );
-  }
-
-  Widget _buildTabletLayout(
-      FullReportDto trash, Set<Marker> markers, double height) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            BaseTrashInfo(
-              trash: trash,
-            ),
-            16.heightBox,
-            _BuildMap(
-              height: height.toDouble(),
-              markers: markers,
-              initialTarget: LatLng(
-                trash.latitude,
-                trash.longitude,
-              ),
-            ),
-            32.heightBox,
-          ],
-        ),
-        40.heightBox,
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    trash.comment,
-                    style: CustomStyles.body1,
-                  ),
-                  if (trash.imageUrls.isNotEmpty) ...[
-                    15.heightBox,
-                    _buildImages(
-                      trash.imageUrls.toList(),
-                    )
-                  ],
-                ],
-              ),
-            ),
-            8.widthBox,
-            TrashTabs(
-              trash: trash,
-            ),
-          ],
-        ),
-        24.heightBox,
-        CustomButton(
-            text: 'Trinti pranešimą',
-            buttonType: ButtonType.outlined,
-            color: CustomColors.red,
-            onPressed: () {
-              //TODO Add logic
-            }),
+        !trash.isDeleted
+            ? CustomButton(
+                text: 'Trinti pranešimą',
+                buttonType: ButtonType.outlined,
+                color: CustomColors.red,
+                onPressed: () {
+                  widget.onDelete;
+                })
+            : CustomButton(
+                text: 'Atkurti pranešimą',
+                buttonType: ButtonType.outlined,
+                color: CustomColors.blue,
+                onPressed: () {
+                  widget.onRestore;
+                }),
       ],
     );
   }

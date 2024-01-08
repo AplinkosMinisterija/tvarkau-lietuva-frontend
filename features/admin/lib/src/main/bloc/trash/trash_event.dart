@@ -19,8 +19,8 @@ class UpdateReport implements TrashEvent {
   final double reportLat;
   final String status;
   final String comment;
-  final String isVisible;
-  final String isDeleted;
+  final bool isVisible;
+  final bool isDeleted;
   final List<String> imageUrls;
   final List<String> officerImageUrls;
   final List<dio.MultipartFile> officerImageFiles;
