@@ -13,10 +13,6 @@ dependencies:
     sdk: flutter
   core:
     path: ../core
-  domain:
-    path: ../domain
-  navigation:
-    path: ../navigation
   dashboard:
     path: ../features/dashboard
   tvarkau_lietuva:

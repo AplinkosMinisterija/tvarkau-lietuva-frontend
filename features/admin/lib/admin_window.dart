@@ -128,27 +128,30 @@ class _AdminWindowState extends State<AdminWindow> {
                               ),
                             ),
                       20.widthBox,
-                      CustomSwitch(
-                        value: isShowDeleted,
-                        width: 64,
-                        height: 32,
-                        activeThumbColor: CustomColors.orange,
-                        activeTrackColor: CustomColors.white,
-                        inactiveTrackColor: CustomColors.white.withOpacity(.1),
-                        inactiveThumbColor:
-                            CustomColors.primary.withOpacity(.4),
-                        onChanged: (value) {
-                          setState(() {
-                            isShowDeleted = value;
-                          });
-                        },
-                      ),
-                      12.widthBox,
-                      Text(
-                        "Rodyti ištrintus pranešimus",
-                        style: CustomStyles.body2
-                            .copyWith(color: CustomColors.white),
-                      ),
+                      if (!isShowDumps) ...[
+                        CustomSwitch(
+                          value: isShowDeleted,
+                          width: 64,
+                          height: 32,
+                          activeThumbColor: CustomColors.orange,
+                          activeTrackColor: CustomColors.white,
+                          inactiveTrackColor:
+                              CustomColors.white.withOpacity(.1),
+                          inactiveThumbColor:
+                              CustomColors.primary.withOpacity(.4),
+                          onChanged: (value) {
+                            setState(() {
+                              isShowDeleted = value;
+                            });
+                          },
+                        ),
+                        12.widthBox,
+                        Text(
+                          "Rodyti ištrintus pranešimus",
+                          style: CustomStyles.body2
+                              .copyWith(color: CustomColors.white),
+                        ),
+                      ],
                       const Spacer(),
                       !isShowDeleted
                           ? UpdatedAdminViewTypeSwitch(

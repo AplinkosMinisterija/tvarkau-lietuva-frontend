@@ -62,7 +62,6 @@ class _TrashScreenState extends State<TrashScreen> {
                             ));
                       },
                       onDelete: () {
-                        print('del');
                         context.read<TrashBloc>().add(UpdateReport(
                               id: state.trashReport.id,
                               refId: state.trashReport.refId,

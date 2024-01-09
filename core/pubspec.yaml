@@ -11,10 +11,6 @@ dependencies:
     sdk: flutter
   data:
     path: ../data
-  domain:
-    path: ../domain
-  navigation:
-    path: ../navigation
 
   cupertino_icons: ^1.0.2
   get_it: ^7.2.0

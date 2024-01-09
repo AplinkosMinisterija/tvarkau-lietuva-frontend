@@ -6,7 +6,6 @@ import 'package:core_ui/core_ui.dart';
 import 'package:data/data.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:openid_client/openid_client.dart';
 
 part 'admin_event.dart';
 

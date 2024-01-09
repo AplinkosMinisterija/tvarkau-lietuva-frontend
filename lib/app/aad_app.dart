@@ -2,8 +2,7 @@
 import 'package:admin/admin.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:dashboard/dashboard_screen.dart';
-import 'package:dashboard/src/adding_report/ui/adding_screen.dart';
-import 'package:dashboard/src/report_information/ui/information_screen.dart';
+import 'package:dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:openapi_generator_annotations/openapi_generator_annotations.dart';

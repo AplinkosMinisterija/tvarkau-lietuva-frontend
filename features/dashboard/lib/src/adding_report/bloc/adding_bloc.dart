@@ -1,6 +1,5 @@
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
-import 'package:domain/domain.dart';
 import 'package:data/data.dart';
 import 'package:dio/dio.dart' as dio;
 
@@ -60,7 +59,6 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
         ConfirmationState(),
       );
     } catch (e) {
-      print(e);
       emit(
         ErrorState(errorMessage: 'Įvyko netikėta klaida'),
       );

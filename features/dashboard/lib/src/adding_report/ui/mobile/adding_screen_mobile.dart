@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:domain/domain.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:core_ui/core_ui.dart';
 import 'dart:typed_data';

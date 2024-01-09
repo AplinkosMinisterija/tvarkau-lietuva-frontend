@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:domain/domain.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -189,7 +188,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                             child: FittedBox(
                               fit: BoxFit.fitWidth,
                               child: Text(
-                                '#TLP-A$str${widget.report.refId!.toUpperCase()}',
+                                '#TLP-A$str${widget.report.refId.toUpperCase()}',
                                 style: GoogleFonts.roboto(
                                     fontSize: 32,
                                     fontWeight: FontWeight.w600,
@@ -381,8 +380,8 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
         : departmentAnswerTextLinesCount + 1;
 
     double imageGap = 0;
-    if (widget.report.officerImageUrls!.isNotEmpty) {
-      imageGap = widget.report.officerImageUrls!.length <= 2
+    if (widget.report.officerImageUrls.isNotEmpty) {
+      imageGap = widget.report.officerImageUrls.length <= 2
           ? widget.width * 0.27778
           : widget.width * 0.61;
     }
@@ -473,7 +472,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
             SizedBox(
                 height:
                     widget.report.comment != ' ' ? widget.width * 0.0805 : 0),
-            widget.report.comment != ' ' && widget.report.comment != null
+            widget.report.comment != ' ' && widget.report.comment != ''
                 ? SizedBox(
                     width: widget.width * 0.73055,
                     child: Text(
@@ -491,7 +490,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
             SizedBox(
               width: widget.width * 0.73055,
               child: Text(
-                widget.report.comment ?? '',
+                widget.report.comment,
                 textAlign: TextAlign.left,
                 style: GoogleFonts.roboto(
                   fontSize: widget.width * 0.04444,
@@ -500,9 +499,9 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                 ),
               ),
             ),
-            widget.report.officerImageUrls!.isNotEmpty
+            widget.report.officerImageUrls.isNotEmpty
                 ? SizedBox(
-                    height: widget.report.officerImageUrls!.length <= 2
+                    height: widget.report.officerImageUrls.length <= 2
                         ? widget.width * 0.27778
                         : widget.width * 0.61,
                     width: widget.width * 0.6001,
@@ -511,7 +510,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                       mainAxisSpacing: widget.width * 0.04444,
                       crossAxisSpacing: widget.width * 0.04444,
                       children: List.generate(
-                          widget.report.officerImageUrls!.length, (index) {
+                          widget.report.officerImageUrls.length, (index) {
                         return Container(
                           height: widget.width * 0.27777,
                           width: widget.width * 0.27777,
@@ -520,7 +519,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                           child: Image.network(
                             getFormattedImageUrl(
                               getFormattedImageUrl(
-                                  widget.report.officerImageUrls![index]),
+                                  widget.report.officerImageUrls[index]),
                             ),
                             fit: BoxFit.fill,
                           ),
@@ -680,7 +679,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
             SizedBox(
               width: widget.width * 0.73055,
               child: Text(
-                widget.report.comment ?? '',
+                widget.report.comment,
                 textAlign: TextAlign.left,
                 style: GoogleFonts.roboto(
                   fontSize: widget.width * 0.04444,
@@ -752,9 +751,9 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
               ),
             ),
             SizedBox(height: widget.width * 0.0666),
-            widget.report.imageUrls!.isNotEmpty
+            widget.report.imageUrls.isNotEmpty
                 ? SizedBox(
-                    height: widget.report.imageUrls!.length < 3
+                    height: widget.report.imageUrls.length < 3
                         ? widget.width * 0.27778
                         : widget.width * 0.61,
                     width: widget.width * 0.6001,
@@ -762,7 +761,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                       crossAxisCount: 2,
                       mainAxisSpacing: widget.width * 0.04444,
                       crossAxisSpacing: widget.width * 0.04444,
-                      children: List.generate(widget.report.imageUrls!.length,
+                      children: List.generate(widget.report.imageUrls.length,
                           (index) {
                         return Container(
                           height: widget.width * 0.27777,
@@ -771,7 +770,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                               borderRadius: BorderRadius.circular(8)),
                           child: Image.network(
                             getFormattedImageUrl(
-                                widget.report.imageUrls![index]),
+                                widget.report.imageUrls[index]),
                             fit: BoxFit.fill,
                           ),
                         );
