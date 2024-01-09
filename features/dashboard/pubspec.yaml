@@ -14,8 +14,6 @@ dependencies:
     path: ../../core
   core_ui:
     path: ../../core_ui
-  data:
-    path: ../../data
   api_client:
     path: ../../api_client
 

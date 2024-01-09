@@ -1,5 +1,4 @@
 import 'package:core/core.dart';
-import 'package:data/data.dart';
 import 'package:api_client/api_client.dart';
 
 part 'dump_event.dart';

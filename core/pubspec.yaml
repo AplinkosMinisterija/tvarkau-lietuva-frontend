@@ -9,8 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  data:
-    path: ../data
+  api_client:
+    path: ../api_client
 
   cupertino_icons: ^1.0.2
   get_it: ^7.2.0
@@ -21,6 +21,10 @@ dependencies:
   g_recaptcha_v3: ^0.0.5
   webviewx_plus: ^0.3.3
   image: ^4.0.17
+  intl: ^0.18.0
+  flutter_secure_storage: ^9.0.0
+  dio: ^5.0.0
+  built_collection: ^5.1.1
 
 dev_dependencies:
   flutter_test:

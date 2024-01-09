@@ -14,8 +14,6 @@ dependencies:
     path: ../../core
   core_ui:
     path: ../../core_ui
-  data:
-    path: ../../data
   api_client:
     path: ../../api_client
 
@@ -35,8 +33,8 @@ dependencies:
   dio: ^5.0.0
   http_parser: ^4.0.2
   syncfusion_flutter_datagrid: ^21.2.10
-  syncfusion_flutter_core: ^24.1.45
-  collection: ^1.18.0
+  syncfusion_flutter_core: ^21.2.10
+  collection: ^1.17.2
 
 dev_dependencies:
   flutter_test:

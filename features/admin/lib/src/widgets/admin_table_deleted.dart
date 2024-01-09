@@ -1,6 +1,6 @@
 import 'package:api_client/api_client.dart';
+import 'package:core/utils/api_provider.dart';
 import 'package:core/utils/date_formatter.dart';
-import 'package:data/providers/http_api_provider/api_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';

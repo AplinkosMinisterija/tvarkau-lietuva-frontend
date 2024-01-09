@@ -1,6 +1,5 @@
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
-import 'package:data/data.dart';
 import 'package:dio/dio.dart' as dio;
 
 part 'adding_event.dart';
@@ -20,8 +19,6 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
     Emitter<AddingState> emit,
   ) async {
     try {
-
-
       final List<PublicReportDto> trashReports =
           await ApiProvider().getAllVisibleTrashReports();
 
@@ -45,7 +42,6 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
       emit(
         LoadingState(),
       );
-
 
       await ApiProvider().sendNewTrashReport(
         emailValue: event.emailValue,

@@ -1,6 +1,5 @@
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
-import 'package:data/data.dart';
 
 part 'home_event.dart';
 
@@ -18,7 +17,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     Emitter<HomeState> emit,
   ) async {
     try {
-
       final List<PublicReportDto> trashReports =
           await ApiProvider().getAllVisibleTrashReports();
       final List<DumpDto> dumpReports =

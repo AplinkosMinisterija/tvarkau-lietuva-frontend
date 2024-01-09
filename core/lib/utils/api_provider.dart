@@ -1,5 +1,4 @@
 import 'package:built_collection/built_collection.dart';
-import 'package:data/data.dart';
 import 'package:dio/dio.dart';
 import 'package:core/core.dart';
 import 'package:flutter/foundation.dart';
@@ -7,24 +6,6 @@ import 'package:api_client/api_client.dart';
 
 class ApiProvider {
   ApiProvider();
-
-  final adminApiClient = ApiClient(
-    basePathOverride: GlobalConstants.basePath,
-    interceptors: [
-      InterceptorsWrapper(
-        onRequest:
-            (RequestOptions options, RequestInterceptorHandler handler) async {
-          final authKey = await SecureStorageProvider().getJwtToken();
-          if (authKey != null) {
-            options.headers['Authorization'] = 'Bearer $authKey';
-          } else {
-            throw Exception('No auth key found');
-          }
-          return handler.next(options);
-        },
-      ),
-    ],
-  );
 
   final dumpsApi = ApiClient(
     basePathOverride: GlobalConstants.basePath,

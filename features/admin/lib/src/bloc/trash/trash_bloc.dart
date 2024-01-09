@@ -1,6 +1,5 @@
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
-import 'package:data/data.dart';
 import 'package:dio/dio.dart' as dio;
 
 part 'trash_event.dart';
