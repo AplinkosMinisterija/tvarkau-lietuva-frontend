@@ -1,4 +1,5 @@
 import 'package:api_client/api_client.dart';
+import 'package:core/core.dart';
 import 'package:core/utils/api_provider.dart';
 import 'package:core/utils/date_formatter.dart';
 import 'package:flutter/material.dart';
@@ -130,15 +131,7 @@ class AdminTableDeleted extends StatelessWidget {
             child = Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  SizedBox(
-                    height: 250,
-                    width: 250,
-                    child: Center(
-                      child: LoadingAnimationWidget.staggeredDotsWave(
-                          color: const Color.fromRGBO(57, 97, 84, 1),
-                          size: 150),
-                    ),
-                  ),
+                  LoaderWidget().loader(),
                 ]);
           }
           return Center(

@@ -25,6 +25,7 @@ dependencies:
   flutter_secure_storage: ^9.0.0
   dio: ^5.0.0
   built_collection: ^5.1.1
+  loading_animation_widget: ^1.2.0+4
 
 dev_dependencies:
   flutter_test:

@@ -76,12 +76,7 @@ class AddingScreen extends StatelessWidget {
               } else if (state is LoadingState) {
                 return Dialog.fullscreen(
                   backgroundColor: const Color.fromRGBO(250, 242, 234, 1),
-                  child: Center(
-                    child: LoadingAnimationWidget.staggeredDotsWave(
-                      color: AppTheme.mainThemeColor,
-                      size: 150,
-                    ),
-                  ),
+                  child: LoaderWidget().loader(),
                 );
               } else if (state is ConfirmationState) {
                 if (width > 900) {

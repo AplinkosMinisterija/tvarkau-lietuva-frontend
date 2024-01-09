@@ -53,13 +53,7 @@ class _DumpScreenState extends State<DumpScreen> {
                       },
                     );
                   } else if (state is LoadingState) {
-                    return Container(
-                      color: const Color.fromRGBO(57, 97, 84, 1),
-                      child: Center(
-                        child: LoadingAnimationWidget.staggeredDotsWave(
-                            color: AppTheme.accentDividerColor, size: 150),
-                      ),
-                    );
+                    return LoaderWidget().loader();
                   } else if (state is ErrorState) {
                     return ErrorReloadWidget(
                       onPressed: () {

@@ -43,7 +43,7 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
         GlobalConstants.maxAllowedImageCount);
 
     if (images != null) {
-      setState(()  {
+      setState(() {
         _selectedImages.addAll(images);
         _fileBytes.addAll(images);
         for (var element in _selectedImages) {

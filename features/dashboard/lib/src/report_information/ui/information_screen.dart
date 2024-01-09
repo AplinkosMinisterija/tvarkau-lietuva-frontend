@@ -41,10 +41,7 @@ class InformationScreen extends StatelessWidget {
                   }
                 } else if (state is LoadingState) {
                   return Scaffold(
-                    body: Center(
-                      child: LoadingAnimationWidget.staggeredDotsWave(
-                          color: AppTheme.mainThemeColor, size: 150),
-                    ),
+                    body: LoaderWidget().loader(),
                   );
                 } else if (state is ErrorState) {
                   return Scaffold(

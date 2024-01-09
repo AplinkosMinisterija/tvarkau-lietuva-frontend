@@ -44,10 +44,7 @@ class HomeScreen extends StatelessWidget {
                     },
                   );
                 } else if (state is LoadingState) {
-                  return Center(
-                    child: LoadingAnimationWidget.staggeredDotsWave(
-                        color: AppTheme.mainThemeColor, size: 150),
-                  );
+                  return LoaderWidget().loader();
                 } else if (state is ErrorState) {
                   return ErrorReloadWidget(
                     onPressed: () {
