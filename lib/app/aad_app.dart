@@ -1,7 +1,5 @@
 // Openapi Generator last run: : 2024-01-03T23:33:54.206452
-import 'package:admin/admin_screen.dart';
-import 'package:admin/src/main/ui/dump_screen.dart';
-import 'package:admin/src/main/ui/trash_screen.dart';
+import 'package:admin/admin.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:dashboard/dashboard_screen.dart';
 import 'package:dashboard/src/adding_report/ui/adding_screen.dart';
@@ -50,20 +48,15 @@ class AadApp extends StatelessWidget {
                 name: 'report_admin',
                 path: "pranesimas",
                 builder: (context, state) {
-                  // return UpdatedReportScreen(
-                  //   reportId: state.uri.queryParameters["id"] ?? '1',
-                  // );
                   return TrashScreen(
                     refId: state.uri.queryParameters['id'] ?? '1',
                   );
-                  //return Container();
                 }),
             GoRoute(
                 name: 'dump_admin',
                 path: 'aikstele',
                 builder: (context, state) {
-                  // final dump = state.extra as ReportModel;
-                  return UpdatedDumpScreen(
+                  return DumpScreen(
                     refId: state.uri.queryParameters['id'] ?? '1',
                   );
                 }),

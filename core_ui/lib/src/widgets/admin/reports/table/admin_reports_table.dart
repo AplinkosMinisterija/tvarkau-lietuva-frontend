@@ -1,5 +1,6 @@
 import 'package:api_client/api_client.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:core/core.dart';
 import 'package:core_ui/src/widgets/admin/reports/table/report_edit_form.dart';
 import 'package:flutter/material.dart';
 import 'package:domain/domain.dart';
@@ -109,76 +110,79 @@ class _AdminReportsTableState extends State<AdminReportsTable> {
                   allowSorting: false,
                   allowFiltering: true,
                   width: widget.width * 0.07,
-                  filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
-              label: Container(
-                  padding: const EdgeInsets.only(left: 5),
-                  alignment: Alignment.center,
-                  child: const Text(
-                    'Platuma',
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                  ))),
-          GridColumn(
-              columnName: 'long',
-              allowSorting: false,
-              allowFiltering: true,
-              width: widget.width * 0.07,
-              filterIconPadding: const EdgeInsets.symmetric(horizontal: 2.0),
-              label: Container(
-                  padding: const EdgeInsets.only(left: 5),
-                  alignment: Alignment.center,
-                  child: const Text(
-                    'Ilguma',
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                  ))),
-          GridColumn(
-              columnName: 'name',
-              allowSorting: false,
-              allowFiltering: true,
-              label: Container(
-                  padding: const EdgeInsets.all(8.0),
-                  alignment: Alignment.center,
-                  child: const Text(
-                    'Pranešimo turinys',
-                    textAlign: TextAlign.center,
-                  ))),
-          GridColumn(
-              columnName: 'status',
-              allowSorting: true,
-              allowFiltering: true,
-              label: Container(
-                  padding: const EdgeInsets.all(8.0),
-                  alignment: Alignment.center,
-                  child: const Text(
-                    'Pranešimo statusas',
-                    textAlign: TextAlign.center,
-                  ))),
-          GridColumn(
-              columnName: 'visibility',
-              allowSorting: true,
-              allowFiltering: true,
-              label: Container(
-                  padding: const EdgeInsets.all(8.0),
-                  alignment: Alignment.center,
-                  child: const Text(
-                    'Matomumas',
-                    textAlign: TextAlign.center,
-                  ))),
-          GridColumn(
-              columnName: 'edit',
-              allowSorting: false,
-              allowFiltering: false,
-              width: widget.width * 0.05,
-              label: Container(
-                  padding: const EdgeInsets.all(0.0),
-                  alignment: Alignment.center,
-                  child: const Text(
-                    'Veiksmai',
-                    textAlign: TextAlign.center,
-                  ))),
-        ],
-      ),),
+                  filterIconPadding:
+                      const EdgeInsets.symmetric(horizontal: 2.0),
+                  label: Container(
+                      padding: const EdgeInsets.only(left: 5),
+                      alignment: Alignment.center,
+                      child: const Text(
+                        'Platuma',
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                      ))),
+              GridColumn(
+                  columnName: 'long',
+                  allowSorting: false,
+                  allowFiltering: true,
+                  width: widget.width * 0.07,
+                  filterIconPadding:
+                      const EdgeInsets.symmetric(horizontal: 2.0),
+                  label: Container(
+                      padding: const EdgeInsets.only(left: 5),
+                      alignment: Alignment.center,
+                      child: const Text(
+                        'Ilguma',
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                      ))),
+              GridColumn(
+                  columnName: 'name',
+                  allowSorting: false,
+                  allowFiltering: true,
+                  label: Container(
+                      padding: const EdgeInsets.all(8.0),
+                      alignment: Alignment.center,
+                      child: const Text(
+                        'Pranešimo turinys',
+                        textAlign: TextAlign.center,
+                      ))),
+              GridColumn(
+                  columnName: 'status',
+                  allowSorting: true,
+                  allowFiltering: true,
+                  label: Container(
+                      padding: const EdgeInsets.all(8.0),
+                      alignment: Alignment.center,
+                      child: const Text(
+                        'Pranešimo statusas',
+                        textAlign: TextAlign.center,
+                      ))),
+              GridColumn(
+                  columnName: 'visibility',
+                  allowSorting: true,
+                  allowFiltering: true,
+                  label: Container(
+                      padding: const EdgeInsets.all(8.0),
+                      alignment: Alignment.center,
+                      child: const Text(
+                        'Matomumas',
+                        textAlign: TextAlign.center,
+                      ))),
+              GridColumn(
+                  columnName: 'edit',
+                  allowSorting: false,
+                  allowFiltering: false,
+                  width: widget.width * 0.05,
+                  label: Container(
+                      padding: const EdgeInsets.all(0.0),
+                      alignment: Alignment.center,
+                      child: const Text(
+                        'Veiksmai',
+                        textAlign: TextAlign.center,
+                      ))),
+            ],
+          ),
+        ),
       ],
     );
   }
@@ -220,14 +224,6 @@ class _AdminReportsTableState extends State<AdminReportsTable> {
   }
 }
 
-String getFormattedDateAdmin(String unformattedDate) {
-  DateTime formattedDate =
-      DateTime.parse(unformattedDate).add(const Duration(hours: 3));
-  String day = formattedDate.toString().substring(0, 10);
-  String hour = formattedDate.toString().substring(11, 16);
-  return '$day\n$hour';
-}
-
 class ReportDataSourceAdmin extends DataGridSource {
   ReportDataSourceAdmin({required List<FullReportDto> reportData}) {
     _reportData = reportData
@@ -238,8 +234,9 @@ class ReportDataSourceAdmin extends DataGridSource {
                   value:
                       'TLP-A${'0' * (8 - e.refId.length)}${e.refId.toUpperCase()}'),
               DataGridCell<String>(
-                  columnName: 'date',
-                  value: getFormattedDateAdmin(e.reportDate.toString())),
+                columnName: 'date',
+                value: DateFormatter().format(e.reportDate),
+              ),
               DataGridCell<String>(
                   columnName: 'lat',
                   value: e.latitude.toString().length > 6

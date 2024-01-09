@@ -10,3 +10,4 @@ export 'errors/no_internet_exception.dart';
 export 'utils/field_validator.dart';
 export 'utils/url_launcher.dart';
 export 'utils/captcha_dialog.dart';
+export 'utils/date_formatter.dart';
