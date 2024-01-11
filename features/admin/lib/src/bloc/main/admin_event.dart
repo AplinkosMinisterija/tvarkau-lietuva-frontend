@@ -8,6 +8,12 @@ class LogIn implements AdminEvent {}
 
 class LogOut implements AdminEvent {}
 
+class OnViewReports implements AdminEvent {}
+
+class OnViewDumps implements AdminEvent {}
+
+class OnViewDeleted implements AdminEvent {}
+
 class ReviewReport implements AdminEvent {
   final String refId;
 

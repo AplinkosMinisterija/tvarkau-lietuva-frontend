@@ -280,9 +280,8 @@ class _ReportsScreenState extends State<ReportsScreen> {
                               child: InkWell(
                                 onTap: () {
                                   LaunchUrl().launch(
-                                      'https://aad.lrv.lt/lt/asmens-duomenu-apsauga');
+                                      'https://aad.lrv.lt/lt/administracine-informacija/asmens-duomenu-apsauga/');
                                 },
-                                //widget.onDataSecurityTap,
                                 child: Text(
                                   'Departamento BDAR taisyklės',
                                   style: GoogleFonts.roboto(

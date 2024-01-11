@@ -1,6 +1,6 @@
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import '../common/custom_colors.dart';
-import '../common/extensions.dart';
 
 class UpdatedAdminViewTypeSwitch extends StatelessWidget {
   const UpdatedAdminViewTypeSwitch({

@@ -5,11 +5,13 @@ import '../../core_ui.dart';
 class ErrorReloadWidget extends StatelessWidget {
   final Function? onPressed;
   final String? errorText;
+  final String? descriptionText;
 
   const ErrorReloadWidget({
     super.key,
     this.onPressed,
     this.errorText,
+    this.descriptionText,
   });
 
   @override
@@ -34,6 +36,19 @@ class ErrorReloadWidget extends StatelessWidget {
                   ),
                   child: Text(
                     errorText ?? 'Klaida',
+                    style: AppTextTheme.ploni16medium.copyWith(
+                      color: AppTheme.defaultTextColor,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 18,
+                    horizontal: 80,
+                  ),
+                  child: Text(
+                    descriptionText ?? '',
                     style: AppTextTheme.ploni16medium.copyWith(
                       color: AppTheme.defaultTextColor,
                     ),

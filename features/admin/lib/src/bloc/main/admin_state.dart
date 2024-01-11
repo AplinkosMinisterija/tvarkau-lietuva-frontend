@@ -1,41 +1,59 @@
 part of 'admin_bloc.dart';
 
-abstract class AdminState {}
+sealed class AdminState {}
 
 class LoadingState implements AdminState {}
 
 class LogingState implements AdminState {}
 
 class ReportState implements AdminState {
-  final FullReportDto report;
+  final LogInDto userInfo;
+  final List<FullReportDto> reports;
 
   ReportState({
-    required this.report,
+    required this.reports,
+    required this.userInfo,
   });
 }
 
 class DumpState implements AdminState {
-  final FullDumpDto dump;
-
-  DumpState({
-    required this.dump,
-  });
-}
-
-class ContentState implements AdminState {
   final LogInDto userInfo;
-  final List<FullReportDto> reports;
   final List<FullDumpDto> dumps;
 
-  ContentState({
-    required this.userInfo,
-    required this.reports,
+  DumpState({
     required this.dumps,
+    required this.userInfo,
   });
 }
+
+class DeletedState implements AdminState {
+  final LogInDto userInfo;
+  final List<FullReportDto> reports;
+
+  DeletedState({
+    required this.reports,
+    required this.userInfo,
+  });
+}
+//
+// class ContentState implements AdminState {
+//   final LogInDto userInfo;
+//   final List<FullReportDto> reports;
+//   final List<FullDumpDto> dumps;
+//
+//   ContentState({
+//     required this.userInfo,
+//     required this.reports,
+//     required this.dumps,
+//   });
+// }
 
 class ErrorState implements AdminState {
   final String errorMessage;
+  final String errorDescription;
 
-  ErrorState({required this.errorMessage});
+  ErrorState({
+    required this.errorDescription,
+    required this.errorMessage,
+  });
 }

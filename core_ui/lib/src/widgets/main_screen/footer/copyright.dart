@@ -16,7 +16,7 @@ class Copyright extends StatelessWidget {
       child: FittedBox(
         fit: BoxFit.fitWidth,
         child: Text(
-          '© 2023, Tvarkau Lietuvą',
+          '© 2024, Tvarkau Lietuvą',
           style: GoogleFonts.roboto(
             fontWeight: FontWeight.w500,
             color: const Color(0xad0a3328),

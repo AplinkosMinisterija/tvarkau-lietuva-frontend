@@ -16,6 +16,9 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
     on<ReloadPage>(_onReloadEvent);
     on<LogIn>(_onLogInEvent);
     on<LogOut>(_onLogOutEvent);
+    on<OnViewReports>(_onViewReportsEvent);
+    on<OnViewDumps>(_onViewDumpsEvent);
+    on<OnViewDeleted>(_onViewDeletedEvent);
     add(LoadData());
   }
 
@@ -42,22 +45,22 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
         if (accessToken != null && accessToken != '') {
           try {
             LogInDto userInfo = await ApiProvider().getUserInfo(accessToken);
+            await SecureStorageProvider().setUserInfo(userInfo);
             await SecureStorageProvider().setJwtToken(userInfo.accessKey);
 
             List<FullReportDto> reports =
                 await ApiProvider().getAllTrashReports();
-            List<FullDumpDto> dumps = await ApiProvider().getAllDumpReports();
 
-            emit(
-              ContentState(
-                userInfo: userInfo,
-                reports: reports,
-                dumps: dumps,
-              ),
-            );
+            emit(ReportState(
+              reports: reports,
+              userInfo: userInfo,
+            ));
           } catch (e) {
             emit(
-              ErrorState(errorMessage: 'Something went wrong'),
+              ErrorState(
+                errorMessage: 'Something went wrong',
+                errorDescription: e.toString(),
+              ),
             );
           }
         } else {
@@ -68,7 +71,63 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
       }
     } catch (e) {
       emit(
-        ErrorState(errorMessage: 'Something went wrong'),
+        ErrorState(
+            errorMessage: 'Something went wrong',
+            errorDescription: e.toString()),
+      );
+    }
+  }
+
+  Future<void> _onViewReportsEvent(
+    OnViewReports _,
+    Emitter<AdminState> emit,
+  ) async {
+    try {
+      emit(LoadingState());
+      LogInDto userInfo = await SecureStorageProvider().getUserInfo();
+      List<FullReportDto> reports = await ApiProvider().getAllTrashReports();
+      emit(ReportState(reports: reports, userInfo: userInfo));
+    } catch (e) {
+      emit(
+        ErrorState(
+            errorMessage: 'Something went wrong',
+            errorDescription: e.toString()),
+      );
+    }
+  }
+
+  Future<void> _onViewDeletedEvent(
+    OnViewDeleted _,
+    Emitter<AdminState> emit,
+  ) async {
+    try {
+      emit(LoadingState());
+      LogInDto userInfo = await SecureStorageProvider().getUserInfo();
+      List<FullReportDto> reports = await ApiProvider().getAllRemovedReports();
+      emit(DeletedState(reports: reports, userInfo: userInfo));
+    } catch (e) {
+      emit(
+        ErrorState(
+            errorMessage: 'Something went wrong',
+            errorDescription: e.toString()),
+      );
+    }
+  }
+
+  Future<void> _onViewDumpsEvent(
+    OnViewDumps _,
+    Emitter<AdminState> emit,
+  ) async {
+    try {
+      emit(LoadingState());
+      LogInDto userInfo = await SecureStorageProvider().getUserInfo();
+      List<FullDumpDto> dumps = await ApiProvider().getAllDumpReports();
+      emit(DumpState(dumps: dumps, userInfo: userInfo));
+    } catch (e) {
+      emit(
+        ErrorState(
+            errorMessage: 'Something went wrong',
+            errorDescription: e.toString()),
       );
     }
   }
@@ -95,14 +154,18 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
       var accessToken = await oauth.getAccessToken();
       if (accessToken != null) {
         emit(
-          ErrorState(errorMessage: 'Something went wrong'),
+          ErrorState(
+              errorMessage: 'Something went wrong',
+              errorDescription: 'Authentication reset error'),
         );
       } else {
         add(LoadData());
       }
     } catch (e) {
       emit(
-        ErrorState(errorMessage: 'Something went wrong'),
+        ErrorState(
+            errorMessage: 'Something went wrong',
+            errorDescription: e.toString()),
       );
     }
   }
@@ -132,12 +195,16 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
         add(LoadData());
       } else {
         emit(
-          ErrorState(errorMessage: 'Something went wrong'),
+          ErrorState(
+              errorMessage: 'Something went wrong',
+              errorDescription: 'Unauthorized'),
         );
       }
     } catch (e) {
       emit(
-        ErrorState(errorMessage: 'Something went wrong'),
+        ErrorState(
+            errorMessage: 'Something went wrong',
+            errorDescription: e.toString()),
       );
     }
   }

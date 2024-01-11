@@ -13,3 +13,4 @@ export 'utils/url_launcher.dart';
 export 'utils/captcha_dialog.dart';
 export 'utils/date_formatter.dart';
 export 'utils/loader_widget.dart';
+export 'utils/extensions.dart';

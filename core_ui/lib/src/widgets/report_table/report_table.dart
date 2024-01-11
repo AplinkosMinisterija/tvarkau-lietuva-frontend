@@ -47,8 +47,8 @@ class _ReportTableState extends State<ReportTable> {
                 .getCells()[0]
                 .value;
             widget.onInformationTap(reports
-                    .firstWhere((element) => element.refId == onTapRef)
-                    .refId);
+                .firstWhere((element) => element.refId == onTapRef)
+                .refId);
           }
         },
         columns: <GridColumn>[
@@ -139,7 +139,8 @@ class ReportDataSource extends DataGridSource {
                   value:
                       'TLP-A${'0' * (8 - e.refId.length)}${e.refId.toUpperCase()}'),
               DataGridCell<String>(
-                  columnName: 'date', value: getFormattedDate(e.reportDate.toString())),
+                  columnName: 'date',
+                  value: getFormattedDate(e.reportDate.toString())),
               DataGridCell<String>(columnName: 'name', value: e.name),
               DataGridCell<String>(columnName: 'comment', value: e.comment),
               DataGridCell<String>(columnName: 'status', value: e.status),

@@ -498,7 +498,7 @@ class _AddingScreenMobileState extends State<AddingScreenMobile> {
                               InkWell(
                                 onTap: () {
                                   LaunchUrl().launch(
-                                      'https://aad.lrv.lt/lt/asmens-duomenu-apsauga');
+                                      'https://aad.lrv.lt/lt/administracine-informacija/asmens-duomenu-apsauga/');
                                 },
                                 //widget.onDataSecurityTap,
                                 child: Text(

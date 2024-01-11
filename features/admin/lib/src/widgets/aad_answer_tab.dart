@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:core/core.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:core/constants/global_constants.dart';
 import 'package:core_ui/core_ui.dart';
@@ -6,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart' as dio;
 import '../common/custom_colors.dart';
 import '../common/custom_styles.dart';
-import '../common/extensions.dart';
 import 'custom_button.dart';
 import 'custom_dropdown.dart';
 

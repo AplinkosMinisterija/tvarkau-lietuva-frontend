@@ -1,11 +1,11 @@
 import 'package:admin/src/widgets/admin_table_deleted.dart';
 import 'package:api_client/api_client.dart';
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'src/common/custom_colors.dart';
 import 'src/common/custom_styles.dart';
-import 'src/common/extensions.dart';
 import 'src/widgets/admin_table_dumps.dart';
 import 'src/widgets/admin_table_reports.dart';
 import 'src/widgets/base_admin_screen.dart';
@@ -21,14 +21,22 @@ class AdminWindow extends StatefulWidget {
     required this.reports,
     required this.dumps,
     required this.onLogout,
+    required this.isShowDeleted,
+    required this.onDeletedChange,
+    required this.onTypeChange,
+    required this.isShowDumps,
     Key? key,
   }) : super(key: key);
 
   final String name;
   final String email;
-  final List<FullReportDto> reports;
-  final List<FullDumpDto> dumps;
+  final bool isShowDeleted;
+  final bool isShowDumps;
+  final List<FullReportDto>? reports;
+  final List<FullDumpDto>? dumps;
   final VoidCallback onLogout;
+  final VoidCallback onTypeChange;
+  final VoidCallback onDeletedChange;
 
   @override
   State<AdminWindow> createState() => _AdminWindowState();
@@ -40,42 +48,95 @@ class _AdminWindowState extends State<AdminWindow> {
   bool isShowDeleted = false;
   Set<Marker> reportMarkers = {};
   Set<Marker> dumpMarkers = {};
+  BitmapDescriptor? blueIcon;
+  BitmapDescriptor? redIcon;
+  BitmapDescriptor? grayIcon;
+  BitmapDescriptor? greenIcon;
+  BitmapDescriptor? orangeIcon;
+  BitmapDescriptor? dumpIcon;
 
   Future<void> setupMarker() async {
-    final description = await BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(size: Size(50, 50)),
-        'assets/svg/pin_icon.svg');
-
-    for (final report in widget.reports) {
-      reportMarkers.add(Marker(
-        markerId: MarkerId(report.refId),
-        position: LatLng(report.latitude, report.longitude),
-        icon: description,
-        onTap: () {
-          String str = '0' * (8 - report.refId.length);
-          context.goNamed('report_admin', queryParameters: {
-            'id': 'TLP-A$str${report.refId.toUpperCase()}'
-          });
-        },
-      ));
+    await setupIcons(widget.isShowDumps);
+    if (isShowDumps) {
+      dumpMarkers = widget.dumps!
+          .map((element) => Marker(
+                markerId: MarkerId(element.refId),
+                position: LatLng(element.latitude, element.longitude),
+                icon: getMarkerIcon(widget.isShowDumps, ''),
+                onTap: () {
+                  context.goNamed('dump_admin', queryParameters: {
+                    'id': element.refId,
+                  });
+                },
+              ))
+          .toSet();
+    } else {
+      reportMarkers = widget.reports!
+          .map((element) => Marker(
+                markerId: MarkerId(element.refId),
+                position: LatLng(element.latitude, element.longitude),
+                icon: getMarkerIcon(widget.isShowDumps, element.status),
+                onTap: () {
+                  String str = '0' * (8 - element.refId.length);
+                  context.goNamed('report_admin', queryParameters: {
+                    'id': 'TLP-A$str${element.refId.toUpperCase()}'
+                  });
+                },
+              ))
+          .toSet();
     }
-    for (final dump in widget.dumps) {
-      dumpMarkers.add(Marker(
-        markerId: MarkerId(dump.refId),
-        position: LatLng(dump.latitude, dump.longitude),
-        icon: description,
-        onTap: () {
-          context.goNamed('dump_admin', queryParameters: {
-            'id': dump.refId,
-          });
-        },
-      ));
+  }
+
+  Future<void> setupIcons(bool isDump) async {
+    if (isDump) {
+      final icon = await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(25, 40)),
+          'assets/svg/pin_icon.svg');
+      dumpIcon = icon;
+    } else {
+      final redMarker = await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(25, 40)),
+          'assets/icons/marker_pins/red_marker.png');
+      final blueMarker = await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(25, 40)),
+          'assets/icons/marker_pins/blue_marker.png');
+      final grayMarker = await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(25, 40)),
+          'assets/icons/marker_pins/gray_marker.png');
+      final greenMarker = await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(25, 40)),
+          'assets/icons/marker_pins/green_marker.png');
+      final orangeMarker = await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(25, 40)),
+          'assets/icons/marker_pins/orange_marker.png');
+      redIcon = redMarker;
+      blueIcon = blueMarker;
+      grayIcon = grayMarker;
+      greenIcon = greenMarker;
+      orangeIcon = orangeMarker;
+    }
+  }
+
+  BitmapDescriptor getMarkerIcon(bool isDump, String status) {
+    if (isDump) {
+      return dumpIcon!;
+    } else {
+      return switch (status) {
+        'gautas' => redIcon!,
+        'tiriamas' => orangeIcon!,
+        'sutvarkyta' => greenIcon!,
+        'ištirtas' => blueIcon!,
+        'nepasitvirtino' => grayIcon!,
+        _ => dumpIcon!,
+      };
     }
   }
 
   @override
   void initState() {
     super.initState();
+    isShowDumps = widget.isShowDumps;
+    isShowDeleted = widget.isShowDeleted;
     setupMarker();
   }
 
@@ -115,9 +176,7 @@ class _AdminWindowState extends State<AdminWindow> {
                           ? UpdatedReportTypeSwitch(
                               isShowDumps: isShowDumps,
                               onReportTypeChange: (value) {
-                                setState(() {
-                                  isShowDumps = value;
-                                });
+                                widget.onTypeChange();
                               },
                             )
                           : Opacity(
@@ -140,9 +199,7 @@ class _AdminWindowState extends State<AdminWindow> {
                           inactiveThumbColor:
                               CustomColors.primary.withOpacity(.4),
                           onChanged: (value) {
-                            setState(() {
-                              isShowDeleted = value;
-                            });
+                            widget.onDeletedChange();
                           },
                         ),
                         12.widthBox,
@@ -153,16 +210,15 @@ class _AdminWindowState extends State<AdminWindow> {
                         ),
                       ],
                       const Spacer(),
-                      !isShowDeleted
-                          ? UpdatedAdminViewTypeSwitch(
-                              isMapView: isMapView,
-                              onIsMapViewChange: (value) {
-                                setState(() {
-                                  isMapView = value;
-                                });
-                              },
-                            )
-                          : const SizedBox.shrink(),
+                      if (!isShowDeleted)
+                        UpdatedAdminViewTypeSwitch(
+                          isMapView: isMapView,
+                          onIsMapViewChange: (value) {
+                            setState(() {
+                              isMapView = value;
+                            });
+                          },
+                        ),
                     ],
                   ),
                   12.heightBox,
@@ -178,13 +234,15 @@ class _AdminWindowState extends State<AdminWindow> {
                             )
                           : SizedBox(
                               height: height.toDouble(),
-                              child: isShowDumps
-                                  ? AdminTableDumps(dumps: widget.dumps)
-                                  : AdminTableReports(reports: widget.reports),
+                              child: isShowDumps && widget.dumps != null
+                                  ? AdminTableDumps(dumps: widget.dumps!)
+                                  : AdminTableReports(reports: widget.reports!),
                             )
                       : SizedBox(
                           height: height.toDouble(),
-                          child: const AdminTableDeleted()),
+                          child: AdminTableReports(
+                            reports: widget.reports!,
+                          )),
                 ],
               ),
             ),
