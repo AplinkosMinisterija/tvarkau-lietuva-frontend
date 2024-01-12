@@ -12,6 +12,8 @@ Method | HTTP request | Description
 [**adminControllerCreateDump**](AdminApi.md#admincontrollercreatedump) | **PUT** /admin/dumps | 
 [**adminControllerGetAllDumps**](AdminApi.md#admincontrollergetalldumps) | **GET** /admin/dumps | 
 [**adminControllerGetAllReports**](AdminApi.md#admincontrollergetallreports) | **GET** /admin/reports | 
+[**adminControllerGetDumpById**](AdminApi.md#admincontrollergetdumpbyid) | **GET** /admin/dumps/{refId} | 
+[**adminControllerGetReportById**](AdminApi.md#admincontrollergetreportbyid) | **GET** /admin/reports/{refId} | 
 [**adminControllerUpdateDump**](AdminApi.md#admincontrollerupdatedump) | **POST** /admin/dumps | 
 [**adminControllerUpdateReport**](AdminApi.md#admincontrollerupdatereport) | **POST** /admin/reports | 
 
@@ -132,6 +134,94 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**BuiltList&lt;FullReportDto&gt;**](FullReportDto.md)
+
+### Authorization
+
+[bearer](../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminControllerGetDumpById**
+> FullDumpDto adminControllerGetDumpById(refId)
+
+
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+// TODO Configure HTTP basic authorization: bearer
+//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').username = 'YOUR_USERNAME'
+//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').password = 'YOUR_PASSWORD';
+
+final api = ApiClient().getAdminApi();
+final String refId = refId_example; // String | 
+
+try {
+    final response = api.adminControllerGetDumpById(refId);
+    print(response);
+} catch on DioError (e) {
+    print('Exception when calling AdminApi->adminControllerGetDumpById: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **refId** | **String**|  | 
+
+### Return type
+
+[**FullDumpDto**](FullDumpDto.md)
+
+### Authorization
+
+[bearer](../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminControllerGetReportById**
+> FullReportDto adminControllerGetReportById(refId)
+
+
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+// TODO Configure HTTP basic authorization: bearer
+//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').username = 'YOUR_USERNAME'
+//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').password = 'YOUR_PASSWORD';
+
+final api = ApiClient().getAdminApi();
+final num refId = 8.14; // num | 
+
+try {
+    final response = api.adminControllerGetReportById(refId);
+    print(response);
+} catch on DioError (e) {
+    print('Exception when calling AdminApi->adminControllerGetReportById: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **refId** | **num**|  | 
+
+### Return type
+
+[**FullReportDto**](FullReportDto.md)
 
 ### Authorization
 

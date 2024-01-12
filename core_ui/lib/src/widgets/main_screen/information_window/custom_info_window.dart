@@ -49,10 +49,10 @@ class CustomInfoWindow extends StatefulWidget {
         assert(width >= 0);
 
   @override
-  _CustomInfoWindowState createState() => _CustomInfoWindowState();
+  CustomInfoWindowState createState() => CustomInfoWindowState();
 }
 
-class _CustomInfoWindowState extends State<CustomInfoWindow> {
+class CustomInfoWindowState extends State<CustomInfoWindow> {
   bool _showNow = false;
   double _leftMargin = 50;
   double _topMargin = 50;

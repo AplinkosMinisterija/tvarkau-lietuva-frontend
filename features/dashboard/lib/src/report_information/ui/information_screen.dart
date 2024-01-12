@@ -1,9 +1,6 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
-import 'package:domain/report/report_library.dart';
 import 'package:flutter/material.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
-
 import '../bloc/information_bloc.dart';
 import 'information_screen_mobile.dart';
 import 'information_screen_web.dart';
@@ -42,10 +39,7 @@ class InformationScreen extends StatelessWidget {
                   }
                 } else if (state is LoadingState) {
                   return Scaffold(
-                    body: Center(
-                      child: LoadingAnimationWidget.staggeredDotsWave(
-                          color: AppTheme.mainThemeColor, size: 150),
-                    ),
+                    body: LoaderWidget().loader(),
                   );
                 } else if (state is ErrorState) {
                   return Scaffold(

@@ -1,9 +1,7 @@
 import 'package:api_client/api_client.dart';
 import 'package:core_ui/core_ui.dart';
-import 'package:domain/report/report_library.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:domain/domain.dart';
 
 class MainTrashMapMobile extends StatefulWidget {
   const MainTrashMapMobile({

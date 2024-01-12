@@ -31,9 +31,5 @@ class ImageCollage extends StatelessWidget {
 }
 
 List<Widget> getImageWidgets(List<Uint8List> imageByte) {
-  List<Image> imageList = [];
-  for (var element in imageByte) {
-    imageList.add(Image.memory(element));
-  }
-  return imageList;
+  return imageByte.map(Image.memory).toList();
 }

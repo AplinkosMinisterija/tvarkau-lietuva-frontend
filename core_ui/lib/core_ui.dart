@@ -27,7 +27,6 @@ export 'src/widgets/main_screen/footer/right_side_footer.dart';
 export 'src/widgets/main_screen/mobile/footer_mobile.dart';
 export 'src/widgets/main_screen/mobile/footer/footer_contacts_mobile_test.dart';
 
-
 //Main screen
 export 'src/widgets/main_screen/mobile/location_search_button.dart';
 export 'src/widgets/main_screen/background_widget.dart';
@@ -65,18 +64,5 @@ export 'src/widgets/main_screen/mobile/adding_screen/image_collage_mobile.dart';
 export 'src/widgets/main_screen/mobile/adding_screen/image_add_button_admin.dart';
 
 //Report table
-export 'src/widgets/report_table/report_entry_row.dart';
 export 'src/widgets/report_table/report_table.dart';
 export 'src/widgets/report_table/report_title_bar.dart';
-
-//ADMIN
-export 'src/widgets/admin/reports/table/admin_reports_table.dart';
-export 'src/widgets/admin/category_type_switcher.dart';
-export 'src/widgets/admin/dumps/admin_dumps_table.dart';
-export 'src/widgets/admin/admin_view_type_switcher.dart';
-export 'src/widgets/admin/reports/map/admin_trash_map.dart';
-export 'src/widgets/admin/deleted/table/deleted_reports_table.dart';
-export 'src/widgets/admin/admin_delete_button.dart';
-export 'src/widgets/admin/admin_deleted_edit_button.dart';
-
-

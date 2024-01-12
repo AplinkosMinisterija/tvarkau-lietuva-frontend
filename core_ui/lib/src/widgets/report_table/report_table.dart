@@ -1,7 +1,6 @@
 import 'package:api_client/api_client.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:domain/domain.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class ReportTable extends StatefulWidget {
@@ -48,9 +47,8 @@ class _ReportTableState extends State<ReportTable> {
                 .getCells()[0]
                 .value;
             widget.onInformationTap(reports
-                    .firstWhere((element) => element.refId == onTapRef)
-                    .refId ??
-                '1');
+                .firstWhere((element) => element.refId == onTapRef)
+                .refId);
           }
         },
         columns: <GridColumn>[
@@ -141,7 +139,8 @@ class ReportDataSource extends DataGridSource {
                   value:
                       'TLP-A${'0' * (8 - e.refId.length)}${e.refId.toUpperCase()}'),
               DataGridCell<String>(
-                  columnName: 'date', value: getFormattedDate(e.reportDate.toString())),
+                  columnName: 'date',
+                  value: getFormattedDate(e.reportDate.toString())),
               DataGridCell<String>(columnName: 'name', value: e.name),
               DataGridCell<String>(columnName: 'comment', value: e.comment),
               DataGridCell<String>(columnName: 'status', value: e.status),

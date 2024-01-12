@@ -1,9 +1,7 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:dashboard/src/adding_report/ui/web/confirmation_screen.dart';
-import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../../home/ui/data_security_information.dart';
 import '../bloc/adding_bloc.dart';
 import 'web/adding_screen_web.dart';
@@ -77,12 +75,7 @@ class AddingScreen extends StatelessWidget {
               } else if (state is LoadingState) {
                 return Dialog.fullscreen(
                   backgroundColor: const Color.fromRGBO(250, 242, 234, 1),
-                  child: Center(
-                    child: LoadingAnimationWidget.staggeredDotsWave(
-                      color: AppTheme.mainThemeColor,
-                      size: 150,
-                    ),
-                  ),
+                  child: LoaderWidget().loader(),
                 );
               } else if (state is ConfirmationState) {
                 if (width > 900) {

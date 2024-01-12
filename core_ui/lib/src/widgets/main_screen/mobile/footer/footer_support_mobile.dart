@@ -21,7 +21,7 @@ class FooterSupportMobile extends StatelessWidget {
           child: FittedBox(
             fit: BoxFit.fitWidth,
             child: Text(
-              '© 2023, Tvarkau Lietuvą',
+              '© 2024, Tvarkau Lietuvą',
               style: GoogleFonts.roboto(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,

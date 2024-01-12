@@ -2,7 +2,6 @@ import 'package:api_client/api_client.dart';
 import 'package:core/utils/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:core_ui/core_ui.dart';
-import 'package:domain/domain.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ReportsScreen extends StatefulWidget {
@@ -281,9 +280,8 @@ class _ReportsScreenState extends State<ReportsScreen> {
                               child: InkWell(
                                 onTap: () {
                                   LaunchUrl().launch(
-                                      'https://aad.lrv.lt/lt/asmens-duomenu-apsauga');
+                                      'https://aad.lrv.lt/lt/administracine-informacija/asmens-duomenu-apsauga/');
                                 },
-                                //widget.onDataSecurityTap,
                                 child: Text(
                                   'Departamento BDAR taisyklės',
                                   style: GoogleFonts.roboto(

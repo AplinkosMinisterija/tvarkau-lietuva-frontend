@@ -19,15 +19,3 @@ class ErrorState implements HomeState {
 
   ErrorState({required this.errorMessage});
 }
-
-class AddingState implements HomeState {
-  final List<ReportModel> trashReports;
-  final double width;
-  final double height;
-
-  AddingState({
-    required this.trashReports,
-    required this.width,
-    required this.height,
-  });
-}

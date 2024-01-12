@@ -1,12 +1,9 @@
-import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:dashboard/src/home/bloc/home_bloc.dart';
 import 'package:dashboard/src/home/ui/data_security_information.dart';
 import 'package:dashboard/src/home/ui/reports_screen.dart';
-import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -46,10 +43,7 @@ class HomeScreen extends StatelessWidget {
                     },
                   );
                 } else if (state is LoadingState) {
-                  return Center(
-                    child: LoadingAnimationWidget.staggeredDotsWave(
-                        color: AppTheme.mainThemeColor, size: 150),
-                  );
+                  return LoaderWidget().loader();
                 } else if (state is ErrorState) {
                   return ErrorReloadWidget(
                     onPressed: () {
