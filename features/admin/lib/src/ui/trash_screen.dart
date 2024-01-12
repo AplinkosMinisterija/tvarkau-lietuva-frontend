@@ -3,7 +3,6 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:dio/dio.dart' as dio;
 import '../bloc/trash/trash_bloc.dart';
 

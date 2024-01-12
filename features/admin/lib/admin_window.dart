@@ -1,4 +1,3 @@
-import 'package:admin/src/widgets/admin_table_deleted.dart';
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';

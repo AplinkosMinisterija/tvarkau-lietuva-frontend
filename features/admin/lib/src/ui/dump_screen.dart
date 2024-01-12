@@ -3,7 +3,6 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 import '../bloc/dump/dump_bloc.dart';
 import '../widgets/confirmation.dart';
 import 'dump_window.dart';

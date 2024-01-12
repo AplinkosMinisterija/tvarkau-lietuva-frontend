@@ -1,7 +1,6 @@
 import 'package:api_client/api_client.dart';
 import 'package:collection/collection.dart';
 import 'package:core/core.dart';
-import 'package:core/utils/date_formatter.dart';
 import 'package:flutter/material.dart';
 import '../common/custom_colors.dart';
 import '../common/custom_styles.dart';
