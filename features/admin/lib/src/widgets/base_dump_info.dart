@@ -12,11 +12,11 @@ class BaseTrashInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String latitude = trash.latitude.toString().length > 6
-        ? trash.latitude.toString().substring(0, 7)
+    String latitude = trash.latitude.toString().length > 7
+        ? trash.latitude.toString().substring(0, 8)
         : trash.latitude.toString();
-    String longitude = trash.longitude.toString().length > 6
-        ? trash.longitude.toString().substring(0, 7)
+    String longitude = trash.longitude.toString().length > 7
+        ? trash.longitude.toString().substring(0, 8)
         : trash.longitude.toString();
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

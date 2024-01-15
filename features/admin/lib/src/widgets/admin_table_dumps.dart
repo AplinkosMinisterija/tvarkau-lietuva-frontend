@@ -116,13 +116,13 @@ class ReportDataSourceAdmin extends DataGridSource {
                   columnName: 'info', value: e.moreInformation),
               DataGridCell<String>(
                   columnName: 'lat',
-                  value: e.latitude.toString().length > 6
-                      ? e.latitude.toString().substring(0, 7)
+                  value: e.latitude.toString().length > 7
+                      ? e.latitude.toString().substring(0, 8)
                       : e.latitude.toString()),
               DataGridCell<String>(
                   columnName: 'long',
-                  value: e.longitude.toString().length > 6
-                      ? e.longitude.toString().substring(0, 7)
+                  value: e.longitude.toString().length > 7
+                      ? e.longitude.toString().substring(0, 8)
                       : e.longitude.toString()),
               DataGridCell<String>(
                   columnName: 'visibility',
