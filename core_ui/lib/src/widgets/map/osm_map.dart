@@ -13,7 +13,7 @@ typedef MapTapCallback = void Function(LatLng position);
 class OSMMap extends StatefulWidget {
   final LatLng? initialCenter;
   final double? initialZoom;
-  final bool enableScrollWheel;
+  final bool disableScrollWheelZoom;
   final bool disableInteractiveMap;
   final List<Widget> layers;
   final MapTapCallback? onTap;
@@ -24,7 +24,7 @@ class OSMMap extends StatefulWidget {
     required this.layers,
     this.initialCenter,
     this.initialZoom,
-    this.enableScrollWheel = true,
+    this.disableScrollWheelZoom = false,
     this.disableInteractiveMap = false,
     this.onTap,
     this.onPositionChanged,
@@ -52,7 +52,6 @@ class _OSMMapState extends State<OSMMap> {
                 widget.initialCenter ?? GlobalConstants.lithuaniaCenterLatLng,
             interactionOptions: InteractionOptions(
               flags: _getInteractiveFlags(),
-              enableScrollWheel: widget.enableScrollWheel,
             ),
             minZoom: 6,
             maxZoom: 19,
@@ -98,6 +97,11 @@ class _OSMMapState extends State<OSMMap> {
       return InteractiveFlag.none;
     }
 
-    return InteractiveFlag.all ^ InteractiveFlag.rotate;
+    int flags = InteractiveFlag.all ^ InteractiveFlag.rotate;
+    if (widget.disableScrollWheelZoom) {
+      flags ^= InteractiveFlag.scrollWheelZoom;
+    }
+
+    return flags;
   }
 }
