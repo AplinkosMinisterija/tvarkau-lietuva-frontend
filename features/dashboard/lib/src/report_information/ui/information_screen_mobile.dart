@@ -1,4 +1,5 @@
 import 'package:api_client/api_client.dart';
+import 'package:core/core.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
@@ -66,8 +67,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
           color: Colors.black,
         ));
     span2 = TextSpan(
-        text: widget.report.comment != ' '
-            ? widget.report.comment: '',
+        text: widget.report.comment != ' ' ? widget.report.comment : '',
         style: GoogleFonts.roboto(
           fontSize: widget.width * 0.04444,
           fontWeight: FontWeight.w400,
@@ -212,39 +212,13 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                       child: ClipRRect(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(8)),
-                        child: Stack(
-                          children: [
-                            GoogleMap(
-                              mapType: _currentMapType,
-                              initialCameraPosition: _initialCameraPosition,
-                              markers: markers,
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(bottom: 110, right: 10),
-                              child: Align(
-                                  alignment: Alignment.bottomRight,
-                                  child: GoogleMapTypeButton(
-                                    height: 40,
-                                    width: 40,
-                                    onPressed: () {
-                                      showDialog<String>(
-                                          context: context,
-                                          builder: (BuildContext context) =>
-                                              MapTypeChangeDialog(
-                                                  width: widget.width,
-                                                  currentMapType:
-                                                      _currentMapType,
-                                                  onHover: (isHover) {},
-                                                  onChangeTap:
-                                                      (MapType mapType) {
-                                                    setState(() {
-                                                      _currentMapType = mapType;
-                                                    });
-                                                  }));
-                                    },
-                                  )),
-                            ),
+                        child: OSMMap(
+                          initialCenter: widget.report.latLng,
+                          initialZoom: 9,
+                          layers: [
+                            PublicReportLayer(
+                              report: widget.report,
+                            )
                           ],
                         ),
                       ),

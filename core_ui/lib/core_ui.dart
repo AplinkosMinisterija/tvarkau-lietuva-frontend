@@ -8,6 +8,15 @@ export 'src/widgets/app_error_dialog.dart';
 export 'src/widgets/app_loader.dart';
 export 'src/widgets/error_reload_widget.dart';
 
+// Map
+export 'src/widgets/map/osm_map.dart';
+export 'src/widgets/map/layers/clustered_reports_layer.dart';
+export 'src/widgets/map/layers/current_user_location_layer.dart';
+export 'src/widgets/map/layers/public_report_layer.dart';
+export 'src/widgets/map/layers/dumps_layer.dart';
+export 'src/widgets/map/layers/map_zoom_in_out_buttons_layer.dart';
+export 'src/widgets/map/layers/single_marker_layer.dart';
+
 //Adding screen
 export 'src/widgets/adding_screen/cancel_button.dart';
 export 'src/widgets/adding_screen/mark_button.dart';

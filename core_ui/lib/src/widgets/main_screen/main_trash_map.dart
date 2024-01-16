@@ -104,54 +104,14 @@ class _MainTrashMapState extends State<MainTrashMap> {
                 width: widget.width * 0.625,
                 child: ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(32)),
-                  child: Stack(
-                    children: [
-                      GoogleMap(
-                        mapType: _currentMapType,
-                        initialCameraPosition: _lithuaniaCameraPosition,
-                        markers: _trashMarkers,
-                        myLocationButtonEnabled: true,
-                        myLocationEnabled: true,
-                        onMapCreated: (GoogleMapController controller) async {
-                          _customTrashInfoWindowController.googleMapController =
-                              controller;
+                  child: OSMMap(
+                    layers: [
+                      ClusteredReportsLayer(
+                        reports: widget.trashReports,
+                        onWidgetTap: (report) {
+                          widget.onInformationTap(report.refId);
                         },
-                        onCameraMove: (position) {
-                          _customTrashInfoWindowController.onCameraMove!();
-                        },
-                        onTap: (position) {
-                          _customTrashInfoWindowController.hideInfoWindow!();
-                        },
-                      ),
-                      CustomInfoWindow(
-                        (top, left, width, height) => {},
-                        leftMargin: 200,
-                        controller: _customTrashInfoWindowController,
-                        isDump: widget.isShowDumps,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 110, right: 10),
-                        child: Align(
-                            alignment: Alignment.bottomRight,
-                            child: GoogleMapTypeButton(
-                              height: 40,
-                              width: 40,
-                              onPressed: () {
-                                showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        MapTypeChangeDialog(
-                                            width: widget.width / 2.4,
-                                            currentMapType: _currentMapType,
-                                            onHover: (isHover) {},
-                                            onChangeTap: (MapType mapType) {
-                                              setState(() {
-                                                _currentMapType = mapType;
-                                              });
-                                            }));
-                              },
-                            )),
-                      ),
+                      )
                     ],
                   ),
                 ),

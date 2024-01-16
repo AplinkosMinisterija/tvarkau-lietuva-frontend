@@ -26,66 +26,9 @@ class MainTrashMapMobile extends StatefulWidget {
 }
 
 class _MainTrashMapMobileState extends State<MainTrashMapMobile> {
-  final CustomInfoWindowController _customTrashInfoWindowController =
-      CustomInfoWindowController();
   BitmapDescriptor trashMarkerIcon = BitmapDescriptor.defaultMarker;
   bool isShowMarkers = false;
   bool isShowDumps = true;
-  Set<Marker> trashMarkers = {};
-  Set<Marker> _trashMarkers = {};
-  bool isMapDisabled = false;
-
-  Future<void> voidAddTrashMarkers() async {
-    int index = 0;
-    Set<Marker> tempMarkers = {};
-    for (var element in widget.trashReports) {
-      tempMarkers.add(
-        Marker(
-            markerId: MarkerId(
-              element.name.toString() + index.toString(),
-            ),
-            position: LatLng(
-              element.latitude.toDouble(),
-              element.longitude.toDouble(),
-            ),
-            icon: await BitmapDescriptor.fromAssetImage(
-                const ImageConfiguration(size: Size(25, 30)),
-                getTrashIconPath(element.status)),
-            onTap: () {
-              _customTrashInfoWindowController.addInfoWindow!(
-                InfoTrashWindowBox(
-                    title: element.name,
-                    imageUrls: element.imageUrls.toList(),
-                    status: element.status,
-                    date: element.reportDate.toString(),
-                    reportId: element.refId,
-                    onTap: () {
-                      widget.onInformationTap(element.refId);
-                    }),
-                LatLng(
-                  element.latitude.toDouble(),
-                  element.longitude.toDouble(),
-                ),
-              );
-            }),
-      );
-      index++;
-    }
-    setState(() {
-      _trashMarkers = tempMarkers;
-    });
-  }
-
-  late MapType _currentMapType;
-  final CameraPosition _lithuaniaCameraPosition =
-      const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 7.0);
-
-  @override
-  void initState() {
-    voidAddTrashMarkers();
-    _currentMapType = MapType.normal;
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,60 +61,14 @@ class _MainTrashMapMobileState extends State<MainTrashMapMobile> {
                   width: widget.width * 0.911,
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(8)),
-                    child: Stack(
-                      children: [
-                        GoogleMap(
-                          mapType: _currentMapType,
-                          initialCameraPosition: _lithuaniaCameraPosition,
-                          markers: _trashMarkers,
-                          onMapCreated: (GoogleMapController controller) async {
-                            _customTrashInfoWindowController
-                                .googleMapController = controller;
+                    child: OSMMap(
+                      layers: [
+                        ClusteredReportsLayer(
+                          reports: widget.trashReports,
+                          onWidgetTap: (report) {
+                            widget.onInformationTap(report.refId);
                           },
-                          onCameraMove: (position) {
-                            _customTrashInfoWindowController.onCameraMove!();
-                          },
-                          onTap: isMapDisabled
-                              ? (position) {}
-                              : (position) {
-                                  _customTrashInfoWindowController
-                                      .hideInfoWindow!();
-                                },
-                        ),
-                        CustomInfoWindow(
-                          (top, left, width, height) => {},
-                          leftMargin: 200,
-                          controller: _customTrashInfoWindowController,
-                          isDump: widget.isShowDumps,
-                        ),
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(bottom: 110, right: 10),
-                          child: Align(
-                              alignment: Alignment.bottomRight,
-                              child: GoogleMapTypeButton(
-                                height: 40,
-                                width: 40,
-                                onPressed: () {
-                                  showDialog<String>(
-                                      context: context,
-                                      builder: (BuildContext context) =>
-                                          MapTypeChangeDialog(
-                                              width: widget.width,
-                                              currentMapType: _currentMapType,
-                                              onHover: (isHover) {
-                                                setState(() {
-                                                  isMapDisabled = isHover;
-                                                });
-                                              },
-                                              onChangeTap: (MapType mapType) {
-                                                setState(() {
-                                                  _currentMapType = mapType;
-                                                });
-                                              }));
-                                },
-                              )),
-                        ),
+                        )
                       ],
                     ),
                   ),

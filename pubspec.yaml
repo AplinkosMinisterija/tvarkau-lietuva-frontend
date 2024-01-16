@@ -31,14 +31,16 @@ dependencies:
   go_router: ^10.1.2
   sentry_flutter: ^7.10.1
   openapi_generator_annotations: ^4.13.1
+  provider: ^6.1.1
 
 dependency_overrides:
+  http: ^1.0.0
   intl: ^0.18.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1
   openapi_generator: ^4.13.1
 
 flutter:

@@ -1,8 +1,8 @@
 import 'package:api_client/api_client.dart';
+import 'package:core/core.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -24,15 +24,10 @@ class InformationScreenWeb extends StatefulWidget {
 }
 
 class _InformationScreenWebState extends State<InformationScreenWeb> {
-  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
-  Set<Marker> markers = {};
   int textLinesCount = 0;
   int departmentAnswerTextLinesCount = 0;
 
   int imageLineCount = 0;
-  late MapType _currentMapType;
-  CameraPosition _initialCameraPosition =
-      const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 7.0);
 
   late Widget statusWidget;
   late Widget firstStageWidget;
@@ -55,10 +50,6 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      addCustomIcon();
-    });
-
     span = TextSpan(
         text: widget.report.name,
         style: GoogleFonts.roboto(
@@ -67,8 +58,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
           color: Colors.black,
         ));
     span2 = TextSpan(
-        text: widget.report.comment != ' '
-            ? widget.report.comment: '',
+        text: widget.report.comment != ' ' ? widget.report.comment : '',
         style: GoogleFonts.roboto(
           fontSize: widget.width * 0.04444,
           fontWeight: FontWeight.w400,
@@ -89,23 +79,6 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
     }
     strLength = 8 - widget.report.refId.length;
     str = '0' * strLength;
-
-    _initialCameraPosition = CameraPosition(
-        target: LatLng(widget.report.latitude, widget.report.longitude),
-        zoom: 9.0);
-    _currentMapType = MapType.normal;
-    markers.add(
-      Marker(
-        markerId: MarkerId(
-          '${widget.report.name}99899',
-        ),
-        position: LatLng(
-          widget.report.latitude,
-          widget.report.longitude,
-        ),
-        icon: markerIcon,
-      ),
-    );
     statusWidget = getStatusWidget(widget.report.status, widget.width);
     firstStageWidget = getFirstStageWidget();
     falseReportWidget = getFalseReportWidget();
@@ -206,40 +179,13 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                         child: ClipRRect(
                           borderRadius:
                               const BorderRadius.all(Radius.circular(8)),
-                          child: Stack(
-                            children: [
-                              GoogleMap(
-                                mapType: _currentMapType,
-                                initialCameraPosition: _initialCameraPosition,
-                                markers: markers,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    bottom: 110, right: 10),
-                                child: Align(
-                                    alignment: Alignment.bottomRight,
-                                    child: GoogleMapTypeButton(
-                                      height: 40,
-                                      width: 40,
-                                      onPressed: () {
-                                        showDialog<String>(
-                                            context: context,
-                                            builder: (BuildContext context) =>
-                                                MapTypeChangeDialog(
-                                                    width: widget.width,
-                                                    currentMapType:
-                                                        _currentMapType,
-                                                    onHover: (isHover) {},
-                                                    onChangeTap:
-                                                        (MapType mapType) {
-                                                      setState(() {
-                                                        _currentMapType =
-                                                            mapType;
-                                                      });
-                                                    }));
-                                      },
-                                    )),
-                              ),
+                          child: OSMMap(
+                            initialCenter: widget.report.latLng,
+                            initialZoom: 9,
+                            layers: [
+                              PublicReportLayer(
+                                report: widget.report,
+                              )
                             ],
                           ),
                         ),
@@ -791,13 +737,12 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
     String day = '';
     String hour = '';
     if (recordObject != null) {
-      DateTime formattedDate =
-          recordObject.date.add(const Duration(hours: 3));
+      DateTime formattedDate = recordObject.date.add(const Duration(hours: 3));
       day = formattedDate.toString().substring(0, 10);
       hour = formattedDate.toString().substring(11, 16);
     } else {
-      DateTime formattedDate = widget.report.reportDate
-          .add(const Duration(hours: 3));
+      DateTime formattedDate =
+          widget.report.reportDate.add(const Duration(hours: 3));
       day = formattedDate.toString().substring(0, 10);
       hour = formattedDate.toString().substring(11, 16);
     }
@@ -937,16 +882,6 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
       fontWeight: FontWeight.w400,
       color: textColor,
     );
-  }
-
-  void addCustomIcon() {
-    BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(), 'assets/svg/pin_icon.svg')
-        .then((icon) {
-      setState(() {
-        markerIcon = icon;
-      });
-    });
   }
 
   String getFormattedImageUrl(String unformattedImageUrl) {
