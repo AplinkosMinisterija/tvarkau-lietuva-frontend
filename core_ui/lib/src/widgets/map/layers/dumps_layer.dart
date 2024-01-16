@@ -82,6 +82,7 @@ class _DumpsLayerState extends State<DumpsLayer> {
       ),
       width: 50,
       height: 50,
+      alignment: Alignment.bottomCenter,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: SvgPicture.asset(

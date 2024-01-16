@@ -30,6 +30,7 @@ class _PublicReportLayerState extends State<PublicReportLayer> {
       point: LatLng(report.latitude, report.longitude),
       width: 25,
       height: 30,
+      alignment: Alignment.bottomCenter,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: Image.asset(
