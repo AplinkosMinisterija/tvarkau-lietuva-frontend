@@ -6,9 +6,22 @@ import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'layers/map_zoom_in_out_buttons_layer.dart';
+import 'layers/map_buttons_layer.dart';
 
 typedef MapTapCallback = void Function(LatLng position);
+
+enum OSMMapType { osm, satellite }
+
+class OSMMapTypeProvider extends ChangeNotifier {
+  OSMMapType _mapType = OSMMapType.osm;
+
+  OSMMapType get mapType => _mapType;
+
+  set mapType(OSMMapType mapType) {
+    _mapType = mapType;
+    notifyListeners();
+  }
+}
 
 class OSMMap extends StatefulWidget {
   final LatLng? initialCenter;
@@ -40,8 +53,12 @@ class _OSMMapState extends State<OSMMap> {
 
   @override
   Widget build(BuildContext context) {
-    return Provider(
-      create: (_) => popupController,
+    return MultiProvider(
+      providers: [
+        Provider<PopupController>(create: (_) => popupController),
+        ChangeNotifierProvider<OSMMapTypeProvider>(
+            create: (_) => OSMMapTypeProvider()),
+      ],
       child: PopupScope(
         popupController: popupController,
         child: FlutterMap(
@@ -66,11 +83,17 @@ class _OSMMapState extends State<OSMMap> {
             },
           ),
           children: [
-            TileLayer(
-              urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+            Consumer<OSMMapTypeProvider>(
+              builder: (context, config, _) {
+                return _TileLayer(type: config.mapType);
+              },
             ),
             ...widget.layers,
-            const OSMMapZoomButtonsLayer(),
+            Consumer<OSMMapTypeProvider>(
+              builder: (context, config, _) {
+                return OSMMapButtonsLayer(osmMapType: config.mapType);
+              },
+            ),
             RichAttributionWidget(
               animationConfig: const ScaleRAWA(),
               showFlutterMapAttribution: false,
@@ -103,5 +126,31 @@ class _OSMMapState extends State<OSMMap> {
     }
 
     return flags;
+  }
+}
+
+class _TileLayer extends StatelessWidget {
+  final OSMMapType type;
+
+  const _TileLayer({required this.type});
+
+  @override
+  Widget build(BuildContext context) {
+    return switch (type) {
+      OSMMapType.osm => _buildOsmTileLayer(),
+      OSMMapType.satellite => _buildSatelliteLayer(),
+    };
+  }
+
+  Widget _buildOsmTileLayer() {
+    return TileLayer(
+      urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    );
+  }
+
+  Widget _buildSatelliteLayer() {
+    return TileLayer(
+      urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+    );
   }
 }
