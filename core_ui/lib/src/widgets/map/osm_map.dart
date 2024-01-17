@@ -133,16 +133,16 @@ class _OSMMapState extends State<OSMMap> {
               tileSize: 512,
             ),
             ...widget.layers,
-            _ButtonsLayer(
-              osmMapType: mapType,
-              onChangeMapType: _changeMapType,
-            ),
-            RichAttributionWidget(
-              animationConfig: const ScaleRAWA(),
-              showFlutterMapAttribution: false,
-              alignment: AttributionAlignment.bottomLeft,
-              attributions: [_getAttribution()],
-            ),
+            // _ButtonsLayer(
+            //   osmMapType: mapType,
+            //   onChangeMapType: _changeMapType,
+            // ),
+            // RichAttributionWidget(
+            //   animationConfig: const ScaleRAWA(),
+            //   showFlutterMapAttribution: false,
+            //   alignment: AttributionAlignment.bottomLeft,
+            //   attributions: [_getAttribution()],
+            // ),
           ],
         ),
       ),
