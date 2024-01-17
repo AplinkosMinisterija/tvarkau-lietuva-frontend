@@ -14,7 +14,6 @@ export 'src/widgets/map/layers/clustered_reports_layer.dart';
 export 'src/widgets/map/layers/current_user_location_layer.dart';
 export 'src/widgets/map/layers/public_report_layer.dart';
 export 'src/widgets/map/layers/dumps_layer.dart';
-export 'src/widgets/map/layers/map_buttons_layer.dart';
 export 'src/widgets/map/layers/single_marker_layer.dart';
 
 //Adding screen
