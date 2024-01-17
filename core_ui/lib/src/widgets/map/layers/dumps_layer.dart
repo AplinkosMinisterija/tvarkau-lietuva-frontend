@@ -25,19 +25,13 @@ class _DumpsLayerState extends State<DumpsLayer> {
 
   @override
   Widget build(BuildContext context) {
-    return MarkerClusterLayerWidget(
-      options: MarkerClusterLayerOptions(
-        maxClusterRadius: 60,
-        size: const Size(40, 40),
-        alignment: Alignment.center,
-        padding: const EdgeInsets.all(50),
-        forceIntegerZoomLevel: true,
-        disableClusteringAtZoom: 12,
+    return PopupMarkerLayer(
+      options: PopupMarkerLayerOptions(
         markers: _markers,
-        popupOptions: PopupOptions(
-          popupSnap: PopupSnap.markerTop,
-          popupController: context.read<PopupController>(),
-          popupBuilder: (context, marker) {
+        popupController: context.read<PopupController>(),
+        popupDisplayOptions: PopupDisplayOptions(
+          snap: PopupSnap.markerTop,
+          builder: (context, marker) {
             final dump = (marker.key as ObjectKey).value as DumpDto;
 
             return InfoDumpWindowBox(
@@ -50,25 +44,6 @@ class _DumpsLayerState extends State<DumpsLayer> {
             );
           },
         ),
-        builder: (context, markers) {
-          return MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.teal,
-              ),
-              child: Center(
-                child: Text(
-                  markers.length.toString(),
-                  style: const TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          );
-        },
       ),
     );
   }

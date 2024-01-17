@@ -26,6 +26,34 @@ class _ClusteredReportsLayerState extends State<ClusteredReportsLayer> {
 
   @override
   Widget build(BuildContext context) {
+    return PopupMarkerLayer(
+      options: PopupMarkerLayerOptions(
+        markers: _markers,
+        popupController: context.read<PopupController>(),
+        popupDisplayOptions: PopupDisplayOptions(
+          snap: PopupSnap.markerTop,
+          builder: (context, marker) {
+            final report = (marker.key as ObjectKey).value as PublicReportDto;
+            final onWidgetTap = widget.onWidgetTap;
+
+            return InfoTrashWindowBox(
+              title: report.name,
+              imageUrls: report.imageUrls.toList(),
+              status: report.status,
+              // TODO remove toString
+              date: report.reportDate.toString(),
+              reportId: report.refId,
+              onTap: () {
+                if (onWidgetTap != null) {
+                  onWidgetTap(report);
+                }
+              },
+            );
+          },
+        ),
+      ),
+    );
+
     return MarkerClusterLayerWidget(
       options: MarkerClusterLayerOptions(
         maxClusterRadius: 60,
