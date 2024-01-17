@@ -1,5 +1,5 @@
+import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'map_type_switcher_button.dart';
 
@@ -12,8 +12,8 @@ class MapTypeSwitcher extends StatefulWidget {
   });
 
   final double width;
-  final ValueChanged<MapType> onMapTypeChange;
-  final MapType currentMapType;
+  final ValueChanged<OSMMapType> onMapTypeChange;
+  final OSMMapType currentMapType;
 
   @override
   State<MapTypeSwitcher> createState() => _MapTypeSwitcherState();
@@ -29,10 +29,10 @@ class _MapTypeSwitcherState extends State<MapTypeSwitcher> {
         MapTypeSwitcherButton(
           width: widget.width,
           title: 'Įprastas',
-          isActive: widget.currentMapType == MapType.normal,
+          isActive: widget.currentMapType == OSMMapType.osm,
           onTap: () {
             setState(() {
-              widget.onMapTypeChange(MapType.normal);
+              widget.onMapTypeChange(OSMMapType.osm);
             });
           },
         ),
@@ -40,21 +40,10 @@ class _MapTypeSwitcherState extends State<MapTypeSwitcher> {
         MapTypeSwitcherButton(
           width: widget.width,
           title: 'Palydovinis',
-          isActive: widget.currentMapType == MapType.satellite,
+          isActive: widget.currentMapType == OSMMapType.satellite,
           onTap: () {
             setState(() {
-              widget.onMapTypeChange(MapType.satellite);
-            });
-          },
-        ),
-        SizedBox(width: widget.width * 0.0083),
-        MapTypeSwitcherButton(
-          width: widget.width,
-          title: 'Hibridinis',
-          isActive: widget.currentMapType == MapType.hybrid,
-          onTap: () {
-            setState(() {
-              widget.onMapTypeChange(MapType.hybrid);
+              widget.onMapTypeChange(OSMMapType.satellite);
             });
           },
         ),

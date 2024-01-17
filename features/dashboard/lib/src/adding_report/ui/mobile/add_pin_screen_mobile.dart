@@ -246,24 +246,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                   child: GoogleMapTypeButton(
                     height: 40,
                     width: 40,
-                    onPressed: () {
-                      showDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) =>
-                              MapTypeChangeDialog(
-                                  width: widget.width,
-                                  currentMapType: currentMapType,
-                                  onHover: (isHover) {
-                                    setState(() {
-                                      isMapDisabled = isHover;
-                                    });
-                                  },
-                                  onChangeTap: (MapType mapType) {
-                                    setState(() {
-                                      currentMapType = mapType;
-                                    });
-                                  }));
-                    },
+                    onPressed: () {},
                   ),
                 ),
               )

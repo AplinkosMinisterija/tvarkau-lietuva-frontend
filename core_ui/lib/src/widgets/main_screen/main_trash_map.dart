@@ -105,6 +105,7 @@ class _MainTrashMapState extends State<MainTrashMap> {
                 child: ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(32)),
                   child: OSMMap(
+                    initialZoom: 2,
                     layers: [
                       ClusteredReportsLayer(
                         reports: widget.trashReports,

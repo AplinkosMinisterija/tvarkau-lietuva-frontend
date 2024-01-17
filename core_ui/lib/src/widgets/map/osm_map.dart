@@ -1,4 +1,5 @@
 import 'package:core/constants/global_constants.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_cancellable_tile_provider/flutter_map_cancellable_tile_provider.dart';
@@ -38,7 +39,7 @@ class OSMMap extends StatefulWidget {
 }
 
 class _OSMMapState extends State<OSMMap> {
-  static const _defaultInitialZoom = 7.0;
+  static const double _defaultInitialZoom = 7.0;
   final popupController = PopupController();
   var mapType = OSMMapType.osm;
 
@@ -133,16 +134,16 @@ class _OSMMapState extends State<OSMMap> {
               tileSize: 512,
             ),
             ...widget.layers,
-            // _ButtonsLayer(
-            //   osmMapType: mapType,
-            //   onChangeMapType: _changeMapType,
-            // ),
-            // RichAttributionWidget(
-            //   animationConfig: const ScaleRAWA(),
-            //   showFlutterMapAttribution: false,
-            //   alignment: AttributionAlignment.bottomLeft,
-            //   attributions: [_getAttribution()],
-            // ),
+            _ButtonsLayer(
+              osmMapType: mapType,
+              onChangeMapType: _changeMapType,
+            ),
+            RichAttributionWidget(
+              animationConfig: const ScaleRAWA(),
+              showFlutterMapAttribution: false,
+              alignment: AttributionAlignment.bottomLeft,
+              attributions: [_getAttribution()],
+            ),
           ],
         ),
       ),
@@ -231,19 +232,22 @@ class _ButtonsLayer extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Material(
-              color: Colors.white,
-              child: IconButton(
-                onPressed: () => _onMapTypeChangeTap(context),
-                icon: const Icon(Icons.map),
-                selectedIcon: const Icon(Icons.satellite),
-                isSelected: osmMapType == OSMMapType.osm,
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.9),
+              ),
+              child: ToggleButtons(
+                onPressed: (_) => _onChangeLayerTap(context),
+                isSelected: const [false],
+                children: const [
+                  Icon(Icons.layers),
+                ],
               ),
             ),
+            const SizedBox(height: 8),
             Container(
-              padding: EdgeInsets.zero,
-              decoration: const BoxDecoration(
-                color: Colors.white70,
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.9),
               ),
               child: ToggleButtons(
                 direction: Axis.vertical,
@@ -267,11 +271,10 @@ class _ButtonsLayer extends StatelessWidget {
                     controller.move(paddedMapCamera.center, zoom);
                   }
                 },
-                color: Colors.black,
                 isSelected: const [false, false],
                 children: const [
-                  Icon(Icons.zoom_in),
-                  Icon(Icons.zoom_out),
+                  Icon(Icons.add),
+                  Icon(Icons.remove),
                 ],
               ),
             ),
@@ -281,8 +284,14 @@ class _ButtonsLayer extends StatelessWidget {
     );
   }
 
-  void _onMapTypeChangeTap(BuildContext context) => switch (osmMapType) {
-        OSMMapType.osm => onChangeMapType(OSMMapType.satellite),
-        OSMMapType.satellite => onChangeMapType(OSMMapType.osm),
-      };
+  Future<String?> _onChangeLayerTap(BuildContext context) {
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => MapTypeChangeDialog(
+        currentMapType: osmMapType,
+        onHover: (isHover) {},
+        onChangeTap: onChangeMapType,
+      ),
+    );
+  }
 }
