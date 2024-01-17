@@ -23,6 +23,7 @@ import 'package:api_client/src/model/history_edits_dto.dart';
 import 'package:api_client/src/model/log_in_dto.dart';
 import 'package:api_client/src/model/login_request_dto.dart';
 import 'package:api_client/src/model/public_report_dto.dart';
+import 'package:api_client/src/model/report_statistics_dto.dart';
 import 'package:api_client/src/model/status_records_dto.dart';
 import 'package:api_client/src/model/update_dump_dto.dart';
 
@@ -38,6 +39,7 @@ part 'serializers.g.dart';
   LogInDto,
   LoginRequestDto,
   PublicReportDto,
+  ReportStatisticsDto,
   StatusRecordsDto,
   UpdateDumpDto,
 ])

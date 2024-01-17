@@ -77,6 +77,11 @@ class ApiProvider {
     return response.data!.toList(); //TODO: add error handling
   }
 
+  Future<ReportStatisticsDto> getReportStatistics() async {
+    final response = await reportsApi.reportControllerGetReportStatistics();
+    return response.data!;
+  }
+
   Future<List<FullDumpDto>> getAllDumpReports() async {
     final response = await adminApi.adminControllerGetAllDumps();
     return response.data!.toList();

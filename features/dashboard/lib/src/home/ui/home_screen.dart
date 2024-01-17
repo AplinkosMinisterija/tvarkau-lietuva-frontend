@@ -20,10 +20,10 @@ class HomeScreen extends StatelessWidget {
             return BlocBuilder<HomeBloc, HomeState>(
               builder: (BuildContext context, HomeState state) {
                 if (state is ContentState) {
-                  final dumpReports = state.dumpReports;
                   return ReportsScreen(
                     trashReports: state.trashReports,
-                    dumpReports: dumpReports,
+                    dumpReports: state.dumpReports,
+                    reportStatistics: state.reportStatistics,
                     onAddTap: (double width, double height) {
                       context.goNamed('newReport');
                     },

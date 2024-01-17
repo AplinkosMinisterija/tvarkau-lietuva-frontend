@@ -178,6 +178,18 @@ paths:
                 items:
                   $ref: '#/components/schemas/PublicReportDto'
       tags: *ref_2
+  /reports/statistics:
+    get:
+      operationId: ReportController_getReportStatistics
+      parameters: []
+      responses:
+        '200':
+          description: Report statistics have been successfully fetched
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportStatisticsDto'
+      tags: *ref_2
   /reports/{refId}:
     get:
       operationId: ReportController_getReportById
@@ -570,6 +582,30 @@ components:
         - officerImageUrls
         - imageUrls
         - statusRecords
+    ReportStatisticsDto:
+      type: object
+      properties:
+        totalSentReports:
+          type: number
+          format: integer
+        totalInInvestigationReports:
+          type: number
+          format: integer
+        totalInvestigatedReports:
+          type: number
+          format: integer
+        totalCleanedReports:
+          type: number
+          format: integer
+        totalFalseReports:
+          type: number
+          format: integer
+      required:
+        - totalSentReports
+        - totalInInvestigationReports
+        - totalInvestigatedReports
+        - totalCleanedReports
+        - totalFalseReports
     LoginRequestDto:
       type: object
       properties:

@@ -8,6 +8,7 @@ class ReportsScreen extends StatefulWidget {
   const ReportsScreen({
     required this.trashReports,
     required this.dumpReports,
+    required this.reportStatistics,
     required this.onAddTap,
     required this.onInformationTap,
     required this.onDataSecurityTap,
@@ -16,6 +17,7 @@ class ReportsScreen extends StatefulWidget {
 
   final List<PublicReportDto> trashReports;
   final List<DumpDto> dumpReports;
+  final ReportStatisticsDto reportStatistics;
   final Function(double, double) onAddTap;
   final Function(String) onInformationTap;
   final VoidCallback onDataSecurityTap;
@@ -127,13 +129,16 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                     });
                                   },
                                   onInformationTap: (String refId) {
-                                    widget.onInformationTap(
-                                      refId
-                                    );
+                                    widget.onInformationTap(refId);
                                   },
                                 ),
                           SizedBox(
                             height: constraints.maxWidth * 0.0135,
+                          ),
+                          ReportStatistics(
+                            width: constraints.maxWidth,
+                            reportStatistics: widget.reportStatistics,
+                            isMobile: false,
                           ),
                           SizedBox(
                             height: constraints.maxWidth * 0.033,
@@ -144,8 +149,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                   width: constraints.maxWidth,
                                   reports: widget.trashReports,
                                   onInformationTap: (refId) {
-                                    widget.onInformationTap(
-                                        refId);
+                                    widget.onInformationTap(refId);
                                   },
                                 ),
                           const Divider(
@@ -195,9 +199,11 @@ class _ReportsScreenState extends State<ReportsScreen> {
                           Align(
                             alignment: Alignment.topLeft,
                             child: DepartmentLogoMobile(
-                                width: constraints.maxWidth,onTap: (){
-                              LaunchUrl().launch('https://aad.lrv.lt/');
-                            },),
+                              width: constraints.maxWidth,
+                              onTap: () {
+                                LaunchUrl().launch('https://aad.lrv.lt/');
+                              },
+                            ),
                           ),
                           SizedBox(height: constraints.maxWidth * 0.0889),
                           TitleWidgetMobile(width: constraints.maxWidth),
@@ -261,6 +267,11 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                     );
                                   },
                                 ),
+                          ReportStatistics(
+                            width: constraints.maxWidth,
+                            reportStatistics: widget.reportStatistics,
+                            isMobile: true,
+                          ),
                           const Divider(
                             height: 1,
                             color: Color.fromRGBO(10, 51, 40, 0.1),

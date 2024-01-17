@@ -16,6 +16,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(LogInDto.serializer)
       ..add(LoginRequestDto.serializer)
       ..add(PublicReportDto.serializer)
+      ..add(ReportStatisticsDto.serializer)
       ..add(StatusRecordsDto.serializer)
       ..add(UpdateDumpDto.serializer)
       ..addBuilderFactory(

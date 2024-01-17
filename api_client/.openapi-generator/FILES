@@ -13,6 +13,7 @@ doc/HistoryEditsDto.md
 doc/LogInDto.md
 doc/LoginRequestDto.md
 doc/PublicReportDto.md
+doc/ReportStatisticsDto.md
 doc/ReportsApi.md
 doc/StatusRecordsDto.md
 doc/UpdateDumpDto.md
@@ -39,6 +40,7 @@ lib/src/model/history_edits_dto.dart
 lib/src/model/log_in_dto.dart
 lib/src/model/login_request_dto.dart
 lib/src/model/public_report_dto.dart
+lib/src/model/report_statistics_dto.dart
 lib/src/model/status_records_dto.dart
 lib/src/model/update_dump_dto.dart
 lib/src/serializers.dart

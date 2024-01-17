@@ -17,17 +17,6 @@ flutter clean && flutter clean cache && flutter pub get
 cd ..
 printf '\n\n'
 
-printf "data pub get\n"
-cd data || exit
-flutter clean && flutter clean cache && flutter pub get
-cd ..
-printf '\n\n'
-
-printf "data generate\n"
-cd data || exit
-dart run build_runner build --delete-conflicting-outputs
-cd ..
-printf '\n\n'
 
 printf "dashboard pub get\n"
 cd features/dashboard || exit
