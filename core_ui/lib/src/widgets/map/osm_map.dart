@@ -49,7 +49,7 @@ class _OSMMapState extends State<OSMMap> {
   );
 
   late final espg3346OsmCSR = Proj4Crs.fromFactory(
-    code: 'EPSG:3346',
+    code: 'EPSG:3346:osm',
     proj4Projection: espg3346,
     bounds: Bounds<double>(
       const math.Point<double>(-3868431.3448, 3787209.7969000004),
@@ -76,7 +76,7 @@ class _OSMMapState extends State<OSMMap> {
     ],
   );
   late final espg3346HybridCSR = Proj4Crs.fromFactory(
-    code: 'EPSG:3346',
+    code: 'EPSG:3346:hybrid',
     proj4Projection: espg3346,
     bounds: Bounds<double>(
       const math.Point<double>(236725.44661756046, 5930813.423926848),
