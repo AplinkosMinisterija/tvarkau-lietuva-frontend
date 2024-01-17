@@ -236,12 +236,26 @@ class _ButtonsLayer extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.9),
               ),
-              child: ToggleButtons(
-                onPressed: (_) => _onChangeLayerTap(context),
-                isSelected: const [false],
-                children: const [
-                  Icon(Icons.layers),
-                ],
+              child: Tooltip(
+                message: osmMapType == OSMMapType.osm
+                    ? 'Palydovinis žemėlapis'
+                    : 'Topografinis žemėlapis',
+                child: ToggleButtons(
+                  onPressed: (_) {
+                    final newType = osmMapType == OSMMapType.osm
+                        ? OSMMapType.satellite
+                        : OSMMapType.osm;
+
+                    onChangeMapType(newType);
+                  },
+                  isSelected: const [false],
+                  children: [
+                    if (osmMapType == OSMMapType.osm)
+                      const Icon(Icons.satellite),
+                    if (osmMapType == OSMMapType.satellite)
+                      const Icon(Icons.map),
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 8),
