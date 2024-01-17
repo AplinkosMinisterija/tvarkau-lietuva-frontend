@@ -2,7 +2,6 @@ import 'package:api_client/api_client.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:core_ui/core_ui.dart';
 import 'dart:typed_data';
@@ -10,6 +9,8 @@ import 'package:http_parser/http_parser.dart';
 import 'package:core/core.dart';
 import 'add_pin_screen_mobile.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:flutter_map/flutter_map.dart';
 
 class AddingScreenMobile extends StatefulWidget {
   const AddingScreenMobile({
@@ -61,48 +62,16 @@ class _AddingScreenMobileState extends State<AddingScreenMobile> {
   }
 
   bool isTermsAccepted = false;
-  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
   final _formKey = GlobalKey<FormState>();
   String currentTextValue = '';
   String currentEmailValue = '';
-  Set<Marker> markers = {};
-  List<Marker> newMarkers = [];
-  Set<Marker> newMarker = {};
-  double selectedLat = 0;
-  double selectedLong = 0;
+  LatLng? _selectedLocation;
   List<DropdownMenuItem<String>> dropDownItems = [];
   late String currentItem;
-
-  void addCustomIcon() {
-    BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(), 'assets/svg/pin_icon.svg')
-        .then((icon) {
-      setState(() {
-        markerIcon = icon;
-      });
-    });
-  }
+  final mapController = MapController();
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      addCustomIcon();
-    });
-    int index = 0;
-    for (var element in widget.reports) {
-      markers.add(
-        Marker(
-          markerId: MarkerId(
-            element.name + index.toString(),
-          ),
-          position: LatLng(
-            element.latitude.toDouble(),
-            element.longitude.toDouble(),
-          ),
-        ),
-      );
-      index++;
-    }
     currentItem = 'Šiukšlinimas gamtoje';
     dropDownItems.add(DropdownMenuItem(
       value: 'Šiukšlinimas gamtoje',
@@ -170,38 +139,11 @@ class _AddingScreenMobileState extends State<AddingScreenMobile> {
                         children: [
                           AddingMapRedirectWindow(
                             width: widget.width,
-                            marker: newMarker,
+                            location: _selectedLocation,
+                            mapController: mapController,
                           ),
                           InkWell(
-                            onTap: () {
-                              setState(() {
-                                if (newMarker.isNotEmpty) {
-                                  newMarker.removeWhere((element) =>
-                                      element.markerId ==
-                                      const MarkerId('99899'));
-                                  markers.removeWhere((element) =>
-                                      element.markerId ==
-                                      const MarkerId('99899'));
-                                }
-                              });
-
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AddPinScreenMobile(
-                                          width: widget.width,
-                                          markers: markers,
-                                          onTap: (lat, long, marker) {
-                                            setState(() {
-                                              newMarker.clear();
-                                              selectedLat = lat;
-                                              selectedLong = long;
-                                              newMarker.add(marker);
-                                            });
-                                          },
-                                        )),
-                              );
-                            },
+                            onTap: _selectLocation,
                             onHover: (isHover) {},
                             child: Align(
                               alignment: Alignment.bottomCenter,
@@ -536,17 +478,17 @@ class _AddingScreenMobileState extends State<AddingScreenMobile> {
                         isActive: true,
                         width: widget.width,
                         onTap: () async {
+                          final selectedLocation = _selectedLocation;
                           if (_formKey.currentState!.validate() &&
-                              selectedLat != 0 &&
-                              selectedLong != 0 &&
+                              selectedLocation != null &&
                               isTermsAccepted &&
                               multipartList.isNotEmpty) {
                             if (multipartList.length >= 2) {
                               widget.onAddTap(
                                 currentEmailValue,
                                 currentTextValue,
-                                selectedLat,
-                                selectedLong,
+                                selectedLocation.latitude,
+                                selectedLocation.longitude,
                                 multipartList,
                               );
                             }
@@ -578,5 +520,24 @@ class _AddingScreenMobileState extends State<AddingScreenMobile> {
         ),
       ),
     );
+  }
+
+  Future<void> _selectLocation() async {
+    final selectedLocation = await Navigator.push<LatLng?>(
+      context,
+      MaterialPageRoute(builder: (context) {
+        return AddPinScreenMobile(
+          width: widget.width,
+          reports: widget.reports,
+        );
+      }),
+    );
+
+    if (selectedLocation != null) {
+      setState(() {
+        mapController.move(selectedLocation, 10);
+        _selectedLocation = selectedLocation;
+      });
+    }
   }
 }

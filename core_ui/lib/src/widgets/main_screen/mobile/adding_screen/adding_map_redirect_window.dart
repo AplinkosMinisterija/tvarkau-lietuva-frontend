@@ -1,85 +1,45 @@
+import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_map/src/map/controller/map_controller.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:latlong2/latlong.dart';
 
-class AddingMapRedirectWindow extends StatefulWidget {
+class AddingMapRedirectWindow extends StatelessWidget {
   const AddingMapRedirectWindow({
     super.key,
     required this.width,
-    required this.marker,
+    required this.location,
+    required this.mapController,
   });
 
+  final MapController mapController;
   final double width;
-  final Set<Marker> marker;
-
-  @override
-  State<AddingMapRedirectWindow> createState() =>
-      _AddingMapRedirectWindowState();
-}
-
-class _AddingMapRedirectWindowState extends State<AddingMapRedirectWindow> {
-  Set<Marker> marker = {};
-  late CameraPosition viewPosition;
-  late GoogleMapController _googleMapController;
-
-  @override
-  void initState() {
-    marker.clear();
-    super.initState();
-  }
-
-  void animate() {
-    _googleMapController.animateCamera(
-      CameraUpdate.newLatLngZoom(
-          LatLng(
-            viewPosition.target.latitude,
-            viewPosition.target.longitude,
-          ),
-          viewPosition.zoom),
-    );
-  }
+  final LatLng? location;
 
   @override
   Widget build(BuildContext context) {
-    if (widget.marker.isNotEmpty) {
-      marker.add(widget.marker.first);
-      viewPosition = CameraPosition(
-          target: LatLng(
-            marker.first.position.latitude,
-            marker.first.position.longitude,
-          ),
-          zoom: 9);
-      animate();
-    } else {
-      viewPosition =
-          const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 6.2);
-      if (marker.isNotEmpty) {
-        animate();
-      }
-      marker.clear();
-    }
     return SizedBox(
-      height: widget.width * 0.444,
-      width: widget.width * 0.911,
+      height: width * 0.444,
+      width: width * 0.911,
       child: Stack(
         children: [
           ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(8)),
-            child: GoogleMap(
-              initialCameraPosition: viewPosition,
-              markers: marker.isNotEmpty ? marker : {},
-              onMapCreated: (GoogleMapController controller) {
-                _googleMapController = controller;
-                _googleMapController.animateCamera(
-                  CameraUpdate.newLatLngZoom(
-                      LatLng(viewPosition.target.latitude,
-                          viewPosition.target.longitude),
-                      viewPosition.zoom),
-                );
-              },
-              mapToolbarEnabled: false,
-              scrollGesturesEnabled: false,
-              zoomControlsEnabled: false,
-              zoomGesturesEnabled: false,
+            child: OSMMap(
+              mapController: mapController,
+              initialCenter: location,
+              initialZoom: location != null ? 8 : null,
+              disableInteractiveMap: true,
+              layers: [
+                if (location != null)
+                  SingleMarkerLayer(
+                    point: location!,
+                    child: SvgPicture.asset(
+                      'assets/svg/pin_icon.svg',
+                      excludeFromSemantics: true,
+                    ),
+                  )
+              ],
             ),
           ),
         ],

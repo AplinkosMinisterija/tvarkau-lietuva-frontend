@@ -38,7 +38,6 @@ export 'src/widgets/main_screen/mobile/footer/footer_contacts_mobile_test.dart';
 //Main screen
 export 'src/widgets/main_screen/mobile/location_search_button.dart';
 export 'src/widgets/main_screen/background_widget.dart';
-export 'src/widgets/main_screen/information_window/custom_info_window.dart';
 export 'src/widgets/main_screen/department_logo.dart';
 export 'src/widgets/main_screen/information_window/info_trash_window_box.dart';
 export 'src/widgets/main_screen/information_window/info_dump_window_box.dart';

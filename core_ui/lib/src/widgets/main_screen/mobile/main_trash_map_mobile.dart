@@ -1,7 +1,6 @@
 import 'package:api_client/api_client.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MainTrashMapMobile extends StatefulWidget {
   const MainTrashMapMobile({
@@ -26,7 +25,6 @@ class MainTrashMapMobile extends StatefulWidget {
 }
 
 class _MainTrashMapMobileState extends State<MainTrashMapMobile> {
-  BitmapDescriptor trashMarkerIcon = BitmapDescriptor.defaultMarker;
   bool isShowMarkers = false;
   bool isShowDumps = true;
 
@@ -96,21 +94,5 @@ class _MainTrashMapMobileState extends State<MainTrashMapMobile> {
         ),
       ),
     );
-  }
-
-  String getTrashIconPath(String status) {
-    if (status == "gautas") {
-      return 'assets/icons/marker_pins/red_marker.png';
-    } else if (status == "tiriamas") {
-      return 'assets/icons/marker_pins/orange_marker.png';
-    } else if (status == "ištirtas") {
-      return 'assets/icons/marker_pins/blue_marker.png';
-    } else if (status == "nepasitvirtino") {
-      return 'assets/icons/marker_pins/gray_marker.png';
-    } else if (status == "sutvarkyta") {
-      return 'assets/icons/marker_pins/green_marker.png';
-    } else {
-      return 'assets/icons/marker_pins/red_marker.png';
-    }
   }
 }

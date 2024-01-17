@@ -22,6 +22,7 @@ class OSMMap extends StatefulWidget {
   final List<Widget> layers;
   final MapTapCallback? onTap;
   final PositionCallback? onPositionChanged;
+  final MapController? mapController;
 
   const OSMMap({
     super.key,
@@ -32,6 +33,7 @@ class OSMMap extends StatefulWidget {
     this.disableInteractiveMap = false,
     this.onTap,
     this.onPositionChanged,
+    this.mapController,
   });
 
   @override
@@ -43,8 +45,7 @@ class _OSMMapState extends State<OSMMap> {
   final popupController = PopupController();
   var mapType = OSMMapType.osm;
 
-  final espg3346 = proj4.Projection.add(
-    'EPSG:3346',
+  final espg3346 = proj4.Projection.parse(
     'PROJCS["LKS_1994_Lithuania_TM",GEOGCS["GCS_LKS_1994",DATUM["D_Lithuania_1994",SPHEROID["GRS_1980",6378137.0,298.257222101]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Transverse_Mercator"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",24.0],PARAMETER["Scale_Factor",0.9998],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0]]',
   );
 
@@ -108,6 +109,7 @@ class _OSMMapState extends State<OSMMap> {
       child: PopupScope(
         popupController: popupController,
         child: FlutterMap(
+          mapController: widget.mapController,
           options: MapOptions(
             crs: _getCRS(),
             onPositionChanged: widget.onPositionChanged,
@@ -134,16 +136,18 @@ class _OSMMapState extends State<OSMMap> {
               tileSize: 512,
             ),
             ...widget.layers,
-            _ButtonsLayer(
-              osmMapType: mapType,
-              onChangeMapType: _changeMapType,
-            ),
-            RichAttributionWidget(
-              animationConfig: const ScaleRAWA(),
-              showFlutterMapAttribution: false,
-              alignment: AttributionAlignment.bottomLeft,
-              attributions: [_getAttribution()],
-            ),
+            if (!widget.disableInteractiveMap)
+              _ButtonsLayer(
+                osmMapType: mapType,
+                onChangeMapType: _changeMapType,
+              ),
+            if (!widget.disableInteractiveMap)
+              RichAttributionWidget(
+                animationConfig: const ScaleRAWA(),
+                showFlutterMapAttribution: false,
+                alignment: AttributionAlignment.bottomLeft,
+                attributions: [_getAttribution()],
+              ),
           ],
         ),
       ),
