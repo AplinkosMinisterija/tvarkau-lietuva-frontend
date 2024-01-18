@@ -20,19 +20,19 @@ part 'report_statistics_dto.g.dart';
 abstract class ReportStatisticsDto
     implements Built<ReportStatisticsDto, ReportStatisticsDtoBuilder> {
   @BuiltValueField(wireName: r'totalSentReports')
-  num get totalSentReports;
+  int get totalSentReports;
 
   @BuiltValueField(wireName: r'totalInInvestigationReports')
-  num get totalInInvestigationReports;
+  int get totalInInvestigationReports;
 
   @BuiltValueField(wireName: r'totalInvestigatedReports')
-  num get totalInvestigatedReports;
+  int get totalInvestigatedReports;
 
   @BuiltValueField(wireName: r'totalCleanedReports')
-  num get totalCleanedReports;
+  int get totalCleanedReports;
 
   @BuiltValueField(wireName: r'totalFalseReports')
-  num get totalFalseReports;
+  int get totalFalseReports;
 
   ReportStatisticsDto._();
 
@@ -66,27 +66,27 @@ class _$ReportStatisticsDtoSerializer
     yield r'totalSentReports';
     yield serializers.serialize(
       object.totalSentReports,
-      specifiedType: const FullType(num),
+      specifiedType: const FullType(int),
     );
     yield r'totalInInvestigationReports';
     yield serializers.serialize(
       object.totalInInvestigationReports,
-      specifiedType: const FullType(num),
+      specifiedType: const FullType(int),
     );
     yield r'totalInvestigatedReports';
     yield serializers.serialize(
       object.totalInvestigatedReports,
-      specifiedType: const FullType(num),
+      specifiedType: const FullType(int),
     );
     yield r'totalCleanedReports';
     yield serializers.serialize(
       object.totalCleanedReports,
-      specifiedType: const FullType(num),
+      specifiedType: const FullType(int),
     );
     yield r'totalFalseReports';
     yield serializers.serialize(
       object.totalFalseReports,
-      specifiedType: const FullType(num),
+      specifiedType: const FullType(int),
     );
   }
 
@@ -116,36 +116,36 @@ class _$ReportStatisticsDtoSerializer
         case r'totalSentReports':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(num),
-          ) as num;
+            specifiedType: const FullType(int),
+          ) as int;
           result.totalSentReports = valueDes;
           break;
         case r'totalInInvestigationReports':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(num),
-          ) as num;
+            specifiedType: const FullType(int),
+          ) as int;
           result.totalInInvestigationReports = valueDes;
           break;
         case r'totalInvestigatedReports':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(num),
-          ) as num;
+            specifiedType: const FullType(int),
+          ) as int;
           result.totalInvestigatedReports = valueDes;
           break;
         case r'totalCleanedReports':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(num),
-          ) as num;
+            specifiedType: const FullType(int),
+          ) as int;
           result.totalCleanedReports = valueDes;
           break;
         case r'totalFalseReports':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(num),
-          ) as num;
+            specifiedType: const FullType(int),
+          ) as int;
           result.totalFalseReports = valueDes;
           break;
         default:

@@ -586,20 +586,15 @@ components:
       type: object
       properties:
         totalSentReports:
-          type: number
-          format: integer
+          type: integer
         totalInInvestigationReports:
-          type: number
-          format: integer
+          type: integer
         totalInvestigatedReports:
-          type: number
-          format: integer
+          type: integer
         totalCleanedReports:
-          type: number
-          format: integer
+          type: integer
         totalFalseReports:
-          type: number
-          format: integer
+          type: integer
       required:
         - totalSentReports
         - totalInInvestigationReports

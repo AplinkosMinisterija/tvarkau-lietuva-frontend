@@ -8,15 +8,15 @@ part of 'report_statistics_dto.dart';
 
 class _$ReportStatisticsDto extends ReportStatisticsDto {
   @override
-  final num totalSentReports;
+  final int totalSentReports;
   @override
-  final num totalInInvestigationReports;
+  final int totalInInvestigationReports;
   @override
-  final num totalInvestigatedReports;
+  final int totalInvestigatedReports;
   @override
-  final num totalCleanedReports;
+  final int totalCleanedReports;
   @override
-  final num totalFalseReports;
+  final int totalFalseReports;
 
   factory _$ReportStatisticsDto(
           [void Function(ReportStatisticsDtoBuilder)? updates]) =>
@@ -89,29 +89,29 @@ class ReportStatisticsDtoBuilder
     implements Builder<ReportStatisticsDto, ReportStatisticsDtoBuilder> {
   _$ReportStatisticsDto? _$v;
 
-  num? _totalSentReports;
-  num? get totalSentReports => _$this._totalSentReports;
-  set totalSentReports(num? totalSentReports) =>
+  int? _totalSentReports;
+  int? get totalSentReports => _$this._totalSentReports;
+  set totalSentReports(int? totalSentReports) =>
       _$this._totalSentReports = totalSentReports;
 
-  num? _totalInInvestigationReports;
-  num? get totalInInvestigationReports => _$this._totalInInvestigationReports;
-  set totalInInvestigationReports(num? totalInInvestigationReports) =>
+  int? _totalInInvestigationReports;
+  int? get totalInInvestigationReports => _$this._totalInInvestigationReports;
+  set totalInInvestigationReports(int? totalInInvestigationReports) =>
       _$this._totalInInvestigationReports = totalInInvestigationReports;
 
-  num? _totalInvestigatedReports;
-  num? get totalInvestigatedReports => _$this._totalInvestigatedReports;
-  set totalInvestigatedReports(num? totalInvestigatedReports) =>
+  int? _totalInvestigatedReports;
+  int? get totalInvestigatedReports => _$this._totalInvestigatedReports;
+  set totalInvestigatedReports(int? totalInvestigatedReports) =>
       _$this._totalInvestigatedReports = totalInvestigatedReports;
 
-  num? _totalCleanedReports;
-  num? get totalCleanedReports => _$this._totalCleanedReports;
-  set totalCleanedReports(num? totalCleanedReports) =>
+  int? _totalCleanedReports;
+  int? get totalCleanedReports => _$this._totalCleanedReports;
+  set totalCleanedReports(int? totalCleanedReports) =>
       _$this._totalCleanedReports = totalCleanedReports;
 
-  num? _totalFalseReports;
-  num? get totalFalseReports => _$this._totalFalseReports;
-  set totalFalseReports(num? totalFalseReports) =>
+  int? _totalFalseReports;
+  int? get totalFalseReports => _$this._totalFalseReports;
+  set totalFalseReports(int? totalFalseReports) =>
       _$this._totalFalseReports = totalFalseReports;
 
   ReportStatisticsDtoBuilder() {
