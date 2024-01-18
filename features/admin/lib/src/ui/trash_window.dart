@@ -1,7 +1,7 @@
 import 'package:core/utils/extensions.dart';
 import 'package:api_client/api_client.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:dio/dio.dart' as dio;
 import '../common/custom_colors.dart';
 import '../common/custom_styles.dart';
@@ -12,6 +12,7 @@ import '../widgets/custom_switch.dart';
 import '../widgets/custom_text_button.dart';
 import '../widgets/dump_tabs.dart';
 import '../widgets/image_preview.dart';
+import 'package:latlong2/latlong.dart';
 
 class TrashWindow extends StatefulWidget {
   final FullReportDto trash;
@@ -42,23 +43,6 @@ class _TrashWindowState extends State<TrashWindow> {
   List<dio.MultipartFile> officerImages = [];
   int statusIndex = 0;
 
-  Set<Marker> markers = {};
-
-  Future<void> setupMarker() async {
-    final marker = Marker(
-        markerId: MarkerId(widget.trash.refId),
-        position: LatLng(
-          widget.trash.latitude,
-          widget.trash.longitude,
-        ),
-        icon: await BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(size: Size(50, 50)),
-            'assets/svg/pin_icon.svg'));
-    setState(() {
-      markers.add(marker);
-    });
-  }
-
   @override
   void initState() {
     isVisible = widget.trash.isVisible;
@@ -66,7 +50,6 @@ class _TrashWindowState extends State<TrashWindow> {
     comment = widget.trash.comment;
     name = widget.trash.name;
     setInitStatusIndex(status);
-    setupMarker();
     super.initState();
   }
 
@@ -126,13 +109,11 @@ class _TrashWindowState extends State<TrashWindow> {
                     if (width < 900) {
                       return _buildMobileLayout(
                         widget.trash,
-                        markers,
                         height.toDouble(),
                       );
                     } else {
                       return _buildDesktopLayout(
                         widget.trash,
-                        markers,
                         height.toDouble(),
                       );
                     }
@@ -179,8 +160,7 @@ class _TrashWindowState extends State<TrashWindow> {
     );
   }
 
-  Widget _buildDesktopLayout(
-      FullReportDto trash, Set<Marker> markers, double height) {
+  Widget _buildDesktopLayout(FullReportDto trash, double height) {
     final List<String> imageUrls = [];
     final List<String> officerImageUrls = [];
     if (trash.imageUrls.isNotEmpty) {
@@ -214,13 +194,9 @@ class _TrashWindowState extends State<TrashWindow> {
                 trash: trash,
               ),
               16.heightBox,
-              _BuildMap(
+              _ReportMap(
                 height: height.toDouble(),
-                markers: markers,
-                initialTarget: LatLng(
-                  trash.latitude,
-                  trash.longitude,
-                ),
+                report: widget.trash,
               ),
               16.heightBox,
               TextFormField(
@@ -344,8 +320,7 @@ class _TrashWindowState extends State<TrashWindow> {
     }
   }
 
-  Widget _buildMobileLayout(
-      FullReportDto trash, Set<Marker> markers, double height) {
+  Widget _buildMobileLayout(FullReportDto trash, double height) {
     final List<String> imageUrls = [];
     final List<String> officerImageUrls = [];
     if (trash.imageUrls.isNotEmpty) {
@@ -378,13 +353,9 @@ class _TrashWindowState extends State<TrashWindow> {
               trash: trash,
             ),
             16.heightBox,
-            _BuildMap(
+            _ReportMap(
               height: height.toDouble(),
-              markers: markers,
-              initialTarget: LatLng(
-                trash.latitude,
-                trash.longitude,
-              ),
+              report: widget.trash,
             ),
             32.heightBox,
             TextFormField(
@@ -483,28 +454,25 @@ class _TrashWindowState extends State<TrashWindow> {
   }
 }
 
-class _BuildMap extends StatelessWidget {
-  const _BuildMap({
+class _ReportMap extends StatelessWidget {
+  const _ReportMap({
     required this.height,
-    required this.markers,
-    required this.initialTarget,
+    required this.report,
   });
 
   final double height;
-  final Set<Marker> markers;
-  final LatLng initialTarget;
+  final FullReportDto report;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: height.toDouble(),
-      child: GoogleMap(
-        mapType: MapType.none,
-        markers: markers,
-        initialCameraPosition: CameraPosition(
-          target: initialTarget,
-          zoom: 13,
-        ),
+      child: OSMMap(
+        initialZoom: 9,
+        initialCenter: LatLng(report.latitude, report.longitude),
+        layers: [
+          FullReportsLayer(reports: [report]),
+        ],
       ),
     );
   }

@@ -1,13 +1,14 @@
 import 'package:core/utils/extensions.dart';
 import 'package:api_client/api_client.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../common/custom_colors.dart';
 import '../common/custom_styles.dart';
 import '../widgets/base_admin_screen.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/custom_switch.dart';
 import '../widgets/custom_text_button.dart';
+import 'package:latlong2/latlong.dart';
 
 class DumpWindow extends StatefulWidget {
   final FullDumpDto dump;
@@ -36,23 +37,6 @@ class _DumpWindowState extends State<DumpWindow> {
   double latitude = 0;
   String address = '';
 
-  Set<Marker> markers = {};
-
-  Future<void> setupMarker() async {
-    final marker = Marker(
-        markerId: MarkerId(widget.dump.refId),
-        position: LatLng(
-          widget.dump.latitude,
-          widget.dump.longitude,
-        ),
-        icon: await BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(size: Size(50, 50)),
-            'assets/svg/pin_icon.svg'));
-    setState(() {
-      markers.add(marker);
-    });
-  }
-
   @override
   void initState() {
     id = widget.dump.refId;
@@ -64,7 +48,6 @@ class _DumpWindowState extends State<DumpWindow> {
     longitude = widget.dump.longitude;
     latitude = widget.dump.latitude;
     address = widget.dump.address ?? '';
-    setupMarker();
     super.initState();
   }
 
@@ -122,13 +105,11 @@ class _DumpWindowState extends State<DumpWindow> {
                     if (width < 1000) {
                       return _buildMobileLayout(
                         widget.dump,
-                        markers,
                         height.toDouble(),
                       );
                     } else {
                       return _buildDesktopLayout(
                         widget.dump,
-                        markers,
                         height.toDouble(),
                       );
                     }
@@ -252,19 +233,14 @@ class _DumpWindowState extends State<DumpWindow> {
     );
   }
 
-  Widget _buildDesktopLayout(
-      FullDumpDto dump, Set<Marker> markers, double height) {
+  Widget _buildDesktopLayout(FullDumpDto dump, double height) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-          child: _BuildMap(
+          child: _DumpMap(
             height: height.toDouble(),
-            markers: markers,
-            initialTarget: LatLng(
-              dump.latitude,
-              dump.longitude,
-            ),
+            dump: dump,
           ),
         ),
         40.widthBox,
@@ -273,21 +249,16 @@ class _DumpWindowState extends State<DumpWindow> {
     );
   }
 
-  Widget _buildMobileLayout(
-      FullDumpDto dump, Set<Marker> markers, double height) {
+  Widget _buildMobileLayout(FullDumpDto dump, double height) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _BuildMap(
+            _DumpMap(
               height: height.toDouble(),
-              markers: markers,
-              initialTarget: LatLng(
-                dump.latitude,
-                dump.longitude,
-              ),
+              dump: widget.dump,
             ),
             32.heightBox,
           ],
@@ -302,28 +273,25 @@ class _DumpWindowState extends State<DumpWindow> {
   }
 }
 
-class _BuildMap extends StatelessWidget {
-  const _BuildMap({
+class _DumpMap extends StatelessWidget {
+  const _DumpMap({
     required this.height,
-    required this.markers,
-    required this.initialTarget,
+    required this.dump,
   });
 
   final double height;
-  final Set<Marker> markers;
-  final LatLng initialTarget;
+  final FullDumpDto dump;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: height.toDouble(),
-      child: GoogleMap(
-        mapType: MapType.none,
-        markers: markers,
-        initialCameraPosition: CameraPosition(
-          target: initialTarget,
-          zoom: 13,
-        ),
+      child: OSMMap(
+        initialZoom: 9,
+        initialCenter: LatLng(dump.latitude, dump.longitude),
+        layers: [
+          FullDumpsLayer(dumps: [dump]),
+        ],
       ),
     );
   }

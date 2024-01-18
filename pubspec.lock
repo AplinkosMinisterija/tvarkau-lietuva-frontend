@@ -425,14 +425,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.0"
-  flutter_map_cancellable_tile_provider:
-    dependency: transitive
-    description:
-      name: flutter_map_cancellable_tile_provider
-      sha256: ae18dd59faf74f3eca1d28f83e59b47741bbff962e123bbebe9335c04d432f44
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
   flutter_map_location_marker:
     dependency: transitive
     description:
@@ -659,30 +651,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.2.0"
-  google_maps_flutter:
-    dependency: "direct main"
-    description:
-      name: google_maps_flutter
-      sha256: "0c6b72b4b1e0f6204973e2b40868a75fe6380725d498f215cd7e35ed920d1c57"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.3"
-  google_maps_flutter_android:
-    dependency: transitive
-    description:
-      name: google_maps_flutter_android
-      sha256: f238a04c378df6fbe7d84a3ea19362e9db19ea1717d06deffa9edaa17973e916
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.4"
-  google_maps_flutter_ios:
-    dependency: transitive
-    description:
-      name: google_maps_flutter_ios
-      sha256: "33bbca8d4148ed373251ea2ec2344fdc63009926b6d6be71a0854fd42409b1ba"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.13"
   google_maps_flutter_platform_interface:
     dependency: transitive
     description:
@@ -692,7 +660,7 @@ packages:
     source: hosted
     version: "2.2.5"
   google_maps_flutter_web:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: google_maps_flutter_web
       sha256: "9ae7d8001add51c6edd7befa45de5249ea9553fb42a950e7a5132a324217e72a"

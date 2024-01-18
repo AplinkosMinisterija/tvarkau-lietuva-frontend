@@ -1,8 +1,8 @@
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'src/common/custom_colors.dart';
 import 'src/common/custom_styles.dart';
 import 'src/widgets/admin_table_dumps.dart';
@@ -45,98 +45,12 @@ class _AdminWindowState extends State<AdminWindow> {
   bool isShowDumps = false;
   bool isMapView = false;
   bool isShowDeleted = false;
-  Set<Marker> reportMarkers = {};
-  Set<Marker> dumpMarkers = {};
-  BitmapDescriptor? blueIcon;
-  BitmapDescriptor? redIcon;
-  BitmapDescriptor? grayIcon;
-  BitmapDescriptor? greenIcon;
-  BitmapDescriptor? orangeIcon;
-  BitmapDescriptor? dumpIcon;
-
-  Future<void> setupMarker() async {
-    await setupIcons(widget.isShowDumps);
-    if (isShowDumps) {
-      dumpMarkers = widget.dumps!
-          .map((element) => Marker(
-                markerId: MarkerId(element.refId),
-                position: LatLng(element.latitude, element.longitude),
-                icon: getMarkerIcon(widget.isShowDumps, ''),
-                onTap: () {
-                  context.goNamed('dump_admin', queryParameters: {
-                    'id': element.refId,
-                  });
-                },
-              ))
-          .toSet();
-    } else {
-      reportMarkers = widget.reports!
-          .map((element) => Marker(
-                markerId: MarkerId(element.refId),
-                position: LatLng(element.latitude, element.longitude),
-                icon: getMarkerIcon(widget.isShowDumps, element.status),
-                onTap: () {
-                  String str = '0' * (8 - element.refId.length);
-                  context.goNamed('report_admin', queryParameters: {
-                    'id': 'TLP-A$str${element.refId.toUpperCase()}'
-                  });
-                },
-              ))
-          .toSet();
-    }
-  }
-
-  Future<void> setupIcons(bool isDump) async {
-    if (isDump) {
-      final icon = await BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(size: Size(25, 40)),
-          'assets/svg/pin_icon.svg');
-      dumpIcon = icon;
-    } else {
-      final redMarker = await BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(size: Size(25, 40)),
-          'assets/icons/marker_pins/red_marker.png');
-      final blueMarker = await BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(size: Size(25, 40)),
-          'assets/icons/marker_pins/blue_marker.png');
-      final grayMarker = await BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(size: Size(25, 40)),
-          'assets/icons/marker_pins/gray_marker.png');
-      final greenMarker = await BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(size: Size(25, 40)),
-          'assets/icons/marker_pins/green_marker.png');
-      final orangeMarker = await BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(size: Size(25, 40)),
-          'assets/icons/marker_pins/orange_marker.png');
-      redIcon = redMarker;
-      blueIcon = blueMarker;
-      grayIcon = grayMarker;
-      greenIcon = greenMarker;
-      orangeIcon = orangeMarker;
-    }
-  }
-
-  BitmapDescriptor getMarkerIcon(bool isDump, String status) {
-    if (isDump) {
-      return dumpIcon!;
-    } else {
-      return switch (status) {
-        'gautas' => redIcon!,
-        'tiriamas' => orangeIcon!,
-        'sutvarkyta' => greenIcon!,
-        'ištirtas' => blueIcon!,
-        'nepasitvirtino' => grayIcon!,
-        _ => dumpIcon!,
-      };
-    }
-  }
 
   @override
   void initState() {
     super.initState();
     isShowDumps = widget.isShowDumps;
     isShowDeleted = widget.isShowDeleted;
-    setupMarker();
   }
 
   @override
@@ -223,13 +137,11 @@ class _AdminWindowState extends State<AdminWindow> {
                   12.heightBox,
                   !isShowDeleted
                       ? isMapView
-                          ? _BuildMap(
+                          ? _DumpsAndReportsMap(
                               height: height.toDouble(),
-                              markers:
-                                  isShowDumps ? dumpMarkers : reportMarkers,
-                              initialTarget: isShowDumps
-                                  ? dumpMarkers.first.position
-                                  : reportMarkers.first.position,
+                              dumps: widget.dumps,
+                              reports: widget.reports,
+                              isDumpsMode: isShowDumps,
                             )
                           : SizedBox(
                               height: height.toDouble(),
@@ -252,28 +164,46 @@ class _AdminWindowState extends State<AdminWindow> {
   }
 }
 
-class _BuildMap extends StatelessWidget {
-  const _BuildMap({
+class _DumpsAndReportsMap extends StatelessWidget {
+  const _DumpsAndReportsMap({
     required this.height,
-    required this.markers,
-    required this.initialTarget,
+    required this.dumps,
+    required this.reports,
+    required this.isDumpsMode,
   });
 
   final double height;
-  final Set<Marker> markers;
-  final LatLng initialTarget;
+  final bool isDumpsMode;
+  final List<FullDumpDto>? dumps;
+  final List<FullReportDto>? reports;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: height.toDouble(),
-      child: GoogleMap(
-        mapType: MapType.none,
-        markers: markers,
-        initialCameraPosition: CameraPosition(
-          target: initialTarget,
-          zoom: 13,
-        ),
+      child: OSMMap(
+        initialZoom: 2,
+        layers: [
+          if (isDumpsMode && dumps != null)
+            FullDumpsLayer(
+              dumps: dumps!,
+              onTap: (dump) {
+                context.goNamed('dump_admin', queryParameters: {
+                  'id': dump.refId,
+                });
+              },
+            ),
+          if (!isDumpsMode && reports != null)
+            FullReportsLayer(
+              reports: reports!,
+              onTap: (report) {
+                String str = '0' * (8 - report.refId.length);
+                context.goNamed('report_admin', queryParameters: {
+                  'id': 'TLP-A$str${report.refId.toUpperCase()}'
+                });
+              },
+            )
+        ],
       ),
     );
   }

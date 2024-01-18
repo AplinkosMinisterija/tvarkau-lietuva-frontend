@@ -21,7 +21,6 @@ dependencies:
   loading_animation_widget: ^1.2.0+4
   google_maps_flutter_web: ^0.3.2+2
   cupertino_icons: ^1.0.2
-  google_maps_flutter: ^2.2.3
   auto_size_text: ^3.0.0
   universal_io: ^2.2.0
   image_collage: ^0.0.4
