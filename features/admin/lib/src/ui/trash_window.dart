@@ -16,7 +16,7 @@ import '../widgets/image_preview.dart';
 class TrashWindow extends StatefulWidget {
   final FullReportDto trash;
   final VoidCallback onBackPress;
-  final Function(String comment, String status, bool isVisible,
+  final Function(String name, String comment, String status, bool isVisible,
       List<dio.MultipartFile> officerImages) onUpdate;
   final VoidCallback onDelete;
   final VoidCallback onRestore;
@@ -38,6 +38,7 @@ class _TrashWindowState extends State<TrashWindow> {
   bool isVisible = false;
   String comment = '';
   String status = '';
+  String name = '';
   List<dio.MultipartFile> officerImages = [];
   int statusIndex = 0;
 
@@ -63,6 +64,7 @@ class _TrashWindowState extends State<TrashWindow> {
     isVisible = widget.trash.isVisible;
     status = widget.trash.status;
     comment = widget.trash.comment;
+    name = widget.trash.name;
     setInitStatusIndex(status);
     setupMarker();
     super.initState();
@@ -221,9 +223,21 @@ class _TrashWindowState extends State<TrashWindow> {
                 ),
               ),
               16.heightBox,
-              Text(
-                trash.name,
+              TextFormField(
+                initialValue: name,
+                onChanged: (String value) {
+                  setState(() {
+                    name = value;
+                  });
+                },
                 style: CustomStyles.body1,
+                decoration: InputDecoration(
+                  hoverColor: CustomColors.primary.withOpacity(0.05),
+                  fillColor: CustomColors.white,
+                  filled: true,
+                  border: InputBorder.none,
+                ),
+                maxLines: 5,
               ),
               if (trash.imageUrls.isNotEmpty) ...[
                 15.heightBox,
@@ -295,7 +309,7 @@ class _TrashWindowState extends State<TrashWindow> {
             widget.onBackPress();
           },
           onSave: () {
-            widget.onUpdate(comment, status, isVisible, officerImages);
+            widget.onUpdate(name, comment, status, isVisible, officerImages);
           },
         ),
       ],
@@ -373,9 +387,21 @@ class _TrashWindowState extends State<TrashWindow> {
               ),
             ),
             32.heightBox,
-            Text(
-              trash.name,
+            TextFormField(
+              initialValue: name,
+              onChanged: (String value) {
+                setState(() {
+                  name = value;
+                });
+              },
               style: CustomStyles.body1,
+              decoration: InputDecoration(
+                hoverColor: CustomColors.primary.withOpacity(0.05),
+                fillColor: CustomColors.white,
+                filled: true,
+                border: InputBorder.none,
+              ),
+              maxLines: 5,
             ),
             if (trash.imageUrls.isNotEmpty) ...[
               15.heightBox,
@@ -433,7 +459,7 @@ class _TrashWindowState extends State<TrashWindow> {
             widget.onBackPress();
           },
           onSave: () {
-            widget.onUpdate(comment, status, isVisible, officerImages);
+            widget.onUpdate(name, comment, status, isVisible, officerImages);
           },
         ),
         24.heightBox,
