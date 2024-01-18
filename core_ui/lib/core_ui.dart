@@ -11,7 +11,6 @@ export 'src/widgets/error_reload_widget.dart';
 // Map
 export 'src/widgets/map/app_map.dart';
 export 'src/widgets/map/layers/public_reports_layer.dart';
-export 'src/widgets/map/layers/current_user_location_layer.dart';
 export 'src/widgets/map/layers/public_report_layer.dart';
 export 'src/widgets/map/layers/dumps_layer.dart';
 export 'src/widgets/map/layers/single_marker_layer.dart';

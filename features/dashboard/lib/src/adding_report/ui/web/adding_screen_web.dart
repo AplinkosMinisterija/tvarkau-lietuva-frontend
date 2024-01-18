@@ -178,7 +178,6 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
                                       }
                                     },
                                     layers: [
-                                      const CurrentUserLocation(),
                                       if (isShowMarkers)
                                         PublicReportsLayer(
                                           reports: widget.reports,

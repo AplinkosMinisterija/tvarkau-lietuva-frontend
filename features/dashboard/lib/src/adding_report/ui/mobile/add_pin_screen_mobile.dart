@@ -128,7 +128,6 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                           }
                         },
                         layers: [
-                          const CurrentUserLocation(),
                           if (isShowMarkers)
                             PublicReportsLayer(reports: widget.reports),
                           SingleMarkerLayer(
