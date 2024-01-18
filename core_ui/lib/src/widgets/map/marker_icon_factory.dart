@@ -16,11 +16,10 @@ class MarkerIconFactory {
   }
 
   static Widget fromPublicReportDto(PublicReportDto report) {
-    return SvgPicture.asset(
-      reportIconPath,
+    return Image.asset(
+      _getColoredMarkerPinPathByStatus(report.status),
       key: Key('report-icon-${report.status}'),
       excludeFromSemantics: true,
-      theme: SvgTheme(currentColor: _getColorByReportStatus(report.status)),
     );
   }
 
@@ -39,6 +38,17 @@ class MarkerIconFactory {
       key: const Key('dump-icon'),
       excludeFromSemantics: true,
     );
+  }
+
+  static String _getColoredMarkerPinPathByStatus(String status) {
+    return switch (status) {
+      "gautas" => 'assets/icons/marker_pins/red_marker.png',
+      "tiriamas" => 'assets/icons/marker_pins/orange_marker.png',
+      "ištirtas" => 'assets/icons/marker_pins/blue_marker.png',
+      "nepasitvirtino" => 'assets/icons/marker_pins/gray_marker.png',
+      "sutvarkyta" => 'assets/icons/marker_pins/green_marker.png',
+      _ => 'assets/icons/marker_pins/red_marker.png',
+    };
   }
 
   static Color _getColorByReportStatus(final String status) {
