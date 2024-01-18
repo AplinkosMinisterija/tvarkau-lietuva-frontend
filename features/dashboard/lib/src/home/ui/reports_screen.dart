@@ -53,7 +53,6 @@ class _ReportsScreenState extends State<ReportsScreen> {
                         vertical: constraints.maxWidth * 0.0083,
                       ),
                       child: Column(
-                        mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Align(
                             alignment: Alignment.topLeft,
@@ -193,7 +192,6 @@ class _ReportsScreenState extends State<ReportsScreen> {
                       padding: EdgeInsets.symmetric(
                           horizontal: constraints.maxWidth * 0.0444),
                       child: Column(
-                        mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           SizedBox(height: constraints.maxWidth * 0.05),
                           Align(
