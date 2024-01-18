@@ -29,6 +29,7 @@ class _PublicReportsLayerState extends State<PublicReportsLayer> {
     return PopupMarkerLayer(
       options: PopupMarkerLayerOptions(
         markers: _markers,
+        markerCenterAnimation: const MarkerCenterAnimation(),
         popupController: context.read<PopupController>(),
         popupDisplayOptions: PopupDisplayOptions(
           snap: PopupSnap.markerTop,
