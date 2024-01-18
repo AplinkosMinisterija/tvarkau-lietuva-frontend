@@ -1,7 +1,6 @@
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/src/map/controller/map_controller.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:latlong2/latlong.dart';
 
 class AddingMapRedirectWindow extends StatelessWidget {
@@ -25,7 +24,7 @@ class AddingMapRedirectWindow extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: const BorderRadius.all(Radius.circular(8)),
-            child: OSMMap(
+            child: AppMap(
               mapController: mapController,
               initialCenter: location,
               initialZoom: location != null ? 8 : null,

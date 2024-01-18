@@ -12,8 +12,8 @@ class MapTypeSwitcher extends StatefulWidget {
   });
 
   final double width;
-  final ValueChanged<OSMMapType> onMapTypeChange;
-  final OSMMapType currentMapType;
+  final ValueChanged<AppMapType> onMapTypeChange;
+  final AppMapType currentMapType;
 
   @override
   State<MapTypeSwitcher> createState() => _MapTypeSwitcherState();
@@ -29,10 +29,10 @@ class _MapTypeSwitcherState extends State<MapTypeSwitcher> {
         MapTypeSwitcherButton(
           width: widget.width,
           title: 'Įprastas',
-          isActive: widget.currentMapType == OSMMapType.osm,
+          isActive: widget.currentMapType == AppMapType.osm,
           onTap: () {
             setState(() {
-              widget.onMapTypeChange(OSMMapType.osm);
+              widget.onMapTypeChange(AppMapType.osm);
             });
           },
         ),
@@ -40,10 +40,10 @@ class _MapTypeSwitcherState extends State<MapTypeSwitcher> {
         MapTypeSwitcherButton(
           width: widget.width,
           title: 'Palydovinis',
-          isActive: widget.currentMapType == OSMMapType.satellite,
+          isActive: widget.currentMapType == AppMapType.satellite,
           onTap: () {
             setState(() {
-              widget.onMapTypeChange(OSMMapType.satellite);
+              widget.onMapTypeChange(AppMapType.satellite);
             });
           },
         ),

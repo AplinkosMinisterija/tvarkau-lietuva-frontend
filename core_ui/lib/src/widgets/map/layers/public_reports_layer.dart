@@ -6,21 +6,21 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:latlong2/latlong.dart';
 
-class ClusteredReportsLayer extends StatefulWidget {
+class PublicReportsLayer extends StatefulWidget {
   final List<PublicReportDto> reports;
   final void Function(PublicReportDto item)? onWidgetTap;
 
-  const ClusteredReportsLayer({
+  const PublicReportsLayer({
     super.key,
     required this.reports,
     this.onWidgetTap,
   });
 
   @override
-  State<ClusteredReportsLayer> createState() => _ClusteredReportsLayerState();
+  State<PublicReportsLayer> createState() => _PublicReportsLayerState();
 }
 
-class _ClusteredReportsLayerState extends State<ClusteredReportsLayer> {
+class _PublicReportsLayerState extends State<PublicReportsLayer> {
   late final _markers =
       widget.reports.map(_reportToMarker).toList(growable: false);
 

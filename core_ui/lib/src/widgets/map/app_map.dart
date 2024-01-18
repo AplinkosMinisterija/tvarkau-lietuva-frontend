@@ -10,9 +10,9 @@ import 'dart:math' as math;
 
 typedef MapTapCallback = void Function(LatLng position);
 
-enum OSMMapType { osm, satellite }
+enum AppMapType { osm, satellite }
 
-class OSMMap extends StatefulWidget {
+class AppMap extends StatefulWidget {
   final LatLng? initialCenter;
   final double? initialZoom;
   final bool disableScrollWheelZoom;
@@ -22,7 +22,7 @@ class OSMMap extends StatefulWidget {
   final PositionCallback? onPositionChanged;
   final MapController? mapController;
 
-  const OSMMap({
+  const AppMap({
     super.key,
     required this.layers,
     this.initialCenter,
@@ -35,13 +35,13 @@ class OSMMap extends StatefulWidget {
   });
 
   @override
-  State<OSMMap> createState() => _OSMMapState();
+  State<AppMap> createState() => _AppMapState();
 }
 
-class _OSMMapState extends State<OSMMap> {
+class _AppMapState extends State<AppMap> {
   static const double _defaultInitialZoom = 7.0;
   final popupController = PopupController();
-  var mapType = OSMMapType.osm;
+  var mapType = AppMapType.osm;
 
   final espg3346 = proj4.Projection.parse(
     'PROJCS["LKS_1994_Lithuania_TM",GEOGCS["GCS_LKS_1994",DATUM["D_Lithuania_1994",SPHEROID["GRS_1980",6378137.0,298.257222101]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Transverse_Mercator"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",24.0],PARAMETER["Scale_Factor",0.9998],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0]]',
@@ -136,7 +136,7 @@ class _OSMMapState extends State<OSMMap> {
             ...widget.layers,
             if (!widget.disableInteractiveMap)
               _ButtonsLayer(
-                osmMapType: mapType,
+                mapType: mapType,
                 onChangeMapType: _changeMapType,
               ),
             if (!widget.disableInteractiveMap)
@@ -152,7 +152,7 @@ class _OSMMapState extends State<OSMMap> {
     );
   }
 
-  void _changeMapType(OSMMapType mapType) {
+  void _changeMapType(AppMapType mapType) {
     setState(() {
       this.mapType = mapType;
     });
@@ -160,30 +160,30 @@ class _OSMMapState extends State<OSMMap> {
 
   String _getTileUrlTemplate() {
     return switch (mapType) {
-      OSMMapType.osm =>
+      AppMapType.osm =>
         'https://www.geoportal.lt/mapproxy/gisc_pagrindinis/MapServer/tile/{z}/{y}/{x}',
-      OSMMapType.satellite =>
+      AppMapType.satellite =>
         'https://www.geoportal.lt/mapproxy/gisc_misrus_public/MapServer/tile/{z}/{y}/{x}'
     };
   }
 
   Crs _getCRS() {
     return switch (mapType) {
-      OSMMapType.osm => espg3346OsmCSR,
-      OSMMapType.satellite => espg3346HybridCSR,
+      AppMapType.osm => espg3346OsmCSR,
+      AppMapType.satellite => espg3346HybridCSR,
     };
   }
 
   TextSourceAttribution _getAttribution() {
     return switch (mapType) {
-      OSMMapType.osm => TextSourceAttribution(
+      AppMapType.osm => TextSourceAttribution(
           'geoportal.lt',
           onTap: () => launchUrl(
             Uri.parse(
                 'https://www.geoportal.lt/mapproxy/gisc_pagrindinis/MapServer'),
           ),
         ),
-      OSMMapType.satellite => TextSourceAttribution(
+      AppMapType.satellite => TextSourceAttribution(
           'Nacionalinė žemės tarnyba prie Aplinkos ministerijos',
           onTap: () => launchUrl(
             Uri.parse('https://www.nzt.lt/'),
@@ -207,25 +207,23 @@ class _OSMMapState extends State<OSMMap> {
 }
 
 class _ButtonsLayer extends StatelessWidget {
-  final OSMMapType osmMapType;
-  final void Function(OSMMapType mapType) onChangeMapType;
-  final double minZoom;
-  final double maxZoom;
+  final AppMapType mapType;
+  final void Function(AppMapType mapType) onChangeMapType;
 
   static const _fitBoundsPadding = EdgeInsets.all(12);
 
   const _ButtonsLayer({
-    super.key,
-    required this.osmMapType,
+    required this.mapType,
     required this.onChangeMapType,
-    this.minZoom = 1,
-    this.maxZoom = 18,
   });
 
   @override
   Widget build(BuildContext context) {
     final controller = MapController.of(context);
     final camera = MapCamera.of(context);
+
+    final minZoom = camera.minZoom ?? 1;
+    final maxZoom = camera.maxZoom ?? 18;
 
     return Align(
       alignment: Alignment.bottomRight,
@@ -239,23 +237,21 @@ class _ButtonsLayer extends StatelessWidget {
                 color: Colors.white.withOpacity(0.9),
               ),
               child: Tooltip(
-                message: osmMapType == OSMMapType.osm
+                message: mapType == AppMapType.osm
                     ? 'Palydovinis žemėlapis'
                     : 'Topografinis žemėlapis',
                 child: ToggleButtons(
                   onPressed: (_) {
-                    final newType = osmMapType == OSMMapType.osm
-                        ? OSMMapType.satellite
-                        : OSMMapType.osm;
+                    final newType = mapType == AppMapType.osm
+                        ? AppMapType.satellite
+                        : AppMapType.osm;
 
                     onChangeMapType(newType);
                   },
                   isSelected: const [false],
                   children: [
-                    if (osmMapType == OSMMapType.osm)
-                      const Icon(Icons.satellite),
-                    if (osmMapType == OSMMapType.satellite)
-                      const Icon(Icons.map),
+                    if (mapType == AppMapType.osm) const Icon(Icons.satellite),
+                    if (mapType == AppMapType.satellite) const Icon(Icons.map),
                   ],
                 ),
               ),

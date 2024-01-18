@@ -286,7 +286,7 @@ class _DumpMap extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: height.toDouble(),
-      child: OSMMap(
+      child: AppMap(
         initialZoom: 9,
         initialCenter: LatLng(dump.latitude, dump.longitude),
         layers: [

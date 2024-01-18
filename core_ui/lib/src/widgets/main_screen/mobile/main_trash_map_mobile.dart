@@ -59,10 +59,10 @@ class _MainTrashMapMobileState extends State<MainTrashMapMobile> {
                   width: widget.width * 0.911,
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(8)),
-                    child: OSMMap(
+                    child: AppMap(
                       initialZoom: 2,
                       layers: [
-                        ClusteredReportsLayer(
+                        PublicReportsLayer(
                           reports: widget.trashReports,
                           onWidgetTap: (report) {
                             widget.onInformationTap(report.refId);

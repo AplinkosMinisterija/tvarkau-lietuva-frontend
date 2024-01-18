@@ -62,7 +62,7 @@ class _MainDumpMapMobileState extends State<MainDumpMapMobile> {
                   width: widget.width * 0.911,
                   child: ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(8)),
-                    child: OSMMap(
+                    child: AppMap(
                       initialZoom: 2,
                       disableScrollWheelZoom: isMapHover,
                       layers: [

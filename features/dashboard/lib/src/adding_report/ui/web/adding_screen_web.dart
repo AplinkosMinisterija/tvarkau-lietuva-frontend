@@ -11,7 +11,6 @@ import 'dart:typed_data';
 import 'package:http_parser/http_parser.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:flutter_svg/svg.dart';
 
 class AddingScreenWeb extends StatefulWidget {
   const AddingScreenWeb({
@@ -154,7 +153,7 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
                                 children: [
                                   const Opacity(
                                     opacity: 0.5,
-                                    child: OSMMap(
+                                    child: AppMap(
                                       disableInteractiveMap: true,
                                       layers: [],
                                     ),
@@ -170,7 +169,7 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
                               )
                             : Stack(
                                 children: [
-                                  OSMMap(
+                                  AppMap(
                                     initialCenter: _currentPosition,
                                     onPositionChanged: (position, _) {
                                       final latLng = position.center;
@@ -181,7 +180,7 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
                                     layers: [
                                       const CurrentUserLocation(),
                                       if (isShowMarkers)
-                                        ClusteredReportsLayer(
+                                        PublicReportsLayer(
                                           reports: widget.reports,
                                         ),
                                       SingleMarkerLayer(

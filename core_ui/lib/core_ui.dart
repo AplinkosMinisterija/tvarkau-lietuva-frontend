@@ -9,8 +9,8 @@ export 'src/widgets/app_loader.dart';
 export 'src/widgets/error_reload_widget.dart';
 
 // Map
-export 'src/widgets/map/osm_map.dart';
-export 'src/widgets/map/layers/clustered_reports_layer.dart';
+export 'src/widgets/map/app_map.dart';
+export 'src/widgets/map/layers/public_reports_layer.dart';
 export 'src/widgets/map/layers/current_user_location_layer.dart';
 export 'src/widgets/map/layers/public_report_layer.dart';
 export 'src/widgets/map/layers/dumps_layer.dart';

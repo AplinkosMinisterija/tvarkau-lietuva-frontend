@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:flutter_svg/svg.dart';
 
 class AddPinScreenMobile extends StatefulWidget {
   const AddPinScreenMobile(
@@ -107,7 +106,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                         children: [
                           const Opacity(
                             opacity: 0.5,
-                            child: OSMMap(
+                            child: AppMap(
                               disableInteractiveMap: true,
                               layers: [],
                             ),
@@ -120,7 +119,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                           ),
                         ],
                       )
-                    : OSMMap(
+                    : AppMap(
                         initialCenter: selectedPosition,
                         onPositionChanged: (position, _) {
                           final latLng = position.center;
@@ -131,7 +130,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                         layers: [
                           const CurrentUserLocation(),
                           if (isShowMarkers)
-                            ClusteredReportsLayer(reports: widget.reports),
+                            PublicReportsLayer(reports: widget.reports),
                           SingleMarkerLayer(
                             width: _locationMarkerSize,
                             height: _locationMarkerSize,

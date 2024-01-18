@@ -467,7 +467,7 @@ class _ReportMap extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: height.toDouble(),
-      child: OSMMap(
+      child: AppMap(
         initialZoom: 9,
         initialCenter: LatLng(report.latitude, report.longitude),
         layers: [

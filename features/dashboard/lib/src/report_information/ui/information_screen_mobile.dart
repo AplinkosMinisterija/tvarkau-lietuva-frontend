@@ -186,7 +186,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                       child: ClipRRect(
                         borderRadius:
                             const BorderRadius.all(Radius.circular(8)),
-                        child: OSMMap(
+                        child: AppMap(
                           initialCenter: LatLng(
                             widget.report.latitude,
                             widget.report.longitude,
