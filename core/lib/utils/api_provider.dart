@@ -18,18 +18,18 @@ class ApiProvider {
   final adminApi = ApiClient(
     basePathOverride: GlobalConstants.basePath,
     interceptors: [
-      InterceptorsWrapper(
-        onRequest:
-            (RequestOptions options, RequestInterceptorHandler handler) async {
-          final authKey = await SecureStorageProvider().getJwtToken();
-          if (authKey != null) {
-            options.headers['Authorization'] = 'Bearer $authKey';
-          } else {
-            throw Exception('No auth key found');
-          }
-          return handler.next(options);
-        },
-      ),
+      // InterceptorsWrapper(
+      //   onRequest:
+      //       (RequestOptions options, RequestInterceptorHandler handler) async {
+      //     final authKey = await SecureStorageProvider().getJwtToken();
+      //     if (authKey != null) {
+      //       options.headers['Authorization'] = 'Bearer $authKey';
+      //     } else {
+      //       throw Exception('No auth key found');
+      //     }
+      //     return handler.next(options);
+      //   },
+      // ),
       if (kDebugMode) LogInterceptor(responseBody: false)
     ],
   ).getAdminApi();

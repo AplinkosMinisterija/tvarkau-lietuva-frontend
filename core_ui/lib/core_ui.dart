@@ -17,6 +17,7 @@ export 'src/widgets/map/layers/dumps_layer.dart';
 export 'src/widgets/map/layers/single_marker_layer.dart';
 export 'src/widgets/map/layers/full_dumps_layer.dart';
 export 'src/widgets/map/layers/full_reports_layer.dart';
+export 'src/widgets/map/marker_icon_factory.dart';
 
 //Adding screen
 export 'src/widgets/adding_screen/cancel_button.dart';

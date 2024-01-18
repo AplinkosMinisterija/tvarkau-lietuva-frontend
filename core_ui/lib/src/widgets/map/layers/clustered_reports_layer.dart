@@ -53,59 +53,6 @@ class _ClusteredReportsLayerState extends State<ClusteredReportsLayer> {
         ),
       ),
     );
-
-    return MarkerClusterLayerWidget(
-      options: MarkerClusterLayerOptions(
-        maxClusterRadius: 60,
-        size: const Size(40, 40),
-        alignment: Alignment.center,
-        padding: const EdgeInsets.all(50),
-        forceIntegerZoomLevel: true,
-        disableClusteringAtZoom: 12,
-        markers: _markers,
-        popupOptions: PopupOptions(
-          popupSnap: PopupSnap.markerTop,
-          popupController: context.read<PopupController>(),
-          popupBuilder: (context, marker) {
-            final report = (marker.key as ObjectKey).value as PublicReportDto;
-            final onWidgetTap = widget.onWidgetTap;
-
-            return InfoTrashWindowBox(
-              title: report.name,
-              imageUrls: report.imageUrls.toList(),
-              status: report.status,
-              // TODO remove toString
-              date: report.reportDate.toString(),
-              reportId: report.refId,
-              onTap: () {
-                if (onWidgetTap != null) {
-                  onWidgetTap(report);
-                }
-              },
-            );
-          },
-        ),
-        builder: (context, markers) {
-          return MouseRegion(
-            cursor: SystemMouseCursors.click,
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.teal,
-              ),
-              child: Center(
-                child: Text(
-                  markers.length.toString(),
-                  style: const TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          );
-        },
-      ),
-    );
   }
 
   Marker _reportToMarker(PublicReportDto report) {
@@ -117,10 +64,7 @@ class _ClusteredReportsLayerState extends State<ClusteredReportsLayer> {
       alignment: Alignment.bottomCenter,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
-        child: Image.asset(
-          report.mapIconPath,
-          key: Key('trash-icon-${report.status}'),
-        ),
+        child: MarkerIconFactory.fromPublicReportDto(report),
       ),
     );
   }

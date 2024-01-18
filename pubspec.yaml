@@ -46,5 +46,4 @@ flutter:
   assets:
     - assets/icons/
     - assets/svg/
-    - assets/icons/marker_pins/
     - assets/documents/

@@ -34,10 +34,7 @@ class AddingMapRedirectWindow extends StatelessWidget {
                 if (location != null)
                   SingleMarkerLayer(
                     point: location!,
-                    child: SvgPicture.asset(
-                      'assets/svg/pin_icon.svg',
-                      excludeFromSemantics: true,
-                    ),
+                    child: MarkerIconFactory.reportDefault(),
                   )
               ],
             ),

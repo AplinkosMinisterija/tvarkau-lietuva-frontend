@@ -1,5 +1,5 @@
 import 'package:api_client/api_client.dart';
-import 'package:core/core.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -33,10 +33,7 @@ class _PublicReportLayerState extends State<PublicReportLayer> {
       alignment: Alignment.bottomCenter,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
-        child: Image.asset(
-          report.mapIconPath,
-          key: Key('trash-icon-${report.status}'),
-        ),
+        child: MarkerIconFactory.fromPublicReportDto(report),
       ),
     );
   }

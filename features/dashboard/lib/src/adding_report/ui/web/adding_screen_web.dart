@@ -189,10 +189,8 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
                                         height: _locationMarkerSize,
                                         point: selectedPosition,
                                         alignment: Alignment.bottomCenter,
-                                        child: SvgPicture.asset(
-                                          'assets/svg/pin_icon.svg',
-                                          excludeFromSemantics: true,
-                                        ),
+                                        child:
+                                            MarkerIconFactory.reportDefault(),
                                       )
                                     ],
                                   ),

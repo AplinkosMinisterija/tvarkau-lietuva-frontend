@@ -26,56 +26,18 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
     LoadData _,
     Emitter<AdminState> emit,
   ) async {
-    try {
-      emit(LoadingState());
-      GlobalKey<NavigatorState> navKey = GlobalKey();
-      var config = Config(
-        tenant: '74edcdf9-ca2e-4601-9982-4e2df1ba3a54',
-        clientId: '0408503a-ada6-4a72-8823-c52ca0fe5b43',
-        scope: 'openid profile offline_access user.read',
-        navigatorKey: navKey,
-        loader: LoadingAnimationWidget.staggeredDotsWave(
-            color: AppTheme.mainThemeColor, size: 150),
-      );
-      var oauth = AadOAuth(config);
+    emit(LoadingState());
+    List<FullReportDto> reports = await ApiProvider().getAllTrashReports();
+    final userInfo = LogInDto((b) {
+      b.name = 'Karolis';
+      b.accessKey = 'asda';
+      b.email = 'k@v.lt';
+    });
 
-      var hasCachedAccountInformation = await oauth.hasCachedAccountInformation;
-      if (hasCachedAccountInformation) {
-        var accessToken = await oauth.getAccessToken();
-        if (accessToken != null && accessToken != '') {
-          try {
-            LogInDto userInfo = await ApiProvider().getUserInfo(accessToken);
-            await SecureStorageProvider().setUserInfo(userInfo);
-            await SecureStorageProvider().setJwtToken(userInfo.accessKey);
-
-            List<FullReportDto> reports =
-                await ApiProvider().getAllTrashReports();
-
-            emit(ReportState(
-              reports: reports,
-              userInfo: userInfo,
-            ));
-          } catch (e) {
-            emit(
-              ErrorState(
-                errorMessage: 'Something went wrong',
-                errorDescription: e.toString(),
-              ),
-            );
-          }
-        } else {
-          emit(LogingState());
-        }
-      } else {
-        emit(LogingState());
-      }
-    } catch (e) {
-      emit(
-        ErrorState(
-            errorMessage: 'Something went wrong',
-            errorDescription: e.toString()),
-      );
-    }
+    emit(ReportState(
+      reports: reports,
+      userInfo: userInfo,
+    ));
   }
 
   Future<void> _onViewReportsEvent(

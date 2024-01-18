@@ -60,11 +60,7 @@ class _DumpsLayerState extends State<DumpsLayer> {
       alignment: Alignment.bottomCenter,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
-        child: SvgPicture.asset(
-          'assets/svg/dump_icon.svg',
-          key: const Key('dump-icon'),
-          semanticsLabel: dump.name,
-        ),
+        child: MarkerIconFactory.dump(),
       ),
     );
   }

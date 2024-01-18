@@ -1,5 +1,4 @@
 import 'package:api_client/api_client.dart';
-import 'package:core/core.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +6,7 @@ import 'package:core_ui/core_ui.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
+import 'package:latlong2/latlong.dart';
 
 class InformationScreenMobile extends StatefulWidget {
   const InformationScreenMobile({
@@ -187,7 +187,10 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                         borderRadius:
                             const BorderRadius.all(Radius.circular(8)),
                         child: OSMMap(
-                          initialCenter: widget.report.latLng,
+                          initialCenter: LatLng(
+                            widget.report.latitude,
+                            widget.report.longitude,
+                          ),
                           initialZoom: 9,
                           layers: [
                             PublicReportLayer(
