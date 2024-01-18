@@ -19,7 +19,6 @@ dependencies:
   google_fonts: ^4.0.0
   url_launcher: ^6.1.11
   g_recaptcha_v3: ^0.0.5
-  webviewx_plus: ^0.3.3
   image: ^4.0.17
   intl: ^0.18.0
   flutter_secure_storage: ^8.0.0

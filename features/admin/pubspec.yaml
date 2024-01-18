@@ -31,8 +31,8 @@ dependencies:
   go_router: ^10.1.2
   dio: ^5.0.0
   http_parser: ^4.0.2
-  syncfusion_flutter_datagrid: ^21.2.10
-  syncfusion_flutter_core: ^21.2.10
+  syncfusion_flutter_datagrid: ^24.1.46
+  syncfusion_flutter_core: ^24.1.46
   collection: ^1.17.2
 
 dev_dependencies:
