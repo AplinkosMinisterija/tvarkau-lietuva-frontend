@@ -16,7 +16,6 @@ class InstructionsWidget extends StatelessWidget {
       margin: EdgeInsets.only(
         top: width * 0.0167,
       ),
-      height: width * 0.0838,
       width: width * 0.6,
       decoration: BoxDecoration(
           color: const Color.fromRGBO(255, 253, 251, 1),
@@ -27,9 +26,10 @@ class InstructionsWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              '1. Spustelėkite ant žemėlapio ir pažymėkite vietą, kurioje aptikote šiukšles.',
+              '1. Tempkite žemalėlapį ir pasirinkite vietą, kurioje aptikote šiukšles.',
               textAlign: TextAlign.center,
               style: GoogleFonts.roboto(
                   fontSize: width * 0.0125, fontWeight: FontWeight.w400),

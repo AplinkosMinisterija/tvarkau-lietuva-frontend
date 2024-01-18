@@ -47,7 +47,26 @@ class _AppMapState extends State<AppMap> {
     'PROJCS["LKS_1994_Lithuania_TM",GEOGCS["GCS_LKS_1994",DATUM["D_Lithuania_1994",SPHEROID["GRS_1980",6378137.0,298.257222101]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Transverse_Mercator"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",24.0],PARAMETER["Scale_Factor",0.9998],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0]]',
   );
 
-  late final espg3346OsmCSR = Proj4Crs.fromFactory(
+  static const espg3346OsmResolutions = [
+    1322.9193125052918,
+    793.7515875031751,
+    529.1677250021168,
+    264.5838625010584,
+    132.2919312505292,
+    66.1459656252646,
+    26.458386250105836,
+    13.229193125052918,
+    6.614596562526459,
+    2.6458386250105836,
+    1.3229193125052918,
+    0.5291677250021167,
+    0.26458386250105836,
+    0.13229193125052918,
+  ];
+
+  final double maxZoomOsm = espg3346OsmResolutions.length - 1;
+
+  late final espg3346OsmCRS = Proj4Crs.fromFactory(
     code: 'EPSG:3346:osm',
     proj4Projection: espg3346,
     bounds: Bounds<double>(
@@ -57,24 +76,25 @@ class _AppMapState extends State<AppMap> {
     origins: const [
       math.Point(-5122000, 10000100),
     ],
-    resolutions: const [
-      1322.9193125052918,
-      793.7515875031751,
-      529.1677250021168,
-      264.5838625010584,
-      132.2919312505292,
-      66.1459656252646,
-      26.458386250105836,
-      13.229193125052918,
-      6.614596562526459,
-      2.6458386250105836,
-      1.3229193125052918,
-      0.5291677250021167,
-      0.26458386250105836,
-      0.13229193125052918,
-    ],
+    resolutions: espg3346OsmResolutions,
   );
-  late final espg3346HybridCSR = Proj4Crs.fromFactory(
+
+  static const espg3346HybridResolutions = [
+    1322.9193125052918,
+    793.7515875031751,
+    529.1677250021168,
+    264.5838625010584,
+    132.2919312505292,
+    66.1459656252646,
+    26.458386250105836,
+    13.229193125052918,
+    6.614596562526459,
+    2.6458386250105836,
+  ];
+
+  final double maxZoomHybrid = espg3346HybridResolutions.length - 1;
+
+  late final espg3346HybridCRS = Proj4Crs.fromFactory(
     code: 'EPSG:3346:hybrid',
     proj4Projection: espg3346,
     bounds: Bounds<double>(
@@ -84,18 +104,7 @@ class _AppMapState extends State<AppMap> {
     origins: const [
       math.Point(-5122000, 10000100),
     ],
-    resolutions: const [
-      1322.9193125052918,
-      793.7515875031751,
-      529.1677250021168,
-      264.5838625010584,
-      132.2919312505292,
-      66.1459656252646,
-      26.458386250105836,
-      13.229193125052918,
-      6.614596562526459,
-      2.6458386250105836,
-    ],
+    resolutions: espg3346HybridResolutions,
   );
 
   @override
@@ -114,6 +123,8 @@ class _AppMapState extends State<AppMap> {
             initialZoom: widget.initialZoom ?? _defaultInitialZoom,
             initialCenter:
                 widget.initialCenter ?? GlobalConstants.lithuaniaCenterLatLng,
+            minZoom: _getMinZoom(),
+            maxZoom: _getMaxZoom(),
             interactionOptions: InteractionOptions(
               flags: _getInteractiveFlags(),
             ),
@@ -130,7 +141,6 @@ class _AppMapState extends State<AppMap> {
           children: [
             TileLayer(
               urlTemplate: _getTileUrlTemplate(),
-              // tileProvider: CancellableNetworkTileProvider(),
               tileSize: 512,
             ),
             ...widget.layers,
@@ -152,10 +162,30 @@ class _AppMapState extends State<AppMap> {
     );
   }
 
-  void _changeMapType(AppMapType mapType) {
+  void _changeMapType(MapController mapController, AppMapType mapType) {
+    // Satellite supports less zoom levels so we need adjustments
+    if (mapType == AppMapType.satellite &&
+        mapController.camera.zoom > maxZoomHybrid) {
+      mapController.move(mapController.camera.center, maxZoomHybrid);
+    }
+
     setState(() {
       this.mapType = mapType;
     });
+  }
+
+  double _getMaxZoom() {
+    return switch (mapType) {
+      AppMapType.osm => maxZoomOsm,
+      AppMapType.satellite => maxZoomHybrid,
+    };
+  }
+
+  double _getMinZoom() {
+    return switch (mapType) {
+      AppMapType.osm => 0,
+      AppMapType.satellite => 1,
+    };
   }
 
   String _getTileUrlTemplate() {
@@ -169,8 +199,8 @@ class _AppMapState extends State<AppMap> {
 
   Crs _getCRS() {
     return switch (mapType) {
-      AppMapType.osm => espg3346OsmCSR,
-      AppMapType.satellite => espg3346HybridCSR,
+      AppMapType.osm => espg3346OsmCRS,
+      AppMapType.satellite => espg3346HybridCRS,
     };
   }
 
@@ -208,7 +238,8 @@ class _AppMapState extends State<AppMap> {
 
 class _ButtonsLayer extends StatelessWidget {
   final AppMapType mapType;
-  final void Function(AppMapType mapType) onChangeMapType;
+  final void Function(MapController mapController, AppMapType mapType)
+      onChangeMapType;
 
   static const _fitBoundsPadding = EdgeInsets.all(12);
 
@@ -222,8 +253,11 @@ class _ButtonsLayer extends StatelessWidget {
     final controller = MapController.of(context);
     final camera = MapCamera.of(context);
 
-    final minZoom = camera.minZoom ?? 1;
-    final maxZoom = camera.maxZoom ?? 18;
+    final minZoom = camera.minZoom;
+    final maxZoom = camera.maxZoom;
+    if (minZoom == null || maxZoom == null) {
+      throw Exception('Min and max zooms should be set');
+    }
 
     return Align(
       alignment: Alignment.bottomRight,
@@ -246,7 +280,7 @@ class _ButtonsLayer extends StatelessWidget {
                         ? AppMapType.satellite
                         : AppMapType.osm;
 
-                    onChangeMapType(newType);
+                    onChangeMapType(controller, newType);
                   },
                   isSelected: const [false],
                   children: [

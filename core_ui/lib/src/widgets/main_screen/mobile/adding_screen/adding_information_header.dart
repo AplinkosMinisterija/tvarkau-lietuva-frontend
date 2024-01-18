@@ -26,7 +26,7 @@ class AddingInformationHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              '1. Spustelėkite ant žemėlapio ir pažymėkite vietą,\n     kurioje aptikote šiukšles.',
+              '1. Tempkite žemalėlapį ir pasirinkite vietą, kurioje aptikote šiukšles.',
               textAlign: TextAlign.left,
               style: GoogleFonts.roboto(
                   fontSize: width * 0.03333, fontWeight: FontWeight.w400),
