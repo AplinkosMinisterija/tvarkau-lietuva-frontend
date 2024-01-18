@@ -171,6 +171,8 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
                                 children: [
                                   AppMap(
                                     initialCenter: _currentPosition,
+                                    initialZoom:
+                                        _currentPosition != null ? 9 : null,
                                     onPositionChanged: (position, _) {
                                       final latLng = position.center;
                                       if (latLng != null) {

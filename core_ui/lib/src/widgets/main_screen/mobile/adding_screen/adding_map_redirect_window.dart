@@ -33,6 +33,8 @@ class AddingMapRedirectWindow extends StatelessWidget {
                 if (location != null)
                   SingleMarkerLayer(
                     point: location!,
+                    width: 50,
+                    height: 50,
                     child: MarkerIconFactory.reportDefault(),
                   )
               ],

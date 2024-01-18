@@ -39,7 +39,7 @@ class AppMap extends StatefulWidget {
 }
 
 class _AppMapState extends State<AppMap> {
-  static const double _defaultInitialZoom = 7.0;
+  static const double _defaultInitialZoom = 2.0;
   final popupController = PopupController();
   var mapType = AppMapType.osm;
 

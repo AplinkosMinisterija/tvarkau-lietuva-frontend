@@ -15,9 +15,9 @@ class PublicReportLayer extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleMarkerLayer(
       key: ObjectKey(report),
+      width: 50,
+      height: 50,
       point: LatLng(report.latitude, report.longitude),
-      width: 25,
-      height: 30,
       alignment: Alignment.bottomCenter,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,

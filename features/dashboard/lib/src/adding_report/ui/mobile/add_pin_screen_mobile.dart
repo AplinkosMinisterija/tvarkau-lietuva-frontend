@@ -21,6 +21,7 @@ class AddPinScreenMobile extends StatefulWidget {
 class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
   static const double _locationMarkerSize = 50;
   LatLng selectedPosition = GlobalConstants.lithuaniaCenterLatLng;
+  LatLng? userPosition;
 
   bool isShowMarkers = true;
   bool isMapDisabled = false;
@@ -50,7 +51,10 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
           desiredAccuracy: LocationAccuracy.high);
 
       setState(() {
-        selectedPosition = LatLng(position.latitude, position.longitude);
+        userPosition = selectedPosition = LatLng(
+          position.latitude,
+          position.longitude,
+        );
         _isLoading = false;
       });
     }
@@ -120,7 +124,8 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                         ],
                       )
                     : AppMap(
-                        initialCenter: selectedPosition,
+                        initialCenter: userPosition ?? selectedPosition,
+                        initialZoom: userPosition != null ? 9 : null,
                         onPositionChanged: (position, _) {
                           final latLng = position.center;
                           if (latLng != null) {

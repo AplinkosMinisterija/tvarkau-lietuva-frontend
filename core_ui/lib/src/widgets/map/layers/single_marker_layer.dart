@@ -7,7 +7,7 @@ class SingleMarkerLayer extends StatelessWidget {
   final Widget child;
   final double width;
   final double height;
-  final Alignment? alignment;
+  final Alignment alignment;
 
   const SingleMarkerLayer({
     super.key,
@@ -21,12 +21,14 @@ class SingleMarkerLayer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MarkerLayer(
+      alignment: alignment,
       markers: [
         Marker(
           width: width,
           height: height,
           point: point,
           child: child,
+          alignment: alignment,
         )
       ],
     );

@@ -87,6 +87,13 @@ class _AddingScreenMobileState extends State<AddingScreenMobile> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    mapController.dispose();
+
+    super.dispose();
+  }
+
   void removeSelectedImage(int imageIndex) {
     setState(() {
       _fileBytes.removeAt(imageIndex);
