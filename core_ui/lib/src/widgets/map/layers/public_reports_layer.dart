@@ -62,7 +62,6 @@ class _PublicReportsLayerState extends State<PublicReportsLayer> {
       point: LatLng(report.latitude, report.longitude),
       width: 25,
       height: 30,
-      alignment: Alignment.bottomCenter,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: MarkerIconFactory.fromPublicReportDto(report),

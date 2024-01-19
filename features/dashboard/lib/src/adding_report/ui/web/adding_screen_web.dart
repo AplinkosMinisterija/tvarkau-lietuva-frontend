@@ -188,7 +188,6 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
                                         width: _locationMarkerSize,
                                         height: _locationMarkerSize,
                                         point: selectedPosition,
-                                        alignment: Alignment.bottomCenter,
                                         child:
                                             MarkerIconFactory.reportDefault(),
                                       )

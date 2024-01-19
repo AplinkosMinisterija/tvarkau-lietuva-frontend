@@ -33,7 +33,6 @@ class _FullReportsLayerState extends State<FullReportsLayer> {
       point: LatLng(report.latitude, report.longitude),
       width: 50,
       height: 50,
-      alignment: Alignment.bottomCenter,
       child: GestureDetector(
         onTap: widget.onTap != null ? () => widget.onTap!(report) : null,
         child: MarkerIconFactory.fromFullReport(report),

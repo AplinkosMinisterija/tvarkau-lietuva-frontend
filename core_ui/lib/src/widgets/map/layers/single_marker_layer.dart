@@ -15,7 +15,7 @@ class SingleMarkerLayer extends StatelessWidget {
     required this.child,
     this.width = 30,
     this.height = 30,
-    this.alignment = Alignment.bottomCenter,
+    this.alignment = Alignment.center,
   });
 
   @override

@@ -36,7 +36,6 @@ class _FullDumpsLayerState extends State<FullDumpsLayer> {
       ),
       width: 50,
       height: 50,
-      alignment: Alignment.bottomCenter,
       child: GestureDetector(
         onTap: widget.onTap != null ? () => widget.onTap!(dump) : null,
         child: MarkerIconFactory.dump(),
