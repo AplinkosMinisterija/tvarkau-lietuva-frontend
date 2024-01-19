@@ -57,6 +57,7 @@ class _DumpsLayerState extends State<DumpsLayer> {
       ),
       width: 50,
       height: 50,
+      alignment: Alignment.topCenter,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: MarkerIconFactory.dump(),

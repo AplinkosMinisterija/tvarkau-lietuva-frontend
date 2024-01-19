@@ -31,6 +31,7 @@ class _FullReportsLayerState extends State<FullReportsLayer> {
     return Marker(
       key: ObjectKey(report),
       point: LatLng(report.latitude, report.longitude),
+      alignment: Alignment.topCenter,
       width: 50,
       height: 50,
       child: GestureDetector(

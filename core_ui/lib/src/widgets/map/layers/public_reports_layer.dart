@@ -52,6 +52,7 @@ class _PublicReportsLayerState extends State<PublicReportsLayer> {
   Marker _reportToMarker(PublicReportDto report) {
     return Marker(
       key: ObjectKey(report),
+      alignment: Alignment.topCenter,
       point: LatLng(report.latitude, report.longitude),
       width: 25,
       height: 30,

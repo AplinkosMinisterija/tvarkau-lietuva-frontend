@@ -18,6 +18,7 @@ class PublicReportLayer extends StatelessWidget {
       width: 50,
       height: 50,
       point: LatLng(report.latitude, report.longitude),
+      alignment: Alignment.topCenter,
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         child: MarkerIconFactory.fromPublicReportDto(report),
