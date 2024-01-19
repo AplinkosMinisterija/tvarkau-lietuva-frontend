@@ -43,7 +43,7 @@ class _AppMapState extends State<AppMap> {
   static const double _defaultInitialZoom = 2.0;
   final popupController = PopupController();
 
-  _MapTileProvider tileProvider = _GeoPortalOSMTileProvider();
+  _MapTileProvider tileProvider = _OpenStreetTileProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -158,8 +158,8 @@ class _ButtonsLayer extends StatelessWidget {
 
   _MapTileProvider get _toggleTitleProvider {
     return switch (tileProvider) {
-      _GeoPortalOSMTileProvider() => _OpenStreetMapProvider(),
-      _OpenStreetMapProvider() => _GeoPortalHybridTileProvider(),
+      _GeoPortalOSMTileProvider() => _OpenStreetTileProvider(),
+      _OpenStreetTileProvider() => _GeoPortalHybridTileProvider(),
       _GeoPortalHybridTileProvider() => _GeoPortalOSMTileProvider(),
     };
   }
@@ -200,7 +200,7 @@ class _ButtonsLayer extends StatelessWidget {
                       _GeoPortalOSMTileProvider() => const Icon(
                           Icons.map,
                         ),
-                      _OpenStreetMapProvider() => const Icon(
+                      _OpenStreetTileProvider() => const Icon(
                           Icons.bug_report,
                         ),
                       _GeoPortalHybridTileProvider() => const Icon(
@@ -386,7 +386,7 @@ class _GeoPortalHybridTileProvider implements _MapTileProvider {
       'https://www.geoportal.lt/mapproxy/gisc_misrus_public/MapServer/tile/{z}/{y}/{x}';
 }
 
-class _OpenStreetMapProvider implements _MapTileProvider {
+class _OpenStreetTileProvider implements _MapTileProvider {
   @override
   String get attributionText => 'OpenStreetMap';
 
