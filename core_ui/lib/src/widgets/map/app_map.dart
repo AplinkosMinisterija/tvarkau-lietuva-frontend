@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:core/constants/global_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -43,6 +45,8 @@ class _AppMapState extends State<AppMap> {
   static const double _defaultInitialZoom = 2.0;
   final popupController = PopupController();
 
+  final StreamController<void> resetController = StreamController.broadcast();
+
   _MapTileProvider tileProvider = _OpenStreetTileProvider();
 
   @override
@@ -63,6 +67,7 @@ class _AppMapState extends State<AppMap> {
                 widget.initialCenter ?? GlobalConstants.lithuaniaCenterLatLng,
             minZoom: tileProvider.minZoom.toDouble(),
             maxZoom: tileProvider.maxZoom.toDouble(),
+            applyPointerTranslucencyToLayers: false,
             interactionOptions: InteractionOptions(
               flags: _getInteractiveFlags(),
             ),
@@ -79,6 +84,7 @@ class _AppMapState extends State<AppMap> {
           children: [
             TileLayer(
               urlTemplate: tileProvider.urlTemplate,
+              reset: resetController.stream,
               tileDisplay: const TileDisplay.instantaneous(),
               tileProvider: CancellableNetworkTileProvider(
                 silenceExceptions: true,
@@ -126,6 +132,9 @@ class _AppMapState extends State<AppMap> {
     setState(() {
       tileProvider = newTileProvider;
     });
+
+    // Reset and dispose cached
+    resetController.add(null);
   }
 
   int _getInteractiveFlags() {
@@ -139,6 +148,14 @@ class _AppMapState extends State<AppMap> {
     }
 
     return flags;
+  }
+
+  @override
+  void dispose() {
+    resetController.close();
+    popupController.dispose();
+
+    super.dispose();
   }
 }
 
