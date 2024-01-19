@@ -47,7 +47,41 @@ class _AppMapState extends State<AppMap> {
 
   final StreamController<void> resetController = StreamController.broadcast();
 
-  _MapTileProvider tileProvider = _OpenStreetTileProvider();
+  _MapTileProvider tileProvider = _GeoPortalOSMTileProvider();
+
+  // mix of [coordinateDebugTileBuilder] and [loadingTimeDebugTileBuilder] from tile_builder.dart
+  Widget tileBuilder(BuildContext context, Widget tileWidget, TileImage tile) {
+    final coords = tile.coordinates;
+
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        border: Border.all(width: 2, color: Colors.white),
+      ),
+      position: DecorationPosition.foreground,
+      child: Stack(
+        fit: StackFit.passthrough,
+        children: [
+          tileWidget,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                '${coords.x} : ${coords.y} : ${coords.z}',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              Text(
+                tile.loadFinishedAt == null
+                    ? 'Loading'
+                    // sometimes result is negative which shouldn't happen, abs() corrects it
+                    : '${(tile.loadFinishedAt!.millisecond - tile.loadStarted!.millisecond).abs()} ms',
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,11 +119,13 @@ class _AppMapState extends State<AppMap> {
             TileLayer(
               urlTemplate: tileProvider.urlTemplate,
               reset: resetController.stream,
-              tileDisplay: const TileDisplay.instantaneous(),
               tileProvider: CancellableNetworkTileProvider(
                 silenceExceptions: true,
               ),
               tileSize: tileProvider.tileSize,
+              panBuffer: 0,
+              evictErrorTileStrategy: EvictErrorTileStrategy.dispose,
+              tileBuilder: tileBuilder,
             ),
             ...widget.layers,
             if (!widget.disableInteractiveMap)
