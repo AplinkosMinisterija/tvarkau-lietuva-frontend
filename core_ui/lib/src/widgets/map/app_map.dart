@@ -42,71 +42,8 @@ class AppMap extends StatefulWidget {
 class _AppMapState extends State<AppMap> {
   static const double _defaultInitialZoom = 2.0;
   final popupController = PopupController();
-  var mapType = AppMapType.osm;
 
-  final espg3346 = proj4.Projection.parse(
-    'PROJCS["LKS_1994_Lithuania_TM",GEOGCS["GCS_LKS_1994",DATUM["D_Lithuania_1994",SPHEROID["GRS_1980",6378137.0,298.257222101]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Transverse_Mercator"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",24.0],PARAMETER["Scale_Factor",0.9998],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0]]',
-  );
-
-  static const espg3346OsmResolutions = [
-    1322.9193125052918,
-    793.7515875031751,
-    529.1677250021168,
-    264.5838625010584,
-    132.2919312505292,
-    66.1459656252646,
-    26.458386250105836,
-    13.229193125052918,
-    6.614596562526459,
-    2.6458386250105836,
-    1.3229193125052918,
-    0.5291677250021167,
-    0.26458386250105836,
-    0.13229193125052918,
-  ];
-
-  final double maxZoomOsm = espg3346OsmResolutions.length - 1;
-
-  late final espg3346OsmCRS = Proj4Crs.fromFactory(
-    code: 'EPSG:3346:osm',
-    proj4Projection: espg3346,
-    bounds: Bounds<double>(
-      const math.Point<double>(-3868431.3448, 3787209.7969000004),
-      const math.Point<double>(3227425.9922, 9284025.053),
-    ),
-    origins: const [
-      math.Point(-5122000, 10000100),
-    ],
-    resolutions: espg3346OsmResolutions,
-  );
-
-  static const espg3346HybridResolutions = [
-    1322.9193125052918,
-    793.7515875031751,
-    529.1677250021168,
-    264.5838625010584,
-    132.2919312505292,
-    66.1459656252646,
-    26.458386250105836,
-    13.229193125052918,
-    6.614596562526459,
-    2.6458386250105836,
-  ];
-
-  final double maxZoomHybrid = espg3346HybridResolutions.length - 1;
-
-  late final espg3346HybridCRS = Proj4Crs.fromFactory(
-    code: 'EPSG:3346:hybrid',
-    proj4Projection: espg3346,
-    bounds: Bounds<double>(
-      const math.Point<double>(236725.44661756046, 5930813.423926848),
-      const math.Point<double>(717678.0543561094, 6291634.374735416),
-    ),
-    origins: const [
-      math.Point(-5122000, 10000100),
-    ],
-    resolutions: espg3346HybridResolutions,
-  );
+  _MapTileProvider tileProvider = _GeoPortalOSMTileProvider();
 
   @override
   Widget build(BuildContext context) {
@@ -119,13 +56,13 @@ class _AppMapState extends State<AppMap> {
         child: FlutterMap(
           mapController: widget.mapController,
           options: MapOptions(
-            crs: _getCRS(),
+            crs: tileProvider.crs,
             onPositionChanged: widget.onPositionChanged,
             initialZoom: widget.initialZoom ?? _defaultInitialZoom,
             initialCenter:
                 widget.initialCenter ?? GlobalConstants.lithuaniaCenterLatLng,
-            minZoom: _getMinZoom(),
-            maxZoom: _getMaxZoom(),
+            minZoom: tileProvider.minZoom.toDouble(),
+            maxZoom: tileProvider.maxZoom.toDouble(),
             interactionOptions: InteractionOptions(
               flags: _getInteractiveFlags(),
             ),
@@ -141,17 +78,17 @@ class _AppMapState extends State<AppMap> {
           ),
           children: [
             TileLayer(
-              urlTemplate: _getTileUrlTemplate(),
+              urlTemplate: tileProvider.urlTemplate,
               tileDisplay: const TileDisplay.instantaneous(),
-              // tileProvider: CancellableNetworkTileProvider(
-              //   silenceExceptions: true,
-              // ),
-              tileSize: 512,
+              tileProvider: CancellableNetworkTileProvider(
+                silenceExceptions: true,
+              ),
+              tileSize: tileProvider.tileSize,
             ),
             ...widget.layers,
             if (!widget.disableInteractiveMap)
               _ButtonsLayer(
-                mapType: mapType,
+                tileProvider: tileProvider,
                 onChangeMapType: _changeMapType,
               ),
             if (!widget.disableInteractiveMap)
@@ -159,7 +96,14 @@ class _AppMapState extends State<AppMap> {
                 animationConfig: const ScaleRAWA(),
                 showFlutterMapAttribution: false,
                 alignment: AttributionAlignment.bottomLeft,
-                attributions: [_getAttribution()],
+                attributions: [
+                  TextSourceAttribution(
+                    tileProvider.attributionText,
+                    onTap: () => launchUrl(
+                      Uri.parse(tileProvider.attributionUrl),
+                    ),
+                  )
+                ],
               ),
           ],
         ),
@@ -167,64 +111,21 @@ class _AppMapState extends State<AppMap> {
     );
   }
 
-  void _changeMapType(MapController mapController, AppMapType mapType) {
+  void _changeMapType(
+    MapController mapController,
+    _MapTileProvider newTileProvider,
+  ) {
     // Satellite supports less zoom levels so we need adjustments
-    if (mapType == AppMapType.satellite &&
-        mapController.camera.zoom > maxZoomHybrid) {
-      mapController.move(mapController.camera.center, maxZoomHybrid);
+    if (mapController.camera.zoom > newTileProvider.maxZoom) {
+      mapController.move(
+        mapController.camera.center,
+        newTileProvider.maxZoom.toDouble(),
+      );
     }
 
     setState(() {
-      this.mapType = mapType;
+      tileProvider = newTileProvider;
     });
-  }
-
-  double _getMaxZoom() {
-    return switch (mapType) {
-      AppMapType.osm => maxZoomOsm,
-      AppMapType.satellite => maxZoomHybrid,
-    };
-  }
-
-  double _getMinZoom() {
-    return switch (mapType) {
-      AppMapType.osm => 0,
-      AppMapType.satellite => 1,
-    };
-  }
-
-  String _getTileUrlTemplate() {
-    return switch (mapType) {
-      AppMapType.osm =>
-        'https://www.geoportal.lt/mapproxy/gisc_pagrindinis/MapServer/tile/{z}/{y}/{x}',
-      AppMapType.satellite =>
-        'https://www.geoportal.lt/mapproxy/gisc_misrus_public/MapServer/tile/{z}/{y}/{x}'
-    };
-  }
-
-  Crs _getCRS() {
-    return switch (mapType) {
-      AppMapType.osm => espg3346OsmCRS,
-      AppMapType.satellite => espg3346HybridCRS,
-    };
-  }
-
-  TextSourceAttribution _getAttribution() {
-    return switch (mapType) {
-      AppMapType.osm => TextSourceAttribution(
-          'geoportal.lt',
-          onTap: () => launchUrl(
-            Uri.parse(
-                'https://www.geoportal.lt/mapproxy/gisc_pagrindinis/MapServer'),
-          ),
-        ),
-      AppMapType.satellite => TextSourceAttribution(
-          'Nacionalinė žemės tarnyba prie Aplinkos ministerijos',
-          onTap: () => launchUrl(
-            Uri.parse('https://www.nzt.lt/'),
-          ),
-        ),
-    };
   }
 
   int _getInteractiveFlags() {
@@ -242,14 +143,16 @@ class _AppMapState extends State<AppMap> {
 }
 
 class _ButtonsLayer extends StatelessWidget {
-  final AppMapType mapType;
-  final void Function(MapController mapController, AppMapType mapType)
-      onChangeMapType;
+  final _MapTileProvider tileProvider;
+  final void Function(
+    MapController mapController,
+    _MapTileProvider tileProvider,
+  ) onChangeMapType;
 
-  static const _fitBoundsPadding = EdgeInsets.all(12);
+  static const _fitBoundsPadding = EdgeInsets.all(16);
 
   const _ButtonsLayer({
-    required this.mapType,
+    required this.tileProvider,
     required this.onChangeMapType,
   });
 
@@ -276,21 +179,28 @@ class _ButtonsLayer extends StatelessWidget {
                 color: Colors.white.withOpacity(0.9),
               ),
               child: Tooltip(
-                message: mapType == AppMapType.osm
-                    ? 'Palydovinis žemėlapis'
-                    : 'Topografinis žemėlapis',
+                message: switch (tileProvider) {
+                  _GeoPortalOSMTileProvider() => 'Palydovinis žemėlapis',
+                  _GeoPortalHybridTileProvider() => 'Topografinis žemėlapis'
+                },
                 child: ToggleButtons(
                   onPressed: (_) {
-                    final newType = mapType == AppMapType.osm
-                        ? AppMapType.satellite
-                        : AppMapType.osm;
+                    final newTileProvider = switch (tileProvider) {
+                      _GeoPortalOSMTileProvider() =>
+                        _GeoPortalHybridTileProvider(),
+                      _GeoPortalHybridTileProvider() =>
+                        _GeoPortalOSMTileProvider()
+                    };
 
-                    onChangeMapType(controller, newType);
+                    onChangeMapType(controller, newTileProvider);
                   },
                   isSelected: const [false],
                   children: [
-                    if (mapType == AppMapType.osm) const Icon(Icons.satellite),
-                    if (mapType == AppMapType.satellite) const Icon(Icons.map),
+                    switch (tileProvider) {
+                      _GeoPortalOSMTileProvider() => const Icon(Icons.map),
+                      _GeoPortalHybridTileProvider() =>
+                        const Icon(Icons.satellite)
+                    }
                   ],
                 ),
               ),
@@ -334,4 +244,130 @@ class _ButtonsLayer extends StatelessWidget {
       ),
     );
   }
+}
+
+sealed class _MapTileProvider {
+  static final _espg3346 = proj4.Projection.parse(
+    'PROJCS["LKS_1994_Lithuania_TM",GEOGCS["GCS_LKS_1994",DATUM["D_Lithuania_1994",SPHEROID["GRS_1980",6378137.0,298.257222101]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Transverse_Mercator"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",24.0],PARAMETER["Scale_Factor",0.9998],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0]]',
+  );
+
+  final Crs crs;
+  final String urlTemplate;
+  final double tileSize;
+  final int minZoom;
+  final int maxZoom;
+  final String attributionText;
+  final String attributionUrl;
+
+  _MapTileProvider({
+    required this.crs,
+    required this.urlTemplate,
+    required this.tileSize,
+    required this.minZoom,
+    required this.maxZoom,
+    required this.attributionText,
+    required this.attributionUrl,
+  });
+}
+
+class _GeoPortalOSMTileProvider implements _MapTileProvider {
+  static const _resolutions = [
+    1322.9193125052918,
+    793.7515875031751,
+    529.1677250021168,
+    264.5838625010584,
+    132.2919312505292,
+    66.1459656252646,
+    26.458386250105836,
+    13.229193125052918,
+    6.614596562526459,
+    2.6458386250105836,
+    1.3229193125052918,
+    0.5291677250021167,
+    0.26458386250105836,
+    0.13229193125052918,
+  ];
+
+  @override
+  String get attributionText => 'geoportal.lt';
+
+  @override
+  String get attributionUrl =>
+      'https://www.geoportal.lt/mapproxy/gisc_pagrindinis/MapServer';
+
+  @override
+  Crs get crs => Proj4Crs.fromFactory(
+        code: 'EPSG:3346:gisc_pagrindinis',
+        proj4Projection: _MapTileProvider._espg3346,
+        bounds: Bounds<double>(
+          const math.Point<double>(-3868431.3448, 3787209.7969000004),
+          const math.Point<double>(3227425.9922, 9284025.053),
+        ),
+        origins: const [
+          math.Point(-5122000, 10000100),
+        ],
+        resolutions: _resolutions,
+      );
+
+  @override
+  int get maxZoom => _resolutions.length - 1;
+
+  @override
+  int get minZoom => 0;
+
+  @override
+  double get tileSize => 512;
+
+  @override
+  String get urlTemplate =>
+      'https://www.geoportal.lt/mapproxy/gisc_pagrindinis/MapServer/tile/{z}/{y}/{x}';
+}
+
+class _GeoPortalHybridTileProvider implements _MapTileProvider {
+  static const _resolutions = [
+    1322.9193125052918,
+    793.7515875031751,
+    529.1677250021168,
+    264.5838625010584,
+    132.2919312505292,
+    66.1459656252646,
+    26.458386250105836,
+    13.229193125052918,
+    6.614596562526459,
+    2.6458386250105836,
+  ];
+
+  @override
+  String get attributionText =>
+      'Nacionalinė žemės tarnyba prie Aplinkos ministerijos';
+
+  @override
+  String get attributionUrl => 'https://www.nzt.lt/';
+
+  @override
+  Crs get crs => Proj4Crs.fromFactory(
+        code: 'EPSG:3346:gisc_misrus_public',
+        proj4Projection: _MapTileProvider._espg3346,
+        bounds: Bounds<double>(
+          const math.Point<double>(236725.44661756046, 5930813.423926848),
+          const math.Point<double>(717678.0543561094, 6291634.374735416),
+        ),
+        origins: const [
+          math.Point(-5122000, 10000100),
+        ],
+        resolutions: _resolutions,
+      );
+
+  @override
+  int get maxZoom => _resolutions.length - 1;
+
+  @override
+  int get minZoom => 1;
+
+  @override
+  double get tileSize => 512;
+
+  @override
+  String get urlTemplate =>
+      'https://www.geoportal.lt/mapproxy/gisc_misrus_public/MapServer/tile/{z}/{y}/{x}';
 }
