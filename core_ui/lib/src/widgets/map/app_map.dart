@@ -91,6 +91,7 @@ class _AppMapState extends State<AppMap> {
               tileUpdateTransformer: TileUpdateTransformers.throttle(
                 const Duration(microseconds: 200),
               ),
+              tileBounds: tileProvider.tileBounds,
             ),
             ...widget.layers,
             if (!widget.disableInteractiveMap)
@@ -270,6 +271,7 @@ sealed class _MapTileProvider {
   final int maxZoom;
   final String attributionText;
   final String attributionUrl;
+  final LatLngBounds? tileBounds;
 
   _MapTileProvider({
     required this.title,
@@ -279,6 +281,7 @@ sealed class _MapTileProvider {
     required this.maxZoom,
     required this.attributionText,
     required this.attributionUrl,
+    required this.tileBounds,
   });
 }
 
@@ -332,6 +335,9 @@ class _GeoPortalOSMTileProvider implements _MapTileProvider {
 
   @override
   String get title => 'Topografinis žemėlapis';
+
+  @override
+  LatLngBounds? get tileBounds => null;
 }
 
 class _GeoPortalHybridTileProvider implements _MapTileProvider {
@@ -384,4 +390,10 @@ class _GeoPortalHybridTileProvider implements _MapTileProvider {
   @override
   String get urlTemplate =>
       'https://www.geoportal.lt/mapproxy/gisc_misrus_public/MapServer/tile/{z}/{y}/{x}';
+
+  @override
+  LatLngBounds? get tileBounds => LatLngBounds(
+        const LatLng(56.45, 26.82),
+        const LatLng(53.89, 19.02),
+      );
 }
