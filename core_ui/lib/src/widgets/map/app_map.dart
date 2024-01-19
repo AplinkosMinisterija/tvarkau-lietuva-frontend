@@ -126,6 +126,9 @@ class _AppMapState extends State<AppMap> {
               panBuffer: 0,
               evictErrorTileStrategy: EvictErrorTileStrategy.dispose,
               tileBuilder: tileBuilder,
+              tileUpdateTransformer: TileUpdateTransformers.throttle(
+                const Duration(microseconds: 200),
+              ),
             ),
             ...widget.layers,
             if (!widget.disableInteractiveMap)
