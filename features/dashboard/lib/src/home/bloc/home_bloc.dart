@@ -21,13 +21,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           await ApiProvider().getAllVisibleTrashReports();
       final List<DumpDto> dumpReports =
           await ApiProvider().getAllVisibleDumpReports();
+      final ReportStatisticsDto reportStatistics =
+          await ApiProvider().getReportStatistics();
       emit(
         ContentState(
           trashReports: trashReports,
           dumpReports: dumpReports,
+          reportStatistics: reportStatistics,
         ),
       );
     } catch (e) {
+      print(e);
       emit(
         ErrorState(errorMessage: 'Netikėta klaida'),
       );

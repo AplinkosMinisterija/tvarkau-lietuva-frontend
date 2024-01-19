@@ -76,6 +76,7 @@ Class | Method | HTTP request | Description
 [*ReportsApi*](doc/ReportsApi.md) | [**reportControllerCreateNewReport**](doc/ReportsApi.md#reportcontrollercreatenewreport) | **POST** /reports | 
 [*ReportsApi*](doc/ReportsApi.md) | [**reportControllerGetAllPublicReports**](doc/ReportsApi.md#reportcontrollergetallpublicreports) | **GET** /reports | 
 [*ReportsApi*](doc/ReportsApi.md) | [**reportControllerGetReportById**](doc/ReportsApi.md#reportcontrollergetreportbyid) | **GET** /reports/{refId} | 
+[*ReportsApi*](doc/ReportsApi.md) | [**reportControllerGetReportStatistics**](doc/ReportsApi.md#reportcontrollergetreportstatistics) | **GET** /reports/statistics | 
 
 
 ## Documentation For Models
@@ -89,6 +90,7 @@ Class | Method | HTTP request | Description
  - [LogInDto](doc/LogInDto.md)
  - [LoginRequestDto](doc/LoginRequestDto.md)
  - [PublicReportDto](doc/PublicReportDto.md)
+ - [ReportStatisticsDto](doc/ReportStatisticsDto.md)
  - [StatusRecordsDto](doc/StatusRecordsDto.md)
  - [UpdateDumpDto](doc/UpdateDumpDto.md)
 

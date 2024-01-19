@@ -42,12 +42,15 @@ class _TrashScreenState extends State<TrashScreen> {
                       onBackPress: () {
                         context.goNamed('admin');
                       },
-                      onUpdate: (String comment, String status, bool isVisible,
+                      onUpdate: (String name,
+                          String comment,
+                          String status,
+                          bool isVisible,
                           List<dio.MultipartFile> officerImages) {
                         context.read<TrashBloc>().add(UpdateReport(
                               id: state.trashReport.id,
                               refId: state.trashReport.refId,
-                              name: state.trashReport.name,
+                              name: name,
                               reportLong: state.trashReport.longitude,
                               reportLat: state.trashReport.latitude,
                               status: status,

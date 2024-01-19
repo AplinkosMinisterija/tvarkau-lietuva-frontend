@@ -12,6 +12,7 @@ Method | HTTP request | Description
 [**reportControllerCreateNewReport**](ReportsApi.md#reportcontrollercreatenewreport) | **POST** /reports | 
 [**reportControllerGetAllPublicReports**](ReportsApi.md#reportcontrollergetallpublicreports) | **GET** /reports | 
 [**reportControllerGetReportById**](ReportsApi.md#reportcontrollergetreportbyid) | **GET** /reports/{refId} | 
+[**reportControllerGetReportStatistics**](ReportsApi.md#reportcontrollergetreportstatistics) | **GET** /reports/statistics | 
 
 
 # **reportControllerCreateNewReport**
@@ -129,6 +130,43 @@ Name | Type | Description  | Notes
 ### Return type
 
 [**PublicReportDto**](PublicReportDto.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **reportControllerGetReportStatistics**
+> ReportStatisticsDto reportControllerGetReportStatistics()
+
+
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+
+final api = ApiClient().getReportsApi();
+
+try {
+    final response = api.reportControllerGetReportStatistics();
+    print(response);
+} catch on DioError (e) {
+    print('Exception when calling ReportsApi->reportControllerGetReportStatistics: $e\n');
+}
+```
+
+### Parameters
+This endpoint does not need any parameter.
+
+### Return type
+
+[**ReportStatisticsDto**](ReportStatisticsDto.md)
 
 ### Authorization
 
