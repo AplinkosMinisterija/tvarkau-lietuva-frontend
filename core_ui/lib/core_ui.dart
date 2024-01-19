@@ -46,7 +46,6 @@ export 'src/widgets/main_screen/information_window/info_trash_window_box.dart';
 export 'src/widgets/main_screen/information_window/info_dump_window_box.dart';
 export 'src/widgets/main_screen/main_dump_map.dart';
 export 'src/widgets/main_screen/main_trash_map.dart';
-export 'src/widgets/main_screen/map_type_switcher.dart';
 export 'src/widgets/main_screen/map_type_switcher_button.dart';
 export 'src/widgets/main_screen/title_widget.dart';
 export 'src/widgets/main_screen/report_type_switcher.dart';
