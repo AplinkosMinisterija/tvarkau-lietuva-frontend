@@ -63,7 +63,7 @@ class _AppMapState extends State<AppMap> {
             initialZoom: widget.initialZoom ?? _defaultInitialZoom,
             initialCenter:
                 widget.initialCenter ?? GlobalConstants.lithuaniaCenterLatLng,
-            minZoom: tileProvider.minZoom.toDouble(),
+            minZoom: 1,
             maxZoom: tileProvider.maxZoom.toDouble(),
             interactionOptions: InteractionOptions(
               flags: _getInteractiveFlags(),
@@ -267,7 +267,6 @@ sealed class _MapTileProvider {
   final Crs crs;
   final String urlTemplate;
   final double tileSize;
-  final int minZoom;
   final int maxZoom;
   final String attributionText;
   final String attributionUrl;
@@ -277,7 +276,6 @@ sealed class _MapTileProvider {
     required this.crs,
     required this.urlTemplate,
     required this.tileSize,
-    required this.minZoom,
     required this.maxZoom,
     required this.attributionText,
     required this.attributionUrl,
@@ -324,9 +322,6 @@ class _GeoPortalOSMTileProvider implements _MapTileProvider {
 
   @override
   int get maxZoom => _resolutions.length - 1;
-
-  @override
-  int get minZoom => 0;
 
   @override
   double get tileSize => 512;
@@ -382,9 +377,6 @@ class _GeoPortalHybridTileProvider implements _MapTileProvider {
 
   @override
   int get maxZoom => _resolutions.length - 1;
-
-  @override
-  int get minZoom => 1;
 
   @override
   double get tileSize => 512;
