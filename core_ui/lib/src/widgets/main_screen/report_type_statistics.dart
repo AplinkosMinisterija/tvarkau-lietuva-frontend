@@ -19,22 +19,18 @@ class ReportTypeStatistics extends StatelessWidget {
   Widget build(BuildContext context) {
     return Tooltip(
       message: tooltipText,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/icons/marker_pins/${imageShort}_marker.png',
-              width: 25,
-              height: 25,
-            ),
-            Text(
-              '$title: $quantity',
-            )
-          ],
-        ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(
+            'assets/icons/marker_pins/${imageShort}_marker.png',
+            width: 25,
+            height: 25,
+          ),
+          Text(
+            '$title: $quantity',
+          )
+        ],
       ),
     );
   }

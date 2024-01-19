@@ -15,9 +15,8 @@ class ReportStatistics extends StatelessWidget {
   Widget build(BuildContext context) {
     return Wrap(
       alignment: WrapAlignment.center,
-      spacing: 8,
-      runSpacing: 4,
-      direction: Axis.horizontal,
+      spacing: 20,
+      runSpacing: 5,
       children: [
         ReportTypeStatistics(
           title: 'Gauti',
