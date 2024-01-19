@@ -13,8 +13,6 @@ import 'dart:math' as math;
 
 typedef MapTapCallback = void Function(LatLng position);
 
-enum AppMapType { osm, satellite }
-
 class AppMap extends StatefulWidget {
   final LatLng? initialCenter;
   final double? initialZoom;
@@ -170,8 +168,7 @@ class _ButtonsLayer extends StatelessWidget {
 
   _MapTileProvider get _toggleTitleProvider {
     return switch (tileProvider) {
-      _GeoPortalOSMTileProvider() => _OpenStreetTileProvider(),
-      _OpenStreetTileProvider() => _GeoPortalHybridTileProvider(),
+      _GeoPortalOSMTileProvider() => _GeoPortalHybridTileProvider(),
       _GeoPortalHybridTileProvider() => _GeoPortalOSMTileProvider(),
     };
   }
@@ -211,9 +208,6 @@ class _ButtonsLayer extends StatelessWidget {
                     switch (_toggleTitleProvider) {
                       _GeoPortalOSMTileProvider() => const Icon(
                           Icons.map,
-                        ),
-                      _OpenStreetTileProvider() => const Icon(
-                          Icons.bug_report,
                         ),
                       _GeoPortalHybridTileProvider() => const Icon(
                           Icons.satellite,
@@ -398,30 +392,4 @@ class _GeoPortalHybridTileProvider implements _MapTileProvider {
   @override
   String get urlTemplate =>
       'https://www.geoportal.lt/mapproxy/gisc_misrus_public/MapServer/tile/{z}/{y}/{x}';
-}
-
-class _OpenStreetTileProvider implements _MapTileProvider {
-  @override
-  String get attributionText => 'OpenStreetMap';
-
-  @override
-  String get attributionUrl => 'https://www.openstreetmap.org/';
-
-  @override
-  Crs get crs => const Epsg3857();
-
-  @override
-  int get maxZoom => 21;
-
-  @override
-  int get minZoom => 0;
-
-  @override
-  double get tileSize => 256;
-
-  @override
-  String get urlTemplate => 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
-
-  @override
-  String get title => 'OpenStreetMap žemėlapis';
 }
