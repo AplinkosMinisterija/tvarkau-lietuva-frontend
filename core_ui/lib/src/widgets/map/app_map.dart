@@ -143,9 +143,9 @@ class _AppMapState extends State<AppMap> {
             TileLayer(
               urlTemplate: _getTileUrlTemplate(),
               tileDisplay: const TileDisplay.instantaneous(),
-              tileProvider: CancellableNetworkTileProvider(
-                silenceExceptions: true,
-              ),
+              // tileProvider: CancellableNetworkTileProvider(
+              //   silenceExceptions: true,
+              // ),
               tileSize: 512,
             ),
             ...widget.layers,
