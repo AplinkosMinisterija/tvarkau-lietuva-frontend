@@ -142,6 +142,7 @@ class _AppMapState extends State<AppMap> {
           children: [
             TileLayer(
               urlTemplate: _getTileUrlTemplate(),
+              tileDisplay: const TileDisplay.instantaneous(),
               tileProvider: CancellableNetworkTileProvider(
                 silenceExceptions: true,
               ),
