@@ -156,6 +156,14 @@ class _ButtonsLayer extends StatelessWidget {
     required this.onChangeMapType,
   });
 
+  _MapTileProvider get _toggleTitleProvider {
+    return switch (tileProvider) {
+      _GeoPortalOSMTileProvider() => _OpenStreetMapProvider(),
+      _OpenStreetMapProvider() => _GeoPortalHybridTileProvider(),
+      _GeoPortalHybridTileProvider() => _GeoPortalOSMTileProvider(),
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     final controller = MapController.of(context);
@@ -179,27 +187,25 @@ class _ButtonsLayer extends StatelessWidget {
                 color: Colors.white.withOpacity(0.9),
               ),
               child: Tooltip(
-                message: switch (tileProvider) {
-                  _GeoPortalOSMTileProvider() => 'Palydovinis žemėlapis',
-                  _GeoPortalHybridTileProvider() => 'Topografinis žemėlapis'
-                },
+                message: _toggleTitleProvider.title,
                 child: ToggleButtons(
                   onPressed: (_) {
-                    final newTileProvider = switch (tileProvider) {
-                      _GeoPortalOSMTileProvider() =>
-                        _GeoPortalHybridTileProvider(),
-                      _GeoPortalHybridTileProvider() =>
-                        _GeoPortalOSMTileProvider()
-                    };
+                    final newTileProvider = _toggleTitleProvider;
 
                     onChangeMapType(controller, newTileProvider);
                   },
                   isSelected: const [false],
                   children: [
-                    switch (tileProvider) {
-                      _GeoPortalOSMTileProvider() => const Icon(Icons.map),
-                      _GeoPortalHybridTileProvider() =>
-                        const Icon(Icons.satellite)
+                    switch (_toggleTitleProvider) {
+                      _GeoPortalOSMTileProvider() => const Icon(
+                          Icons.map,
+                        ),
+                      _OpenStreetMapProvider() => const Icon(
+                          Icons.bug_report,
+                        ),
+                      _GeoPortalHybridTileProvider() => const Icon(
+                          Icons.satellite,
+                        ),
                     }
                   ],
                 ),
@@ -251,6 +257,7 @@ sealed class _MapTileProvider {
     'PROJCS["LKS_1994_Lithuania_TM",GEOGCS["GCS_LKS_1994",DATUM["D_Lithuania_1994",SPHEROID["GRS_1980",6378137.0,298.257222101]],PRIMEM["Greenwich",0.0],UNIT["Degree",0.0174532925199433]],PROJECTION["Transverse_Mercator"],PARAMETER["False_Easting",500000.0],PARAMETER["False_Northing",0.0],PARAMETER["Central_Meridian",24.0],PARAMETER["Scale_Factor",0.9998],PARAMETER["Latitude_Of_Origin",0.0],UNIT["Meter",1.0]]',
   );
 
+  final String title;
   final Crs crs;
   final String urlTemplate;
   final double tileSize;
@@ -260,6 +267,7 @@ sealed class _MapTileProvider {
   final String attributionUrl;
 
   _MapTileProvider({
+    required this.title,
     required this.crs,
     required this.urlTemplate,
     required this.tileSize,
@@ -321,6 +329,9 @@ class _GeoPortalOSMTileProvider implements _MapTileProvider {
   @override
   String get urlTemplate =>
       'https://www.geoportal.lt/mapproxy/gisc_pagrindinis/MapServer/tile/{z}/{y}/{x}';
+
+  @override
+  String get title => 'Topografinis žemėlapis';
 }
 
 class _GeoPortalHybridTileProvider implements _MapTileProvider {
@@ -336,6 +347,9 @@ class _GeoPortalHybridTileProvider implements _MapTileProvider {
     6.614596562526459,
     2.6458386250105836,
   ];
+
+  @override
+  String get title => 'Palydovinis žemėlapis';
 
   @override
   String get attributionText =>
@@ -370,4 +384,30 @@ class _GeoPortalHybridTileProvider implements _MapTileProvider {
   @override
   String get urlTemplate =>
       'https://www.geoportal.lt/mapproxy/gisc_misrus_public/MapServer/tile/{z}/{y}/{x}';
+}
+
+class _OpenStreetMapProvider implements _MapTileProvider {
+  @override
+  String get attributionText => 'OpenStreetMap';
+
+  @override
+  String get attributionUrl => 'https://www.openstreetmap.org/';
+
+  @override
+  Crs get crs => const Epsg3857();
+
+  @override
+  int get maxZoom => 21;
+
+  @override
+  int get minZoom => 0;
+
+  @override
+  double get tileSize => 256;
+
+  @override
+  String get urlTemplate => 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+
+  @override
+  String get title => 'OpenStreetMap žemėlapis';
 }
