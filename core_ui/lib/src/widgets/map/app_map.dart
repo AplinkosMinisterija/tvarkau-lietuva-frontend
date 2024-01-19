@@ -67,7 +67,6 @@ class _AppMapState extends State<AppMap> {
                 widget.initialCenter ?? GlobalConstants.lithuaniaCenterLatLng,
             minZoom: tileProvider.minZoom.toDouble(),
             maxZoom: tileProvider.maxZoom.toDouble(),
-            applyPointerTranslucencyToLayers: false,
             interactionOptions: InteractionOptions(
               flags: _getInteractiveFlags(),
             ),
@@ -125,14 +124,6 @@ class _AppMapState extends State<AppMap> {
     MapController mapController,
     _MapTileProvider newTileProvider,
   ) {
-    // Satellite supports less zoom levels so we need adjustments
-    if (mapController.camera.zoom > newTileProvider.maxZoom) {
-      mapController.move(
-        mapController.camera.center,
-        newTileProvider.maxZoom.toDouble(),
-      );
-    }
-
     setState(() {
       tileProvider = newTileProvider;
     });
@@ -314,7 +305,6 @@ class _GeoPortalOSMTileProvider implements _MapTileProvider {
     1.3229193125052918,
     0.5291677250021167,
     0.26458386250105836,
-    0.13229193125052918,
   ];
 
   @override
@@ -367,6 +357,9 @@ class _GeoPortalHybridTileProvider implements _MapTileProvider {
     13.229193125052918,
     6.614596562526459,
     2.6458386250105836,
+    1.3229193125052918,
+    0.5291677250021167,
+    0.26458386250105836,
   ];
 
   @override
