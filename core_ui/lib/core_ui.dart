@@ -8,6 +8,17 @@ export 'src/widgets/app_error_dialog.dart';
 export 'src/widgets/app_loader.dart';
 export 'src/widgets/error_reload_widget.dart';
 
+// Map
+export 'src/widgets/map/app_map.dart';
+export 'src/widgets/map/layers/public_reports_layer.dart';
+export 'src/widgets/map/layers/public_report_layer.dart';
+export 'src/widgets/map/layers/dumps_layer.dart';
+export 'src/widgets/map/layers/single_marker_layer.dart';
+export 'src/widgets/map/layers/full_dumps_layer.dart';
+export 'src/widgets/map/layers/full_reports_layer.dart';
+export 'src/widgets/map/layers/clustered_map_layer.dart';
+export 'src/widgets/map/marker_icon_factory.dart';
+
 //Adding screen
 export 'src/widgets/adding_screen/cancel_button.dart';
 export 'src/widgets/adding_screen/mark_button.dart';
@@ -30,13 +41,11 @@ export 'src/widgets/main_screen/mobile/footer/footer_contacts_mobile_test.dart';
 //Main screen
 export 'src/widgets/main_screen/mobile/location_search_button.dart';
 export 'src/widgets/main_screen/background_widget.dart';
-export 'src/widgets/main_screen/information_window/custom_info_window.dart';
 export 'src/widgets/main_screen/department_logo.dart';
 export 'src/widgets/main_screen/information_window/info_trash_window_box.dart';
 export 'src/widgets/main_screen/information_window/info_dump_window_box.dart';
 export 'src/widgets/main_screen/main_dump_map.dart';
 export 'src/widgets/main_screen/main_trash_map.dart';
-export 'src/widgets/main_screen/map_type_switcher.dart';
 export 'src/widgets/main_screen/map_type_switcher_button.dart';
 export 'src/widgets/main_screen/title_widget.dart';
 export 'src/widgets/main_screen/report_type_switcher.dart';
@@ -59,7 +68,6 @@ export 'src/widgets/main_screen/mobile/adding_screen/image_add_button_mobile.dar
 export 'src/widgets/main_screen/mobile/adding_screen/mark_button_mobile.dart';
 export 'src/widgets/main_screen/mobile/adding_screen/save_pin_button_mobile.dart';
 export 'src/widgets/main_screen/mobile/adding_screen/change_visibility_button_mobile.dart';
-export 'src/widgets/main_screen/mobile/map_type_change_dialog.dart';
 export 'src/widgets/main_screen/mobile/adding_screen/image_collage_mobile.dart';
 export 'src/widgets/main_screen/mobile/adding_screen/image_add_button_admin.dart';
 export 'src/widgets/main_screen/mobile/report_statistics.dart';

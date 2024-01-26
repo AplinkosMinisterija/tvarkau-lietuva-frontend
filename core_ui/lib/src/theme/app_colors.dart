@@ -1,6 +1,8 @@
 part of app_theme;
 
 class AppColors {
+  static const Color primary = Color.fromRGBO(57, 97, 84, 1);
+
   static const Color transparent = Color.fromRGBO(0, 0, 0, 0);
   static const Color white = Color.fromRGBO(255, 255, 255, 1);
   static const Color selago = Color.fromRGBO(248, 249, 254, 1);

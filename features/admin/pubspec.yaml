@@ -23,7 +23,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   openid_client: ^0.4.6
   google_fonts: ^4.0.3
-  google_maps_flutter: ^2.2.3
   auto_size_text: ^3.0.0
   universal_io: ^2.2.0
   aad_oauth: ^0.4.4
@@ -32,8 +31,8 @@ dependencies:
   go_router: ^10.1.2
   dio: ^5.0.0
   http_parser: ^4.0.2
-  syncfusion_flutter_datagrid: ^21.2.10
-  syncfusion_flutter_core: ^21.2.10
+  syncfusion_flutter_datagrid: ^24.1.46
+  syncfusion_flutter_core: ^24.1.46
   collection: ^1.17.2
 
 dev_dependencies:
