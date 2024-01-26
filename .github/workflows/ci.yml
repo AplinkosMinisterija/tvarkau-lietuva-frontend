@@ -13,9 +13,8 @@ jobs:
     name: Dart analyze
     runs-on: ubuntu-latest
     permissions:
-      security-events: write
       contents: read
-      actions: read
+      pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,17 +25,11 @@ jobs:
           channel: 'stable'
           cache: true
 
-      - name: Analyze project
-        run: flutter analyze > flutter-lints.txt || true
+      - run: flutter pub get
 
-      - name: Flutter Analyze to SARIF
-        uses: advanced-security/dart-analyzer-sarif@v1
-        with:
-          input: flutter-lints.txt
-          output: flutter-lints.sarif
+      - run: flutter analyze --write=flutter_analyze.log --no-fatal-infos
 
-      - name: Upload SARIF
-        uses: github/codeql-action/upload-sarif@v2
+      - if: ${{ !cancelled() }}
+        uses: yorifuji/flutter-analyze-commenter@v1
         with:
-          sarif_file: flutter-lints.sarif
-          category: flutter-lints
+          analyze-log: flutter_analyze.log    # file path for analyze log
