@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:core/constants/global_constants.dart';
+import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_map_cancellable_tile_provider/flutter_map_cancellable_tile_provider.dart';
+import 'package:flutter_map_cache/flutter_map_cache.dart';
 import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
+import 'package:dio/dio.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:proj4dart/proj4dart.dart' as proj4;
 import 'dart:math' as math;
@@ -42,6 +44,10 @@ class AppMap extends StatefulWidget {
 class _AppMapState extends State<AppMap> {
   static const double _defaultInitialZoom = 2.0;
   final popupController = PopupController();
+  final dio = Dio(BaseOptions(
+    connectTimeout: const Duration(seconds: 5),
+    receiveTimeout: const Duration(seconds: 5),
+  ));
 
   final StreamController<void> resetController = StreamController.broadcast();
 
@@ -82,8 +88,10 @@ class _AppMapState extends State<AppMap> {
             TileLayer(
               urlTemplate: tileProvider.urlTemplate,
               reset: resetController.stream,
-              tileProvider: CancellableNetworkTileProvider(
-                silenceExceptions: true,
+              tileProvider: CachedTileProvider(
+                store: HiveCacheStore(null, hiveBoxName: 'map_tiles'),
+                dio: dio,
+                maxStale: const Duration(days: 30),
               ),
               tileSize: tileProvider.tileSize,
               panBuffer: 0,
@@ -148,6 +156,7 @@ class _AppMapState extends State<AppMap> {
   void dispose() {
     resetController.close();
     popupController.dispose();
+    dio.close(force: true);
 
     super.dispose();
   }
