@@ -25,7 +25,6 @@ dependencies:
   auto_size_text: ^3.0.0
   google_fonts: ^4.0.3
   dotted_line: ^3.2.2
-  syncfusion_flutter_pdfviewer: ^21.2.10
   pointer_interceptor: ^0.9.3+4
   geolocator: ^10.0.1
   go_router: ^10.1.2

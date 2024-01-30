@@ -2,7 +2,6 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:dashboard/src/adding_report/ui/web/confirmation_screen.dart';
 import 'package:flutter/material.dart';
-import '../../home/ui/data_security_information.dart';
 import '../bloc/adding_bloc.dart';
 import 'web/adding_screen_web.dart';
 import '../ui/mobile/adding_screen_mobile.dart';
@@ -41,12 +40,6 @@ class AddingScreen extends StatelessWidget {
                             ),
                           );
                     },
-                    onDataSecurityTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) =>
-                              const DataSecurityInformation());
-                    },
                   );
                 } else {
                   return AddingScreenMobile(
@@ -63,12 +56,6 @@ class AddingScreen extends StatelessWidget {
                               imageFiles: files,
                             ),
                           );
-                    },
-                    onDataSecurityTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) =>
-                              const DataSecurityInformation());
                     },
                   );
                 }

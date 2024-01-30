@@ -18,7 +18,6 @@ class AddingScreenWeb extends StatefulWidget {
     required this.height,
     required this.reports,
     required this.onAddTap,
-    required this.onDataSecurityTap,
     super.key,
   });
 
@@ -27,7 +26,6 @@ class AddingScreenWeb extends StatefulWidget {
   final List<PublicReportDto> reports;
   final Function(String, String, double, double, List<dio.MultipartFile>)
       onAddTap;
-  final VoidCallback onDataSecurityTap;
 
   @override
   State<AddingScreenWeb> createState() => _AddingScreenWebState();
@@ -615,7 +613,6 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
                                           LaunchUrl().launch(
                                               'https://aad.lrv.lt/lt/administracine-informacija/asmens-duomenu-apsauga/');
                                         },
-                                        //widget.onDataSecurityTap,
                                         child: Text(
                                           'Asmens duomenų apsaugos\n tvarkymo taisyklėmis',
                                           textAlign: TextAlign.center,
