@@ -17,17 +17,19 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     Emitter<HomeState> emit,
   ) async {
     try {
-      final List<PublicReportDto> trashReports =
-          await ApiProvider().getAllVisibleTrashReports();
-      final List<DumpDto> dumpReports =
-          await ApiProvider().getAllVisibleDumpReports();
-      final ReportStatisticsDto reportStatistics =
-          await ApiProvider().getReportStatistics();
+      final responses = await Future.wait(
+        [
+          ApiProvider().getAllVisibleTrashReports(),
+          ApiProvider().getAllVisibleDumpReports(),
+          ApiProvider().getReportStatistics(),
+        ],
+        eagerError: true,
+      );
       emit(
         ContentState(
-          trashReports: trashReports,
-          dumpReports: dumpReports,
-          reportStatistics: reportStatistics,
+          trashReports: responses[0] as List<PublicReportDto>,
+          dumpReports: responses[1] as List<DumpDto>,
+          reportStatistics: responses[2] as ReportStatisticsDto,
         ),
       );
     } catch (e) {

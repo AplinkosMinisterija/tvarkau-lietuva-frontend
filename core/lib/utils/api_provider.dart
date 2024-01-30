@@ -1,42 +1,54 @@
-import 'package:built_collection/built_collection.dart';
-import 'package:dio/dio.dart';
-import 'package:core/core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:api_client/api_client.dart';
+import 'package:built_collection/built_collection.dart';
+import 'package:core/core.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 class ApiProvider {
-  ApiProvider();
+  ApiProvider._(
+      {required ApiClient publicClient, required ApiClient adminClient})
+      : adminApi = adminClient.getAdminApi(),
+        dumpsApi = publicClient.getDumpsApi(),
+        reportsApi = publicClient.getReportsApi(),
+        authApi = publicClient.getAuthApi();
 
-  final dumpsApi = ApiClient(
-    basePathOverride: GlobalConstants.basePath,
-  ).getDumpsApi();
+  static final ApiProvider _instance = ApiProvider._(
+    publicClient: _publicClient,
+    adminClient: _adminClient,
+  );
 
-  final reportsApi = ApiClient(
-    basePathOverride: GlobalConstants.basePath,
-  ).getReportsApi();
+  static get _publicClient => ApiClient(
+        basePathOverride: GlobalConstants.basePath,
+      );
 
-  final adminApi = ApiClient(
-    basePathOverride: GlobalConstants.basePath,
-    interceptors: [
-      InterceptorsWrapper(
-        onRequest:
-            (RequestOptions options, RequestInterceptorHandler handler) async {
-          final authKey = await SecureStorageProvider().getJwtToken();
-          if (authKey != null) {
-            options.headers['Authorization'] = 'Bearer $authKey';
-          } else {
-            throw Exception('No auth key found');
-          }
-          return handler.next(options);
-        },
-      ),
-      if (kDebugMode) LogInterceptor(responseBody: false)
-    ],
-  ).getAdminApi();
+  static get _adminClient => ApiClient(
+        basePathOverride: GlobalConstants.basePath,
+        interceptors: [
+          InterceptorsWrapper(
+            onRequest: (RequestOptions options,
+                RequestInterceptorHandler handler) async {
+              final authKey = await SecureStorageProvider().getJwtToken();
+              if (authKey != null) {
+                options.headers['Authorization'] = 'Bearer $authKey';
+              } else {
+                throw Exception('No auth key found');
+              }
+              return handler.next(options);
+            },
+          ),
+          if (kDebugMode) LogInterceptor(responseBody: false)
+        ],
+      );
 
-  final authApi = ApiClient(
-    basePathOverride: GlobalConstants.basePath,
-  ).getAuthApi();
+  factory ApiProvider() => _instance;
+
+  final DumpsApi dumpsApi;
+
+  final ReportsApi reportsApi;
+
+  final AdminApi adminApi;
+
+  final AuthApi authApi;
 
   Future<List<FullReportDto>> getAllTrashReports() async {
     final response = await adminApi.adminControllerGetAllReports(
