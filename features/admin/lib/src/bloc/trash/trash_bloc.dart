@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:dio/dio.dart' as dio;
@@ -29,13 +31,12 @@ class TrashBloc extends Bloc<TrashEvent, TrashState> {
 
       final FullReportDto trashReport =
           await ApiProvider().getFullTrashReportById(event.refId);
-      
-        emit(
-          ContentState(
-            trashReport: trashReport,
-          ),
-        );
-      
+
+      emit(
+        ContentState(
+          trashReport: trashReport,
+        ),
+      );
     } catch (e) {
       emit(
         ErrorState(errorMessage: 'Something went wrong'),
@@ -62,7 +63,9 @@ class TrashBloc extends Bloc<TrashEvent, TrashState> {
         comment: event.comment,
         isVisible: event.isVisible,
         isDeleted: event.isDeleted,
-        officerImageFiles: event.officerImageFiles,
+        officerImageFiles: event.officerImageFiles
+            .map((s) => dio.MultipartFile.fromBytes(s))
+            .toList(),
         officerImageUrls: event.officerImageUrls,
         imageUrls: event.imageUrls,
       );
@@ -70,12 +73,11 @@ class TrashBloc extends Bloc<TrashEvent, TrashState> {
       final FullReportDto trashReport =
           await ApiProvider().getFullTrashReportById(event.refId);
 
-        emit(
-          ContentState(
-            trashReport: trashReport,
-          ),
-        );
-
+      emit(
+        ContentState(
+          trashReport: trashReport,
+        ),
+      );
     } catch (e) {
       emit(
         ErrorState(errorMessage: 'Įvyko netikėta klaida'),

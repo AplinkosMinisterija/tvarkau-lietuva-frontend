@@ -9,14 +9,14 @@ class AddReport implements AddingEvent {
   final String textValue;
   final double selectedLat;
   final double selectedLong;
-  final List<dio.MultipartFile> imageFiles;
+  final List<Uint8List> images;
 
   AddReport({
     required this.emailValue,
     required this.textValue,
     required this.selectedLat,
     required this.selectedLong,
-    required this.imageFiles,
+    required this.images,
   });
 }
 
