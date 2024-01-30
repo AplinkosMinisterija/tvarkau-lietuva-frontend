@@ -1,7 +1,6 @@
 library core;
 
 export 'package:flutter_bloc/flutter_bloc.dart';
-export 'package:flutter_dotenv/flutter_dotenv.dart';
 export 'utils/secure_storage_provider.dart';
 export 'utils/api_provider.dart';
 export 'constants/global_constants.dart';
