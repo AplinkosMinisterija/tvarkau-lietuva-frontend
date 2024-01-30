@@ -23,3 +23,9 @@ cd features/dashboard || exit
 flutter clean && flutter clean cache && flutter pub get
 cd ../..
 printf '\n\n'
+
+printf "admin pub get\n"
+cd features/admin || exit
+flutter clean && flutter clean cache && flutter pub get
+cd ../..
+printf '\n\n'
