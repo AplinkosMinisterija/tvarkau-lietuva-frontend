@@ -33,3 +33,15 @@ jobs:
         uses: yorifuji/flutter-analyze-commenter@v1
         with:
           analyze-log: flutter_analyze.log    # file path for analyze log
+
+  validate-openapi:
+    name: Validate OpenApi contract
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Lint OpenApi.yaml
+        run: npx @redocly/cli lint openapi.yaml || true
