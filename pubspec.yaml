@@ -40,6 +40,7 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   openapi_generator: ^5.0.2
   flutter_native_splash: ^2.3.9
+  melos: ^3.4.0
 
 flutter:
   uses-material-design: true
