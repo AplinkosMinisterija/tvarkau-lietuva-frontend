@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
-import 'package:dio/dio.dart' as dio;
 
 part 'trash_event.dart';
 
@@ -63,9 +62,7 @@ class TrashBloc extends Bloc<TrashEvent, TrashState> {
         comment: event.comment,
         isVisible: event.isVisible,
         isDeleted: event.isDeleted,
-        officerImageFiles: event.officerImageFiles
-            .map((s) => dio.MultipartFile.fromBytes(s))
-            .toList(),
+        officerImageFiles: event.officerImageFiles,
         officerImageUrls: event.officerImageUrls,
         imageUrls: event.imageUrls,
       );
