@@ -1,8 +1,9 @@
+import 'dart:typed_data';
+
 import 'package:core/utils/extensions.dart';
 import 'package:api_client/api_client.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:dio/dio.dart' as dio;
 import '../common/custom_colors.dart';
 import '../common/custom_styles.dart';
 import '../widgets/base_admin_screen.dart';
@@ -17,7 +18,7 @@ class TrashWindow extends StatefulWidget {
   final FullReportDto trash;
   final VoidCallback onBackPress;
   final Function(String name, String comment, String status, bool isVisible,
-      List<dio.MultipartFile> officerImages) onUpdate;
+      List<Uint8List> officerImages) onUpdate;
   final VoidCallback onDelete;
   final VoidCallback onRestore;
 
@@ -39,7 +40,7 @@ class _TrashWindowState extends State<TrashWindow> {
   String comment = '';
   String status = '';
   String name = '';
-  List<dio.MultipartFile> officerImages = [];
+  List<Uint8List> officerImages = [];
   int statusIndex = 0;
 
   Set<Marker> markers = {};
@@ -300,7 +301,7 @@ class _TrashWindowState extends State<TrashWindow> {
             });
           },
           answerValue: comment,
-          onImageUpload: (List<dio.MultipartFile> uploadedOfficerImages) {
+          onImageUpload: (uploadedOfficerImages) {
             setState(() {
               officerImages = uploadedOfficerImages;
             });
@@ -450,7 +451,7 @@ class _TrashWindowState extends State<TrashWindow> {
             });
           },
           answerValue: comment,
-          onImageUpload: (List<dio.MultipartFile> officerImages) {
+          onImageUpload: (officerImages) {
             setState(() {
               officerImages = officerImages;
             });

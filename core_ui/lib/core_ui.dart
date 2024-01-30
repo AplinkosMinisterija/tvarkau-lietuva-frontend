@@ -13,7 +13,6 @@ export 'src/widgets/adding_screen/cancel_button.dart';
 export 'src/widgets/adding_screen/mark_button.dart';
 export 'src/widgets/adding_screen/image_collage.dart';
 export 'src/widgets/adding_screen/image_add_button.dart';
-export 'src/widgets/adding_screen/image_picker/image_picker_web.dart';
 export 'src/widgets/main_screen/web/adding_screen/instructions_widget.dart';
 export 'src/widgets/main_screen/web/adding_screen/exit_header.dart';
 export 'src/widgets/route_error_screen.dart';

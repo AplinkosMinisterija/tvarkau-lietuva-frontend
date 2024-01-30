@@ -1,6 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:api_client/api_client.dart';
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart' as dio;
 import '../common/custom_colors.dart';
 import '../common/custom_styles.dart';
 import 'aad_answer_tab.dart';
@@ -39,7 +40,7 @@ class TrashTabs extends StatefulWidget {
   final String answerValue;
   final VoidCallback onBackPress;
   final VoidCallback onSave;
-  final Function(List<dio.MultipartFile>) onImageUpload;
+  final Function(List<Uint8List>) onImageUpload;
 
   @override
   State<TrashTabs> createState() => _TrashTabsState();
@@ -59,7 +60,7 @@ class _TrashTabsState extends State<TrashTabs> {
             widget.onAnswerChange(value);
           },
           answerValue: widget.answerValue,
-          onImageUpload: (List<dio.MultipartFile> uploadedOfficerImages) {
+          onImageUpload: (uploadedOfficerImages) {
             widget.onImageUpload(uploadedOfficerImages);
           },
           onBackPress: () {

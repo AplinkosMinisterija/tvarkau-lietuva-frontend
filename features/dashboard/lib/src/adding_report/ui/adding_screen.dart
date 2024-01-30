@@ -36,7 +36,7 @@ class AddingScreen extends StatelessWidget {
                               textValue: text,
                               selectedLat: lat,
                               selectedLong: long,
-                              imageFiles: files,
+                              images: files,
                             ),
                           );
                     },
@@ -53,7 +53,7 @@ class AddingScreen extends StatelessWidget {
                               textValue: text,
                               selectedLat: lat,
                               selectedLong: long,
-                              imageFiles: files,
+                              images: files,
                             ),
                           );
                     },
