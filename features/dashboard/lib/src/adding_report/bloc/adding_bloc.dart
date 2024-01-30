@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
-import 'package:dio/dio.dart' as dio;
 
 part 'adding_event.dart';
 
@@ -50,8 +49,7 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
         textValue: event.textValue,
         selectedLat: event.selectedLat,
         selectedLong: event.selectedLong,
-        imageFiles:
-            event.images.map((s) => dio.MultipartFile.fromBytes(s)).toList(),
+        imageFiles: event.images,
       );
 
       emit(
