@@ -14,13 +14,13 @@ class _$CreateDumpDto extends CreateDumpDto {
   @override
   final num reportLat;
   @override
-  final String address;
+  final String? address;
   @override
-  final String phone;
+  final String? phone;
   @override
-  final String workingHours;
+  final String? workingHours;
   @override
-  final String moreInformation;
+  final String? moreInformation;
 
   factory _$CreateDumpDto([void Function(CreateDumpDtoBuilder)? updates]) =>
       (new CreateDumpDtoBuilder()..update(updates))._build();
@@ -29,22 +29,16 @@ class _$CreateDumpDto extends CreateDumpDto {
       {required this.name,
       required this.reportLong,
       required this.reportLat,
-      required this.address,
-      required this.phone,
-      required this.workingHours,
-      required this.moreInformation})
+      this.address,
+      this.phone,
+      this.workingHours,
+      this.moreInformation})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'CreateDumpDto', 'name');
     BuiltValueNullFieldError.checkNotNull(
         reportLong, r'CreateDumpDto', 'reportLong');
     BuiltValueNullFieldError.checkNotNull(
         reportLat, r'CreateDumpDto', 'reportLat');
-    BuiltValueNullFieldError.checkNotNull(address, r'CreateDumpDto', 'address');
-    BuiltValueNullFieldError.checkNotNull(phone, r'CreateDumpDto', 'phone');
-    BuiltValueNullFieldError.checkNotNull(
-        workingHours, r'CreateDumpDto', 'workingHours');
-    BuiltValueNullFieldError.checkNotNull(
-        moreInformation, r'CreateDumpDto', 'moreInformation');
   }
 
   @override
@@ -170,14 +164,10 @@ class CreateDumpDtoBuilder
                 reportLong, r'CreateDumpDto', 'reportLong'),
             reportLat: BuiltValueNullFieldError.checkNotNull(
                 reportLat, r'CreateDumpDto', 'reportLat'),
-            address: BuiltValueNullFieldError.checkNotNull(
-                address, r'CreateDumpDto', 'address'),
-            phone: BuiltValueNullFieldError.checkNotNull(
-                phone, r'CreateDumpDto', 'phone'),
-            workingHours: BuiltValueNullFieldError.checkNotNull(
-                workingHours, r'CreateDumpDto', 'workingHours'),
-            moreInformation: BuiltValueNullFieldError.checkNotNull(
-                moreInformation, r'CreateDumpDto', 'moreInformation'));
+            address: address,
+            phone: phone,
+            workingHours: workingHours,
+            moreInformation: moreInformation);
     replace(_$result);
     return _$result;
   }

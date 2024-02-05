@@ -18,6 +18,10 @@ class ContentState implements HomeState {
 
 class ErrorState implements HomeState {
   final String errorMessage;
+  final String type;
 
-  ErrorState({required this.errorMessage});
+  ErrorState({
+    required this.errorMessage,
+    required this.type,
+  });
 }

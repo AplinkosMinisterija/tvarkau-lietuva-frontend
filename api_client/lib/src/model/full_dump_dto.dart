@@ -17,10 +17,10 @@ part 'full_dump_dto.g.dart';
 /// * [longitude]
 /// * [latitude]
 /// * [isVisible]
-/// * [address]
-/// * [phone]
 /// * [workingHours]
 /// * [moreInformation]
+/// * [address]
+/// * [phone]
 @BuiltValue()
 abstract class FullDumpDto implements Built<FullDumpDto, FullDumpDtoBuilder> {
   @BuiltValueField(wireName: r'refId')
@@ -41,17 +41,17 @@ abstract class FullDumpDto implements Built<FullDumpDto, FullDumpDtoBuilder> {
   @BuiltValueField(wireName: r'isVisible')
   bool get isVisible;
 
-  @BuiltValueField(wireName: r'address')
-  String? get address;
-
-  @BuiltValueField(wireName: r'phone')
-  String? get phone;
-
   @BuiltValueField(wireName: r'workingHours')
   String get workingHours;
 
   @BuiltValueField(wireName: r'moreInformation')
   String get moreInformation;
+
+  @BuiltValueField(wireName: r'address')
+  String? get address;
+
+  @BuiltValueField(wireName: r'phone')
+  String? get phone;
 
   FullDumpDto._();
 
@@ -106,20 +106,6 @@ class _$FullDumpDtoSerializer implements PrimitiveSerializer<FullDumpDto> {
       object.isVisible,
       specifiedType: const FullType(bool),
     );
-    yield r'address';
-    yield object.address == null
-        ? null
-        : serializers.serialize(
-            object.address,
-            specifiedType: const FullType.nullable(String),
-          );
-    yield r'phone';
-    yield object.phone == null
-        ? null
-        : serializers.serialize(
-            object.phone,
-            specifiedType: const FullType.nullable(String),
-          );
     yield r'workingHours';
     yield serializers.serialize(
       object.workingHours,
@@ -130,6 +116,20 @@ class _$FullDumpDtoSerializer implements PrimitiveSerializer<FullDumpDto> {
       object.moreInformation,
       specifiedType: const FullType(String),
     );
+    if (object.address != null) {
+      yield r'address';
+      yield serializers.serialize(
+        object.address,
+        specifiedType: const FullType.nullable(String),
+      );
+    }
+    if (object.phone != null) {
+      yield r'phone';
+      yield serializers.serialize(
+        object.phone,
+        specifiedType: const FullType.nullable(String),
+      );
+    }
   }
 
   @override
@@ -197,6 +197,20 @@ class _$FullDumpDtoSerializer implements PrimitiveSerializer<FullDumpDto> {
           ) as bool;
           result.isVisible = valueDes;
           break;
+        case r'workingHours':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.workingHours = valueDes;
+          break;
+        case r'moreInformation':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.moreInformation = valueDes;
+          break;
         case r'address':
           final valueDes = serializers.deserialize(
             value,
@@ -212,20 +226,6 @@ class _$FullDumpDtoSerializer implements PrimitiveSerializer<FullDumpDto> {
           ) as String?;
           if (valueDes == null) continue;
           result.phone = valueDes;
-          break;
-        case r'workingHours':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.workingHours = valueDes;
-          break;
-        case r'moreInformation':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.moreInformation = valueDes;
           break;
         default:
           unhandled.add(key);

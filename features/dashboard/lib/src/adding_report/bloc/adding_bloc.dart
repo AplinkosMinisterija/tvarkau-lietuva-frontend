@@ -7,24 +7,46 @@ part 'adding_event.dart';
 part 'adding_state.dart';
 
 class AddingBloc extends Bloc<AddingEvent, AddingState> {
-  AddingBloc() : super(LoadingState()) {
-    on<LoadData>(_onLoadData);
+  AddingBloc(this.type) : super(LoadingState()) {
+    on<LoadTrashData>(_onLoadTrashData);
+    on<LoadForestData>(_onLoadForestData);
     on<AddReport>(_onAddReport);
     on<ReloadPage>(_onReloadEvent);
-    add(LoadData());
   }
 
-  Future<void> _onLoadData(
-    LoadData _,
+  final String type;
+
+  Future<void> _onLoadTrashData(
+    LoadTrashData _,
     Emitter<AddingState> emit,
   ) async {
     try {
       final List<PublicReportDto> trashReports =
-          await ApiProvider().getAllVisibleTrashReports();
+          await ApiProvider().getAllVisibleReports('trash');
 
       emit(
-        ContentState(
+        TrashContentState(
           trashReports: trashReports,
+        ),
+      );
+    } catch (e) {
+      emit(
+        ErrorState(errorMessage: 'Netikėta klaida'),
+      );
+    }
+  }
+
+  Future<void> _onLoadForestData(
+    LoadForestData _,
+    Emitter<AddingState> emit,
+  ) async {
+    try {
+      final List<PublicReportDto> trashReports =
+          await ApiProvider().getAllVisibleReports('forest');
+
+      emit(
+        ForestContentState(
+          forestReports: trashReports,
         ),
       );
     } catch (e) {
@@ -49,6 +71,7 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
         selectedLat: event.selectedLat,
         selectedLong: event.selectedLong,
         imageFiles: event.imageFiles,
+        type: event.type,
       );
 
       emit(
@@ -65,6 +88,6 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
     ReloadPage _,
     Emitter<AddingState> emit,
   ) async {
-    add(LoadData());
+    type == 'trash' ? add(LoadTrashData()) : add(LoadForestData());
   }
 }

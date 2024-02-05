@@ -9,6 +9,11 @@ paths:
           in: query
           schema:
             type: boolean
+        - name: type
+          required: true
+          in: query
+          schema:
+            type: string
       responses:
         '200':
           description: All reports have been successfully found
@@ -38,6 +43,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FullReportDto'
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
       tags: *ref_0
       security: *ref_1
   /admin/reports/{refId}:
@@ -111,6 +122,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FullDumpDto'
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
       tags: *ref_0
       security: *ref_1
     put:
@@ -157,7 +174,7 @@ paths:
             schema:
               $ref: '#/components/schemas/CreateReportDto'
       responses:
-        '200':
+        '201':
           description: New Report has been successfully created
           content:
             application/json:
@@ -167,7 +184,12 @@ paths:
         - reports
     get:
       operationId: ReportController_getAllPublicReports
-      parameters: []
+      parameters:
+        - name: type
+          required: true
+          in: query
+          schema:
+            type: string
       responses:
         '200':
           description: All visible reports have been successfully found
@@ -181,7 +203,12 @@ paths:
   /reports/statistics:
     get:
       operationId: ReportController_getReportStatistics
-      parameters: []
+      parameters:
+        - name: type
+          required: true
+          in: query
+          schema:
+            type: string
       responses:
         '200':
           description: Report statistics have been successfully fetched
@@ -222,6 +249,12 @@ paths:
       responses:
         '200':
           description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogInDto'
+        '201':
+          description: ''
           content:
             application/json:
               schema:
@@ -378,8 +411,6 @@ components:
         - longitude
         - latitude
         - isVisible
-        - address
-        - phone
         - workingHours
         - moreInformation
     UpdateReportDto:
@@ -478,10 +509,6 @@ components:
         - name
         - reportLong
         - reportLat
-        - address
-        - phone
-        - workingHours
-        - moreInformation
     DumpDto:
       type: object
       properties:
@@ -517,25 +544,28 @@ components:
     CreateReportDto:
       type: object
       properties:
+        images:
+          type: array
+          items:
+            type: string
+            format: binary
         name:
           type: string
         longitude:
           type: number
         latitude:
           type: number
+        type:
+          type: string
         email:
           type: string
-        images:
-          type: array
-          items:
-            type: string
-            format: binary
       required:
+        - images
         - name
         - longitude
         - latitude
+        - type
         - email
-        - images
     PublicReportDto:
       type: object
       properties:

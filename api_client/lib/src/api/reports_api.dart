@@ -23,11 +23,12 @@ class ReportsApi {
   ///
   ///
   /// Parameters:
+  /// * [images]
   /// * [name]
   /// * [longitude]
   /// * [latitude]
+  /// * [type]
   /// * [email]
-  /// * [images]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -38,11 +39,12 @@ class ReportsApi {
   /// Returns a [Future] containing a [Response] with a [PublicReportDto] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<PublicReportDto>> reportControllerCreateNewReport({
+    required BuiltList<MultipartFile> images,
     required String name,
     required num longitude,
     required num latitude,
+    required String type,
     required String email,
-    required BuiltList<MultipartFile> images,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -68,15 +70,17 @@ class ReportsApi {
 
     try {
       _bodyData = FormData.fromMap(<String, dynamic>{
+        r'images': images.toList(),
         r'name':
             encodeFormParameter(_serializers, name, const FullType(String)),
         r'longitude':
             encodeFormParameter(_serializers, longitude, const FullType(num)),
         r'latitude':
             encodeFormParameter(_serializers, latitude, const FullType(num)),
+        r'type':
+            encodeFormParameter(_serializers, type, const FullType(String)),
         r'email':
             encodeFormParameter(_serializers, email, const FullType(String)),
-        r'images': images.toList(),
       });
     } catch (error, stackTrace) {
       throw DioError(
@@ -135,6 +139,7 @@ class ReportsApi {
   ///
   ///
   /// Parameters:
+  /// * [type]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -146,6 +151,7 @@ class ReportsApi {
   /// Throws [DioError] if API call or serialization fails
   Future<Response<BuiltList<PublicReportDto>>>
       reportControllerGetAllPublicReports({
+    required String type,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -166,9 +172,14 @@ class ReportsApi {
       validateStatus: validateStatus,
     );
 
+    final _queryParameters = <String, dynamic>{
+      r'type': encodeQueryParameter(_serializers, type, const FullType(String)),
+    };
+
     final _response = await _dio.request<Object>(
       _path,
       options: _options,
+      queryParameters: _queryParameters,
       cancelToken: cancelToken,
       onSendProgress: onSendProgress,
       onReceiveProgress: onReceiveProgress,
@@ -288,6 +299,7 @@ class ReportsApi {
   ///
   ///
   /// Parameters:
+  /// * [type]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -298,6 +310,7 @@ class ReportsApi {
   /// Returns a [Future] containing a [Response] with a [ReportStatisticsDto] as data
   /// Throws [DioError] if API call or serialization fails
   Future<Response<ReportStatisticsDto>> reportControllerGetReportStatistics({
+    required String type,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -318,9 +331,14 @@ class ReportsApi {
       validateStatus: validateStatus,
     );
 
+    final _queryParameters = <String, dynamic>{
+      r'type': encodeQueryParameter(_serializers, type, const FullType(String)),
+    };
+
     final _response = await _dio.request<Object>(
       _path,
       options: _options,
+      queryParameters: _queryParameters,
       cancelToken: cancelToken,
       onSendProgress: onSendProgress,
       onReceiveProgress: onReceiveProgress,

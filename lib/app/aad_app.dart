@@ -1,4 +1,4 @@
-// Openapi Generator last run: : 2024-01-26T08:37:42.684611
+// Openapi Generator last run: : 2024-02-02T15:15:29.262703
 import 'package:admin/admin.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:dashboard/dashboard_screen.dart';
@@ -66,9 +66,17 @@ class AadApp extends StatelessWidget {
             InformationScreen(reportId: state.uri.queryParameters['id'] ?? '1'),
       ),
       GoRoute(
-          name: 'newReport',
-          path: '/pranesti',
-          builder: (context, state) => const AddingScreen()),
+          name: 'newReportTrash',
+          path: '/pranesti-atliekos',
+          builder: (context, state) => const AddingScreenTrash()),
+      GoRoute(
+          name: 'newReportForest',
+          path: '/pranesti-miskai',
+          builder: (context, state) => const AddingScreenForest()),
+      GoRoute(
+          name: 'report_category',
+          path: '/pasirinkti-kategorija',
+          builder: (context, state) => const ReportCategoryScreen()),
     ],
   );
 

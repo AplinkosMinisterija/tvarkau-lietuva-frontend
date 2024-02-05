@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
                     dumpReports: state.dumpReports,
                     reportStatistics: state.reportStatistics,
                     onAddTap: (double width, double height) {
-                      context.goNamed('newReport');
+                      context.goNamed('report_category');
                     },
                     onInformationTap: (String refId) {
                       int strLength = 8 - refId.length;
@@ -48,7 +48,7 @@ class HomeScreen extends StatelessWidget {
                   return ErrorReloadWidget(
                     onPressed: () {
                       context.read<HomeBloc>().add(
-                            ReloadPage(),
+                            ReloadPage(type: state.type),
                           );
                     },
                   );

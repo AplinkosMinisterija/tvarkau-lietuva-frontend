@@ -103,7 +103,7 @@ This endpoint does not need any parameter.
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminControllerGetAllReports**
-> BuiltList<FullReportDto> adminControllerGetAllReports(isDeleted)
+> BuiltList<FullReportDto> adminControllerGetAllReports(isDeleted, type)
 
 
 
@@ -116,9 +116,10 @@ import 'package:api_client/api.dart';
 
 final api = ApiClient().getAdminApi();
 final bool isDeleted = true; // bool | 
+final String type = type_example; // String | 
 
 try {
-    final response = api.adminControllerGetAllReports(isDeleted);
+    final response = api.adminControllerGetAllReports(isDeleted, type);
     print(response);
 } catch on DioError (e) {
     print('Exception when calling AdminApi->adminControllerGetAllReports: $e\n');
@@ -130,6 +131,7 @@ try {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **isDeleted** | **bool**|  | 
+ **type** | **String**|  | 
 
 ### Return type
 

@@ -9,19 +9,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(LoadingState()) {
     on<LoadData>(_onLoadData);
     on<ReloadPage>(_onReloadEvent);
-    add(LoadData());
   }
 
   Future<void> _onLoadData(
-    LoadData _,
+    LoadData event,
     Emitter<HomeState> emit,
   ) async {
     try {
       final responses = await Future.wait(
         [
-          ApiProvider().getAllVisibleTrashReports(),
+          ApiProvider().getAllVisibleReports(event.type),
           ApiProvider().getAllVisibleDumpReports(),
-          ApiProvider().getReportStatistics(),
+          ApiProvider().getReportStatistics(event.type),
         ],
         eagerError: true,
       );
@@ -33,9 +32,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         ),
       );
     } catch (e) {
-      print(e);
       emit(
-        ErrorState(errorMessage: 'Netikėta klaida'),
+        ErrorState(errorMessage: 'Netikėta klaida', type: 'trash'),
       );
     }
   }
@@ -44,6 +42,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     ReloadPage _,
     Emitter<HomeState> emit,
   ) async {
-    add(LoadData());
+    add(LoadData(type: _.type));
   }
 }

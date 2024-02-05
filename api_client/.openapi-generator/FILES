@@ -1,6 +1,5 @@
 .gitignore
 README.md
-analysis_options.yaml
 doc/AdminApi.md
 doc/AuthApi.md
 doc/CreateDumpDto.md

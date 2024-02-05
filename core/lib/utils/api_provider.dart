@@ -84,13 +84,13 @@ class ApiProvider {
     return response.data!.toList();
   }
 
-  Future<List<PublicReportDto>> getAllVisibleTrashReports() async {
-    final response = await reportsApi.reportControllerGetAllPublicReports();
+  Future<List<PublicReportDto>> getAllVisibleReports(String type) async {
+    final response = await reportsApi.reportControllerGetAllPublicReports(type: type);
     return response.data!.toList(); //TODO: add error handling
   }
 
-  Future<ReportStatisticsDto> getReportStatistics() async {
-    final response = await reportsApi.reportControllerGetReportStatistics();
+  Future<ReportStatisticsDto> getReportStatistics(String type) async {
+    final response = await reportsApi.reportControllerGetReportStatistics(type: type);
     return response.data!;
   }
 
@@ -115,16 +115,19 @@ class ApiProvider {
   Future<PublicReportDto> sendNewTrashReport({
     required String emailValue,
     required String textValue,
+    required String type,
     required double selectedLat,
     required double selectedLong,
     required List<MultipartFile> imageFiles,
   }) async {
     final response = await reportsApi.reportControllerCreateNewReport(
-        name: textValue,
-        longitude: selectedLong,
-        latitude: selectedLat,
-        email: emailValue,
-        images: BuiltList(imageFiles));
+      name: textValue,
+      longitude: selectedLong,
+      latitude: selectedLat,
+      email: emailValue,
+      images: BuiltList(imageFiles),
+      type: type,
+    );
     return response.data!;
   }
 

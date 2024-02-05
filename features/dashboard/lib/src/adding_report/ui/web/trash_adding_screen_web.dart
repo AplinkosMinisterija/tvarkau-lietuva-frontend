@@ -12,8 +12,8 @@ import 'package:http_parser/http_parser.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class AddingScreenWeb extends StatefulWidget {
-  const AddingScreenWeb({
+class TrashAddingScreenWeb extends StatefulWidget {
+  const TrashAddingScreenWeb({
     required this.width,
     required this.height,
     required this.reports,
@@ -30,10 +30,10 @@ class AddingScreenWeb extends StatefulWidget {
   final VoidCallback onDataSecurityTap;
 
   @override
-  State<AddingScreenWeb> createState() => _AddingScreenWebState();
+  State<TrashAddingScreenWeb> createState() => _TrashAddingScreenWebState();
 }
 
-class _AddingScreenWebState extends State<AddingScreenWeb> {
+class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
   final List<List<int>> _selectedImages = [];
   final List<Uint8List> _fileBytes = [];
   List<dio.MultipartFile> multipartList = [];

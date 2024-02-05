@@ -14,10 +14,10 @@ Name | Type | Description | Notes
 **longitude** | **double** |  | 
 **latitude** | **double** |  | 
 **isVisible** | **bool** |  | 
-**address** | **String** |  | 
-**phone** | **String** |  | 
 **workingHours** | **String** |  | 
 **moreInformation** | **String** |  | 
+**address** | **String** |  | [optional] 
+**phone** | **String** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
