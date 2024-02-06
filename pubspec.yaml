@@ -40,6 +40,7 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^2.0.0
   openapi_generator: ^5.0.2
+  flutter_native_splash: ^2.3.9
 
 flutter:
   uses-material-design: true
@@ -48,3 +49,11 @@ flutter:
     - assets/svg/
     - assets/icons/marker_pins/
     - assets/documents/
+
+
+flutter_native_splash:
+  color: "#396154"
+  image: "web/icons/android-chrome-512x512.png"
+  android: false
+  ios: false
+  web: true
