@@ -1,4 +1,4 @@
-// Openapi Generator last run: : 2024-01-26T14:57:09.637275
+// Openapi Generator last run: : 2024-01-26T08:37:42.684611
 import 'package:admin/admin.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:dashboard/dashboard_screen.dart';
@@ -13,9 +13,8 @@ import 'package:sentry_flutter/sentry_flutter.dart';
     pubName: 'api_client',
     pubAuthor: 'Aplinkos apsaugos departamentas',
   ),
-  inputSpecFile: 'openapi.yaml',
+  inputSpec: InputSpec(path: 'openapi.yaml'),
   generatorName: Generator.dio,
-  useNextGen: true,
   outputDirectory: 'api_client',
 )
 class AadApp extends StatelessWidget {
