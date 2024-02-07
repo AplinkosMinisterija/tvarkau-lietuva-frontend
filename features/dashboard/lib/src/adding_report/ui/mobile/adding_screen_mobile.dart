@@ -17,7 +17,6 @@ class AddingScreenMobile extends StatefulWidget {
     required this.height,
     required this.reports,
     required this.onAddTap,
-    required this.onDataSecurityTap,
     super.key,
   });
 
@@ -26,7 +25,6 @@ class AddingScreenMobile extends StatefulWidget {
   final List<PublicReportDto> reports;
   final Function(String, String, double, double, List<dio.MultipartFile>)
       onAddTap;
-  final VoidCallback onDataSecurityTap;
 
   @override
   State<AddingScreenMobile> createState() => _AddingScreenMobileState();

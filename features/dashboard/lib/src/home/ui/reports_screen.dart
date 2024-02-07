@@ -11,7 +11,6 @@ class ReportsScreen extends StatefulWidget {
     required this.reportStatistics,
     required this.onAddTap,
     required this.onInformationTap,
-    required this.onDataSecurityTap,
     super.key,
   });
 
@@ -20,7 +19,6 @@ class ReportsScreen extends StatefulWidget {
   final ReportStatisticsDto reportStatistics;
   final Function(double, double) onAddTap;
   final Function(String) onInformationTap;
-  final VoidCallback onDataSecurityTap;
 
   @override
   State<ReportsScreen> createState() => _ReportsScreenState();
@@ -155,10 +153,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                             color: Color.fromRGBO(10, 51, 40, 0.1),
                           ),
                           SizedBox(height: constraints.maxWidth * 0.0343),
-                          Footer(
-                            width: constraints.maxWidth,
-                            onDataSecurityTap: widget.onDataSecurityTap,
-                          ),
+                          Footer(width: constraints.maxWidth),
                           SizedBox(height: constraints.maxWidth * 0.0166),
                           const Divider(
                             height: 1,

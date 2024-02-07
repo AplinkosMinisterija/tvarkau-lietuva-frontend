@@ -1,7 +1,6 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:dashboard/src/home/bloc/home_bloc.dart';
-import 'package:dashboard/src/home/ui/data_security_information.dart';
 import 'package:dashboard/src/home/ui/reports_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -34,12 +33,6 @@ class HomeScreen extends StatelessWidget {
                       context.goNamed('report', queryParameters: {
                         'id': 'TLP-A$str${refId.toUpperCase()}'
                       });
-                    },
-                    onDataSecurityTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) =>
-                              const DataSecurityInformation());
                     },
                   );
                 } else if (state is LoadingState) {
