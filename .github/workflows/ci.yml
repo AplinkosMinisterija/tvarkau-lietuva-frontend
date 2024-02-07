@@ -22,10 +22,10 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: 'stable'
           cache: true
 
-      - run: flutter pub get
+      - name: Set up Melos
+        uses: bluefireteam/melos-action@v3
 
       - run: flutter analyze --write=flutter_analyze.log --no-fatal-infos
 
