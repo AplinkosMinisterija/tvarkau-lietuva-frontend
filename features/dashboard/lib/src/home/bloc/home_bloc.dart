@@ -33,7 +33,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         ),
       );
     } catch (e) {
-      print(e);
       emit(
         ErrorState(errorMessage: 'Netikėta klaida'),
       );
