@@ -47,8 +47,6 @@ flutter:
     - assets/icons/
     - assets/svg/
     - assets/icons/marker_pins/
-    - assets/documents/
-
 
 flutter_native_splash:
   color: "#396154"
