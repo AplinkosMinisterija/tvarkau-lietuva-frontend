@@ -44,13 +44,14 @@ To get started with the Tvarkau Lietuvą Frontend, follow the instructions below
    git clone https://github.com/AplinkosMinisterija/tvarkau-lietuva-frontend.git
    ```
 
-2. Install Flutter https://docs.flutter.dev/get-started/install
+2. Install Flutter https://docs.flutter.dev/get-started/install and
+   Melos https://melos.invertase.dev/
 
 3. Install the required dependencies:
 
    ```bash
    cd tvarkau-lietuva-frontend
-   sh pub_get_script.sh
+   melos bootstrap 
    ```
 
 ### Usage
