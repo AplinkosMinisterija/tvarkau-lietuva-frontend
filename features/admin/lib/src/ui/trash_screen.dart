@@ -1,9 +1,10 @@
+import 'dart:typed_data';
+
 import 'package:admin/src/ui/trash_window.dart';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:dio/dio.dart' as dio;
 import '../bloc/trash/trash_bloc.dart';
 
 class TrashScreen extends StatefulWidget {
@@ -42,11 +43,8 @@ class _TrashScreenState extends State<TrashScreen> {
                       onBackPress: () {
                         context.goNamed('admin');
                       },
-                      onUpdate: (String name,
-                          String comment,
-                          String status,
-                          bool isVisible,
-                          List<dio.MultipartFile> officerImages) {
+                      onUpdate: (String name, String comment, String status,
+                          bool isVisible, List<Uint8List> officerImages) {
                         context.read<TrashBloc>().add(UpdateReport(
                               id: state.trashReport.id,
                               refId: state.trashReport.refId,

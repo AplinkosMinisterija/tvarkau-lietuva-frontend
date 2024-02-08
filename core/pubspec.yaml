@@ -21,6 +21,10 @@ dependencies:
   dio: ^5.0.0
   built_collection: ^5.1.1
   loading_animation_widget: ^1.2.0+4
+  image_picker: ^1.0.7
+  collection: ^1.18.0
+  mime: ^1.0.5
+  http_parser: ^4.0.2
 
 dev_dependencies:
   flutter_test:

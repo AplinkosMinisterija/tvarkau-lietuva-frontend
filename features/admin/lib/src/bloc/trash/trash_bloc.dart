@@ -1,6 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
-import 'package:dio/dio.dart' as dio;
 
 part 'trash_event.dart';
 
@@ -29,13 +30,12 @@ class TrashBloc extends Bloc<TrashEvent, TrashState> {
 
       final FullReportDto trashReport =
           await ApiProvider().getFullTrashReportById(event.refId);
-      
-        emit(
-          ContentState(
-            trashReport: trashReport,
-          ),
-        );
-      
+
+      emit(
+        ContentState(
+          trashReport: trashReport,
+        ),
+      );
     } catch (e) {
       emit(
         ErrorState(errorMessage: 'Something went wrong'),
@@ -70,12 +70,11 @@ class TrashBloc extends Bloc<TrashEvent, TrashState> {
       final FullReportDto trashReport =
           await ApiProvider().getFullTrashReportById(event.refId);
 
-        emit(
-          ContentState(
-            trashReport: trashReport,
-          ),
-        );
-
+      emit(
+        ContentState(
+          trashReport: trashReport,
+        ),
+      );
     } catch (e) {
       emit(
         ErrorState(errorMessage: 'Įvyko netikėta klaida'),

@@ -3,6 +3,9 @@ import 'package:built_collection/built_collection.dart';
 import 'package:core/core.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:collection/collection.dart';
+import 'package:mime/mime.dart';
+import 'package:http_parser/http_parser.dart';
 
 class ApiProvider {
   ApiProvider._(
@@ -117,14 +120,14 @@ class ApiProvider {
     required String textValue,
     required double selectedLat,
     required double selectedLong,
-    required List<MultipartFile> imageFiles,
+    required List<Uint8List> imageFiles,
   }) async {
     final response = await reportsApi.reportControllerCreateNewReport(
         name: textValue,
         longitude: selectedLong,
         latitude: selectedLat,
         email: emailValue,
-        images: BuiltList(imageFiles));
+        images: _toMultiPartFiles(imageFiles));
     return response.data!;
   }
 
@@ -140,7 +143,7 @@ class ApiProvider {
     required bool isDeleted,
     required List<String> imageUrls,
     required List<String> officerImageUrls,
-    required List<MultipartFile> officerImageFiles,
+    required List<Uint8List> officerImageFiles,
   }) async {
     final response = await adminApi.adminControllerUpdateReport(
         refId: refId,
@@ -153,7 +156,7 @@ class ApiProvider {
         status: status,
         officerImageUrls: officerImageUrls.toBuiltList(),
         imageUrls: imageUrls.toBuiltList(),
-        images: officerImageFiles.toBuiltList());
+        images: _toMultiPartFiles(officerImageFiles));
     return response.data!;
   }
 
@@ -181,5 +184,18 @@ class ApiProvider {
               builder.isVisible = isVisible,
             }));
     return response.data!;
+  }
+
+  BuiltList<MultipartFile> _toMultiPartFiles(List<Uint8List> files) {
+    return files.mapIndexed((index, bytes) {
+      final mime = lookupMimeType('', headerBytes: bytes) ?? 'image/jpeg';
+      final extension = extensionFromMime(mime);
+
+      return MultipartFile.fromBytes(
+        bytes,
+        filename: '${index + 1}.$extension',
+        contentType: MediaType.parse(mime),
+      );
+    }).toBuiltList();
   }
 }
