@@ -27,9 +27,6 @@ jobs:
       - name: Set up Melos
         uses: bluefireteam/melos-action@v3
 
-      - name: Install package dependencies and link packages
-        run: melos bootstrap
-
       - run: flutter analyze --write=flutter_analyze.log
 
       - if: ${{ !cancelled() }}
