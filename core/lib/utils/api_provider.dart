@@ -53,6 +53,7 @@ class ApiProvider {
   Future<List<FullReportDto>> getAllTrashReports() async {
     final response = await adminApi.adminControllerGetAllReports(
       isDeleted: false,
+      type: 'trash',
     );
     return response.data!.toList();
   }
@@ -80,17 +81,20 @@ class ApiProvider {
   Future<List<FullReportDto>> getAllRemovedReports() async {
     final response = await adminApi.adminControllerGetAllReports(
       isDeleted: true,
+      type: 'trash',
     );
     return response.data!.toList();
   }
 
   Future<List<PublicReportDto>> getAllVisibleReports(String type) async {
-    final response = await reportsApi.reportControllerGetAllPublicReports(type: type);
+    final response =
+        await reportsApi.reportControllerGetAllPublicReports(type: type);
     return response.data!.toList(); //TODO: add error handling
   }
 
   Future<ReportStatisticsDto> getReportStatistics(String type) async {
-    final response = await reportsApi.reportControllerGetReportStatistics(type: type);
+    final response =
+        await reportsApi.reportControllerGetReportStatistics(type: type);
     return response.data!;
   }
 

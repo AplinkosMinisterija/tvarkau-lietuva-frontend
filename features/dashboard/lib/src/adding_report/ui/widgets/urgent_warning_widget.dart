@@ -4,16 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 class UrgentWarningWidget extends StatelessWidget {
   const UrgentWarningWidget({
     super.key,
-    required this.constraints,
   });
-
-  final BoxConstraints constraints;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: constraints.maxWidth / 1.8,
-      height: constraints.maxWidth / 8,
       decoration: BoxDecoration(
         border: Border.all(
           color: const Color.fromRGBO(250, 204, 62, 1.0),
@@ -29,51 +24,48 @@ class UrgentWarningWidget extends StatelessWidget {
           ),
         ],
       ),
-      padding: EdgeInsets.symmetric(
-          vertical: constraints.maxWidth * 0.009,
-          horizontal: constraints.maxWidth * 0.02),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      margin: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(8),
+      child: Row(
         children: [
-          Row(
-            children: [
-              Icon(
-                Icons.warning,
-                color: const Color.fromRGBO(250, 204, 62, 1.0),
-                size: constraints.maxWidth * 0.03,
-              ),
-              SizedBox(width: constraints.maxWidth * 0.012),
-              Text(
-                'Ar šiuo metu reikalinga pagalba?',
-                style: GoogleFonts.roboto(
-                  fontSize: constraints.maxWidth * 0.02,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.black,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: constraints.maxWidth * 0.012),
-          Padding(
-            padding: EdgeInsets.only(left: constraints.maxWidth * 0.042),
-            child: RichText(
-              text: TextSpan(
-                text:
-                    'Jeigu Jums ar kitiems žmonėms yra reali grėsmė gyvybei, sveikatai ar saugumui, Jūsų turtui kyla reali grėmsmė (kėsinamasi pagrobti Jūsų automobilį, kėsinamasi sugadinti ar sunaikinti Jūsų turtą), šiuo metu matote vykstančias muštynes, ',
-                style: DefaultTextStyle.of(context).style.copyWith(
-                      fontSize: constraints.maxWidth * 0.012,
-                    ),
-                children: <TextSpan>[
-                  TextSpan(
-                      text: 'skambinkite 112.',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: constraints.maxWidth * 0.013,
-                      )),
-                ],
-              ),
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Icon(
+              Icons.warning,
+              color: Color.fromRGBO(250, 204, 62, 1.0),
+              size: 48,
             ),
-          )
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Text(
+                    'Ar šiuo metu reikalinga pagalba?',
+                    style: Theme.of(context).textTheme.headlineSmall,
+                  ),
+                ),
+                RichText(
+                  text: TextSpan(
+                    text:
+                        'Jeigu Jums ar kitiems žmonėms yra reali grėsmė gyvybei, sveikatai ar saugumui, Jūsų turtui kyla reali grėmsmė (kėsinamasi pagrobti Jūsų automobilį, kėsinamasi sugadinti ar sunaikinti Jūsų turtą), šiuo metu matote vykstančias muštynes, ',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'skambinkite 112.',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium!
+                            .copyWith(fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
