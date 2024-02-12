@@ -11,6 +11,7 @@ class MainTrashMapMobile extends StatefulWidget {
     required this.isHovering,
     required this.onReportTypeChange,
     required this.isShowDumps,
+    required this.isTrash,
     required this.onInformationTap,
   });
 
@@ -19,6 +20,8 @@ class MainTrashMapMobile extends StatefulWidget {
   final ValueChanged<bool> isHovering;
   final ValueChanged<bool> onReportTypeChange;
   final bool isShowDumps;
+  final bool isTrash;
+
   final Function(String) onInformationTap;
 
   @override
@@ -181,19 +184,21 @@ class _MainTrashMapMobileState extends State<MainTrashMapMobile> {
                 ),
               ],
             ),
-            Padding(
-              padding: EdgeInsets.only(top: widget.width * 0.022),
-              child: Align(
-                alignment: Alignment.topCenter,
-                child: ReportTypeSwitcherMobile(
-                  width: widget.width,
-                  isShowDumps: widget.isShowDumps,
-                  onReportTypeChange: (bool value) {
-                    widget.onReportTypeChange(value);
-                  },
-                ),
-              ),
-            ),
+            widget.isTrash
+                ? Padding(
+                    padding: EdgeInsets.only(top: widget.width * 0.022),
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: ReportTypeSwitcherMobile(
+                        width: widget.width,
+                        isShowDumps: widget.isShowDumps,
+                        onReportTypeChange: (bool value) {
+                          widget.onReportTypeChange(value);
+                        },
+                      ),
+                    ),
+                  )
+                : const SizedBox.shrink(),
           ],
         ),
       ),

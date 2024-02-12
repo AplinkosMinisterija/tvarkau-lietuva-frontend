@@ -33,6 +33,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
   late bool isMapHover;
   bool isShowDumps = false;
   bool isTrash = false;
+  String? initialItem;
 
   static const List<String> _dropdownList = [
     'Atliekos',
@@ -42,7 +43,13 @@ class _ReportsScreenState extends State<ReportsScreen> {
   @override
   void initState() {
     isMapHover = false;
-    if (widget.category == 'trash') isTrash = true;
+    if (widget.category == 'trash') {
+      initialItem = 'Atliekos';
+      isTrash = true;
+    } else if (widget.category == 'forest') {
+      initialItem = 'Miškai';
+    }
+
     super.initState();
   }
 
@@ -87,6 +94,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                   child: CustomDropdown<String>(
                                     hintText: 'Pasirinkite kategoriją',
                                     items: _dropdownList,
+                                    initialItem: initialItem,
                                     onChanged: (value) {
                                       widget.onCategoryChange(value);
                                     },
@@ -225,17 +233,31 @@ class _ReportsScreenState extends State<ReportsScreen> {
                           SizedBox(height: constraints.maxWidth * 0.0889),
                           TitleWidgetMobile(width: constraints.maxWidth),
                           SizedBox(height: constraints.maxWidth * 0.0889),
-                          Align(
-                              alignment: Alignment.topCenter,
-                              child: AddButtonMobile(
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: constraints.maxWidth * 0.4,
+                                child: CustomDropdown<String>(
+                                  hintText: 'Pasirinkite kategoriją',
+                                  items: _dropdownList,
+                                  initialItem: initialItem,
+                                  onChanged: (value) {
+                                    widget.onCategoryChange(value);
+                                  },
+                                ),
+                              ),
+                              AddButtonMobile(
                                 onTap: () {
                                   widget.onAddTap(
                                     constraints.maxWidth,
                                     constraints.maxHeight,
                                   );
                                 },
-                                width: constraints.maxWidth,
-                              )),
+                                width: constraints.maxWidth / 1.8,
+                              ),
+                            ],
+                          ),
                           SizedBox(height: constraints.maxWidth * 0.0444),
                           Align(
                             alignment: Alignment.centerRight,
@@ -272,6 +294,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                     });
                                   },
                                   isShowDumps: isShowDumps,
+                                  isTrash: isTrash,
                                   trashReports: widget.reports,
                                   isHovering: (bool value) {
                                     setState(() {
