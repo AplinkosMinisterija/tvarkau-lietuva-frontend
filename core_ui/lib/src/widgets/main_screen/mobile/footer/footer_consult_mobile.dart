@@ -18,10 +18,11 @@ class FooterConsultMobile extends StatelessWidget {
       decoration: BoxDecoration(
           color: const Color.fromRGBO(57, 97, 84, 0.07),
           borderRadius: BorderRadius.circular(14)),
-      padding: EdgeInsets.all(width * 0.05),
+      padding: EdgeInsets.symmetric(horizontal: width * 0.05),
       child: SelectionArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Align(
               alignment: Alignment.centerLeft,
@@ -56,7 +57,7 @@ class FooterConsultMobile extends StatelessWidget {
                         fontSize: width * 0.03333, fontWeight: FontWeight.w400),
                   ),
                 ),
-                SizedBox(width: width * 0.0611),
+                SizedBox(width: width * 0.0311),
                 Icon(
                   Icons.email,
                   size: width * 0.05,

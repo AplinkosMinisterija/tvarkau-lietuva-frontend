@@ -40,7 +40,7 @@ class AddingScreenForest extends StatelessWidget {
                                 selectedLat: lat,
                                 selectedLong: long,
                                 imageFiles: files,
-                                type: 'forest'),
+                                category: 'forest'),
                           );
                     },
                     onDataSecurityTap: () {
@@ -63,7 +63,7 @@ class AddingScreenForest extends StatelessWidget {
                                 selectedLat: lat,
                                 selectedLong: long,
                                 imageFiles: files,
-                                type: 'forest'),
+                                category: 'forest'),
                           );
                     },
                     onDataSecurityTap: () {

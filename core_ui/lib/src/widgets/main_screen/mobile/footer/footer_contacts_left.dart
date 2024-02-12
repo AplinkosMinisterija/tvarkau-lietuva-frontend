@@ -42,7 +42,7 @@ class FooterContactsLeft extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: width * 0.0416,
+              height: width * 0.0316,
             ),
             GestureDetector(
               onTap: () {

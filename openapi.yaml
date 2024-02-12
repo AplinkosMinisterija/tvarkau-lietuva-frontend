@@ -9,10 +9,13 @@ paths:
           in: query
           schema:
             type: boolean
-        - name: type
-          required: true
+        - name: category
+          required: false
           in: query
           schema:
+            enum:
+              - trash
+              - forest
             type: string
       responses:
         '200':
@@ -185,10 +188,13 @@ paths:
     get:
       operationId: ReportController_getAllPublicReports
       parameters:
-        - name: type
-          required: true
+        - name: category
+          required: false
           in: query
           schema:
+            enum:
+              - trash
+              - forest
             type: string
       responses:
         '200':
@@ -204,10 +210,13 @@ paths:
     get:
       operationId: ReportController_getReportStatistics
       parameters:
-        - name: type
-          required: true
+        - name: category
+          required: false
           in: query
           schema:
+            enum:
+              - trash
+              - forest
             type: string
       responses:
         '200':
@@ -321,7 +330,10 @@ components:
           type: string
         name:
           type: string
-        type:
+        category:
+          enum:
+            - trash
+            - forest
           type: string
         refId:
           type: string
@@ -363,7 +375,7 @@ components:
       required:
         - _id
         - name
-        - type
+        - category
         - refId
         - longitude
         - latitude
@@ -383,8 +395,6 @@ components:
         refId:
           type: string
         name:
-          type: string
-        type:
           type: string
         longitude:
           type: number
@@ -407,7 +417,6 @@ components:
       required:
         - refId
         - name
-        - type
         - longitude
         - latitude
         - isVisible
@@ -514,8 +523,6 @@ components:
       properties:
         name:
           type: string
-        type:
-          type: string
         reportLong:
           type: number
           format: double
@@ -534,7 +541,6 @@ components:
           type: string
       required:
         - name
-        - type
         - reportLong
         - reportLat
         - address
@@ -555,8 +561,11 @@ components:
           type: number
         latitude:
           type: number
-        type:
+        category:
           type: string
+          enum:
+            - trash
+            - forest
         email:
           type: string
       required:
@@ -564,14 +573,17 @@ components:
         - name
         - longitude
         - latitude
-        - type
+        - category
         - email
     PublicReportDto:
       type: object
       properties:
         name:
           type: string
-        type:
+        category:
+          enum:
+            - trash
+            - forest
           type: string
         refId:
           type: string
@@ -602,7 +614,7 @@ components:
             $ref: '#/components/schemas/StatusRecordsDto'
       required:
         - name
-        - type
+        - category
         - refId
         - longitude
         - latitude

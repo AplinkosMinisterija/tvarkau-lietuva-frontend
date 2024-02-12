@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 
 # **reportControllerCreateNewReport**
-> PublicReportDto reportControllerCreateNewReport(images, name, longitude, latitude, type, email)
+> PublicReportDto reportControllerCreateNewReport(images, name, longitude, latitude, category, email)
 
 
 
@@ -29,11 +29,11 @@ final BuiltList<MultipartFile> images = /path/to/file.txt; // BuiltList<Multipar
 final String name = name_example; // String | 
 final num longitude = 8.14; // num | 
 final num latitude = 8.14; // num | 
-final String type = type_example; // String | 
+final String category = category_example; // String | 
 final String email = email_example; // String | 
 
 try {
-    final response = api.reportControllerCreateNewReport(images, name, longitude, latitude, type, email);
+    final response = api.reportControllerCreateNewReport(images, name, longitude, latitude, category, email);
     print(response);
 } catch on DioError (e) {
     print('Exception when calling ReportsApi->reportControllerCreateNewReport: $e\n');
@@ -48,7 +48,7 @@ Name | Type | Description  | Notes
  **name** | **String**|  | 
  **longitude** | **num**|  | 
  **latitude** | **num**|  | 
- **type** | **String**|  | 
+ **category** | **String**|  | 
  **email** | **String**|  | 
 
 ### Return type
@@ -67,7 +67,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **reportControllerGetAllPublicReports**
-> BuiltList<PublicReportDto> reportControllerGetAllPublicReports(type)
+> BuiltList<PublicReportDto> reportControllerGetAllPublicReports(category)
 
 
 
@@ -76,10 +76,10 @@ No authorization required
 import 'package:api_client/api.dart';
 
 final api = ApiClient().getReportsApi();
-final String type = type_example; // String | 
+final String category = category_example; // String | 
 
 try {
-    final response = api.reportControllerGetAllPublicReports(type);
+    final response = api.reportControllerGetAllPublicReports(category);
     print(response);
 } catch on DioError (e) {
     print('Exception when calling ReportsApi->reportControllerGetAllPublicReports: $e\n');
@@ -90,7 +90,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **type** | **String**|  | 
+ **category** | **String**|  | [optional] 
 
 ### Return type
 
@@ -149,7 +149,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **reportControllerGetReportStatistics**
-> ReportStatisticsDto reportControllerGetReportStatistics(type)
+> ReportStatisticsDto reportControllerGetReportStatistics(category)
 
 
 
@@ -158,10 +158,10 @@ No authorization required
 import 'package:api_client/api.dart';
 
 final api = ApiClient().getReportsApi();
-final String type = type_example; // String | 
+final String category = category_example; // String | 
 
 try {
-    final response = api.reportControllerGetReportStatistics(type);
+    final response = api.reportControllerGetReportStatistics(category);
     print(response);
 } catch on DioError (e) {
     print('Exception when calling ReportsApi->reportControllerGetReportStatistics: $e\n');
@@ -172,7 +172,7 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **type** | **String**|  | 
+ **category** | **String**|  | [optional] 
 
 ### Return type
 

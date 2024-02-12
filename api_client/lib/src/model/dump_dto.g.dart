@@ -10,8 +10,6 @@ class _$DumpDto extends DumpDto {
   @override
   final String name;
   @override
-  final String type;
-  @override
   final double reportLong;
   @override
   final double reportLat;
@@ -29,7 +27,6 @@ class _$DumpDto extends DumpDto {
 
   _$DumpDto._(
       {required this.name,
-      required this.type,
       required this.reportLong,
       required this.reportLat,
       this.address,
@@ -38,7 +35,6 @@ class _$DumpDto extends DumpDto {
       required this.moreInformation})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'DumpDto', 'name');
-    BuiltValueNullFieldError.checkNotNull(type, r'DumpDto', 'type');
     BuiltValueNullFieldError.checkNotNull(reportLong, r'DumpDto', 'reportLong');
     BuiltValueNullFieldError.checkNotNull(reportLat, r'DumpDto', 'reportLat');
     BuiltValueNullFieldError.checkNotNull(
@@ -59,7 +55,6 @@ class _$DumpDto extends DumpDto {
     if (identical(other, this)) return true;
     return other is DumpDto &&
         name == other.name &&
-        type == other.type &&
         reportLong == other.reportLong &&
         reportLat == other.reportLat &&
         address == other.address &&
@@ -72,7 +67,6 @@ class _$DumpDto extends DumpDto {
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, name.hashCode);
-    _$hash = $jc(_$hash, type.hashCode);
     _$hash = $jc(_$hash, reportLong.hashCode);
     _$hash = $jc(_$hash, reportLat.hashCode);
     _$hash = $jc(_$hash, address.hashCode);
@@ -87,7 +81,6 @@ class _$DumpDto extends DumpDto {
   String toString() {
     return (newBuiltValueToStringHelper(r'DumpDto')
           ..add('name', name)
-          ..add('type', type)
           ..add('reportLong', reportLong)
           ..add('reportLat', reportLat)
           ..add('address', address)
@@ -104,10 +97,6 @@ class DumpDtoBuilder implements Builder<DumpDto, DumpDtoBuilder> {
   String? _name;
   String? get name => _$this._name;
   set name(String? name) => _$this._name = name;
-
-  String? _type;
-  String? get type => _$this._type;
-  set type(String? type) => _$this._type = type;
 
   double? _reportLong;
   double? get reportLong => _$this._reportLong;
@@ -142,7 +131,6 @@ class DumpDtoBuilder implements Builder<DumpDto, DumpDtoBuilder> {
     final $v = _$v;
     if ($v != null) {
       _name = $v.name;
-      _type = $v.type;
       _reportLong = $v.reportLong;
       _reportLat = $v.reportLat;
       _address = $v.address;
@@ -173,8 +161,6 @@ class DumpDtoBuilder implements Builder<DumpDto, DumpDtoBuilder> {
         new _$DumpDto._(
             name:
                 BuiltValueNullFieldError.checkNotNull(name, r'DumpDto', 'name'),
-            type:
-                BuiltValueNullFieldError.checkNotNull(type, r'DumpDto', 'type'),
             reportLong: BuiltValueNullFieldError.checkNotNull(
                 reportLong, r'DumpDto', 'reportLong'),
             reportLat: BuiltValueNullFieldError.checkNotNull(

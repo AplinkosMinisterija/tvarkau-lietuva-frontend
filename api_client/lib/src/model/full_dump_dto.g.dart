@@ -12,8 +12,6 @@ class _$FullDumpDto extends FullDumpDto {
   @override
   final String name;
   @override
-  final String type;
-  @override
   final double longitude;
   @override
   final double latitude;
@@ -34,7 +32,6 @@ class _$FullDumpDto extends FullDumpDto {
   _$FullDumpDto._(
       {required this.refId,
       required this.name,
-      required this.type,
       required this.longitude,
       required this.latitude,
       required this.isVisible,
@@ -45,7 +42,6 @@ class _$FullDumpDto extends FullDumpDto {
       : super._() {
     BuiltValueNullFieldError.checkNotNull(refId, r'FullDumpDto', 'refId');
     BuiltValueNullFieldError.checkNotNull(name, r'FullDumpDto', 'name');
-    BuiltValueNullFieldError.checkNotNull(type, r'FullDumpDto', 'type');
     BuiltValueNullFieldError.checkNotNull(
         longitude, r'FullDumpDto', 'longitude');
     BuiltValueNullFieldError.checkNotNull(latitude, r'FullDumpDto', 'latitude');
@@ -70,7 +66,6 @@ class _$FullDumpDto extends FullDumpDto {
     return other is FullDumpDto &&
         refId == other.refId &&
         name == other.name &&
-        type == other.type &&
         longitude == other.longitude &&
         latitude == other.latitude &&
         isVisible == other.isVisible &&
@@ -85,7 +80,6 @@ class _$FullDumpDto extends FullDumpDto {
     var _$hash = 0;
     _$hash = $jc(_$hash, refId.hashCode);
     _$hash = $jc(_$hash, name.hashCode);
-    _$hash = $jc(_$hash, type.hashCode);
     _$hash = $jc(_$hash, longitude.hashCode);
     _$hash = $jc(_$hash, latitude.hashCode);
     _$hash = $jc(_$hash, isVisible.hashCode);
@@ -102,7 +96,6 @@ class _$FullDumpDto extends FullDumpDto {
     return (newBuiltValueToStringHelper(r'FullDumpDto')
           ..add('refId', refId)
           ..add('name', name)
-          ..add('type', type)
           ..add('longitude', longitude)
           ..add('latitude', latitude)
           ..add('isVisible', isVisible)
@@ -124,10 +117,6 @@ class FullDumpDtoBuilder implements Builder<FullDumpDto, FullDumpDtoBuilder> {
   String? _name;
   String? get name => _$this._name;
   set name(String? name) => _$this._name = name;
-
-  String? _type;
-  String? get type => _$this._type;
-  set type(String? type) => _$this._type = type;
 
   double? _longitude;
   double? get longitude => _$this._longitude;
@@ -167,7 +156,6 @@ class FullDumpDtoBuilder implements Builder<FullDumpDto, FullDumpDtoBuilder> {
     if ($v != null) {
       _refId = $v.refId;
       _name = $v.name;
-      _type = $v.type;
       _longitude = $v.longitude;
       _latitude = $v.latitude;
       _isVisible = $v.isVisible;
@@ -201,8 +189,6 @@ class FullDumpDtoBuilder implements Builder<FullDumpDto, FullDumpDtoBuilder> {
                 refId, r'FullDumpDto', 'refId'),
             name: BuiltValueNullFieldError.checkNotNull(
                 name, r'FullDumpDto', 'name'),
-            type: BuiltValueNullFieldError.checkNotNull(
-                type, r'FullDumpDto', 'type'),
             longitude: BuiltValueNullFieldError.checkNotNull(
                 longitude, r'FullDumpDto', 'longitude'),
             latitude: BuiltValueNullFieldError.checkNotNull(

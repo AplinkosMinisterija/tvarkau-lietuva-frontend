@@ -57,12 +57,11 @@ class _AddButtonMobileState extends State<AddButtonMobile> {
               width: widget.width * 0.03572,
             ),
             SizedBox(
-              width: widget.width * 0.561,
-              height: widget.width * 0.0611,
+              width: widget.width * 0.211,
               child: FittedBox(
-                fit: BoxFit.fill,
+                fit: BoxFit.fitWidth,
                 child: Text(
-                  'Pranešti apie šiukšlinimą',
+                  'Pranešti',
                   style: GoogleFonts.raleway(
                     fontWeight: FontWeight.w600,
                     color: Colors.white,

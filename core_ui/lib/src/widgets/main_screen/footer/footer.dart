@@ -7,11 +7,9 @@ class Footer extends StatelessWidget {
   const Footer({
     super.key,
     required this.width,
-    required this.onDataSecurityTap,
   });
 
   final double width;
-  final VoidCallback onDataSecurityTap;
 
   @override
   Widget build(BuildContext context) {

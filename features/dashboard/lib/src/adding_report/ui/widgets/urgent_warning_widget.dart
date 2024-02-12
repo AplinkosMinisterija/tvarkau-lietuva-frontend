@@ -50,7 +50,7 @@ class UrgentWarningWidget extends StatelessWidget {
                 RichText(
                   text: TextSpan(
                     text:
-                        'Jeigu Jums ar kitiems žmonėms yra reali grėsmė gyvybei, sveikatai ar saugumui, Jūsų turtui kyla reali grėmsmė (kėsinamasi pagrobti Jūsų automobilį, kėsinamasi sugadinti ar sunaikinti Jūsų turtą), šiuo metu matote vykstančias muštynes, ',
+                        'Jeigu šiuo metu matote daromą pažeidimą, yra reali grėsmė gyvybei, sveikatai ar saugumui, kėsinamasi sugadinti ar sunaikinti turtą - ',
                     style: Theme.of(context).textTheme.bodyMedium,
                     children: <TextSpan>[
                       TextSpan(

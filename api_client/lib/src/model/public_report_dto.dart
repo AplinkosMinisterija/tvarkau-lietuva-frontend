@@ -14,7 +14,7 @@ part 'public_report_dto.g.dart';
 ///
 /// Properties:
 /// * [name]
-/// * [type]
+/// * [category]
 /// * [refId]
 /// * [longitude]
 /// * [latitude]
@@ -30,8 +30,9 @@ abstract class PublicReportDto
   @BuiltValueField(wireName: r'name')
   String get name;
 
-  @BuiltValueField(wireName: r'type')
-  String get type;
+  @BuiltValueField(wireName: r'category')
+  PublicReportDtoCategoryEnum get category;
+  // enum categoryEnum {  trash,  forest,  };
 
   @BuiltValueField(wireName: r'refId')
   String get refId;
@@ -91,10 +92,10 @@ class _$PublicReportDtoSerializer
       object.name,
       specifiedType: const FullType(String),
     );
-    yield r'type';
+    yield r'category';
     yield serializers.serialize(
-      object.type,
-      specifiedType: const FullType(String),
+      object.category,
+      specifiedType: const FullType(PublicReportDtoCategoryEnum),
     );
     yield r'refId';
     yield serializers.serialize(
@@ -173,12 +174,12 @@ class _$PublicReportDtoSerializer
           ) as String;
           result.name = valueDes;
           break;
-        case r'type':
+        case r'category':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.type = valueDes;
+            specifiedType: const FullType(PublicReportDtoCategoryEnum),
+          ) as PublicReportDtoCategoryEnum;
+          result.category = valueDes;
           break;
         case r'refId':
           final valueDes = serializers.deserialize(
@@ -271,4 +272,23 @@ class _$PublicReportDtoSerializer
     );
     return result.build();
   }
+}
+
+class PublicReportDtoCategoryEnum extends EnumClass {
+  @BuiltValueEnumConst(wireName: r'trash')
+  static const PublicReportDtoCategoryEnum trash =
+      _$publicReportDtoCategoryEnum_trash;
+  @BuiltValueEnumConst(wireName: r'forest', fallback: true)
+  static const PublicReportDtoCategoryEnum forest =
+      _$publicReportDtoCategoryEnum_forest;
+
+  static Serializer<PublicReportDtoCategoryEnum> get serializer =>
+      _$publicReportDtoCategoryEnumSerializer;
+
+  const PublicReportDtoCategoryEnum._(String name) : super(name);
+
+  static BuiltSet<PublicReportDtoCategoryEnum> get values =>
+      _$publicReportDtoCategoryEnumValues;
+  static PublicReportDtoCategoryEnum valueOf(String name) =>
+      _$publicReportDtoCategoryEnumValueOf(name);
 }

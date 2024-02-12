@@ -2,18 +2,10 @@ part of 'home_bloc.dart';
 
 abstract class HomeEvent {}
 
-class LoadData implements HomeEvent {
-  final String type;
+class LoadData implements HomeEvent {}
 
-  LoadData({
-    required this.type,
-  });
-}
+class LoadTrashData implements HomeEvent {}
 
-class ReloadPage implements HomeEvent {
-  final String type;
+class LoadForestData implements HomeEvent {}
 
-  ReloadPage({
-    required this.type,
-  });
-}
+class ReloadPage implements HomeEvent {}

@@ -39,7 +39,7 @@ class AddingScreenTrash extends StatelessWidget {
                               selectedLat: lat,
                               selectedLong: long,
                               imageFiles: files,
-                              type: 'trash',
+                              category: 'trash',
                             ),
                           );
                     },
@@ -63,7 +63,7 @@ class AddingScreenTrash extends StatelessWidget {
                               selectedLat: lat,
                               selectedLong: long,
                               imageFiles: files,
-                              type: 'trash',
+                              category: 'trash',
                             ),
                           );
                     },

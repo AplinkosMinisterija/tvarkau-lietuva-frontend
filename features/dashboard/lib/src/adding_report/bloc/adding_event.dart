@@ -9,18 +9,18 @@ class LoadForestData implements AddingEvent {}
 class AddReport implements AddingEvent {
   final String emailValue;
   final String textValue;
-  final String type;
   final double selectedLat;
   final double selectedLong;
   final List<dio.MultipartFile> imageFiles;
+  final String category;
 
   AddReport({
     required this.emailValue,
     required this.textValue,
-    required this.type,
     required this.selectedLat,
     required this.selectedLong,
     required this.imageFiles,
+    required this.category,
   });
 }
 

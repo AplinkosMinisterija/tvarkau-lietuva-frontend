@@ -16,7 +16,7 @@ part 'full_report_dto.g.dart';
 /// Properties:
 /// * [id]
 /// * [name]
-/// * [type]
+/// * [category]
 /// * [refId]
 /// * [longitude]
 /// * [latitude]
@@ -39,8 +39,9 @@ abstract class FullReportDto
   @BuiltValueField(wireName: r'name')
   String get name;
 
-  @BuiltValueField(wireName: r'type')
-  String get type;
+  @BuiltValueField(wireName: r'category')
+  FullReportDtoCategoryEnum get category;
+  // enum categoryEnum {  trash,  forest,  };
 
   @BuiltValueField(wireName: r'refId')
   String get refId;
@@ -116,10 +117,10 @@ class _$FullReportDtoSerializer implements PrimitiveSerializer<FullReportDto> {
       object.name,
       specifiedType: const FullType(String),
     );
-    yield r'type';
+    yield r'category';
     yield serializers.serialize(
-      object.type,
-      specifiedType: const FullType(String),
+      object.category,
+      specifiedType: const FullType(FullReportDtoCategoryEnum),
     );
     yield r'refId';
     yield serializers.serialize(
@@ -225,12 +226,12 @@ class _$FullReportDtoSerializer implements PrimitiveSerializer<FullReportDto> {
           ) as String;
           result.name = valueDes;
           break;
-        case r'type':
+        case r'category':
           final valueDes = serializers.deserialize(
             value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.type = valueDes;
+            specifiedType: const FullType(FullReportDtoCategoryEnum),
+          ) as FullReportDtoCategoryEnum;
+          result.category = valueDes;
           break;
         case r'refId':
           final valueDes = serializers.deserialize(
@@ -352,4 +353,23 @@ class _$FullReportDtoSerializer implements PrimitiveSerializer<FullReportDto> {
     );
     return result.build();
   }
+}
+
+class FullReportDtoCategoryEnum extends EnumClass {
+  @BuiltValueEnumConst(wireName: r'trash')
+  static const FullReportDtoCategoryEnum trash =
+      _$fullReportDtoCategoryEnum_trash;
+  @BuiltValueEnumConst(wireName: r'forest', fallback: true)
+  static const FullReportDtoCategoryEnum forest =
+      _$fullReportDtoCategoryEnum_forest;
+
+  static Serializer<FullReportDtoCategoryEnum> get serializer =>
+      _$fullReportDtoCategoryEnumSerializer;
+
+  const FullReportDtoCategoryEnum._(String name) : super(name);
+
+  static BuiltSet<FullReportDtoCategoryEnum> get values =>
+      _$fullReportDtoCategoryEnumValues;
+  static FullReportDtoCategoryEnum valueOf(String name) =>
+      _$fullReportDtoCategoryEnumValueOf(name);
 }

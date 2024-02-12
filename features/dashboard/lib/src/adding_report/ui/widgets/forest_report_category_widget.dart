@@ -31,7 +31,8 @@ class ReportCategorySelector extends StatelessWidget {
       child: ListTile(
         title: Text(title),
         subtitle: Text(description),
-        leading: getIcon(iconName, 24),
+        leading: getIcon(iconName, 35),
+        horizontalTitleGap: 25,
         onTap: onTap,
         trailing: const Icon(Icons.chevron_right),
       ),

@@ -11,6 +11,7 @@ class MainTrashMap extends StatefulWidget {
     required this.isHovering,
     required this.onReportTypeChange,
     required this.isShowDumps,
+    required this.isTrash,
     required this.onInformationTap,
   });
 
@@ -19,6 +20,7 @@ class MainTrashMap extends StatefulWidget {
   final ValueChanged<bool> isHovering;
   final ValueChanged<bool> onReportTypeChange;
   final bool isShowDumps;
+  final bool isTrash;
   final Function(String) onInformationTap;
 
   @override
@@ -158,22 +160,24 @@ class _MainTrashMapState extends State<MainTrashMap> {
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 20,
-              left: 20,
-            ),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: ReportTypeSwitcher(
-                width: widget.width,
-                isShowDumps: widget.isShowDumps,
-                onReportTypeChange: (bool value) {
-                  widget.onReportTypeChange(value);
-                },
-              ),
-            ),
-          ),
+          widget.isTrash
+              ? Padding(
+                  padding: const EdgeInsets.only(
+                    top: 20,
+                    left: 20,
+                  ),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: ReportTypeSwitcher(
+                      width: widget.width,
+                      isShowDumps: widget.isShowDumps,
+                      onReportTypeChange: (bool value) {
+                        widget.onReportTypeChange(value);
+                      },
+                    ),
+                  ),
+                )
+              : const SizedBox.shrink(),
         ],
       ),
     );

@@ -50,10 +50,10 @@ class ApiProvider {
 
   final AuthApi authApi;
 
-  Future<List<FullReportDto>> getAllTrashReports() async {
+  Future<List<FullReportDto>> getAllTrashReports(String? category) async {
     final response = await adminApi.adminControllerGetAllReports(
       isDeleted: false,
-      type: 'trash',
+      category: category,
     );
     return response.data!.toList();
   }
@@ -78,23 +78,23 @@ class ApiProvider {
     return response.data!;
   }
 
-  Future<List<FullReportDto>> getAllRemovedReports() async {
+  Future<List<FullReportDto>> getAllRemovedReports(String? category) async {
     final response = await adminApi.adminControllerGetAllReports(
       isDeleted: true,
-      type: 'trash',
+      category: category,
     );
     return response.data!.toList();
   }
 
-  Future<List<PublicReportDto>> getAllVisibleReports(String type) async {
+  Future<List<PublicReportDto>> getAllVisibleReports(String? category) async {
     final response =
-        await reportsApi.reportControllerGetAllPublicReports(type: type);
+        await reportsApi.reportControllerGetAllPublicReports(category: category);
     return response.data!.toList(); //TODO: add error handling
   }
 
-  Future<ReportStatisticsDto> getReportStatistics(String type) async {
+  Future<ReportStatisticsDto> getReportStatistics(String? category) async {
     final response =
-        await reportsApi.reportControllerGetReportStatistics(type: type);
+        await reportsApi.reportControllerGetReportStatistics(category: category);
     return response.data!;
   }
 
@@ -119,10 +119,10 @@ class ApiProvider {
   Future<PublicReportDto> sendNewTrashReport({
     required String emailValue,
     required String textValue,
-    required String type,
     required double selectedLat,
     required double selectedLong,
     required List<MultipartFile> imageFiles,
+    required String category,
   }) async {
     final response = await reportsApi.reportControllerCreateNewReport(
       name: textValue,
@@ -130,7 +130,7 @@ class ApiProvider {
       latitude: selectedLat,
       email: emailValue,
       images: BuiltList(imageFiles),
-      type: type,
+      category: category,
     );
     return response.data!;
   }

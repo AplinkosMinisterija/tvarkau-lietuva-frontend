@@ -8,6 +8,8 @@ part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(LoadingState()) {
     on<LoadData>(_onLoadData);
+    on<LoadTrashData>(_onLoadTrashData);
+    on<LoadForestData>(_onLoadForestData);
     on<ReloadPage>(_onReloadEvent);
   }
 
@@ -16,17 +18,45 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     Emitter<HomeState> emit,
   ) async {
     try {
+      emit(LoadingState());
       final responses = await Future.wait(
         [
-          ApiProvider().getAllVisibleReports(event.type),
-          ApiProvider().getAllVisibleDumpReports(),
-          ApiProvider().getReportStatistics(event.type),
+          ApiProvider().getAllVisibleReports(null),
+          ApiProvider().getReportStatistics(null),
         ],
         eagerError: true,
       );
       emit(
-        ContentState(
-          trashReports: responses[0] as List<PublicReportDto>,
+        InitState(
+          reports: responses[0] as List<PublicReportDto>,
+          reportStatistics: responses[1] as ReportStatisticsDto,
+        ),
+      );
+    } catch (e) {
+      emit(
+        ErrorState(errorMessage: 'Netikėta klaida', type: 'trash'),
+      );
+    }
+  }
+
+  Future<void> _onLoadTrashData(
+    LoadTrashData _,
+    Emitter<HomeState> emit,
+  ) async {
+    try {
+      emit(LoadingState());
+      final responses = await Future.wait(
+        [
+          ApiProvider().getAllVisibleReports('trash'),
+          ApiProvider().getAllVisibleDumpReports(),
+          ApiProvider().getReportStatistics('trash'),
+        ],
+        eagerError: true,
+      );
+
+      emit(
+        TrashState(
+          reports: responses[0] as List<PublicReportDto>,
           dumpReports: responses[1] as List<DumpDto>,
           reportStatistics: responses[2] as ReportStatisticsDto,
         ),
@@ -38,10 +68,37 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     }
   }
 
+  Future<void> _onLoadForestData(
+    LoadForestData _,
+    Emitter<HomeState> emit,
+  ) async {
+    try {
+      emit(LoadingState());
+      final responses = await Future.wait(
+        [
+          ApiProvider().getAllVisibleReports('forest'),
+          ApiProvider().getReportStatistics('forest'),
+        ],
+        eagerError: true,
+      );
+
+      emit(
+        ForestState(
+          reports: responses[0] as List<PublicReportDto>,
+          reportStatistics: responses[1] as ReportStatisticsDto,
+        ),
+      );
+    } catch (e) {
+      emit(
+        ErrorState(errorMessage: 'Netikėta klaida', type: 'forest'),
+      );
+    }
+  }
+
   Future<void> _onReloadEvent(
     ReloadPage _,
     Emitter<HomeState> emit,
   ) async {
-    add(LoadData(type: _.type));
+    add(LoadData());
   }
 }

@@ -208,7 +208,7 @@ class AdminApi {
   ///
   /// Parameters:
   /// * [isDeleted]
-  /// * [type]
+  /// * [category]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -220,7 +220,7 @@ class AdminApi {
   /// Throws [DioError] if API call or serialization fails
   Future<Response<BuiltList<FullReportDto>>> adminControllerGetAllReports({
     required bool isDeleted,
-    required String type,
+    String? category,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -250,7 +250,9 @@ class AdminApi {
     final _queryParameters = <String, dynamic>{
       r'isDeleted':
           encodeQueryParameter(_serializers, isDeleted, const FullType(bool)),
-      r'type': encodeQueryParameter(_serializers, type, const FullType(String)),
+      if (category != null)
+        r'category': encodeQueryParameter(
+            _serializers, category, const FullType(String)),
     };
 
     final _response = await _dio.request<Object>(

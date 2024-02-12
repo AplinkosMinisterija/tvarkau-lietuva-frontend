@@ -1,3 +1,4 @@
+import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:api_client/api_client.dart';
 import 'package:core/utils/url_launcher.dart';
 import 'package:flutter/material.dart';
@@ -6,21 +7,23 @@ import 'package:google_fonts/google_fonts.dart';
 
 class ReportsScreen extends StatefulWidget {
   const ReportsScreen({
-    required this.trashReports,
+    required this.reports,
     required this.dumpReports,
     required this.reportStatistics,
+    required this.category,
     required this.onAddTap,
     required this.onInformationTap,
-    required this.onDataSecurityTap,
+    required this.onCategoryChange,
     super.key,
   });
 
-  final List<PublicReportDto> trashReports;
-  final List<DumpDto> dumpReports;
+  final List<PublicReportDto> reports;
+  final List<DumpDto>? dumpReports;
   final ReportStatisticsDto reportStatistics;
+  final String category;
   final Function(double, double) onAddTap;
   final Function(String) onInformationTap;
-  final VoidCallback onDataSecurityTap;
+  final Function(String) onCategoryChange;
 
   @override
   State<ReportsScreen> createState() => _ReportsScreenState();
@@ -29,10 +32,17 @@ class ReportsScreen extends StatefulWidget {
 class _ReportsScreenState extends State<ReportsScreen> {
   late bool isMapHover;
   bool isShowDumps = false;
+  bool isTrash = false;
+
+  static const List<String> _dropdownList = [
+    'Atliekos',
+    'Miškai',
+  ];
 
   @override
   void initState() {
     isMapHover = false;
+    if (widget.category == 'trash') isTrash = true;
     super.initState();
   }
 
@@ -67,31 +77,40 @@ class _ReportsScreenState extends State<ReportsScreen> {
                           SizedBox(
                             height: constraints.maxWidth * 0.009,
                           ),
-                          Stack(
-                            alignment: Alignment.bottomCenter,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Align(
-                                  alignment: Alignment.topCenter,
-                                  child: AddButton(
-                                    onTap: () {
-                                      widget.onAddTap(
-                                        constraints.maxWidth,
-                                        constraints.maxHeight,
-                                      );
+                              Padding(
+                                padding: const EdgeInsets.only(left: 20),
+                                child: SizedBox(
+                                  width: constraints.maxWidth * 0.2,
+                                  child: CustomDropdown<String>(
+                                    hintText: 'Pasirinkite kategoriją',
+                                    items: _dropdownList,
+                                    onChanged: (value) {
+                                      widget.onCategoryChange(value);
                                     },
-                                    width: constraints.maxWidth,
-                                  )),
+                                  ),
+                                ),
+                              ),
+                              AddButton(
+                                onTap: () {
+                                  widget.onAddTap(
+                                    constraints.maxWidth,
+                                    constraints.maxHeight,
+                                  );
+                                },
+                                width: constraints.maxWidth,
+                              ),
                               Padding(
                                 padding: const EdgeInsets.only(right: 20),
-                                child: Align(
-                                    alignment: Alignment.bottomRight,
-                                    child: Text(
-                                      "Pranešimų skaičius: ${widget.trashReports.length}",
-                                      style: GoogleFonts.roboto(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.white),
-                                    )),
+                                child: Text(
+                                  "Pranešimų skaičius: ${widget.reports.length}",
+                                  style: GoogleFonts.roboto(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.white),
+                                ),
                               ),
                             ],
                           ),
@@ -107,7 +126,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                     });
                                   },
                                   isShowDumps: isShowDumps,
-                                  dumpReports: widget.dumpReports,
+                                  dumpReports: widget.dumpReports ?? [],
                                   isHovering: (bool value) {
                                     setState(() {
                                       isMapHover = value;
@@ -122,7 +141,8 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                     });
                                   },
                                   isShowDumps: isShowDumps,
-                                  trashReports: widget.trashReports,
+                                  isTrash: isTrash,
+                                  trashReports: widget.reports,
                                   isHovering: (bool value) {
                                     setState(() {
                                       isMapHover = value;
@@ -145,7 +165,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                               ? const SizedBox.shrink()
                               : ReportTable(
                                   width: constraints.maxWidth,
-                                  reports: widget.trashReports,
+                                  reports: widget.reports,
                                   onInformationTap: (refId) {
                                     widget.onInformationTap(refId);
                                   },
@@ -157,7 +177,6 @@ class _ReportsScreenState extends State<ReportsScreen> {
                           SizedBox(height: constraints.maxWidth * 0.0343),
                           Footer(
                             width: constraints.maxWidth,
-                            onDataSecurityTap: widget.onDataSecurityTap,
                           ),
                           SizedBox(height: constraints.maxWidth * 0.0166),
                           const Divider(
@@ -221,7 +240,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                           Align(
                             alignment: Alignment.centerRight,
                             child: Text(
-                              "Pranešimų skaičius: ${widget.trashReports.length}",
+                              "Pranešimų skaičius: ${widget.reports.length}",
                               style: GoogleFonts.roboto(
                                   fontSize: constraints.maxWidth * 0.0333,
                                   fontWeight: FontWeight.w400,
@@ -238,7 +257,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                     });
                                   },
                                   isShowDumps: isShowDumps,
-                                  dumpReports: widget.dumpReports,
+                                  dumpReports: widget.dumpReports ?? [],
                                   isHovering: (bool value) {
                                     setState(() {
                                       isMapHover = value;
@@ -253,7 +272,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                     });
                                   },
                                   isShowDumps: isShowDumps,
-                                  trashReports: widget.trashReports,
+                                  trashReports: widget.reports,
                                   isHovering: (bool value) {
                                     setState(() {
                                       isMapHover = value;

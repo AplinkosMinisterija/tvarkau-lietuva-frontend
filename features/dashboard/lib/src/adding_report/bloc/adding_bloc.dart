@@ -71,7 +71,7 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
         selectedLat: event.selectedLat,
         selectedLong: event.selectedLong,
         imageFiles: event.imageFiles,
-        type: event.type,
+        category: event.category,
       );
 
       emit(

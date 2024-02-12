@@ -49,7 +49,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
             await SecureStorageProvider().setJwtToken(userInfo.accessKey);
 
             List<FullReportDto> reports =
-                await ApiProvider().getAllTrashReports();
+                await ApiProvider().getAllTrashReports(null);//TODO:
 
             emit(ReportState(
               reports: reports,
@@ -79,13 +79,13 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
   }
 
   Future<void> _onViewReportsEvent(
-    OnViewReports _,
+    OnViewReports event,
     Emitter<AdminState> emit,
   ) async {
     try {
       emit(LoadingState());
       LogInDto userInfo = await SecureStorageProvider().getUserInfo();
-      List<FullReportDto> reports = await ApiProvider().getAllTrashReports();
+      List<FullReportDto> reports = await ApiProvider().getAllTrashReports(event.category);
       emit(ReportState(reports: reports, userInfo: userInfo));
     } catch (e) {
       emit(
@@ -97,13 +97,13 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
   }
 
   Future<void> _onViewDeletedEvent(
-    OnViewDeleted _,
+    OnViewDeleted event,
     Emitter<AdminState> emit,
   ) async {
     try {
       emit(LoadingState());
       LogInDto userInfo = await SecureStorageProvider().getUserInfo();
-      List<FullReportDto> reports = await ApiProvider().getAllRemovedReports();
+      List<FullReportDto> reports = await ApiProvider().getAllRemovedReports(event.category);
       emit(DeletedState(reports: reports, userInfo: userInfo));
     } catch (e) {
       emit(

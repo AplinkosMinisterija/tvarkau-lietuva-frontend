@@ -44,7 +44,7 @@ class AdminScreen extends StatelessWidget {
                         isShowDeleted: false,
                         onDeletedChange: () {
                           context.read<AdminBloc>().add(
-                                OnViewDeleted(),
+                                OnViewDeleted(category: ''),//TODO:
                               );
                         },
                         onTypeChange: () {
@@ -68,7 +68,7 @@ class AdminScreen extends StatelessWidget {
                         onDeletedChange: () {},
                         onTypeChange: () {
                           context.read<AdminBloc>().add(
-                                OnViewReports(),
+                                OnViewReports(category: ''),//TODO:
                               );
                         },
                         isShowDumps: true);
@@ -86,7 +86,7 @@ class AdminScreen extends StatelessWidget {
                         isShowDeleted: true,
                         onDeletedChange: () {
                           context.read<AdminBloc>().add(
-                                OnViewReports(),
+                                OnViewReports(category: ''),//TODO:
                               );
                         },
                         onTypeChange: () {},
