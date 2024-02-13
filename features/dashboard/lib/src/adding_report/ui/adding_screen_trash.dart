@@ -59,7 +59,7 @@ class AddingScreenTrash extends StatelessWidget {
                               category: 'trash',
                             ),
                           );
-                    },
+                    }, onDataSecurityTap: () {  },
                   );
                 }
               } else if (state is LoadingState) {

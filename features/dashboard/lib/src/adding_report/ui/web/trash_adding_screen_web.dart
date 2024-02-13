@@ -410,7 +410,6 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                             SizedBox(
                               height: widget.width * 0.004,
                             ),
-
                             ImageAddButtonMobile(
                                 width: widget.width / 2.4,
                                 title: _selectedImages.isNotEmpty
@@ -460,15 +459,6 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                             SizedBox(
                               height: widget.width * 0.005,
                             ),
-                            // _fileBytes.isNotEmpty
-                            //     ? ImageCollageMobile(
-                            //         width: widget.width / 2.4,
-                            //         imageBytes: _fileBytes,
-                            //         onTap: (index) {
-                            //           removeSelectedImage(index);
-                            //         },
-                            //       )
-                            //     : const SizedBox.shrink(),
                             _selectedImages.isNotEmpty
                                 ? SizedBox(
                                     width: widget.width / 2.4 * 0.9111,
@@ -515,7 +505,6 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                                     ),
                                   )
                                 : const SizedBox.shrink(),
-
                             SizedBox(height: widget.width * 0.01),
                             CheckboxListTile(
                               activeColor: const Color.fromRGBO(57, 97, 84, 1),
