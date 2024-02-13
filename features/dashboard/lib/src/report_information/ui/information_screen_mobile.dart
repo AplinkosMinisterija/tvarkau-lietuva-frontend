@@ -66,8 +66,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
           color: Colors.black,
         ));
     span2 = TextSpan(
-        text: widget.report.comment != ' '
-            ? widget.report.comment: '',
+        text: widget.report.comment != ' ' ? widget.report.comment : '',
         style: GoogleFonts.roboto(
           fontSize: widget.width * 0.04444,
           fontWeight: FontWeight.w400,
@@ -290,33 +289,33 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                             ],
                           )
                         : const SizedBox.shrink(),
-                    widget.report.status == 'ištirtas'
-                        ? Stack(
-                            children: [
-                              Padding(
-                                  padding: EdgeInsets.only(
-                                      left: widget.width * 0.054166,
-                                      top: widget.width * 0.1111),
-                                  child: DottedLine(
-                                    dashLength: widget.width * 0.01111,
-                                    dashGapLength: widget.width * 0.01111,
-                                    lineThickness: widget.width * 0.002777,
-                                    dashColor:
-                                        const Color.fromRGBO(222, 224, 224, 1),
-                                    direction: Axis.vertical,
-                                    lineLength: widget.width * 0.125 +
-                                        thirdStageLineHeight,
-                                  )),
-                              Column(
-                                children: [
-                                  secondStageWidget,
-                                  thirdStageWidgetFalse,
-                                ],
-                              )
-                            ],
-                          )
-                        : const SizedBox.shrink(),
-                    widget.report.status == 'sutvarkyta'
+                    // widget.report.status == 'išspręsta'
+                    //     ? Stack(
+                    //         children: [
+                    //           Padding(
+                    //               padding: EdgeInsets.only(
+                    //                   left: widget.width * 0.054166,
+                    //                   top: widget.width * 0.1111),
+                    //               child: DottedLine(
+                    //                 dashLength: widget.width * 0.01111,
+                    //                 dashGapLength: widget.width * 0.01111,
+                    //                 lineThickness: widget.width * 0.002777,
+                    //                 dashColor:
+                    //                     const Color.fromRGBO(222, 224, 224, 1),
+                    //                 direction: Axis.vertical,
+                    //                 lineLength: widget.width * 0.125 +
+                    //                     thirdStageLineHeight,
+                    //               )),
+                    //           Column(
+                    //             children: [
+                    //               secondStageWidget,
+                    //               thirdStageWidgetFalse,
+                    //             ],
+                    //           )
+                    //         ],
+                    //       )
+                    //     : const SizedBox.shrink(),
+                    widget.report.status == 'išspręsta'
                         ? Stack(
                             children: [
                               Padding(
@@ -448,7 +447,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              'Pranešimas ištirtas',
+              'Pranešimas išspręstas',
               style: GoogleFonts.roboto(
                 fontSize: widget.width * 0.05555,
                 fontWeight: FontWeight.w500,
@@ -457,7 +456,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
             ),
             SizedBox(height: widget.width * 0.01111),
             Text(
-              getFormattedDate('ištirtas'),
+              getFormattedDate('išspręsta'),
               style: GoogleFonts.roboto(
                   fontSize: widget.width * 0.03888,
                   fontWeight: FontWeight.w400,
@@ -604,7 +603,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              'Sutvarkyta',
+              'Išspręsta',
               style: GoogleFonts.roboto(
                 fontSize: widget.width * 0.05555,
                 fontWeight: FontWeight.w500,
@@ -613,7 +612,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
             ),
             SizedBox(height: widget.width * 0.01111),
             Text(
-              getFormattedDate('sutvarkyta'),
+              getFormattedDate('išspręsta'),
               style: GoogleFonts.roboto(
                   fontSize: widget.width * 0.03888,
                   fontWeight: FontWeight.w400,
@@ -837,7 +836,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
           ),
         ),
       );
-    } else if (status == 'ištirtas') {
+    } else if (status == 'išspręsta') {
       return Container(
         height: width * 0.07777,
         width: width * 0.17777,
@@ -850,7 +849,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
             width: width * 0.1222,
             child: FittedBox(
               child: Text(
-                'Ištirtas',
+                'Išspręsta',
                 style: getStatusBoxTextStyle(
                   const Color.fromRGBO(9, 126, 223, 1),
                 ),
@@ -875,28 +874,6 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                 'Nepasitvirtino',
                 style: getStatusBoxTextStyle(
                   const Color.fromRGBO(100, 100, 100, 1.0),
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
-    } else if (status == 'sutvarkyta') {
-      return Container(
-        height: width * 0.07777,
-        width: width * 0.2477,
-        decoration: getStatusBoxDecoration(
-          const Color.fromRGBO(0, 174, 6, 1),
-          const Color.fromRGBO(224, 245, 224, 1),
-        ),
-        child: Center(
-          child: SizedBox(
-            width: width * 0.1822,
-            child: FittedBox(
-              child: Text(
-                'Sutvarkyta',
-                style: getStatusBoxTextStyle(
-                  const Color.fromRGBO(0, 174, 6, 1),
                 ),
               ),
             ),

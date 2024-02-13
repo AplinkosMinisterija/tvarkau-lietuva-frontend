@@ -158,43 +158,41 @@ class ReportDataSourceAdmin extends DataGridSource {
         color: getRowBackgroundColor(),
         padding: const EdgeInsets.only(left: 24),
         alignment: Alignment.centerLeft,
-        child: e.columnName == 'status'
-            ? _BuildStatus(status: e.value)
-            : e.columnName == 'visibility'
-                ? getVisibilityWidget(e.value)
-                : e.columnName == 'edit'
-                    ? CustomButton(
-                        padding: EdgeInsets.zero,
-                        height: 32,
-                        width: 110,
-                        text: 'Redaguoti',
-                        textStyle: CustomStyles.button2.copyWith(
-                          color: CustomColors.primary,
-                        ),
-                        onPressed: () {
-                          final int index = effectiveRows.indexOf(row);
-                          final FullDumpDto dump = reportData[index];
+        child: e.columnName == 'visibility'
+            ? getVisibilityWidget(e.value)
+            : e.columnName == 'edit'
+                ? CustomButton(
+                    padding: EdgeInsets.zero,
+                    height: 32,
+                    width: 110,
+                    text: 'Redaguoti',
+                    textStyle: CustomStyles.button2.copyWith(
+                      color: CustomColors.primary,
+                    ),
+                    onPressed: () {
+                      final int index = effectiveRows.indexOf(row);
+                      final FullDumpDto dump = reportData[index];
 
-                          context.goNamed('dump_admin', queryParameters: {
-                            'id': dump.refId,
-                          });
-                        },
-                        icon: const Icon(
-                          Icons.edit,
-                          size: 14,
-                          color: CustomColors.primary,
-                        ),
-                        buttonType: ButtonType.outlined,
-                      )
-                    : SelectionArea(
-                        child: Text(e.value.toString(),
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            maxLines: 2,
-                            style: CustomStyles.button1.copyWith(
-                              color: CustomColors.black,
-                            )),
-                      ),
+                      context.goNamed('dump_admin', queryParameters: {
+                        'id': dump.refId,
+                      });
+                    },
+                    icon: const Icon(
+                      Icons.edit,
+                      size: 14,
+                      color: CustomColors.primary,
+                    ),
+                    buttonType: ButtonType.outlined,
+                  )
+                : SelectionArea(
+                    child: Text(e.value.toString(),
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.left,
+                        maxLines: 2,
+                        style: CustomStyles.button1.copyWith(
+                          color: CustomColors.black,
+                        )),
+                  ),
       );
     }).toList());
   }
@@ -228,70 +226,6 @@ Widget getVisibilityWidget(String isVisible) {
       ),
     ),
   );
-}
-
-BoxDecoration getStatusBoxDecorationAdmin(Color borderColor, Color fillColor) {
-  return BoxDecoration(
-    borderRadius: BorderRadius.circular(8),
-    border: Border.all(
-      width: 1,
-      color: borderColor,
-    ),
-    color: fillColor,
-  );
-}
-
-TextStyle getStatusBoxTextStyleAdmin(Color textColor) {
-  return CustomStyles.body2.copyWith(
-    color: textColor,
-  );
-}
-
-class _BuildStatus extends StatelessWidget {
-  const _BuildStatus({required this.status});
-
-  final String status;
-
-  Color get color {
-    return switch (status) {
-      'gautas' => CustomColors.red,
-      'tiriamas' => CustomColors.orange,
-      'uždarytas' => CustomColors.blue,
-      'ištirtas' => CustomColors.green,
-      _ => Colors.white,
-    };
-  }
-
-  String get text {
-    return switch (status) {
-      'gautas' => 'Gautas',
-      'tiriamas' => 'Tiriamas',
-      'ištirtas' => 'Ištirtas',
-      'uždarytas' => 'Uždarytas',
-      _ => '',
-    };
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-      decoration: BoxDecoration(
-        color: color.withOpacity(.1),
-        borderRadius: BorderRadius.circular(4),
-        border: Border.all(
-          width: 1,
-          color: color,
-        ),
-      ),
-      child: Text(
-        text,
-        style: CustomStyles.body2.copyWith(
-          color: color,
-        ),
-      ),
-    );
-  }
 }
 
 class _BuildHeaderLabel extends StatelessWidget {

@@ -210,12 +210,10 @@ class _MainTrashMapMobileState extends State<MainTrashMapMobile> {
       return 'assets/icons/marker_pins/red_marker.png';
     } else if (status == "tiriamas") {
       return 'assets/icons/marker_pins/orange_marker.png';
-    } else if (status == "ištirtas") {
+    } else if (status == "išspręsta") {
       return 'assets/icons/marker_pins/blue_marker.png';
     } else if (status == "nepasitvirtino") {
       return 'assets/icons/marker_pins/gray_marker.png';
-    } else if (status == "sutvarkyta") {
-      return 'assets/icons/marker_pins/green_marker.png';
     } else {
       return 'assets/icons/marker_pins/red_marker.png';
     }

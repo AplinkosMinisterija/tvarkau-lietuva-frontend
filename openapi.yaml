@@ -633,15 +633,12 @@ components:
           type: integer
         totalInvestigatedReports:
           type: integer
-        totalCleanedReports:
-          type: integer
         totalFalseReports:
           type: integer
       required:
         - totalSentReports
         - totalInInvestigationReports
         - totalInvestigatedReports
-        - totalCleanedReports
         - totalFalseReports
     LoginRequestDto:
       type: object

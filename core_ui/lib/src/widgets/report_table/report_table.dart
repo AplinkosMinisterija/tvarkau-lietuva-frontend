@@ -240,7 +240,7 @@ Widget getStatusWidget(String status) {
         ),
       ),
     );
-  } else if (status == 'ištirtas') {
+  } else if (status == 'išspręsta') {
     return Container(
       height: 28,
       width: 64,
@@ -250,7 +250,7 @@ Widget getStatusWidget(String status) {
       ),
       child: Center(
         child: Text(
-          'Ištirtas',
+          'Išspręsta',
           style: getStatusBoxTextStyle(
             const Color.fromRGBO(9, 126, 223, 1),
           ),
@@ -270,23 +270,6 @@ Widget getStatusWidget(String status) {
           'Nepasitvirtino',
           style: getStatusBoxTextStyle(
             const Color.fromRGBO(100, 100, 100, 1.0),
-          ),
-        ),
-      ),
-    );
-  } else if (status == 'sutvarkyta') {
-    return Container(
-      height: 28,
-      width: 95,
-      decoration: getStatusBoxDecoration(
-        const Color.fromRGBO(0, 174, 6, 1),
-        const Color.fromRGBO(224, 245, 224, 1),
-      ),
-      child: Center(
-        child: Text(
-          'Sutvarkyta',
-          style: getStatusBoxTextStyle(
-            const Color.fromRGBO(0, 174, 6, 1),
           ),
         ),
       ),

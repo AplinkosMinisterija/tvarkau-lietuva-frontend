@@ -33,11 +33,11 @@ class ReportStatistics extends StatelessWidget {
               'Vykdomas pranešimo tyrimas.',
         ),
         ReportTypeStatistics(
-          title: 'Ištirti',
+          title: 'Išspręsti',
           quantity: reportStatistics.totalInvestigatedReports,
           imageShort: 'blue',
           tooltipText:
-              'Pranešimas ištirtas ir tolimesniems veiksmams perduota vykdyti atsakingoms institucijoms.',
+              'Pranešimas ištirtas ir pažeidėjas įpareigotas pašalinti pažeidimą ar atlyginti padarytą žalą aplinkai.',
         ),
         ReportTypeStatistics(
           title: 'Nepasitvirtinę',
@@ -45,13 +45,7 @@ class ReportStatistics extends StatelessWidget {
           imageShort: 'gray',
           tooltipText: 'Atlikus teritorijos apžiūrą, pažeidimas neužfiksuotas.',
         ),
-        ReportTypeStatistics(
-          title: 'Sutvarkyti',
-          quantity: reportStatistics.totalCleanedReports,
-          imageShort: 'green',
-          tooltipText:
-              'AAD užfiksavo pranešime nurodytą pažeidimą kaip sutvarkytą.',
-        ),
+
       ],
     );
   }
