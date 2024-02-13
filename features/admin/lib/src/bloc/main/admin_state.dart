@@ -9,10 +9,12 @@ class LogingState implements AdminState {}
 class ReportState implements AdminState {
   final LogInDto userInfo;
   final List<FullReportDto> reports;
+  final String category;
 
   ReportState({
     required this.reports,
     required this.userInfo,
+    required this.category,
   });
 }
 
@@ -29,24 +31,14 @@ class DumpState implements AdminState {
 class DeletedState implements AdminState {
   final LogInDto userInfo;
   final List<FullReportDto> reports;
+  final String category;
 
   DeletedState({
     required this.reports,
     required this.userInfo,
+    required this.category,
   });
 }
-//
-// class ContentState implements AdminState {
-//   final LogInDto userInfo;
-//   final List<FullReportDto> reports;
-//   final List<FullDumpDto> dumps;
-//
-//   ContentState({
-//     required this.userInfo,
-//     required this.reports,
-//     required this.dumps,
-//   });
-// }
 
 class ErrorState implements AdminState {
   final String errorMessage;

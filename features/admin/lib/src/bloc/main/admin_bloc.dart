@@ -49,12 +49,10 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
             await SecureStorageProvider().setJwtToken(userInfo.accessKey);
 
             List<FullReportDto> reports =
-                await ApiProvider().getAllTrashReports(null);//TODO:
+                await ApiProvider().getAllTrashReports('trash');
 
             emit(ReportState(
-              reports: reports,
-              userInfo: userInfo,
-            ));
+                reports: reports, userInfo: userInfo, category: 'trash'));
           } catch (e) {
             emit(
               ErrorState(
@@ -85,8 +83,10 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
     try {
       emit(LoadingState());
       LogInDto userInfo = await SecureStorageProvider().getUserInfo();
-      List<FullReportDto> reports = await ApiProvider().getAllTrashReports(event.category);
-      emit(ReportState(reports: reports, userInfo: userInfo));
+      List<FullReportDto> reports =
+          await ApiProvider().getAllTrashReports(event.category);
+      emit(ReportState(
+          reports: reports, userInfo: userInfo, category: event.category));
     } catch (e) {
       emit(
         ErrorState(
@@ -103,8 +103,10 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
     try {
       emit(LoadingState());
       LogInDto userInfo = await SecureStorageProvider().getUserInfo();
-      List<FullReportDto> reports = await ApiProvider().getAllRemovedReports(event.category);
-      emit(DeletedState(reports: reports, userInfo: userInfo));
+      List<FullReportDto> reports =
+          await ApiProvider().getAllRemovedReports(event.category);
+      emit(DeletedState(
+          reports: reports, userInfo: userInfo, category: event.category));
     } catch (e) {
       emit(
         ErrorState(

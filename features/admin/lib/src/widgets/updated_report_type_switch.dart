@@ -6,12 +6,12 @@ import '../common/custom_colors.dart';
 class UpdatedReportTypeSwitch extends StatelessWidget {
   const UpdatedReportTypeSwitch({
     super.key,
-    required this.isShowDumps,
-    required this.onReportTypeChange,
+    required this.activeCategory,
+    required this.onReportCategoryChange,
   });
 
-  final bool isShowDumps;
-  final ValueChanged<bool> onReportTypeChange;
+  final String activeCategory;
+  final ValueChanged<String> onReportCategoryChange;
 
   @override
   Widget build(BuildContext context) {
@@ -25,18 +25,26 @@ class UpdatedReportTypeSwitch extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _BuildButton(
-            buttonText: 'Pranešimai apie šiukšles',
-            isActive: isShowDumps ? false : true,
+            buttonText: 'Pranešimai apie atliekas',
+            isActive: activeCategory == 'trash',
             onPressed: () {
-              onReportTypeChange(false);
+              onReportCategoryChange('trash');
+            },
+          ),
+          4.widthBox,
+          _BuildButton(
+            buttonText: 'Pranešimai apie miškus',
+            isActive: activeCategory == 'forest',
+            onPressed: () {
+              onReportCategoryChange('forest');
             },
           ),
           4.widthBox,
           _BuildButton(
             buttonText: 'Atliekų surinkimo aikštelės',
-            isActive: isShowDumps ? true : false,
+            isActive: activeCategory == 'dump',
             onPressed: () {
-              onReportTypeChange(true);
+              onReportCategoryChange('dump');
             },
           ),
         ],

@@ -4,7 +4,7 @@ import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:dio/dio.dart' as dio;
-import '../bloc/trash/trash_bloc.dart';
+import '../bloc/report/report_bloc.dart';
 
 class TrashScreen extends StatefulWidget {
   final String refId;
@@ -31,11 +31,11 @@ class _TrashScreenState extends State<TrashScreen> {
     return Scaffold(
       body: BlocProvider(
           create: (BuildContext context) =>
-              TrashBloc(refId: getRefId(widget.refId)),
-          child: BlocBuilder<TrashBloc, TrashState>(
-            builder: (BuildContext context, TrashState state) {
-              return BlocBuilder<TrashBloc, TrashState>(
-                builder: (BuildContext context, TrashState state) {
+              ReportBloc(refId: getRefId(widget.refId)),
+          child: BlocBuilder<ReportBloc, ReportState>(
+            builder: (BuildContext context, ReportState state) {
+              return BlocBuilder<ReportBloc, ReportState>(
+                builder: (BuildContext context, ReportState state) {
                   if (state is ContentState) {
                     return TrashWindow(
                       trash: state.trashReport,
@@ -47,7 +47,7 @@ class _TrashScreenState extends State<TrashScreen> {
                           String status,
                           bool isVisible,
                           List<dio.MultipartFile> officerImages) {
-                        context.read<TrashBloc>().add(UpdateReport(
+                        context.read<ReportBloc>().add(UpdateReport(
                               id: state.trashReport.id,
                               refId: state.trashReport.refId,
                               name: name,
@@ -64,7 +64,7 @@ class _TrashScreenState extends State<TrashScreen> {
                             ));
                       },
                       onDelete: () {
-                        context.read<TrashBloc>().add(UpdateReport(
+                        context.read<ReportBloc>().add(UpdateReport(
                               id: state.trashReport.id,
                               refId: state.trashReport.refId,
                               name: state.trashReport.name,
@@ -81,7 +81,7 @@ class _TrashScreenState extends State<TrashScreen> {
                             ));
                       },
                       onRestore: () {
-                        context.read<TrashBloc>().add(UpdateReport(
+                        context.read<ReportBloc>().add(UpdateReport(
                               id: state.trashReport.id,
                               refId: state.trashReport.refId,
                               name: state.trashReport.name,
@@ -103,7 +103,7 @@ class _TrashScreenState extends State<TrashScreen> {
                   } else if (state is ErrorState) {
                     return ErrorReloadWidget(
                       onPressed: () {
-                        context.read<TrashBloc>().add(
+                        context.read<ReportBloc>().add(
                               ReloadPage(),
                             );
                       },

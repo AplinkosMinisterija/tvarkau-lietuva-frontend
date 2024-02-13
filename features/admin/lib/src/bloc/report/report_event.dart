@@ -1,17 +1,17 @@
-part of 'trash_bloc.dart';
+part of 'report_bloc.dart';
 
-abstract class TrashEvent {}
+abstract class ReportEvent {}
 
-class LoadData implements TrashEvent {
+class LoadData implements ReportEvent {
   final String refId;
   LoadData({
     required this.refId,
   });
 }
 
-class ReloadPage implements TrashEvent {}
+class ReloadPage implements ReportEvent {}
 
-class UpdateReport implements TrashEvent {
+class UpdateReport implements ReportEvent {
   final String id;
   final String refId;
   final String name;
