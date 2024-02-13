@@ -2,7 +2,6 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:dashboard/src/adding_report/ui/web/confirmation_screen.dart';
 import 'package:flutter/material.dart';
-import '../../home/ui/data_security_information.dart';
 import '../bloc/adding_bloc.dart';
 import 'web/trash_adding_screen_web.dart';
 import '../ui/mobile/trash_adding_screen_mobile.dart';
@@ -38,16 +37,10 @@ class AddingScreenTrash extends StatelessWidget {
                               textValue: text,
                               selectedLat: lat,
                               selectedLong: long,
-                              imageFiles: files,
+                              images: files,
                               category: 'trash',
                             ),
                           );
-                    },
-                    onDataSecurityTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) =>
-                              const DataSecurityInformation());
                     },
                   );
                 } else {
@@ -62,16 +55,10 @@ class AddingScreenTrash extends StatelessWidget {
                               textValue: text,
                               selectedLat: lat,
                               selectedLong: long,
-                              imageFiles: files,
+                              images: files,
                               category: 'trash',
                             ),
                           );
-                    },
-                    onDataSecurityTap: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) =>
-                              const DataSecurityInformation());
                     },
                   );
                 }

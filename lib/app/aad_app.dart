@@ -19,8 +19,8 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 )
 class AadApp extends StatelessWidget {
   AadApp({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final _router = GoRouter(
     initialLocation: '/',

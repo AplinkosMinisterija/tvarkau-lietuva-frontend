@@ -5,10 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:dio/dio.dart' as dio;
 import 'package:core_ui/core_ui.dart';
 import 'dart:typed_data';
-import 'package:http_parser/http_parser.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -18,47 +16,29 @@ class TrashAddingScreenWeb extends StatefulWidget {
     required this.height,
     required this.reports,
     required this.onAddTap,
-    required this.onDataSecurityTap,
     super.key,
   });
 
   final double width;
   final double height;
   final List<PublicReportDto> reports;
-  final Function(String, String, double, double, List<dio.MultipartFile>)
-      onAddTap;
-  final VoidCallback onDataSecurityTap;
+  final Function(String, String, double, double, List<Uint8List>) onAddTap;
 
   @override
   State<TrashAddingScreenWeb> createState() => _TrashAddingScreenWebState();
 }
 
 class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
-  final List<List<int>> _selectedImages = [];
-  final List<Uint8List> _fileBytes = [];
-  List<dio.MultipartFile> multipartList = [];
+  List<Uint8List> _selectedImages = [];
 
   Future<void> getMultipleImageInfos() async {
-    List<Uint8List>? images = await ImagePickerWeb.getMultiImagesAsBytes(
-        GlobalConstants.maxAllowedImageCount);
+    final images = await AppImagePicker().pickMultipleImages();
 
-    if (images != null) {
-      setState(() {
-        _selectedImages.addAll(images);
-        _fileBytes.addAll(images);
-        for (var element in _selectedImages) {
-          multipartList.add(dio.MultipartFile.fromBytes(element,
-              contentType: MediaType("image", "jpg"), filename: 'name.jpg'));
-        }
-        if (_selectedImages.length > 4 && _selectedImages.isNotEmpty) {
-          for (int i = 0; i < _selectedImages.length - 4; i++) {
-            _selectedImages.removeAt(0);
-            _fileBytes.removeAt(0);
-            multipartList.removeAt(0);
-          }
-        }
-      });
-    }
+    setState(() {
+      _selectedImages = (_selectedImages + images)
+          .take(GlobalConstants.maxAllowedImageCount)
+          .toList();
+    });
   }
 
   bool isTermsAccepted = false;
@@ -92,9 +72,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
 
   void removeSelectedImage(int imageIndex) {
     setState(() {
-      _fileBytes.removeAt(imageIndex);
       _selectedImages.removeAt(imageIndex);
-      multipartList.removeAt(imageIndex);
     });
   }
 
@@ -435,7 +413,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
 
                             ImageAddButtonMobile(
                                 width: widget.width / 2.4,
-                                title: _fileBytes.isNotEmpty
+                                title: _selectedImages.isNotEmpty
                                     ? 'Įkelti kitas nuotraukas'
                                     : 'Įkelti nuotraukas',
                                 onTap: () {
@@ -467,10 +445,10 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                                 ),
                                 textAlignVertical: TextAlignVertical.top,
                                 validator: (value) {
-                                  if (_fileBytes.isEmpty) {
+                                  if (_selectedImages.isEmpty) {
                                     return 'Prašome įkelti bent 2 nuotraukas';
                                   } else {
-                                    if (_fileBytes.length < 2) {
+                                    if (_selectedImages.length < 2) {
                                       return 'Prašome įkelti bent 2 nuotraukas';
                                     } else {
                                       return null;
@@ -491,10 +469,10 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                             //         },
                             //       )
                             //     : const SizedBox.shrink(),
-                            _fileBytes.isNotEmpty
+                            _selectedImages.isNotEmpty
                                 ? SizedBox(
                                     width: widget.width / 2.4 * 0.9111,
-                                    height: _fileBytes.length > 2
+                                    height: _selectedImages.length > 2
                                         ? widget.width / 2.4 * 0.9111
                                         : widget.width / 2.4 * 0.4555,
                                     child: AlignedGridView.count(
@@ -508,7 +486,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                                             alignment: Alignment.topRight,
                                             children: [
                                               getImageWidget(
-                                                  _fileBytes,
+                                                  _selectedImages,
                                                   widget.width /
                                                       2.4 *
                                                       0.4333)[index],
@@ -531,7 +509,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                                               )
                                             ]);
                                       },
-                                      itemCount: getImageWidget(_fileBytes,
+                                      itemCount: getImageWidget(_selectedImages,
                                               widget.width / 2.4 * 0.4333)
                                           .length,
                                     ),
@@ -561,7 +539,6 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                                           LaunchUrl().launch(
                                               'https://aad.lrv.lt/lt/administracine-informacija/asmens-duomenu-apsauga/');
                                         },
-                                        //widget.onDataSecurityTap,
                                         child: Text(
                                           'Asmens duomenų apsaugos\n tvarkymo taisyklėmis',
                                           textAlign: TextAlign.center,
@@ -605,14 +582,14 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                                     selectedLat != 0 &&
                                     selectedLong != 0 &&
                                     isTermsAccepted &&
-                                    multipartList.isNotEmpty) {
-                                  if (multipartList.length >= 2) {
+                                    _selectedImages.isNotEmpty) {
+                                  if (_selectedImages.length >= 2) {
                                     widget.onAddTap(
                                       currentEmailValue,
                                       currentTextValue,
                                       selectedLat,
                                       selectedLong,
-                                      multipartList,
+                                      _selectedImages,
                                     );
                                   }
                                 }

@@ -1,9 +1,7 @@
 import 'dart:typed_data';
 import 'package:core/core.dart';
-import 'package:http_parser/http_parser.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart' as dio;
 import '../common/custom_colors.dart';
 import '../common/custom_styles.dart';
 import 'custom_button.dart';
@@ -25,7 +23,7 @@ class AddAnswerTab extends StatelessWidget {
   final int statusValue;
   final Function(String value) onAnswerChange;
   final String answerValue;
-  final Function(List<dio.MultipartFile>) onImageUpload;
+  final Function(List<Uint8List>) onImageUpload;
   final VoidCallback onBackPress;
   final VoidCallback onSave;
 
@@ -53,7 +51,7 @@ class AddAnswerTab extends StatelessWidget {
               onAnswerChange(value);
             },
             answerValue: answerValue,
-            onImageUpload: (List<dio.MultipartFile> uploadedOfficerImages) {
+            onImageUpload: (uploadedOfficerImages) {
               onImageUpload(uploadedOfficerImages);
             },
           ),
@@ -207,7 +205,7 @@ class _BuildAnswerAndImageSection extends StatefulWidget {
 
   final Function(String value) onAnswerChange;
   final String answerValue;
-  final Function(List<dio.MultipartFile> officerImages) onImageUpload;
+  final Function(List<Uint8List> officerImages) onImageUpload;
 
   @override
   State<_BuildAnswerAndImageSection> createState() =>
@@ -216,25 +214,16 @@ class _BuildAnswerAndImageSection extends StatefulWidget {
 
 class _BuildAnswerAndImageSectionState
     extends State<_BuildAnswerAndImageSection> {
-  List<List<int>>? _selectedImages;
-  List<Uint8List>? _fileBytes;
-  List<dio.MultipartFile> multipartList = [];
+  List<Uint8List> _selectedImages = [];
 
   Future<void> getMultipleImageInfos() async {
-    List<Uint8List>? images = await ImagePickerWeb.getMultiImagesAsBytes(
-        GlobalConstants.maxAllowedImageCount);
+    final images = await AppImagePicker().pickMultipleImages();
 
-    if (images != null) {
-      setState(() {
-        _selectedImages = images;
-        _fileBytes = images;
-        multipartList.clear();
-        for (var element in _selectedImages!) {
-          multipartList.add(dio.MultipartFile.fromBytes(element,
-              contentType: MediaType("image", "jpg"), filename: 'name.jpg'));
-        }
-      });
-    }
+    setState(() {
+      _selectedImages = (_selectedImages + images)
+          .take(GlobalConstants.maxAllowedImageCount)
+          .toList();
+    });
   }
 
   @override
@@ -269,20 +258,22 @@ class _BuildAnswerAndImageSectionState
           style: CustomStyles.body2,
         ),
         5.heightBox,
-        _fileBytes != null
+        _selectedImages.isNotEmpty
             ? ImageCollageMobile(
                 width: 450,
-                imageBytes: _fileBytes!,
+                imageBytes: _selectedImages,
               )
             : const SizedBox.shrink(),
         5.heightBox,
         CustomButton(
           width: null,
           buttonType: ButtonType.outlined,
-          text: _fileBytes != null ? 'Keisti nuotraukas' : 'Įkelti nuotraukas',
+          text: _selectedImages.isNotEmpty
+              ? 'Keisti nuotraukas'
+              : 'Įkelti nuotraukas',
           onPressed: () async {
             await getMultipleImageInfos();
-            widget.onImageUpload(multipartList);
+            widget.onImageUpload(_selectedImages);
           },
           icon: const Icon(
             Icons.upload,

@@ -23,7 +23,7 @@ class UpdateReport implements ReportEvent {
   final bool isDeleted;
   final List<String> imageUrls;
   final List<String> officerImageUrls;
-  final List<dio.MultipartFile> officerImageFiles;
+  final List<Uint8List> officerImageFiles;
 
   UpdateReport({
     required this.id,

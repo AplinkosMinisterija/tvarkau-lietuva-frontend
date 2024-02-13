@@ -32,7 +32,6 @@ class Footer extends StatelessWidget {
                 LaunchUrl().launch(
                     'https://aad.lrv.lt/lt/administracine-informacija/asmens-duomenu-apsauga/');
               },
-              //onDataSecurityTap,
               child: Text(
                 'Departamento BDAR taisyklės',
                 style: GoogleFonts.roboto(
