@@ -12,7 +12,7 @@ class InstructionsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(width * 0.0083),
+      padding: EdgeInsets.all(width * 0.0043),
       margin: EdgeInsets.only(
         top: width * 0.0167,
       ),

@@ -23,14 +23,14 @@ class ReportStatistics extends StatelessWidget {
           quantity: reportStatistics.totalSentReports,
           imageShort: 'red',
           tooltipText:
-              'Pranešimą peržiūrėjo tvarkaulietuva.lt administratorius ir jis perduotas atitinkamam struktūriniam vienetui tvarkyti.',
+              'Pranešimas perduotas Aplinkos apsaugos departamento pareigūnams.',
         ),
         ReportTypeStatistics(
           title: 'Tiriami',
           quantity: reportStatistics.totalInInvestigationReports,
           imageShort: 'orange',
           tooltipText:
-              'Atsakingas AAD struktūrinis padalinys vykdo pranešimo tyrimą.',
+              'Vykdomas pranešimo tyrimas.',
         ),
         ReportTypeStatistics(
           title: 'Ištirti',
@@ -43,7 +43,7 @@ class ReportStatistics extends StatelessWidget {
           title: 'Nepasitvirtinę',
           quantity: reportStatistics.totalFalseReports,
           imageShort: 'gray',
-          tooltipText: 'AAD atliko patikrinimą ir pažeidimo neužfiksavo.',
+          tooltipText: 'Atlikus teritorijos apžiūrą, pažeidimas neužfiksuotas.',
         ),
         ReportTypeStatistics(
           title: 'Sutvarkyti',

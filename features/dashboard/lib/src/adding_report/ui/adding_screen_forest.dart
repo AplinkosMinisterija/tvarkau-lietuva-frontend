@@ -5,8 +5,9 @@ import 'package:dashboard/src/adding_report/ui/web/forest_adding_screen_web.dart
 import 'package:flutter/material.dart';
 import '../../home/ui/data_security_information.dart';
 import '../bloc/adding_bloc.dart';
+import 'mobile/forest_adding_screen_mobile.dart';
 import 'web/trash_adding_screen_web.dart';
-import '../ui/mobile/adding_screen_mobile.dart';
+import '../ui/mobile/trash_adding_screen_mobile.dart';
 import 'mobile/confirmation_screen_mobile.dart';
 
 class AddingScreenForest extends StatelessWidget {
@@ -51,7 +52,7 @@ class AddingScreenForest extends StatelessWidget {
                     },
                   );
                 } else {
-                  return AddingScreenMobile(
+                  return ForestAddingScreenMobile(
                     width: width,
                     height: height,
                     reports: state.forestReports,

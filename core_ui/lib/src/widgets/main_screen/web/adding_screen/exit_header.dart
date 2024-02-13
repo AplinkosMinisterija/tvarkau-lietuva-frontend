@@ -17,7 +17,7 @@ class ExitHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Text(
-          'Pranešti apie šiukšlinimą',
+          'Pranešti apie pažeidimą',
           style: GoogleFonts.roboto(
             fontSize: width * 0.01458,
             fontWeight: FontWeight.w700,

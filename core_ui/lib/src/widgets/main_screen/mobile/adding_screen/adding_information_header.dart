@@ -40,7 +40,7 @@ class AddingInformationHeader extends StatelessWidget {
             ),
             SizedBox(height: width * 0.02),
             Text(
-              '3. Spauskite mygtuką „Pranešti“, o kilus klausimams su\n    Jumis susisieks departamento pareigūnai.',
+              '3. Spauskite mygtuką „Pranešti“, o kilus klausimams\n     su Jumis susisieks departamento pareigūnai.',
               textAlign: TextAlign.left,
               style: GoogleFonts.roboto(
                   fontSize: width * 0.03333, fontWeight: FontWeight.w400),

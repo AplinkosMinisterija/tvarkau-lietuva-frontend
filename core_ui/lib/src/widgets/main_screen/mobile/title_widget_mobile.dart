@@ -27,7 +27,7 @@ class TitleWidgetMobile extends StatelessWidget {
           height: width * 0.033,
         ),
         Text(
-          'Žemėlapyje pažymėkite gamtoje pastebėtus galimus pažeidimus. Aplinkos apsaugos departamento pareigūnai pasirūpins, kad jūsų pranešimai būtų išnagrinėti.',
+          'Žemėlapyje pažymėkite gamtoje pastebėtus pažeidimus. Aplinkos apsaugos departamento pareigūnai išnagrinės pranešimus ir pasirūpins, kad pažeidėjai būtų surasti ir pašalintų padarytus pažeidimus ar atlygintų padarytą žalą gamtai.',
           textAlign: TextAlign.center,
           style: GoogleFonts.roboto(
             fontSize: width * 0.04444,

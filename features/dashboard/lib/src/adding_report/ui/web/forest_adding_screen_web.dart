@@ -76,8 +76,6 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
   MapType currentMapType = MapType.normal;
   CameraPosition _lithuaniaCameraPosition =
       const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 7.0);
-  List<DropdownMenuItem<String>> dropDownItems = [];
-  late String currentItem;
 
   late GoogleMapController mapController;
   LatLng? _currentPosition;
@@ -164,7 +162,7 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
   @override
   Widget build(BuildContext context) {
     return Title(
-      title: "Pranešti apie miškus",
+      title: "Pranešti apie pažeidimą",
       color: Colors.green,
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(250, 242, 234, 1),

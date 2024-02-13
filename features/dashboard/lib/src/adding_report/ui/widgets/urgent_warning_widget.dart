@@ -43,7 +43,7 @@ class UrgentWarningWidget extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Text(
-                    'Ar šiuo metu reikalinga pagalba?',
+                    'Ar šiuo metu reikalinga skubi pagalba?',
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 ),

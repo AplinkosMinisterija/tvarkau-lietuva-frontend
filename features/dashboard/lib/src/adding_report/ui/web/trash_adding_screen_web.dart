@@ -47,7 +47,6 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
         _selectedImages.addAll(images);
         _fileBytes.addAll(images);
         for (var element in _selectedImages) {
-          //http.MultipartFile.fromBytes(field, value)
           multipartList.add(dio.MultipartFile.fromBytes(element,
               contentType: MediaType("image", "jpg"), filename: 'name.jpg'));
         }
@@ -76,8 +75,6 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
   MapType currentMapType = MapType.normal;
   CameraPosition _lithuaniaCameraPosition =
       const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 7.0);
-  List<DropdownMenuItem<String>> dropDownItems = [];
-  late String currentItem;
 
   late GoogleMapController mapController;
   LatLng? _currentPosition;
@@ -121,18 +118,6 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
       );
       index++;
     }
-    currentItem = 'Šiukšlinimas gamtoje';
-    dropDownItems.add(DropdownMenuItem(
-      value: 'Šiukšlinimas gamtoje',
-      child: Text(
-        'Šiukšlinimas gamtoje',
-        style: GoogleFonts.roboto(
-          fontWeight: FontWeight.w500,
-          fontSize: widget.width * 0.01888,
-          color: const Color.fromRGBO(57, 97, 84, 1),
-        ),
-      ),
-    ));
     getLocation();
     super.initState();
   }
@@ -175,7 +160,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
   @override
   Widget build(BuildContext context) {
     return Title(
-      title: "Pranešti apie šiukšlinimą",
+      title: "Pranešti apie pažeidimą",
       color: Colors.green,
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(250, 242, 234, 1),
@@ -552,46 +537,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                                     ),
                                   )
                                 : const SizedBox.shrink(),
-                            SizedBox(height: widget.width * 0.005),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'Pranešimo kategorija',
-                                style: GoogleFonts.roboto(
-                                  fontSize: widget.width * 0.01145,
-                                  fontWeight: FontWeight.w600,
-                                  color: const Color(0x660a3328),
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: widget.width * 0.01),
-                            Container(
-                              width: widget.width * 0.45,
-                              height: widget.width * 0.045,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: widget.width * 0.01),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4),
-                                border: Border.all(
-                                    color: const Color.fromRGBO(57, 97, 84, 1),
-                                    width: 1),
-                              ),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton(
-                                  icon: Icon(
-                                    Icons.arrow_drop_down_circle_outlined,
-                                    size: widget.width * 0.02,
-                                    color: const Color.fromRGBO(57, 97, 84, 1),
-                                  ),
-                                  value: currentItem,
-                                  autofocus: false,
-                                  focusColor: Colors.transparent,
-                                  isExpanded: true,
-                                  items: dropDownItems,
-                                  onChanged: (value) {},
-                                ),
-                              ),
-                            ),
+
                             SizedBox(height: widget.width * 0.01),
                             CheckboxListTile(
                               activeColor: const Color.fromRGBO(57, 97, 84, 1),

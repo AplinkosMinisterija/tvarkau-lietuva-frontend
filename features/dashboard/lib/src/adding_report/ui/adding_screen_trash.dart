@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../../home/ui/data_security_information.dart';
 import '../bloc/adding_bloc.dart';
 import 'web/trash_adding_screen_web.dart';
-import '../ui/mobile/adding_screen_mobile.dart';
+import '../ui/mobile/trash_adding_screen_mobile.dart';
 import 'mobile/confirmation_screen_mobile.dart';
 
 class AddingScreenTrash extends StatelessWidget {
@@ -51,7 +51,7 @@ class AddingScreenTrash extends StatelessWidget {
                     },
                   );
                 } else {
-                  return AddingScreenMobile(
+                  return TrashAddingScreenMobile(
                     width: width,
                     height: height,
                     reports: state.trashReports,
