@@ -2,7 +2,6 @@ import 'package:dashboard/src/adding_report/ui/widgets/forest_report_category_wi
 import 'package:dashboard/src/adding_report/ui/widgets/urgent_warning_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ReportCategoryScreen extends StatelessWidget {
   const ReportCategoryScreen({
