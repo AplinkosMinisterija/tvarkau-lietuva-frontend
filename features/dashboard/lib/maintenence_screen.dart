@@ -52,7 +52,7 @@ class _MaintenenceScreenState extends State<MaintenenceScreen> {
                         height: constraints.maxWidth * 0.0291,
                       ),
                       Text(
-                        'Puslapis kuriamas',
+                        'Vyksta puslapio atnaujinimo darbai',
                         style: GoogleFonts.poppins(
                           fontSize: 40,
                           fontWeight: FontWeight.w800,

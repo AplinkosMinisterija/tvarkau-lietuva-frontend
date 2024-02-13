@@ -3,6 +3,7 @@ import 'package:admin/admin.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:dashboard/dashboard_screen.dart';
 import 'package:dashboard/dashboard.dart';
+import 'package:dashboard/maintenence_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:openapi_generator_annotations/openapi_generator_annotations.dart';
@@ -35,40 +36,40 @@ class AadApp extends StatelessWidget {
       GoRoute(
         name: 'home',
         path: '/',
-        builder: (context, state) => const DashboardScreen(),
+        builder: (context, state) => const MaintenenceScreen(),
       ),
-      GoRoute(
-          name: 'admin',
-          path: '/admin',
-          builder: (context, state) => const AdminScreen(),
-          routes: [
-            GoRoute(
-                name: 'report_admin',
-                path: "pranesimas",
-                builder: (context, state) {
-                  return TrashScreen(
-                    refId: state.uri.queryParameters['id'] ?? '1',
-                  );
-                }),
-            GoRoute(
-                name: 'dump_admin',
-                path: 'aikstele',
-                builder: (context, state) {
-                  return DumpScreen(
-                    refId: state.uri.queryParameters['id'] ?? '1',
-                  );
-                }),
-          ]),
-      GoRoute(
-        name: 'report',
-        path: '/pranesimas',
-        builder: (context, state) =>
-            InformationScreen(reportId: state.uri.queryParameters['id'] ?? '1'),
-      ),
-      GoRoute(
-          name: 'newReport',
-          path: '/pranesti',
-          builder: (context, state) => const AddingScreen()),
+      // GoRoute(
+      //     name: 'admin',
+      //     path: '/admin',
+      //     builder: (context, state) => const AdminScreen(),
+      //     routes: [
+      //       GoRoute(
+      //           name: 'report_admin',
+      //           path: "pranesimas",
+      //           builder: (context, state) {
+      //             return TrashScreen(
+      //               refId: state.uri.queryParameters['id'] ?? '1',
+      //             );
+      //           }),
+      //       GoRoute(
+      //           name: 'dump_admin',
+      //           path: 'aikstele',
+      //           builder: (context, state) {
+      //             return DumpScreen(
+      //               refId: state.uri.queryParameters['id'] ?? '1',
+      //             );
+      //           }),
+      //     ]),
+      // GoRoute(
+      //   name: 'report',
+      //   path: '/pranesimas',
+      //   builder: (context, state) =>
+      //       InformationScreen(reportId: state.uri.queryParameters['id'] ?? '1'),
+      // ),
+      // GoRoute(
+      //     name: 'newReport',
+      //     path: '/pranesti',
+      //     builder: (context, state) => const AddingScreen()),
     ],
   );
 
