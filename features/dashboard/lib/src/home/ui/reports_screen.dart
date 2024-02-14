@@ -152,7 +152,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                     ),
                               Padding(
                                 padding:
-                                    const EdgeInsets.only(top: 25, right: 20),
+                                    const EdgeInsets.only(top: 22, right: 20),
                                 child: Align(
                                   alignment: Alignment.topRight,
                                   child: SizedBox(
@@ -160,6 +160,15 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                     child: PointerInterceptor(
                                       child: CustomDropdown<String>(
                                         hintText: 'Pasirinkite kategoriją',
+                                          overlayHeight: 20,
+                                        decoration: CustomDropdownDecoration(
+                                          listItemStyle:
+                                              GoogleFonts.roboto(fontSize: 13),
+                                          hintStyle:
+                                              GoogleFonts.roboto(fontSize: 13),
+                                          headerStyle:
+                                              GoogleFonts.roboto(fontSize: 13),
+                                        ),
                                         items: _dropdownList,
                                         initialItem: initialItem,
                                         onChanged: (value) {

@@ -17,7 +17,7 @@ class ReportTypeSwitcher extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: width * 0.22,
-      height: width * 0.0307,
+      height: width * 0.0370,
       decoration: BoxDecoration(
         color: const Color(0xffeceaea),
         borderRadius: BorderRadius.circular(12),
@@ -29,7 +29,7 @@ class ReportTypeSwitcher extends StatelessWidget {
         children: [
           ReportTypeSwitcherButton(
             width: (width * 0.22 / 2) - (width * 0.002 * 2),
-            height: (width * 0.0307) - (width * 0.002 * 2),
+            height: (width * 0.0370) - (width * 0.002 * 2),
             buttonText: 'Peržiūrėti pranešimus\napie atliekas',
             isActive: isShowDumps ? false : true,
             onPressed: () {
@@ -38,7 +38,7 @@ class ReportTypeSwitcher extends StatelessWidget {
           ),
           ReportTypeSwitcherButton(
             width: (width * 0.22 / 2) - (width * 0.002 * 2),
-            height: (width * 0.0307) - (width * 0.002 * 2),
+            height: (width * 0.0370) - (width * 0.002 * 2),
             buttonText: 'Peržiūrėti atliekų\nsurinkimo aikšteles',
             isActive: isShowDumps ? true : false,
             onPressed: () {
