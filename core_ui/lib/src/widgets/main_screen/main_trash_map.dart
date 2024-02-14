@@ -131,7 +131,6 @@ class _MainTrashMapState extends State<MainTrashMap> {
                         controller: _customTrashInfoWindowController,
                         isDump: widget.isShowDumps,
                       ),
-
                       Padding(
                         padding: const EdgeInsets.only(bottom: 110, right: 10),
                         child: Align(
@@ -170,7 +169,6 @@ class _MainTrashMapState extends State<MainTrashMap> {
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: ReportTypeSwitcher(
-                      width: widget.width,
                       isShowDumps: widget.isShowDumps,
                       onReportTypeChange: (bool value) {
                         widget.onReportTypeChange(value);

@@ -160,10 +160,11 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                     child: PointerInterceptor(
                                       child: CustomDropdown<String>(
                                         hintText: 'Pasirinkite kategoriją',
-                                          overlayHeight: 20,
+                                        overlayHeight: 20,
                                         decoration: CustomDropdownDecoration(
-                                          listItemStyle:
-                                              GoogleFonts.roboto(fontSize: 13),
+                                          listItemStyle: GoogleFonts.roboto(
+                                            fontSize: 13,
+                                          ),
                                           hintStyle:
                                               GoogleFonts.roboto(fontSize: 13),
                                           headerStyle:

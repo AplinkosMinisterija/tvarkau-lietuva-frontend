@@ -4,32 +4,30 @@ import 'package:flutter/material.dart';
 class ReportTypeSwitcher extends StatelessWidget {
   const ReportTypeSwitcher({
     super.key,
-    required this.width,
     required this.isShowDumps,
     required this.onReportTypeChange,
   });
 
-  final double width;
   final bool isShowDumps;
   final ValueChanged<bool> onReportTypeChange;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width * 0.22,
-      height: width * 0.0370,
+      width: 318,
+      height: 52,
       decoration: BoxDecoration(
         color: const Color(0xffeceaea),
         borderRadius: BorderRadius.circular(12),
       ),
-      padding: EdgeInsets.all(width * 0.002),
+      padding: const EdgeInsets.all(4),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ReportTypeSwitcherButton(
-            width: (width * 0.22 / 2) - (width * 0.002 * 2),
-            height: (width * 0.0370) - (width * 0.002 * 2),
+            width: 153,
+            height: 42,
             buttonText: 'Peržiūrėti pranešimus\napie atliekas',
             isActive: isShowDumps ? false : true,
             onPressed: () {
@@ -37,8 +35,8 @@ class ReportTypeSwitcher extends StatelessWidget {
             },
           ),
           ReportTypeSwitcherButton(
-            width: (width * 0.22 / 2) - (width * 0.002 * 2),
-            height: (width * 0.0370) - (width * 0.002 * 2),
+            width: 153,
+            height: 42,
             buttonText: 'Peržiūrėti atliekų\nsurinkimo aikšteles',
             isActive: isShowDumps ? true : false,
             onPressed: () {

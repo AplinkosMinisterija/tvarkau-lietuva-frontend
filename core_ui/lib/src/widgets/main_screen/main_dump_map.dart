@@ -167,7 +167,6 @@ class _MainDumpMapState extends State<MainDumpMap> {
             child: Align(
               alignment: Alignment.topLeft,
               child: ReportTypeSwitcher(
-                width: widget.width,
                 isShowDumps: widget.isShowDumps,
                 onReportTypeChange: (bool value) {
                   widget.onReportTypeChange(value);
