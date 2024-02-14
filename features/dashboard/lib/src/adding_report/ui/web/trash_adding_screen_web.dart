@@ -138,7 +138,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
   @override
   Widget build(BuildContext context) {
     return Title(
-      title: "Pranešti apie pažeidimą",
+      title: "Pranešti apie atliekas",
       color: Colors.green,
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(250, 242, 234, 1),
@@ -281,6 +281,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                         child: Column(
                           children: [
                             ExitHeader(
+                                title: 'Pranešti apie atliekas',
                                 width: widget.width,
                                 onTap: () {
                                   context.goNamed("home");

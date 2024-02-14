@@ -30,7 +30,7 @@ class ReportTypeSwitcherMobile extends StatelessWidget {
           ReportTypeSwitcherButtonMobile(
             width: width * 0.416,
             height: width * 0.0888,
-            buttonText: 'Pranešimai apie šiukšles',
+            buttonText: 'Pranešimai apie atliekas',
             isActive: isShowDumps ? false : true,
             onPressed: () {
               onReportTypeChange(false);

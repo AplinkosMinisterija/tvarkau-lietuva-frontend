@@ -125,7 +125,7 @@ class _AdminWindowState extends State<AdminWindow> {
       return switch (status) {
         'gautas' => redIcon!,
         'tiriamas' => orangeIcon!,
-        'išspręsta' => blueIcon!,
+        'išspręsta' => greenIcon!,
         'nepasitvirtino' => grayIcon!,
         _ => dumpIcon!,
       };

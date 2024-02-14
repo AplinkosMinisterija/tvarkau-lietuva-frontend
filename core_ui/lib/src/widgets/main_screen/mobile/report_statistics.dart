@@ -19,7 +19,7 @@ class ReportStatistics extends StatelessWidget {
       runSpacing: 5,
       children: [
         ReportTypeStatistics(
-          title: 'Gauti',
+          title: 'Gauta',
           quantity: reportStatistics.totalSentReports,
           imageShort: 'red',
           tooltipText:
@@ -35,7 +35,7 @@ class ReportStatistics extends StatelessWidget {
         ReportTypeStatistics(
           title: 'Išspręsti',
           quantity: reportStatistics.totalInvestigatedReports,
-          imageShort: 'blue',
+          imageShort: 'green',
           tooltipText:
               'Pranešimas ištirtas ir pažeidėjas įpareigotas pašalinti pažeidimą ar atlyginti padarytą žalą aplinkai.',
         ),

@@ -131,6 +131,7 @@ class _MainTrashMapState extends State<MainTrashMap> {
                         controller: _customTrashInfoWindowController,
                         isDump: widget.isShowDumps,
                       ),
+
                       Padding(
                         padding: const EdgeInsets.only(bottom: 110, right: 10),
                         child: Align(
@@ -189,7 +190,7 @@ class _MainTrashMapState extends State<MainTrashMap> {
     } else if (status == "tiriamas") {
       return 'assets/icons/marker_pins/orange_marker.png';
     } else if (status == "išspręsta") {
-      return 'assets/icons/marker_pins/blue_marker.png';
+      return 'assets/icons/marker_pins/green_marker.png';
     } else if (status == "nepasitvirtino") {
       return 'assets/icons/marker_pins/gray_marker.png';
     } else {

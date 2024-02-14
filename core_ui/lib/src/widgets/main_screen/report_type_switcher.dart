@@ -30,7 +30,7 @@ class ReportTypeSwitcher extends StatelessWidget {
           ReportTypeSwitcherButton(
             width: (width * 0.22 / 2) - (width * 0.002 * 2),
             height: (width * 0.0307) - (width * 0.002 * 2),
-            buttonText: 'Peržiūrėti pranešimus\napie šiukšles',
+            buttonText: 'Peržiūrėti pranešimus\napie atliekas',
             isActive: isShowDumps ? false : true,
             onPressed: () {
               onReportTypeChange(false);

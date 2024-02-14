@@ -4,6 +4,7 @@ import 'package:core/utils/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 class ReportsScreen extends StatefulWidget {
   const ReportsScreen({
@@ -37,7 +38,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
 
   static const List<String> _dropdownList = [
     'Atliekos',
-    'Miškai',
+    'Sugadinta miško paklotė ir keliai',
   ];
 
   @override
@@ -47,7 +48,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
       initialItem = 'Atliekos';
       isTrash = true;
     } else if (widget.category == 'forest') {
-      initialItem = 'Miškai';
+      initialItem = 'Sugadinta miško paklotė ir keliai';
     }
 
     super.initState();
@@ -84,82 +85,93 @@ class _ReportsScreenState extends State<ReportsScreen> {
                           SizedBox(
                             height: constraints.maxWidth * 0.009,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 20),
-                                child: SizedBox(
-                                  width: constraints.maxWidth * 0.2,
-                                  child: CustomDropdown<String>(
-                                    hintText: 'Pasirinkite kategoriją',
-                                    items: _dropdownList,
-                                    initialItem: initialItem,
-                                    onChanged: (value) {
-                                      widget.onCategoryChange(value);
-                                    },
-                                  ),
-                                ),
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: AddButton(
+                              onTap: () {
+                                widget.onAddTap(
+                                  constraints.maxWidth,
+                                  constraints.maxHeight,
+                                );
+                              },
+                              width: constraints.maxWidth,
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 20),
+                              child: Text(
+                                "Pranešimų skaičius: ${widget.reports.length}",
+                                style: GoogleFonts.roboto(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.white),
                               ),
-                              AddButton(
-                                onTap: () {
-                                  widget.onAddTap(
-                                    constraints.maxWidth,
-                                    constraints.maxHeight,
-                                  );
-                                },
-                                width: constraints.maxWidth,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 20),
-                                child: Text(
-                                  "Pranešimų skaičius: ${widget.reports.length}",
-                                  style: GoogleFonts.roboto(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.white),
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
                           SizedBox(
                             height: constraints.maxWidth * 0.009,
                           ),
-                          isShowDumps
-                              ? MainDumpMap(
-                                  width: constraints.maxWidth,
-                                  onReportTypeChange: (bool value) {
-                                    setState(() {
-                                      isShowDumps = value;
-                                    });
-                                  },
-                                  isShowDumps: isShowDumps,
-                                  dumpReports: widget.dumpReports ?? [],
-                                  isHovering: (bool value) {
-                                    setState(() {
-                                      isMapHover = value;
-                                    });
-                                  },
-                                )
-                              : MainTrashMap(
-                                  width: constraints.maxWidth,
-                                  onReportTypeChange: (bool value) {
-                                    setState(() {
-                                      isShowDumps = value;
-                                    });
-                                  },
-                                  isShowDumps: isShowDumps,
-                                  isTrash: isTrash,
-                                  trashReports: widget.reports,
-                                  isHovering: (bool value) {
-                                    setState(() {
-                                      isMapHover = value;
-                                    });
-                                  },
-                                  onInformationTap: (String refId) {
-                                    widget.onInformationTap(refId);
-                                  },
+                          Stack(
+                            children: [
+                              isShowDumps
+                                  ? MainDumpMap(
+                                      width: constraints.maxWidth,
+                                      onReportTypeChange: (bool value) {
+                                        setState(() {
+                                          isShowDumps = value;
+                                        });
+                                      },
+                                      isShowDumps: isShowDumps,
+                                      dumpReports: widget.dumpReports ?? [],
+                                      isHovering: (bool value) {
+                                        setState(() {
+                                          isMapHover = value;
+                                        });
+                                      },
+                                    )
+                                  : MainTrashMap(
+                                      width: constraints.maxWidth,
+                                      onReportTypeChange: (bool value) {
+                                        setState(() {
+                                          isShowDumps = value;
+                                        });
+                                      },
+                                      isShowDumps: isShowDumps,
+                                      isTrash: isTrash,
+                                      trashReports: widget.reports,
+                                      isHovering: (bool value) {
+                                        setState(() {
+                                          isMapHover = value;
+                                        });
+                                      },
+                                      onInformationTap: (String refId) {
+                                        widget.onInformationTap(refId);
+                                      },
+                                    ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 10, right: 20),
+                                child: Align(
+                                  alignment: Alignment.topRight,
+                                  child: SizedBox(
+                                    width: constraints.maxWidth * 0.3,
+                                    child: PointerInterceptor(
+                                      child: CustomDropdown<String>(
+                                        hintText: 'Pasirinkite kategoriją',
+                                        items: _dropdownList,
+                                        initialItem: initialItem,
+                                        onChanged: (value) {
+                                          widget.onCategoryChange(value);
+                                        },
+                                      ),
+                                    ),
+                                  ),
                                 ),
+                              ),
+                            ],
+                          ),
                           SizedBox(
                             height: constraints.maxWidth * 0.0135,
                           ),
@@ -214,7 +226,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                     isMapHover ? const NeverScrollableScrollPhysics() : null,
                 child: Stack(
                   children: <Widget>[
-                    BackgroundWidget(width: constraints.maxWidth * 3),
+                    BackgroundWidget(width: constraints.maxWidth * 3.5),
                     Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: constraints.maxWidth * 0.0444),
@@ -232,33 +244,29 @@ class _ReportsScreenState extends State<ReportsScreen> {
                           ),
                           SizedBox(height: constraints.maxWidth * 0.0889),
                           TitleWidgetMobile(width: constraints.maxWidth),
-                          SizedBox(height: constraints.maxWidth * 0.0889),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                width: constraints.maxWidth * 0.4,
-                                child: CustomDropdown<String>(
-                                  hintText: 'Pasirinkite kategoriją',
-                                  items: _dropdownList,
-                                  initialItem: initialItem,
-                                  onChanged: (value) {
-                                    widget.onCategoryChange(value);
-                                  },
-                                ),
-                              ),
-                              AddButtonMobile(
-                                onTap: () {
-                                  widget.onAddTap(
-                                    constraints.maxWidth,
-                                    constraints.maxHeight,
-                                  );
-                                },
-                                width: constraints.maxWidth / 1.8,
-                              ),
-                            ],
+                          SizedBox(height: constraints.maxWidth * 0.0689),
+                          AddButtonMobile(
+                            onTap: () {
+                              widget.onAddTap(
+                                constraints.maxWidth,
+                                constraints.maxHeight,
+                              );
+                            },
+                            width: constraints.maxWidth,
                           ),
-                          SizedBox(height: constraints.maxWidth * 0.0444),
+                          SizedBox(height: constraints.maxWidth * 0.05),
+                          SizedBox(
+                            width: constraints.maxWidth,
+                            child: CustomDropdown<String>(
+                              hintText: 'Pasirinkite kategoriją',
+                              items: _dropdownList,
+                              initialItem: initialItem,
+                              onChanged: (value) {
+                                widget.onCategoryChange(value);
+                              },
+                            ),
+                          ),
+                          SizedBox(height: constraints.maxWidth * 0.01),
                           Align(
                             alignment: Alignment.centerRight,
                             child: Text(
@@ -269,7 +277,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                   color: Colors.white),
                             ),
                           ),
-                          SizedBox(height: constraints.maxWidth * 0.011),
+                          SizedBox(height: constraints.maxWidth * 0.01),
                           isShowDumps
                               ? MainDumpMapMobile(
                                   width: constraints.maxWidth,

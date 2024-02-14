@@ -155,7 +155,7 @@ class InfoTrashWindowBox extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            'Gautas',
+            'Gauta',
             style: getStatusBoxTextStyle(
               const Color.fromRGBO(237, 12, 12, 1),
             ),
@@ -172,7 +172,7 @@ class InfoTrashWindowBox extends StatelessWidget {
         ),
         child: Center(
           child: Text(
-            'Tiriamas',
+            'Tiriama',
             style: getStatusBoxTextStyle(
               const Color.fromRGBO(255, 119, 0, 1),
             ),
@@ -182,16 +182,16 @@ class InfoTrashWindowBox extends StatelessWidget {
     } else if (status == 'išspręsta') {
       return Container(
         height: 28,
-        width: 64,
+        width: 80,
         decoration: getStatusBoxDecoration(
-          const Color.fromRGBO(9, 126, 223, 1),
-          const Color.fromRGBO(225, 239, 251, 1),
+          const Color.fromRGBO(0, 174, 6, 1),
+          const Color.fromRGBO(224, 245, 224, 1),
         ),
         child: Center(
           child: Text(
             'Išspręsta',
             style: getStatusBoxTextStyle(
-              const Color.fromRGBO(9, 126, 223, 1),
+              const Color.fromRGBO(0, 174, 6, 1),
             ),
           ),
         ),

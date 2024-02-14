@@ -93,7 +93,7 @@ class _ForestAddingScreenMobileState extends State<ForestAddingScreenMobile> {
   @override
   Widget build(BuildContext context) {
     return Title(
-      title: "Pranešti apie pažeidimą",
+      title: "Pranešti apie sugadintą miško paklotę ar kelius",
       color: Colors.green,
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(250, 242, 234, 1),
@@ -109,7 +109,7 @@ class _ForestAddingScreenMobileState extends State<ForestAddingScreenMobile> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Pranešti apie pažeidimą',
+                            'Pranešti apie sugadintą miško\npaklotę ar kelius',
                             style: GoogleFonts.roboto(
                               fontSize: widget.width * 0.04444,
                               fontWeight: FontWeight.w700,

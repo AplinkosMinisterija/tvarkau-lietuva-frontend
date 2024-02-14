@@ -50,7 +50,7 @@ class _ReportCategoryScreenBody extends StatelessWidget {
                     ),
                   ),
                   ReportCategorySelector(
-                    title: 'Miškai',
+                    title: 'Sugadinta miško paklotė ir keliai',
                     description:
                         'Jeigu matote sudraskytas samanas, sugadintą miško paklotę, itin gilias provėžas miške arba sugadintą miško kelią',
                     onTap: () {

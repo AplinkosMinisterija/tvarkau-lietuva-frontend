@@ -551,7 +551,39 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                   fontWeight: FontWeight.w400,
                   color: const Color.fromRGBO(0, 0, 0, 0.72)),
             ),
-            SizedBox(height: widget.width * 0.1111),
+            if (widget.report.status == 'tiriamas') ...[
+              SizedBox(
+                  height:
+                      widget.report.comment != ' ' ? widget.width * 0.0805 : 0),
+              widget.report.comment != ' ' && widget.report.comment != ''
+                  ? SizedBox(
+                      width: widget.width * 0.73055,
+                      child: Text(
+                        'AAD atsakymas:',
+                        textAlign: TextAlign.left,
+                        style: GoogleFonts.roboto(
+                          fontSize: widget.width * 0.04444,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black,
+                        ),
+                      ),
+                    )
+                  : const SizedBox.shrink(),
+              SizedBox(height: widget.width * 0.02777),
+              SizedBox(
+                width: widget.width * 0.73055,
+                child: Text(
+                  widget.report.comment,
+                  textAlign: TextAlign.left,
+                  style: GoogleFonts.roboto(
+                    fontSize: widget.width * 0.04444,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+            ],
+            SizedBox(height: widget.width * 0.1),
           ],
         )
       ],
@@ -790,7 +822,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
             width: width * 0.1222,
             child: FittedBox(
               child: Text(
-                'Gautas',
+                'Gauta',
                 style: getStatusBoxTextStyle(
                   const Color.fromRGBO(237, 12, 12, 1),
                 ),
@@ -812,7 +844,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
             width: width * 0.15,
             child: FittedBox(
               child: Text(
-                'Tiriamas',
+                'Tiriama',
                 style: getStatusBoxTextStyle(
                   const Color.fromRGBO(255, 119, 0, 1),
                 ),
@@ -826,8 +858,8 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
         height: width * 0.07777,
         width: width * 0.17777,
         decoration: getStatusBoxDecoration(
-          const Color.fromRGBO(9, 126, 223, 1),
-          const Color.fromRGBO(225, 239, 251, 1),
+          const Color.fromRGBO(0, 174, 6, 1),
+          const Color.fromRGBO(224, 245, 224, 1),
         ),
         child: Center(
           child: SizedBox(
@@ -836,7 +868,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
               child: Text(
                 'Išspręsta',
                 style: getStatusBoxTextStyle(
-                  const Color.fromRGBO(9, 126, 223, 1),
+                  const Color.fromRGBO(0, 174, 6, 1),
                 ),
               ),
             ),

@@ -141,7 +141,7 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
   @override
   Widget build(BuildContext context) {
     return Title(
-      title: "Pranešti apie pažeidimą",
+      title: "Pranešti apie sugadintą miško paklotę ar kelius",
       color: Colors.green,
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(250, 242, 234, 1),
@@ -284,6 +284,7 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
                         child: Column(
                           children: [
                             ExitHeader(
+                              title: 'Pranešti apie sugadintą miško\npaklotę ar kelius',
                                 width: widget.width,
                                 onTap: () {
                                   context.goNamed("home");
