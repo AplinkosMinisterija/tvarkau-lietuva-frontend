@@ -30,7 +30,7 @@ class Footer extends StatelessWidget {
             InkWell(
               onTap: () {
                 LaunchUrl().launch(
-                    'https://aad.lrv.lt/lt/administracine-informacija/asmens-duomenu-apsauga/');
+                    'https://aad.lrv.lt/lt/asmens-duomenu-apsauga/');
               },
               child: Text(
                 'Departamento BDAR taisyklės',

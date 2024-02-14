@@ -152,7 +152,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                     ),
                               Padding(
                                 padding:
-                                    const EdgeInsets.only(top: 10, right: 20),
+                                    const EdgeInsets.only(top: 25, right: 20),
                                 child: Align(
                                   alignment: Alignment.topRight,
                                   child: SizedBox(
@@ -337,7 +337,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                               child: InkWell(
                                 onTap: () {
                                   LaunchUrl().launch(
-                                      'https://aad.lrv.lt/lt/administracine-informacija/asmens-duomenu-apsauga/');
+                                      'https://aad.lrv.lt/lt/asmens-duomenu-apsauga/');
                                 },
                                 child: Text(
                                   'Departamento BDAR taisyklės',

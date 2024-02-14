@@ -64,7 +64,7 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
 
   void addCustomIcon() {
     BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(), 'assets/svg/pin_icon.svg')
+            const ImageConfiguration(size: Size(45, 45)), 'assets/svg/forest_pin_icon.svg')
         .then((icon) {
       setState(() {
         markerIcon = icon;
@@ -284,7 +284,8 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
                         child: Column(
                           children: [
                             ExitHeader(
-                              title: 'Pranešti apie sugadintą miško\npaklotę ar kelius',
+                                title:
+                                    'Pranešti apie sugadintą miško\npaklotę ar kelius',
                                 width: widget.width,
                                 onTap: () {
                                   context.goNamed("home");
@@ -530,9 +531,8 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
                                       InkWell(
                                         onTap: () {
                                           LaunchUrl().launch(
-                                              'https://aad.lrv.lt/lt/administracine-informacija/asmens-duomenu-apsauga/');
+                                              'https://aad.lrv.lt/lt/asmens-duomenu-apsauga/');
                                         },
-                                        //widget.onDataSecurityTap,
                                         child: Text(
                                           'Asmens duomenų apsaugos\n tvarkymo taisyklėmis',
                                           textAlign: TextAlign.center,

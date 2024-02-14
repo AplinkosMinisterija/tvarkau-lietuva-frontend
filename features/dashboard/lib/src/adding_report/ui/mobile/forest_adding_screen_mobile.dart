@@ -53,7 +53,7 @@ class _ForestAddingScreenMobileState extends State<ForestAddingScreenMobile> {
 
   void addCustomIcon() {
     BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(), 'assets/svg/pin_icon.svg')
+            const ImageConfiguration(), 'assets/svg/forest_pin_icon.svg')
         .then((icon) {
       setState(() {
         markerIcon = icon;
@@ -413,7 +413,7 @@ class _ForestAddingScreenMobileState extends State<ForestAddingScreenMobile> {
                               InkWell(
                                 onTap: () {
                                   LaunchUrl().launch(
-                                      'https://aad.lrv.lt/lt/administracine-informacija/asmens-duomenu-apsauga/');
+                                      'https://aad.lrv.lt/lt/asmens-duomenu-apsauga/');
                                 },
                                 //widget.onDataSecurityTap,
                                 child: Text(

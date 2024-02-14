@@ -15,7 +15,7 @@ class ReportStatistics extends StatelessWidget {
   Widget build(BuildContext context) {
     return Wrap(
       alignment: WrapAlignment.center,
-      spacing: 20,
+      spacing: 15,
       runSpacing: 5,
       children: [
         ReportTypeStatistics(
@@ -26,21 +26,21 @@ class ReportStatistics extends StatelessWidget {
               'Pranešimas perduotas Aplinkos apsaugos departamento pareigūnams.',
         ),
         ReportTypeStatistics(
-          title: 'Tiriami',
+          title: 'Tiriama',
           quantity: reportStatistics.totalInInvestigationReports,
           imageShort: 'orange',
           tooltipText:
               'Vykdomas pranešimo tyrimas.',
         ),
         ReportTypeStatistics(
-          title: 'Išspręsti',
+          title: 'Išspręsta',
           quantity: reportStatistics.totalInvestigatedReports,
           imageShort: 'green',
           tooltipText:
               'Pranešimas ištirtas ir pažeidėjas įpareigotas pašalinti pažeidimą ar atlyginti padarytą žalą aplinkai.',
         ),
         ReportTypeStatistics(
-          title: 'Nepasitvirtinę',
+          title: 'Nepasitvirtino',
           quantity: reportStatistics.totalFalseReports,
           imageShort: 'gray',
           tooltipText: 'Atlikus teritorijos apžiūrą, pažeidimas neužfiksuotas.',

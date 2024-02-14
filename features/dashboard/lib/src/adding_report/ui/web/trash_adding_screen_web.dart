@@ -527,7 +527,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                                       InkWell(
                                         onTap: () {
                                           LaunchUrl().launch(
-                                              'https://aad.lrv.lt/lt/administracine-informacija/asmens-duomenu-apsauga/');
+                                              'https://aad.lrv.lt/lt/asmens-duomenu-apsauga/');
                                         },
                                         child: Text(
                                           'Asmens duomenų apsaugos\n tvarkymo taisyklėmis',
