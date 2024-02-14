@@ -2,7 +2,9 @@ part of 'adding_bloc.dart';
 
 abstract class AddingEvent {}
 
-class LoadData implements AddingEvent {}
+class LoadTrashData implements AddingEvent {}
+
+class LoadForestData implements AddingEvent {}
 
 class AddReport implements AddingEvent {
   final String emailValue;
@@ -10,6 +12,7 @@ class AddReport implements AddingEvent {
   final double selectedLat;
   final double selectedLong;
   final List<Uint8List> images;
+  final String category;
 
   AddReport({
     required this.emailValue,
@@ -17,6 +20,7 @@ class AddReport implements AddingEvent {
     required this.selectedLat,
     required this.selectedLong,
     required this.images,
+    required this.category,
   });
 }
 

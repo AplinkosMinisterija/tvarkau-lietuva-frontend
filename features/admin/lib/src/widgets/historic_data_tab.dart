@@ -408,18 +408,20 @@ class _BuildStatus extends StatelessWidget {
     return switch (status) {
       'gautas' => CustomColors.red,
       'tiriamas' => CustomColors.orange,
-      'sutvarkyta' => CustomColors.green,
-      'ištirtas' => CustomColors.blue,
+      'išspręsta' => CustomColors.green,
       'nepasitvirtino' => Colors.grey,
+      'ištirtas' => Colors.blue,
+      'sutvarkyta' => Colors.green,
       _ => Colors.white,
     };
   }
 
   String get text {
     return switch (status) {
-      'gautas' => 'Gautas',
-      'tiriamas' => 'Tiriamas',
-      'ištirtas' => 'Ištirtas',
+      'gautas' => 'Gauta',
+      'tiriamas' => 'Tiriama',
+      'išspręsta' => 'Išspręsta',
+      'ištirtas' => 'Ištirta',
       'sutvarkyta' => 'Sutvarkyta',
       'nepasitvirtino' => 'Nepasitvirtino',
       _ => '',

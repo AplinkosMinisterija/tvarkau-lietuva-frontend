@@ -33,7 +33,7 @@ class TitleWidget extends StatelessWidget {
         SizedBox(
           width: width * 0.4166,
           child: Text(
-            'Žemėlapyje pažymėkite gamtoje pastebėtas šiukšles. Aplinkos apsaugos departamento pareigūnai pasirūpins, kad pažeidėjai būtų surasti ir pašalintų atliekas.',
+            'Žemėlapyje pažymėkite gamtoje pastebėtus pažeidimus. Aplinkos apsaugos departamento pareigūnai išnagrinės pranešimus ir pasirūpins, kad pažeidėjai būtų surasti ir pašalintų padarytus pažeidimus ar atlygintų padarytą žalą gamtai.',
             textAlign: TextAlign.center,
             style: GoogleFonts.roboto(
               fontWeight: FontWeight.w400,

@@ -3,14 +3,14 @@ import 'dart:typed_data';
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 
-part 'trash_event.dart';
+part 'report_event.dart';
 
-part 'trash_state.dart';
+part 'report_state.dart';
 
-class TrashBloc extends Bloc<TrashEvent, TrashState> {
+class ReportBloc extends Bloc<ReportEvent, ReportState> {
   final String refId;
 
-  TrashBloc({
+  ReportBloc({
     required this.refId,
   }) : super(LoadingState()) {
     on<LoadData>(_onLoadData);
@@ -21,7 +21,7 @@ class TrashBloc extends Bloc<TrashEvent, TrashState> {
 
   Future<void> _onLoadData(
     LoadData event,
-    Emitter<TrashState> emit,
+    Emitter<ReportState> emit,
   ) async {
     try {
       emit(
@@ -45,7 +45,7 @@ class TrashBloc extends Bloc<TrashEvent, TrashState> {
 
   Future<void> _onUpdateReport(
     UpdateReport event,
-    Emitter<TrashState> emit,
+    Emitter<ReportState> emit,
   ) async {
     try {
       emit(
@@ -84,7 +84,7 @@ class TrashBloc extends Bloc<TrashEvent, TrashState> {
 
   Future<void> _onReloadEvent(
     ReloadPage _,
-    Emitter<TrashState> emit,
+    Emitter<ReportState> emit,
   ) async {
     add(LoadData(refId: refId));
   }

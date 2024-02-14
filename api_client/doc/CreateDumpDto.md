@@ -11,10 +11,10 @@ Name | Type | Description | Notes
 **name** | **String** |  | 
 **reportLong** | **num** |  | 
 **reportLat** | **num** |  | 
-**address** | **String** |  | 
-**phone** | **String** |  | 
-**workingHours** | **String** |  | 
-**moreInformation** | **String** |  | 
+**address** | **String** |  | [optional] 
+**phone** | **String** |  | [optional] 
+**workingHours** | **String** |  | [optional] 
+**moreInformation** | **String** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

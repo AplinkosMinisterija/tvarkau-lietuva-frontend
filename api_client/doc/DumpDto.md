@@ -9,7 +9,6 @@ import 'package:api_client/api.dart';
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **String** |  | 
-**type** | **String** |  | 
 **reportLong** | **double** |  | 
 **reportLat** | **double** |  | 
 **address** | **String** |  | 

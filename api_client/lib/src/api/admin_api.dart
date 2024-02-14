@@ -13,6 +13,7 @@ import 'package:api_client/src/model/full_dump_dto.dart';
 import 'package:api_client/src/model/full_report_dto.dart';
 import 'package:api_client/src/model/update_dump_dto.dart';
 import 'package:built_collection/built_collection.dart';
+import 'package:built_value/json_object.dart';
 
 class AdminApi {
   final Dio _dio;
@@ -207,6 +208,7 @@ class AdminApi {
   ///
   /// Parameters:
   /// * [isDeleted]
+  /// * [category]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -218,6 +220,7 @@ class AdminApi {
   /// Throws [DioError] if API call or serialization fails
   Future<Response<BuiltList<FullReportDto>>> adminControllerGetAllReports({
     required bool isDeleted,
+    String? category,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -247,6 +250,9 @@ class AdminApi {
     final _queryParameters = <String, dynamic>{
       r'isDeleted':
           encodeQueryParameter(_serializers, isDeleted, const FullType(bool)),
+      if (category != null)
+        r'category': encodeQueryParameter(
+            _serializers, category, const FullType(String)),
     };
 
     final _response = await _dio.request<Object>(

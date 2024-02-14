@@ -241,7 +241,6 @@ class _DumpWindowState extends State<DumpWindow> {
                         builder.latitude = latitude,
                         builder.longitude = longitude,
                         builder.address = address,
-                        builder.type = 'dump',
                       }));
                 },
               ),

@@ -6,10 +6,12 @@ class ExitHeader extends StatelessWidget {
     super.key,
     required this.width,
     required this.onTap,
+    required this.title,
   });
 
   final double width;
   final VoidCallback onTap;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +19,7 @@ class ExitHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Text(
-          'Pranešti apie šiukšlinimą',
+          title,
           style: GoogleFonts.roboto(
             fontSize: width * 0.01458,
             fontWeight: FontWeight.w700,

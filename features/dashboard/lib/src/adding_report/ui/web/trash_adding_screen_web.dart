@@ -10,8 +10,8 @@ import 'dart:typed_data';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class AddingScreenWeb extends StatefulWidget {
-  const AddingScreenWeb({
+class TrashAddingScreenWeb extends StatefulWidget {
+  const TrashAddingScreenWeb({
     required this.width,
     required this.height,
     required this.reports,
@@ -25,10 +25,10 @@ class AddingScreenWeb extends StatefulWidget {
   final Function(String, String, double, double, List<Uint8List>) onAddTap;
 
   @override
-  State<AddingScreenWeb> createState() => _AddingScreenWebState();
+  State<TrashAddingScreenWeb> createState() => _TrashAddingScreenWebState();
 }
 
-class _AddingScreenWebState extends State<AddingScreenWeb> {
+class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
   List<Uint8List> _selectedImages = [];
 
   Future<void> getMultipleImageInfos() async {
@@ -55,8 +55,6 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
   MapType currentMapType = MapType.normal;
   CameraPosition _lithuaniaCameraPosition =
       const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 7.0);
-  List<DropdownMenuItem<String>> dropDownItems = [];
-  late String currentItem;
 
   late GoogleMapController mapController;
   LatLng? _currentPosition;
@@ -98,18 +96,6 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
       );
       index++;
     }
-    currentItem = 'Šiukšlinimas gamtoje';
-    dropDownItems.add(DropdownMenuItem(
-      value: 'Šiukšlinimas gamtoje',
-      child: Text(
-        'Šiukšlinimas gamtoje',
-        style: GoogleFonts.roboto(
-          fontWeight: FontWeight.w500,
-          fontSize: widget.width * 0.01888,
-          color: const Color.fromRGBO(57, 97, 84, 1),
-        ),
-      ),
-    ));
     getLocation();
     super.initState();
   }
@@ -152,7 +138,7 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
   @override
   Widget build(BuildContext context) {
     return Title(
-      title: "Pranešti apie šiukšlinimą",
+      title: "Pranešti apie atliekas",
       color: Colors.green,
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(250, 242, 234, 1),
@@ -295,6 +281,7 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
                         child: Column(
                           children: [
                             ExitHeader(
+                                title: 'Pranešti apie atliekas',
                                 width: widget.width,
                                 onTap: () {
                                   context.goNamed("home");
@@ -424,7 +411,6 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
                             SizedBox(
                               height: widget.width * 0.004,
                             ),
-
                             ImageAddButtonMobile(
                                 width: widget.width / 2.4,
                                 title: _selectedImages.isNotEmpty
@@ -474,15 +460,6 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
                             SizedBox(
                               height: widget.width * 0.005,
                             ),
-                            // _fileBytes.isNotEmpty
-                            //     ? ImageCollageMobile(
-                            //         width: widget.width / 2.4,
-                            //         imageBytes: _fileBytes,
-                            //         onTap: (index) {
-                            //           removeSelectedImage(index);
-                            //         },
-                            //       )
-                            //     : const SizedBox.shrink(),
                             _selectedImages.isNotEmpty
                                 ? SizedBox(
                                     width: widget.width / 2.4 * 0.9111,
@@ -529,46 +506,6 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
                                     ),
                                   )
                                 : const SizedBox.shrink(),
-                            SizedBox(height: widget.width * 0.005),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'Pranešimo kategorija',
-                                style: GoogleFonts.roboto(
-                                  fontSize: widget.width * 0.01145,
-                                  fontWeight: FontWeight.w600,
-                                  color: const Color(0x660a3328),
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: widget.width * 0.01),
-                            Container(
-                              width: widget.width * 0.45,
-                              height: widget.width * 0.045,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: widget.width * 0.01),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4),
-                                border: Border.all(
-                                    color: const Color.fromRGBO(57, 97, 84, 1),
-                                    width: 1),
-                              ),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton(
-                                  icon: Icon(
-                                    Icons.arrow_drop_down_circle_outlined,
-                                    size: widget.width * 0.02,
-                                    color: const Color.fromRGBO(57, 97, 84, 1),
-                                  ),
-                                  value: currentItem,
-                                  autofocus: false,
-                                  focusColor: Colors.transparent,
-                                  isExpanded: true,
-                                  items: dropDownItems,
-                                  onChanged: (value) {},
-                                ),
-                              ),
-                            ),
                             SizedBox(height: widget.width * 0.01),
                             CheckboxListTile(
                               activeColor: const Color.fromRGBO(57, 97, 84, 1),
@@ -590,7 +527,7 @@ class _AddingScreenWebState extends State<AddingScreenWeb> {
                                       InkWell(
                                         onTap: () {
                                           LaunchUrl().launch(
-                                              'https://aad.lrv.lt/lt/administracine-informacija/asmens-duomenu-apsauga/');
+                                              'https://aad.lrv.lt/lt/asmens-duomenu-apsauga/');
                                         },
                                         child: Text(
                                           'Asmens duomenų apsaugos\n tvarkymo taisyklėmis',

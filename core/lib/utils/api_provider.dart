@@ -53,9 +53,10 @@ class ApiProvider {
 
   final AuthApi authApi;
 
-  Future<List<FullReportDto>> getAllTrashReports() async {
+  Future<List<FullReportDto>> getAllTrashReports(String? category) async {
     final response = await adminApi.adminControllerGetAllReports(
       isDeleted: false,
+      category: category,
     );
     return response.data!.toList();
   }
@@ -80,20 +81,23 @@ class ApiProvider {
     return response.data!;
   }
 
-  Future<List<FullReportDto>> getAllRemovedReports() async {
+  Future<List<FullReportDto>> getAllRemovedReports(String? category) async {
     final response = await adminApi.adminControllerGetAllReports(
       isDeleted: true,
+      category: category,
     );
     return response.data!.toList();
   }
 
-  Future<List<PublicReportDto>> getAllVisibleTrashReports() async {
-    final response = await reportsApi.reportControllerGetAllPublicReports();
+  Future<List<PublicReportDto>> getAllVisibleReports(String? category) async {
+    final response =
+        await reportsApi.reportControllerGetAllPublicReports(category: category);
     return response.data!.toList(); //TODO: add error handling
   }
 
-  Future<ReportStatisticsDto> getReportStatistics() async {
-    final response = await reportsApi.reportControllerGetReportStatistics();
+  Future<ReportStatisticsDto> getReportStatistics(String? category) async {
+    final response =
+        await reportsApi.reportControllerGetReportStatistics(category: category);
     return response.data!;
   }
 
@@ -121,13 +125,16 @@ class ApiProvider {
     required double selectedLat,
     required double selectedLong,
     required List<Uint8List> imageFiles,
+    required String category,
   }) async {
     final response = await reportsApi.reportControllerCreateNewReport(
-        name: textValue,
-        longitude: selectedLong,
-        latitude: selectedLat,
-        email: emailValue,
-        images: _toMultiPartFiles(imageFiles));
+      name: textValue,
+      longitude: selectedLong,
+      latitude: selectedLat,
+      email: emailValue,
+      images: _toMultiPartFiles(imageFiles),
+      category: category,
+    );
     return response.data!;
   }
 

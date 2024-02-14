@@ -6,13 +6,67 @@ part of 'full_report_dto.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+const FullReportDtoCategoryEnum _$fullReportDtoCategoryEnum_trash =
+    const FullReportDtoCategoryEnum._('trash');
+const FullReportDtoCategoryEnum _$fullReportDtoCategoryEnum_forest =
+    const FullReportDtoCategoryEnum._('forest');
+
+FullReportDtoCategoryEnum _$fullReportDtoCategoryEnumValueOf(String name) {
+  switch (name) {
+    case 'trash':
+      return _$fullReportDtoCategoryEnum_trash;
+    case 'forest':
+      return _$fullReportDtoCategoryEnum_forest;
+    default:
+      return _$fullReportDtoCategoryEnum_forest;
+  }
+}
+
+final BuiltSet<FullReportDtoCategoryEnum> _$fullReportDtoCategoryEnumValues =
+    new BuiltSet<FullReportDtoCategoryEnum>(const <FullReportDtoCategoryEnum>[
+  _$fullReportDtoCategoryEnum_trash,
+  _$fullReportDtoCategoryEnum_forest,
+]);
+
+Serializer<FullReportDtoCategoryEnum> _$fullReportDtoCategoryEnumSerializer =
+    new _$FullReportDtoCategoryEnumSerializer();
+
+class _$FullReportDtoCategoryEnumSerializer
+    implements PrimitiveSerializer<FullReportDtoCategoryEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'trash': 'trash',
+    'forest': 'forest',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'trash': 'trash',
+    'forest': 'forest',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[FullReportDtoCategoryEnum];
+  @override
+  final String wireName = 'FullReportDtoCategoryEnum';
+
+  @override
+  Object serialize(Serializers serializers, FullReportDtoCategoryEnum object,
+          {FullType specifiedType = FullType.unspecified}) =>
+      _toWire[object.name] ?? object.name;
+
+  @override
+  FullReportDtoCategoryEnum deserialize(
+          Serializers serializers, Object serialized,
+          {FullType specifiedType = FullType.unspecified}) =>
+      FullReportDtoCategoryEnum.valueOf(
+          _fromWire[serialized] ?? (serialized is String ? serialized : ''));
+}
+
 class _$FullReportDto extends FullReportDto {
   @override
   final String id;
   @override
   final String name;
   @override
-  final String type;
+  final FullReportDtoCategoryEnum category;
   @override
   final String refId;
   @override
@@ -46,7 +100,7 @@ class _$FullReportDto extends FullReportDto {
   _$FullReportDto._(
       {required this.id,
       required this.name,
-      required this.type,
+      required this.category,
       required this.refId,
       required this.longitude,
       required this.latitude,
@@ -63,7 +117,8 @@ class _$FullReportDto extends FullReportDto {
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, r'FullReportDto', 'id');
     BuiltValueNullFieldError.checkNotNull(name, r'FullReportDto', 'name');
-    BuiltValueNullFieldError.checkNotNull(type, r'FullReportDto', 'type');
+    BuiltValueNullFieldError.checkNotNull(
+        category, r'FullReportDto', 'category');
     BuiltValueNullFieldError.checkNotNull(refId, r'FullReportDto', 'refId');
     BuiltValueNullFieldError.checkNotNull(
         longitude, r'FullReportDto', 'longitude');
@@ -101,7 +156,7 @@ class _$FullReportDto extends FullReportDto {
     return other is FullReportDto &&
         id == other.id &&
         name == other.name &&
-        type == other.type &&
+        category == other.category &&
         refId == other.refId &&
         longitude == other.longitude &&
         latitude == other.latitude &&
@@ -122,7 +177,7 @@ class _$FullReportDto extends FullReportDto {
     var _$hash = 0;
     _$hash = $jc(_$hash, id.hashCode);
     _$hash = $jc(_$hash, name.hashCode);
-    _$hash = $jc(_$hash, type.hashCode);
+    _$hash = $jc(_$hash, category.hashCode);
     _$hash = $jc(_$hash, refId.hashCode);
     _$hash = $jc(_$hash, longitude.hashCode);
     _$hash = $jc(_$hash, latitude.hashCode);
@@ -145,7 +200,7 @@ class _$FullReportDto extends FullReportDto {
     return (newBuiltValueToStringHelper(r'FullReportDto')
           ..add('id', id)
           ..add('name', name)
-          ..add('type', type)
+          ..add('category', category)
           ..add('refId', refId)
           ..add('longitude', longitude)
           ..add('latitude', latitude)
@@ -175,9 +230,10 @@ class FullReportDtoBuilder
   String? get name => _$this._name;
   set name(String? name) => _$this._name = name;
 
-  String? _type;
-  String? get type => _$this._type;
-  set type(String? type) => _$this._type = type;
+  FullReportDtoCategoryEnum? _category;
+  FullReportDtoCategoryEnum? get category => _$this._category;
+  set category(FullReportDtoCategoryEnum? category) =>
+      _$this._category = category;
 
   String? _refId;
   String? get refId => _$this._refId;
@@ -248,7 +304,7 @@ class FullReportDtoBuilder
     if ($v != null) {
       _id = $v.id;
       _name = $v.name;
-      _type = $v.type;
+      _category = $v.category;
       _refId = $v.refId;
       _longitude = $v.longitude;
       _latitude = $v.latitude;
@@ -290,8 +346,8 @@ class FullReportDtoBuilder
                   id, r'FullReportDto', 'id'),
               name: BuiltValueNullFieldError.checkNotNull(
                   name, r'FullReportDto', 'name'),
-              type: BuiltValueNullFieldError.checkNotNull(
-                  type, r'FullReportDto', 'type'),
+              category: BuiltValueNullFieldError.checkNotNull(
+                  category, r'FullReportDto', 'category'),
               refId: BuiltValueNullFieldError.checkNotNull(
                   refId, r'FullReportDto', 'refId'),
               longitude: BuiltValueNullFieldError.checkNotNull(
@@ -304,8 +360,8 @@ class FullReportDtoBuilder
                   isVisible, r'FullReportDto', 'isVisible'),
               isDeleted: BuiltValueNullFieldError.checkNotNull(
                   isDeleted, r'FullReportDto', 'isDeleted'),
-              comment: BuiltValueNullFieldError.checkNotNull(
-                  comment, r'FullReportDto', 'comment'),
+              comment:
+                  BuiltValueNullFieldError.checkNotNull(comment, r'FullReportDto', 'comment'),
               status: BuiltValueNullFieldError.checkNotNull(status, r'FullReportDto', 'status'),
               reportDate: BuiltValueNullFieldError.checkNotNull(reportDate, r'FullReportDto', 'reportDate'),
               officerImageUrls: officerImageUrls.build(),

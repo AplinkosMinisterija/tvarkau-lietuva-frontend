@@ -14,7 +14,6 @@ part 'report_statistics_dto.g.dart';
 /// * [totalSentReports]
 /// * [totalInInvestigationReports]
 /// * [totalInvestigatedReports]
-/// * [totalCleanedReports]
 /// * [totalFalseReports]
 @BuiltValue()
 abstract class ReportStatisticsDto
@@ -27,9 +26,6 @@ abstract class ReportStatisticsDto
 
   @BuiltValueField(wireName: r'totalInvestigatedReports')
   int get totalInvestigatedReports;
-
-  @BuiltValueField(wireName: r'totalCleanedReports')
-  int get totalCleanedReports;
 
   @BuiltValueField(wireName: r'totalFalseReports')
   int get totalFalseReports;
@@ -76,11 +72,6 @@ class _$ReportStatisticsDtoSerializer
     yield r'totalInvestigatedReports';
     yield serializers.serialize(
       object.totalInvestigatedReports,
-      specifiedType: const FullType(int),
-    );
-    yield r'totalCleanedReports';
-    yield serializers.serialize(
-      object.totalCleanedReports,
       specifiedType: const FullType(int),
     );
     yield r'totalFalseReports';
@@ -133,13 +124,6 @@ class _$ReportStatisticsDtoSerializer
             specifiedType: const FullType(int),
           ) as int;
           result.totalInvestigatedReports = valueDes;
-          break;
-        case r'totalCleanedReports':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(int),
-          ) as int;
-          result.totalCleanedReports = valueDes;
           break;
         case r'totalFalseReports':
           final valueDes = serializers.deserialize(

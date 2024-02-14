@@ -119,14 +119,7 @@ class _BuildStatusSection extends StatelessWidget {
               value: 2,
               alignment: Alignment.center,
               child: _BuildStatus(
-                status: 'ištirtas',
-              ),
-            ),
-            DropdownMenuItem(
-              value: 3,
-              alignment: Alignment.center,
-              child: _BuildStatus(
-                status: 'sutvarkyta',
+                status: 'išspręsta',
               ),
             ),
             DropdownMenuItem(
@@ -156,8 +149,7 @@ class _BuildStatus extends StatelessWidget {
     return switch (status) {
       'gautas' => CustomColors.red,
       'tiriamas' => CustomColors.orange,
-      'sutvarkyta' => CustomColors.green,
-      'ištirtas' => CustomColors.blue,
+      'išspręsta' => CustomColors.green,
       'nepasitvirtino' => Colors.grey,
       _ => Colors.white,
     };
@@ -165,10 +157,9 @@ class _BuildStatus extends StatelessWidget {
 
   String get text {
     return switch (status) {
-      'gautas' => 'Gautas',
-      'tiriamas' => 'Tiriamas',
-      'ištirtas' => 'Ištirtas',
-      'sutvarkyta' => 'Sutvarkyta',
+      'gautas' => 'Gauta',
+      'tiriamas' => 'Tiriama',
+      'išspręsta' => 'Išspręsta',
       'nepasitvirtino' => 'Nepasitvirtino',
       _ => '',
     };

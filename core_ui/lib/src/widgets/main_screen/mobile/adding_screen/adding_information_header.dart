@@ -12,7 +12,7 @@ class AddingInformationHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: width * 0.4,
+      height: width * 0.8,
       width: width * 0.911,
       padding: EdgeInsets.all(width * 0.028),
       decoration: BoxDecoration(
@@ -26,25 +26,39 @@ class AddingInformationHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              '1. Spustelėkite ant žemėlapio ir pažymėkite vietą,\n     kurioje aptikote šiukšles.',
+              '1. Spustelėkite „Pažymėkite vietą” ir suteikite prieigą prie jūsų vietos nustatymo.',
               textAlign: TextAlign.left,
               style: GoogleFonts.roboto(
                   fontSize: width * 0.03333, fontWeight: FontWeight.w400),
             ),
             SizedBox(height: width * 0.02),
             Text(
-              '2. Aprašykite informaciją, kuri susijusi su aptiktomis\n     šiukšlėmis, pridėkite nuotraukas.',
+              '2. Jei vieta automatiškai nustatyta teisingai - spauskite „Išsaugoti pažymėtą vietą” arba prieš tai patikslinkite vietą nuvilkdami smeigtuką į reikiamą vietą.',
               textAlign: TextAlign.left,
               style: GoogleFonts.roboto(
                   fontSize: width * 0.03333, fontWeight: FontWeight.w400),
             ),
             SizedBox(height: width * 0.02),
             Text(
-              '3. Spauskite mygtuką „Pranešti“, o kilus klausimams su\n    Jumis susisieks departamento pareigūnai.',
+              '3. Jeigu nesuteikėte prieigos naudoti jūsų įrenginio vietos, nurodykite pažeidimo vietą nuvildami smeigtuką ant žemėlapio.',
               textAlign: TextAlign.left,
               style: GoogleFonts.roboto(
                   fontSize: width * 0.03333, fontWeight: FontWeight.w400),
-            )
+            ),
+            SizedBox(height: width * 0.02),
+            Text(
+              '4. Aprašykite informaciją susijusią su pastebėtu pažeidimu, pridėkite nuotraukas.',
+              textAlign: TextAlign.left,
+              style: GoogleFonts.roboto(
+                  fontSize: width * 0.03333, fontWeight: FontWeight.w400),
+            ),
+            SizedBox(height: width * 0.02),
+            Text(
+              '5. Spauskite mygtuką „Pranešti“, o kilus klausimams su Jumis susisieks departamento pareigūnai.',
+              textAlign: TextAlign.left,
+              style: GoogleFonts.roboto(
+                  fontSize: width * 0.03333, fontWeight: FontWeight.w400),
+            ),
           ],
         ),
       ),

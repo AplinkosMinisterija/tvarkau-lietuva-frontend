@@ -12,7 +12,7 @@ class InstructionsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(width * 0.0083),
+      padding: EdgeInsets.all(width * 0.0043),
       margin: EdgeInsets.only(
         top: width * 0.0167,
       ),
@@ -29,14 +29,14 @@ class InstructionsWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              '1. Spustelėkite ant žemėlapio ir pažymėkite vietą, kurioje aptikote šiukšles.',
+              '1. Spustelėkite ant žemėlapio ir pele nutempkite smeigtuką į vietą, kurioje pastebėjote pažeidimą.',
               textAlign: TextAlign.center,
               style: GoogleFonts.roboto(
                   fontSize: width * 0.0125, fontWeight: FontWeight.w400),
             ),
             SizedBox(height: width * 0.00833),
             Text(
-              '2. Aprašykite informaciją, kuri susijusi su aptiktomis šiukšlėmis, pridėkite nuotraukas.',
+              '2. Aprašykite informaciją susijusią su pastebėtu pažeidimu, pridėkite nuotraukas.',
               textAlign: TextAlign.center,
               style: GoogleFonts.roboto(
                   fontSize: width * 0.0125, fontWeight: FontWeight.w400),

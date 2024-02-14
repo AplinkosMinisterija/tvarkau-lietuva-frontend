@@ -15,7 +15,7 @@ class FooterContactsRight extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: width * 0.2416,
-      width: width * 0.3611,
+      width: width * 0.3711,
       child: SelectionArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -30,7 +30,7 @@ class FooterContactsRight extends StatelessWidget {
                   color: const Color.fromRGBO(57, 97, 84, 1),
                   size: width * 0.05,
                 ),
-                SizedBox(width: width * 0.033),
+                SizedBox(width: width * 0.023),
                 InkWell(
                   onTap: () {
                     LaunchUrl().launch('tel:+37052163385');

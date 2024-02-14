@@ -44,16 +44,14 @@ class _ReportTypeSwitcherButtonState extends State<ReportTypeSwitcherButton> {
               : inactiveBackgroundColor,
           borderRadius: BorderRadius.circular(10),
         ),
-        padding: EdgeInsets.all(widget.width * 0.1),
-        child: FittedBox(
-          fit: BoxFit.fitWidth,
-          child: Text(
-            widget.buttonText,
-            textAlign: TextAlign.center,
-            style: GoogleFonts.raleway(
-              fontWeight: FontWeight.w500,
-              color: Colors.black,
-            ),
+        padding: const EdgeInsets.all(2),
+        child: Text(
+          widget.buttonText,
+          textAlign: TextAlign.center,
+          style: GoogleFonts.roboto(
+            fontSize: 13,
+            fontWeight: FontWeight.w400,
+            color: Colors.black,
           ),
         ),
       ),

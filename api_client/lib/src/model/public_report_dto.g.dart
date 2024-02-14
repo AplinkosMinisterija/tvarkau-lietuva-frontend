@@ -6,11 +6,67 @@ part of 'public_report_dto.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
+const PublicReportDtoCategoryEnum _$publicReportDtoCategoryEnum_trash =
+    const PublicReportDtoCategoryEnum._('trash');
+const PublicReportDtoCategoryEnum _$publicReportDtoCategoryEnum_forest =
+    const PublicReportDtoCategoryEnum._('forest');
+
+PublicReportDtoCategoryEnum _$publicReportDtoCategoryEnumValueOf(String name) {
+  switch (name) {
+    case 'trash':
+      return _$publicReportDtoCategoryEnum_trash;
+    case 'forest':
+      return _$publicReportDtoCategoryEnum_forest;
+    default:
+      return _$publicReportDtoCategoryEnum_forest;
+  }
+}
+
+final BuiltSet<PublicReportDtoCategoryEnum>
+    _$publicReportDtoCategoryEnumValues = new BuiltSet<
+        PublicReportDtoCategoryEnum>(const <PublicReportDtoCategoryEnum>[
+  _$publicReportDtoCategoryEnum_trash,
+  _$publicReportDtoCategoryEnum_forest,
+]);
+
+Serializer<PublicReportDtoCategoryEnum>
+    _$publicReportDtoCategoryEnumSerializer =
+    new _$PublicReportDtoCategoryEnumSerializer();
+
+class _$PublicReportDtoCategoryEnumSerializer
+    implements PrimitiveSerializer<PublicReportDtoCategoryEnum> {
+  static const Map<String, Object> _toWire = const <String, Object>{
+    'trash': 'trash',
+    'forest': 'forest',
+  };
+  static const Map<Object, String> _fromWire = const <Object, String>{
+    'trash': 'trash',
+    'forest': 'forest',
+  };
+
+  @override
+  final Iterable<Type> types = const <Type>[PublicReportDtoCategoryEnum];
+  @override
+  final String wireName = 'PublicReportDtoCategoryEnum';
+
+  @override
+  Object serialize(Serializers serializers, PublicReportDtoCategoryEnum object,
+          {FullType specifiedType = FullType.unspecified}) =>
+      _toWire[object.name] ?? object.name;
+
+  @override
+  PublicReportDtoCategoryEnum deserialize(
+          Serializers serializers, Object serialized,
+          {FullType specifiedType = FullType.unspecified}) =>
+      PublicReportDtoCategoryEnum.valueOf(
+          _fromWire[serialized] ?? (serialized is String ? serialized : ''));
+}
+
 class _$PublicReportDto extends PublicReportDto {
   @override
   final String name;
   @override
-  final String type;
+  final PublicReportDtoCategoryEnum category;
   @override
   final String refId;
   @override
@@ -35,7 +91,7 @@ class _$PublicReportDto extends PublicReportDto {
 
   _$PublicReportDto._(
       {required this.name,
-      required this.type,
+      required this.category,
       required this.refId,
       required this.longitude,
       required this.latitude,
@@ -47,7 +103,8 @@ class _$PublicReportDto extends PublicReportDto {
       required this.statusRecords})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(name, r'PublicReportDto', 'name');
-    BuiltValueNullFieldError.checkNotNull(type, r'PublicReportDto', 'type');
+    BuiltValueNullFieldError.checkNotNull(
+        category, r'PublicReportDto', 'category');
     BuiltValueNullFieldError.checkNotNull(refId, r'PublicReportDto', 'refId');
     BuiltValueNullFieldError.checkNotNull(
         longitude, r'PublicReportDto', 'longitude');
@@ -79,7 +136,7 @@ class _$PublicReportDto extends PublicReportDto {
     if (identical(other, this)) return true;
     return other is PublicReportDto &&
         name == other.name &&
-        type == other.type &&
+        category == other.category &&
         refId == other.refId &&
         longitude == other.longitude &&
         latitude == other.latitude &&
@@ -95,7 +152,7 @@ class _$PublicReportDto extends PublicReportDto {
   int get hashCode {
     var _$hash = 0;
     _$hash = $jc(_$hash, name.hashCode);
-    _$hash = $jc(_$hash, type.hashCode);
+    _$hash = $jc(_$hash, category.hashCode);
     _$hash = $jc(_$hash, refId.hashCode);
     _$hash = $jc(_$hash, longitude.hashCode);
     _$hash = $jc(_$hash, latitude.hashCode);
@@ -113,7 +170,7 @@ class _$PublicReportDto extends PublicReportDto {
   String toString() {
     return (newBuiltValueToStringHelper(r'PublicReportDto')
           ..add('name', name)
-          ..add('type', type)
+          ..add('category', category)
           ..add('refId', refId)
           ..add('longitude', longitude)
           ..add('latitude', latitude)
@@ -135,9 +192,10 @@ class PublicReportDtoBuilder
   String? get name => _$this._name;
   set name(String? name) => _$this._name = name;
 
-  String? _type;
-  String? get type => _$this._type;
-  set type(String? type) => _$this._type = type;
+  PublicReportDtoCategoryEnum? _category;
+  PublicReportDtoCategoryEnum? get category => _$this._category;
+  set category(PublicReportDtoCategoryEnum? category) =>
+      _$this._category = category;
 
   String? _refId;
   String? get refId => _$this._refId;
@@ -189,7 +247,7 @@ class PublicReportDtoBuilder
     final $v = _$v;
     if ($v != null) {
       _name = $v.name;
-      _type = $v.type;
+      _category = $v.category;
       _refId = $v.refId;
       _longitude = $v.longitude;
       _latitude = $v.latitude;
@@ -225,8 +283,8 @@ class PublicReportDtoBuilder
           new _$PublicReportDto._(
               name: BuiltValueNullFieldError.checkNotNull(
                   name, r'PublicReportDto', 'name'),
-              type: BuiltValueNullFieldError.checkNotNull(
-                  type, r'PublicReportDto', 'type'),
+              category: BuiltValueNullFieldError.checkNotNull(
+                  category, r'PublicReportDto', 'category'),
               refId: BuiltValueNullFieldError.checkNotNull(
                   refId, r'PublicReportDto', 'refId'),
               longitude: BuiltValueNullFieldError.checkNotNull(

@@ -32,65 +32,93 @@ class AdminScreen extends StatelessWidget {
                         });
                   case ReportState():
                     return AdminWindow(
-                        name: state.userInfo.name,
-                        email: state.userInfo.email,
-                        reports: state.reports,
-                        dumps: null,
-                        onLogout: () {
-                          context.read<AdminBloc>().add(
-                                LogOut(),
-                              );
-                        },
-                        isShowDeleted: false,
-                        onDeletedChange: () {
-                          context.read<AdminBloc>().add(
-                                OnViewDeleted(),
-                              );
-                        },
-                        onTypeChange: () {
+                      name: state.userInfo.name,
+                      email: state.userInfo.email,
+                      reports: state.reports,
+                      dumps: null,
+                      onLogout: () {
+                        context.read<AdminBloc>().add(
+                              LogOut(),
+                            );
+                      },
+                      isShowDeleted: false,
+                      onDeletedChange: (String category) {
+                        context.read<AdminBloc>().add(
+                              OnViewDeleted(category: category),
+                            );
+                      },
+                      isShowDumps: false,
+                      onCategoryChange: (String category) {
+                        if (category == 'dump') {
                           context.read<AdminBloc>().add(
                                 OnViewDumps(),
                               );
-                        },
-                        isShowDumps: false);
+                        } else {
+                          context.read<AdminBloc>().add(
+                                OnViewReports(category: category),
+                              );
+                        }
+                      },
+                      activeCategory: state.category,
+                    );
                   case DumpState():
                     return AdminWindow(
-                        name: state.userInfo.name,
-                        email: state.userInfo.email,
-                        reports: null,
-                        dumps: state.dumps,
-                        onLogout: () {
+                      name: state.userInfo.name,
+                      email: state.userInfo.email,
+                      reports: null,
+                      dumps: state.dumps,
+                      onLogout: () {
+                        context.read<AdminBloc>().add(
+                              LogOut(),
+                            );
+                      },
+                      isShowDeleted: false,
+                      onDeletedChange: (a) {},
+                      onCategoryChange: (String category) {
+                        if (category == 'dump') {
                           context.read<AdminBloc>().add(
-                                LogOut(),
+                                OnViewDumps(),
                               );
-                        },
-                        isShowDeleted: false,
-                        onDeletedChange: () {},
-                        onTypeChange: () {
+                        } else {
                           context.read<AdminBloc>().add(
-                                OnViewReports(),
+                                OnViewReports(category: category),
                               );
-                        },
-                        isShowDumps: true);
+                        }
+                      },
+                      isShowDumps: true,
+                      activeCategory: 'dump',
+                    );
                   case DeletedState():
                     return AdminWindow(
-                        name: state.userInfo.name,
-                        email: state.userInfo.email,
-                        reports: state.reports,
-                        dumps: null,
-                        onLogout: () {
+                      name: state.userInfo.name,
+                      email: state.userInfo.email,
+                      reports: state.reports,
+                      dumps: null,
+                      onLogout: () {
+                        context.read<AdminBloc>().add(
+                              LogOut(),
+                            );
+                      },
+                      isShowDeleted: true,
+                      onDeletedChange: (String category) {
+                        context.read<AdminBloc>().add(
+                              OnViewReports(category: category),
+                            );
+                      },
+                      onCategoryChange: (String category) {
+                        if (category == 'dump') {
                           context.read<AdminBloc>().add(
-                                LogOut(),
+                                OnViewDumps(),
                               );
-                        },
-                        isShowDeleted: true,
-                        onDeletedChange: () {
+                        } else {
                           context.read<AdminBloc>().add(
-                                OnViewReports(),
+                                OnViewReports(category: category),
                               );
-                        },
-                        onTypeChange: () {},
-                        isShowDumps: false);
+                        }
+                      },
+                      isShowDumps: false,
+                      activeCategory: state.category,
+                    );
                   case ErrorState():
                     return ErrorReloadWidget(
                       onPressed: () {
@@ -102,46 +130,6 @@ class AdminScreen extends StatelessWidget {
                       descriptionText: state.errorDescription,
                     );
                 }
-                //   if (state is ContentState) {
-                //     return AdminWindow(
-                //       name: state.userInfo.name,
-                //       email: state.userInfo.email,
-                //       reports: state.reports,
-                //       dumps: state.dumps,
-                //       onLogout: () {
-                //         context.read<AdminBloc>().add(
-                //               LogOut(),
-                //             );
-                //       },
-                //       isShowDeleted: false,
-                //       onDeletedChange: (bool isShowDeleted) {},
-                //       onTypeChange: (bool isShowReports) {},
-                //       isShowDumps: false,
-                //     );
-                //   } else if (state is LogingState) {
-                //     double width = MediaQuery.of(context).size.width;
-                //     return LoginWidget(
-                //         width: width,
-                //         onLogIn: () {
-                //           context.read<AdminBloc>().add(
-                //                 LogIn(),
-                //               );
-                //         });
-                //   } else if (state is LoadingState) {
-                //     return LoaderWidget().loader();
-                //   } else if (state is ErrorState) {
-                //     return ErrorReloadWidget(
-                //       onPressed: () {
-                //         context.read<AdminBloc>().add(
-                //               ReloadPage(),
-                //             );
-                //       },
-                //     );
-                //   } else {
-                //     return Container(
-                //       color: const Color.fromRGBO(57, 97, 84, 1),
-                //     );
-                //   }
               },
             );
           },

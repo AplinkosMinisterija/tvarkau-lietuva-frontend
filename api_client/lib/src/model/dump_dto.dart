@@ -12,7 +12,6 @@ part 'dump_dto.g.dart';
 ///
 /// Properties:
 /// * [name]
-/// * [type]
 /// * [reportLong]
 /// * [reportLat]
 /// * [address]
@@ -23,9 +22,6 @@ part 'dump_dto.g.dart';
 abstract class DumpDto implements Built<DumpDto, DumpDtoBuilder> {
   @BuiltValueField(wireName: r'name')
   String get name;
-
-  @BuiltValueField(wireName: r'type')
-  String get type;
 
   @BuiltValueField(wireName: r'reportLong')
   double get reportLong;
@@ -71,11 +67,6 @@ class _$DumpDtoSerializer implements PrimitiveSerializer<DumpDto> {
     yield r'name';
     yield serializers.serialize(
       object.name,
-      specifiedType: const FullType(String),
-    );
-    yield r'type';
-    yield serializers.serialize(
-      object.type,
       specifiedType: const FullType(String),
     );
     yield r'reportLong';
@@ -143,13 +134,6 @@ class _$DumpDtoSerializer implements PrimitiveSerializer<DumpDto> {
             specifiedType: const FullType(String),
           ) as String;
           result.name = valueDes;
-          break;
-        case r'type':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.type = valueDes;
           break;
         case r'reportLong':
           final valueDes = serializers.deserialize(

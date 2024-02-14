@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **String** |  | 
 **name** | **String** |  | 
-**type** | **String** |  | 
+**category** | **String** |  | 
 **refId** | **String** |  | 
 **longitude** | **double** |  | 
 **latitude** | **double** |  | 

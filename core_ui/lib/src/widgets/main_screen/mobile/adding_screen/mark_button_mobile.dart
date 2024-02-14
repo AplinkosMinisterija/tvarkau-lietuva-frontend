@@ -53,11 +53,11 @@ class _MarkButtonMobileState extends State<MarkButtonMobile> {
             ),
             SizedBox(width: widget.width * 0.0361),
             SizedBox(
-              width: widget.width * 0.561,
+              width: widget.width * 0.211,
               child: FittedBox(
                 fit: BoxFit.fitWidth,
                 child: Text(
-                  'Pranešti apie šiukšlinimą',
+                  'Pranešti',
                   style: GoogleFonts.roboto(
                     fontWeight: FontWeight.w500,
                     color: Colors.white,

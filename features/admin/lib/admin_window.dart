@@ -22,8 +22,9 @@ class AdminWindow extends StatefulWidget {
     required this.onLogout,
     required this.isShowDeleted,
     required this.onDeletedChange,
-    required this.onTypeChange,
+    required this.onCategoryChange,
     required this.isShowDumps,
+    required this.activeCategory,
     Key? key,
   }) : super(key: key);
 
@@ -34,8 +35,9 @@ class AdminWindow extends StatefulWidget {
   final List<FullReportDto>? reports;
   final List<FullDumpDto>? dumps;
   final VoidCallback onLogout;
-  final VoidCallback onTypeChange;
-  final VoidCallback onDeletedChange;
+  final Function(String category) onCategoryChange;
+  final Function(String category) onDeletedChange;
+  final String activeCategory;
 
   @override
   State<AdminWindow> createState() => _AdminWindowState();
@@ -123,8 +125,7 @@ class _AdminWindowState extends State<AdminWindow> {
       return switch (status) {
         'gautas' => redIcon!,
         'tiriamas' => orangeIcon!,
-        'sutvarkyta' => greenIcon!,
-        'ištirtas' => blueIcon!,
+        'išspręsta' => greenIcon!,
         'nepasitvirtino' => grayIcon!,
         _ => dumpIcon!,
       };
@@ -134,8 +135,8 @@ class _AdminWindowState extends State<AdminWindow> {
   @override
   void initState() {
     super.initState();
-    isShowDumps = widget.isShowDumps;
     isShowDeleted = widget.isShowDeleted;
+    isShowDumps = widget.isShowDumps;
     setupMarker();
   }
 
@@ -173,20 +174,20 @@ class _AdminWindowState extends State<AdminWindow> {
                     children: [
                       !isShowDeleted
                           ? UpdatedReportTypeSwitch(
-                              isShowDumps: isShowDumps,
-                              onReportTypeChange: (value) {
-                                widget.onTypeChange();
+                              activeCategory: widget.activeCategory,
+                              onReportCategoryChange: (String value) {
+                                widget.onCategoryChange(value);
                               },
                             )
                           : Opacity(
                               opacity: 0.3,
                               child: UpdatedReportTypeSwitch(
-                                isShowDumps: isShowDumps,
-                                onReportTypeChange: (value) {},
+                                activeCategory: widget.activeCategory,
+                                onReportCategoryChange: (String value) {},
                               ),
                             ),
                       20.widthBox,
-                      if (!isShowDumps) ...[
+                      if (widget.activeCategory != 'dump') ...[
                         CustomSwitch(
                           value: isShowDeleted,
                           width: 64,
@@ -198,7 +199,7 @@ class _AdminWindowState extends State<AdminWindow> {
                           inactiveThumbColor:
                               CustomColors.primary.withOpacity(.4),
                           onChanged: (value) {
-                            widget.onDeletedChange();
+                            widget.onDeletedChange(widget.activeCategory);
                           },
                         ),
                         12.widthBox,

@@ -15,43 +15,37 @@ class ReportStatistics extends StatelessWidget {
   Widget build(BuildContext context) {
     return Wrap(
       alignment: WrapAlignment.center,
-      spacing: 20,
+      spacing: 15,
       runSpacing: 5,
       children: [
         ReportTypeStatistics(
-          title: 'Gauti',
+          title: 'Gauta',
           quantity: reportStatistics.totalSentReports,
           imageShort: 'red',
           tooltipText:
-              'Pranešimą peržiūrėjo tvarkaulietuva.lt administratorius ir jis perduotas atitinkamam struktūriniam vienetui tvarkyti.',
+              'Pranešimas perduotas Aplinkos apsaugos departamento pareigūnams.',
         ),
         ReportTypeStatistics(
-          title: 'Tiriami',
+          title: 'Tiriama',
           quantity: reportStatistics.totalInInvestigationReports,
           imageShort: 'orange',
           tooltipText:
-              'Atsakingas AAD struktūrinis padalinys vykdo pranešimo tyrimą.',
+              'Vykdomas pranešimo tyrimas.',
         ),
         ReportTypeStatistics(
-          title: 'Ištirti',
+          title: 'Išspręsta',
           quantity: reportStatistics.totalInvestigatedReports,
-          imageShort: 'blue',
-          tooltipText:
-              'Pranešimas ištirtas ir tolimesniems veiksmams perduota vykdyti atsakingoms institucijoms.',
-        ),
-        ReportTypeStatistics(
-          title: 'Nepasitvirtinę',
-          quantity: reportStatistics.totalFalseReports,
-          imageShort: 'gray',
-          tooltipText: 'AAD atliko patikrinimą ir pažeidimo neužfiksavo.',
-        ),
-        ReportTypeStatistics(
-          title: 'Sutvarkyti',
-          quantity: reportStatistics.totalCleanedReports,
           imageShort: 'green',
           tooltipText:
-              'AAD užfiksavo pranešime nurodytą pažeidimą kaip sutvarkytą.',
+              'Pranešimas ištirtas ir pažeidėjas įpareigotas pašalinti pažeidimą ar atlyginti padarytą žalą aplinkai.',
         ),
+        ReportTypeStatistics(
+          title: 'Nepasitvirtino',
+          quantity: reportStatistics.totalFalseReports,
+          imageShort: 'gray',
+          tooltipText: 'Atlikus teritorijos apžiūrą, pažeidimas neužfiksuotas.',
+        ),
+
       ],
     );
   }

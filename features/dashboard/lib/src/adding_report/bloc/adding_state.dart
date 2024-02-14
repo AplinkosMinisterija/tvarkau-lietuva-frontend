@@ -4,11 +4,19 @@ abstract class AddingState {}
 
 class LoadingState implements AddingState {}
 
-class ContentState implements AddingState {
+class TrashContentState implements AddingState {
   final List<PublicReportDto> trashReports;
 
-  ContentState({
+  TrashContentState({
     required this.trashReports,
+  });
+}
+
+class ForestContentState implements AddingState {
+  final List<PublicReportDto> forestReports;
+
+  ForestContentState({
+    required this.forestReports,
   });
 }
 

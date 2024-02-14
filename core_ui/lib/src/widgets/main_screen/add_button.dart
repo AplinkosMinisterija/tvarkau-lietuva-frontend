@@ -50,11 +50,11 @@ class _AddButtonState extends State<AddButton> {
               width: widget.width * 0.0083,
             ),
             SizedBox(
-              width: widget.width * 0.0974,
+              width: widget.width * 0.0474,
               child: FittedBox(
                 fit: BoxFit.fitWidth,
                 child: Text(
-                  'Pranešti apie šiukšlinimą',
+                  'Pranešti',
                   style: GoogleFonts.raleway(
                     fontWeight: FontWeight.w600,
                     color: Colors.white,

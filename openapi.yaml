@@ -9,6 +9,14 @@ paths:
           in: query
           schema:
             type: boolean
+        - name: category
+          required: false
+          in: query
+          schema:
+            enum:
+              - trash
+              - forest
+            type: string
       responses:
         '200':
           description: All reports have been successfully found
@@ -38,6 +46,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FullReportDto'
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
       tags: *ref_0
       security: *ref_1
   /admin/reports/{refId}:
@@ -111,6 +125,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FullDumpDto'
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
       tags: *ref_0
       security: *ref_1
     put:
@@ -157,7 +177,7 @@ paths:
             schema:
               $ref: '#/components/schemas/CreateReportDto'
       responses:
-        '200':
+        '201':
           description: New Report has been successfully created
           content:
             application/json:
@@ -167,7 +187,15 @@ paths:
         - reports
     get:
       operationId: ReportController_getAllPublicReports
-      parameters: []
+      parameters:
+        - name: category
+          required: false
+          in: query
+          schema:
+            enum:
+              - trash
+              - forest
+            type: string
       responses:
         '200':
           description: All visible reports have been successfully found
@@ -181,7 +209,15 @@ paths:
   /reports/statistics:
     get:
       operationId: ReportController_getReportStatistics
-      parameters: []
+      parameters:
+        - name: category
+          required: false
+          in: query
+          schema:
+            enum:
+              - trash
+              - forest
+            type: string
       responses:
         '200':
           description: Report statistics have been successfully fetched
@@ -222,6 +258,12 @@ paths:
       responses:
         '200':
           description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogInDto'
+        '201':
+          description: ''
           content:
             application/json:
               schema:
@@ -288,7 +330,10 @@ components:
           type: string
         name:
           type: string
-        type:
+        category:
+          enum:
+            - trash
+            - forest
           type: string
         refId:
           type: string
@@ -330,7 +375,7 @@ components:
       required:
         - _id
         - name
-        - type
+        - category
         - refId
         - longitude
         - latitude
@@ -350,8 +395,6 @@ components:
         refId:
           type: string
         name:
-          type: string
-        type:
           type: string
         longitude:
           type: number
@@ -374,12 +417,9 @@ components:
       required:
         - refId
         - name
-        - type
         - longitude
         - latitude
         - isVisible
-        - address
-        - phone
         - workingHours
         - moreInformation
     UpdateReportDto:
@@ -478,16 +518,10 @@ components:
         - name
         - reportLong
         - reportLat
-        - address
-        - phone
-        - workingHours
-        - moreInformation
     DumpDto:
       type: object
       properties:
         name:
-          type: string
-        type:
           type: string
         reportLong:
           type: number
@@ -507,7 +541,6 @@ components:
           type: string
       required:
         - name
-        - type
         - reportLong
         - reportLat
         - address
@@ -517,31 +550,40 @@ components:
     CreateReportDto:
       type: object
       properties:
+        images:
+          type: array
+          items:
+            type: string
+            format: binary
         name:
           type: string
         longitude:
           type: number
         latitude:
           type: number
+        category:
+          type: string
+          enum:
+            - trash
+            - forest
         email:
           type: string
-        images:
-          type: array
-          items:
-            type: string
-            format: binary
       required:
+        - images
         - name
         - longitude
         - latitude
+        - category
         - email
-        - images
     PublicReportDto:
       type: object
       properties:
         name:
           type: string
-        type:
+        category:
+          enum:
+            - trash
+            - forest
           type: string
         refId:
           type: string
@@ -572,7 +614,7 @@ components:
             $ref: '#/components/schemas/StatusRecordsDto'
       required:
         - name
-        - type
+        - category
         - refId
         - longitude
         - latitude
@@ -591,15 +633,12 @@ components:
           type: integer
         totalInvestigatedReports:
           type: integer
-        totalCleanedReports:
-          type: integer
         totalFalseReports:
           type: integer
       required:
         - totalSentReports
         - totalInInvestigationReports
         - totalInvestigatedReports
-        - totalCleanedReports
         - totalFalseReports
     LoginRequestDto:
       type: object

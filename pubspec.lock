@@ -32,6 +32,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.0"
+  animated_custom_dropdown:
+    dependency: transitive
+    description:
+      name: animated_custom_dropdown
+      sha256: "9e286defa42f2e774285015d7ff29523a24260888d53f79a3635328fad5bdad7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   ansi_styles:
     dependency: transitive
     description:

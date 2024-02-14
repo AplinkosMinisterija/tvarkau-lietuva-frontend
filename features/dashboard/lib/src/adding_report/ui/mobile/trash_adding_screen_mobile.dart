@@ -9,25 +9,29 @@ import 'package:core/core.dart';
 import 'add_pin_screen_mobile.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class AddingScreenMobile extends StatefulWidget {
-  const AddingScreenMobile({
+class TrashAddingScreenMobile extends StatefulWidget {
+  const TrashAddingScreenMobile({
     required this.width,
     required this.height,
     required this.reports,
     required this.onAddTap,
+    required this.onDataSecurityTap,
     super.key,
   });
 
   final double width;
   final double height;
   final List<PublicReportDto> reports;
-  final Function(String, String, double, double, List<Uint8List>) onAddTap;
+  final Function(String, String, double, double, List<Uint8List>)
+      onAddTap;
+  final VoidCallback onDataSecurityTap;
 
   @override
-  State<AddingScreenMobile> createState() => _AddingScreenMobileState();
+  State<TrashAddingScreenMobile> createState() =>
+      _TrashAddingScreenMobileState();
 }
 
-class _AddingScreenMobileState extends State<AddingScreenMobile> {
+class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
   List<Uint8List> _selectedImages = [];
 
   Future<void> getMultipleImageInfos() async {
@@ -50,8 +54,6 @@ class _AddingScreenMobileState extends State<AddingScreenMobile> {
   Set<Marker> newMarker = {};
   double selectedLat = 0;
   double selectedLong = 0;
-  List<DropdownMenuItem<String>> dropDownItems = [];
-  late String currentItem;
 
   void addCustomIcon() {
     BitmapDescriptor.fromAssetImage(
@@ -83,18 +85,6 @@ class _AddingScreenMobileState extends State<AddingScreenMobile> {
       );
       index++;
     }
-    currentItem = 'Šiukšlinimas gamtoje';
-    dropDownItems.add(DropdownMenuItem(
-      value: 'Šiukšlinimas gamtoje',
-      child: Text(
-        'Šiukšlinimas gamtoje',
-        style: GoogleFonts.roboto(
-          fontWeight: FontWeight.w500,
-          fontSize: widget.width * 0.03888,
-          color: const Color.fromRGBO(57, 97, 84, 1),
-        ),
-      ),
-    ));
     super.initState();
   }
 
@@ -107,7 +97,7 @@ class _AddingScreenMobileState extends State<AddingScreenMobile> {
   @override
   Widget build(BuildContext context) {
     return Title(
-      title: "Pranešti apie šiukšlinimą",
+      title: "Pranešti apie pažeidimą",
       color: Colors.green,
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(250, 242, 234, 1),
@@ -123,7 +113,7 @@ class _AddingScreenMobileState extends State<AddingScreenMobile> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Pranešti apie šiukšlinimą',
+                            'Pranešti apie pažeidimą',
                             style: GoogleFonts.roboto(
                               fontSize: widget.width * 0.04444,
                               fontWeight: FontWeight.w700,
@@ -203,9 +193,9 @@ class _AddingScreenMobileState extends State<AddingScreenMobile> {
                                       ),
                                       SizedBox(width: widget.width * 0.0277),
                                       Text(
-                                        'Pažymėkite vietą, kur aptikote šiukšles',
+                                        'Pažymėkite vietą, kur pastebėjote pažeidimą',
                                         style: GoogleFonts.roboto(
-                                            fontSize: widget.width * 0.038888,
+                                            fontSize: widget.width * 0.028888,
                                             fontWeight: FontWeight.w400),
                                       )
                                     ],
@@ -367,19 +357,6 @@ class _AddingScreenMobileState extends State<AddingScreenMobile> {
                           },
                         ),
                       ),
-                      // _fileBytes.isNotEmpty
-                      //     ? ImageCollageMobile(
-                      //         width: widget.width,
-                      //         imageBytes: _fileBytes,
-                      //         onTap: (index) {
-                      //           setState(() {
-                      //             _fileBytes.removeAt(index);
-                      //             _selectedImages.removeAt(index);
-                      //             multipartList.removeAt(index);
-                      //           });
-                      //         },
-                      //       )
-                      //     : const SizedBox.shrink(),
                       _selectedImages.isNotEmpty
                           ? SizedBox(
                               width: widget.width * 0.9111,
@@ -415,49 +392,11 @@ class _AddingScreenMobileState extends State<AddingScreenMobile> {
                                       ]);
                                 },
                                 itemCount: getImageWidget(
-                                        _selectedImages, widget.width * 0.4333)
+                                    _selectedImages, widget.width * 0.4333)
                                     .length,
                               ),
                             )
                           : const SizedBox.shrink(),
-                      SizedBox(height: widget.width * 0.0488),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Pranešimo kategorija',
-                          style: GoogleFonts.roboto(
-                              fontSize: widget.width * 0.03888,
-                              fontWeight: FontWeight.w400),
-                        ),
-                      ),
-                      SizedBox(height: widget.width * 0.0133),
-                      Container(
-                        width: widget.width * 0.911,
-                        height: widget.width * 0.111,
-                        padding: EdgeInsets.symmetric(
-                            horizontal: widget.width * 0.05),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          border: Border.all(
-                              color: const Color.fromRGBO(57, 97, 84, 1),
-                              width: 1),
-                        ),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton(
-                            icon: Icon(
-                              Icons.arrow_drop_down_circle_outlined,
-                              size: widget.width * 0.05,
-                              color: const Color.fromRGBO(57, 97, 84, 1),
-                            ),
-                            value: currentItem,
-                            autofocus: false,
-                            focusColor: Colors.transparent,
-                            isExpanded: true,
-                            items: dropDownItems,
-                            onChanged: (value) {},
-                          ),
-                        ),
-                      ),
                       SizedBox(height: widget.width * 0.03333),
                       SizedBox(
                         width: widget.width,
@@ -476,7 +415,7 @@ class _AddingScreenMobileState extends State<AddingScreenMobile> {
                               InkWell(
                                 onTap: () {
                                   LaunchUrl().launch(
-                                      'https://aad.lrv.lt/lt/administracine-informacija/asmens-duomenu-apsauga/');
+                                      'https://aad.lrv.lt/lt/asmens-duomenu-apsauga/');
                                 },
                                 //widget.onDataSecurityTap,
                                 child: Text(
@@ -529,25 +468,6 @@ class _AddingScreenMobileState extends State<AddingScreenMobile> {
                               );
                             }
 
-                            //TODO: FIX CAPTCHA
-                            // showDialog(
-                            //     context: context,
-                            //     builder: (context) {
-                            //       return CaptchaDialog(
-                            //         onSuccess: () async {
-                            //           await Future.delayed(
-                            //               const Duration(seconds: 1));
-                            //           Navigator.of(context).pop();
-                            //           widget.onAddTap(
-                            //             currentEmailValue,
-                            //             currentTextValue,
-                            //             selectedLat,
-                            //             selectedLong,
-                            //             multipartList,
-                            //           );
-                            //         },
-                            //       );
-                            //     });
                           }
                         },
                       ),

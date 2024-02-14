@@ -32,7 +32,7 @@ class FooterContactsMobile extends StatelessWidget {
           height: width * 0.044,
         ),
         Padding(
-          padding: EdgeInsets.only(right: width * 0.05),
+          padding: EdgeInsets.only(right: width * 0.03),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

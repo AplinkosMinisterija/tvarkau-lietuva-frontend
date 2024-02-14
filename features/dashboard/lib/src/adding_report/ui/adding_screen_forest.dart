@@ -1,14 +1,14 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:dashboard/src/adding_report/ui/web/confirmation_screen.dart';
+import 'package:dashboard/src/adding_report/ui/web/forest_adding_screen_web.dart';
 import 'package:flutter/material.dart';
 import '../bloc/adding_bloc.dart';
-import 'web/adding_screen_web.dart';
-import '../ui/mobile/adding_screen_mobile.dart';
+import 'mobile/forest_adding_screen_mobile.dart';
 import 'mobile/confirmation_screen_mobile.dart';
 
-class AddingScreen extends StatelessWidget {
-  const AddingScreen({
+class AddingScreenForest extends StatelessWidget {
+  const AddingScreenForest({
     Key? key,
   }) : super(key: key);
 
@@ -18,43 +18,50 @@ class AddingScreen extends StatelessWidget {
     double width = size.width;
     double height = size.height;
     return BlocProvider(
-      create: (BuildContext context) => AddingBloc(),
+      create: (BuildContext context) =>
+          AddingBloc('forest')..add(LoadForestData()),
       child: BlocBuilder<AddingBloc, AddingState>(
         builder: (BuildContext context, AddingState state) {
           return BlocBuilder<AddingBloc, AddingState>(
             builder: (BuildContext context, AddingState state) {
-              if (state is ContentState) {
+              if (state is ForestContentState) {
                 if (width > 900) {
-                  return AddingScreenWeb(
+                  return ForestAddingScreenWeb(
                     width: width,
                     height: height,
-                    reports: state.trashReports,
+                    reports: state.forestReports,
                     onAddTap: (email, text, lat, long, files) {
                       context.read<AddingBloc>().add(
                             AddReport(
-                              emailValue: email,
-                              textValue: text,
-                              selectedLat: lat,
-                              selectedLong: long,
-                              images: files,
-                            ),
+                                emailValue: email,
+                                textValue: text,
+                                selectedLat: lat,
+                                selectedLong: long,
+                                images: files,
+                                category: 'forest'),
                           );
+                    },
+                    onDataSecurityTap: () {
+                      // showDialog(
+                      //     context: context,
+                      //     builder: (BuildContext context) =>
+                      //         const DataSecurityInformation());
                     },
                   );
                 } else {
-                  return AddingScreenMobile(
+                  return ForestAddingScreenMobile(
                     width: width,
                     height: height,
-                    reports: state.trashReports,
+                    reports: state.forestReports,
                     onAddTap: (email, text, lat, long, files) {
                       context.read<AddingBloc>().add(
                             AddReport(
-                              emailValue: email,
-                              textValue: text,
-                              selectedLat: lat,
-                              selectedLong: long,
-                              images: files,
-                            ),
+                                emailValue: email,
+                                textValue: text,
+                                selectedLat: lat,
+                                selectedLong: long,
+                                images: files,
+                                category: 'forest'),
                           );
                     },
                   );

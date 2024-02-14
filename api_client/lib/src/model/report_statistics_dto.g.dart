@@ -14,8 +14,6 @@ class _$ReportStatisticsDto extends ReportStatisticsDto {
   @override
   final int totalInvestigatedReports;
   @override
-  final int totalCleanedReports;
-  @override
   final int totalFalseReports;
 
   factory _$ReportStatisticsDto(
@@ -26,7 +24,6 @@ class _$ReportStatisticsDto extends ReportStatisticsDto {
       {required this.totalSentReports,
       required this.totalInInvestigationReports,
       required this.totalInvestigatedReports,
-      required this.totalCleanedReports,
       required this.totalFalseReports})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(
@@ -35,8 +32,6 @@ class _$ReportStatisticsDto extends ReportStatisticsDto {
         r'ReportStatisticsDto', 'totalInInvestigationReports');
     BuiltValueNullFieldError.checkNotNull(totalInvestigatedReports,
         r'ReportStatisticsDto', 'totalInvestigatedReports');
-    BuiltValueNullFieldError.checkNotNull(
-        totalCleanedReports, r'ReportStatisticsDto', 'totalCleanedReports');
     BuiltValueNullFieldError.checkNotNull(
         totalFalseReports, r'ReportStatisticsDto', 'totalFalseReports');
   }
@@ -57,7 +52,6 @@ class _$ReportStatisticsDto extends ReportStatisticsDto {
         totalSentReports == other.totalSentReports &&
         totalInInvestigationReports == other.totalInInvestigationReports &&
         totalInvestigatedReports == other.totalInvestigatedReports &&
-        totalCleanedReports == other.totalCleanedReports &&
         totalFalseReports == other.totalFalseReports;
   }
 
@@ -67,7 +61,6 @@ class _$ReportStatisticsDto extends ReportStatisticsDto {
     _$hash = $jc(_$hash, totalSentReports.hashCode);
     _$hash = $jc(_$hash, totalInInvestigationReports.hashCode);
     _$hash = $jc(_$hash, totalInvestigatedReports.hashCode);
-    _$hash = $jc(_$hash, totalCleanedReports.hashCode);
     _$hash = $jc(_$hash, totalFalseReports.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -79,7 +72,6 @@ class _$ReportStatisticsDto extends ReportStatisticsDto {
           ..add('totalSentReports', totalSentReports)
           ..add('totalInInvestigationReports', totalInInvestigationReports)
           ..add('totalInvestigatedReports', totalInvestigatedReports)
-          ..add('totalCleanedReports', totalCleanedReports)
           ..add('totalFalseReports', totalFalseReports))
         .toString();
   }
@@ -104,11 +96,6 @@ class ReportStatisticsDtoBuilder
   set totalInvestigatedReports(int? totalInvestigatedReports) =>
       _$this._totalInvestigatedReports = totalInvestigatedReports;
 
-  int? _totalCleanedReports;
-  int? get totalCleanedReports => _$this._totalCleanedReports;
-  set totalCleanedReports(int? totalCleanedReports) =>
-      _$this._totalCleanedReports = totalCleanedReports;
-
   int? _totalFalseReports;
   int? get totalFalseReports => _$this._totalFalseReports;
   set totalFalseReports(int? totalFalseReports) =>
@@ -124,7 +111,6 @@ class ReportStatisticsDtoBuilder
       _totalSentReports = $v.totalSentReports;
       _totalInInvestigationReports = $v.totalInInvestigationReports;
       _totalInvestigatedReports = $v.totalInvestigatedReports;
-      _totalCleanedReports = $v.totalCleanedReports;
       _totalFalseReports = $v.totalFalseReports;
       _$v = null;
     }
@@ -158,10 +144,6 @@ class ReportStatisticsDtoBuilder
                 totalInvestigatedReports,
                 r'ReportStatisticsDto',
                 'totalInvestigatedReports'),
-            totalCleanedReports: BuiltValueNullFieldError.checkNotNull(
-                totalCleanedReports,
-                r'ReportStatisticsDto',
-                'totalCleanedReports'),
             totalFalseReports: BuiltValueNullFieldError.checkNotNull(
                 totalFalseReports,
                 r'ReportStatisticsDto',

@@ -31,16 +31,16 @@ abstract class CreateDumpDto
   num get reportLat;
 
   @BuiltValueField(wireName: r'address')
-  String get address;
+  String? get address;
 
   @BuiltValueField(wireName: r'phone')
-  String get phone;
+  String? get phone;
 
   @BuiltValueField(wireName: r'workingHours')
-  String get workingHours;
+  String? get workingHours;
 
   @BuiltValueField(wireName: r'moreInformation')
-  String get moreInformation;
+  String? get moreInformation;
 
   CreateDumpDto._();
 
@@ -82,26 +82,34 @@ class _$CreateDumpDtoSerializer implements PrimitiveSerializer<CreateDumpDto> {
       object.reportLat,
       specifiedType: const FullType(num),
     );
-    yield r'address';
-    yield serializers.serialize(
-      object.address,
-      specifiedType: const FullType(String),
-    );
-    yield r'phone';
-    yield serializers.serialize(
-      object.phone,
-      specifiedType: const FullType(String),
-    );
-    yield r'workingHours';
-    yield serializers.serialize(
-      object.workingHours,
-      specifiedType: const FullType(String),
-    );
-    yield r'moreInformation';
-    yield serializers.serialize(
-      object.moreInformation,
-      specifiedType: const FullType(String),
-    );
+    if (object.address != null) {
+      yield r'address';
+      yield serializers.serialize(
+        object.address,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.phone != null) {
+      yield r'phone';
+      yield serializers.serialize(
+        object.phone,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.workingHours != null) {
+      yield r'workingHours';
+      yield serializers.serialize(
+        object.workingHours,
+        specifiedType: const FullType(String),
+      );
+    }
+    if (object.moreInformation != null) {
+      yield r'moreInformation';
+      yield serializers.serialize(
+        object.moreInformation,
+        specifiedType: const FullType(String),
+      );
+    }
   }
 
   @override

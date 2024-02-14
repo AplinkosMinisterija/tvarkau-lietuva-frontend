@@ -322,12 +322,10 @@ class _TrashWindowState extends State<TrashWindow> {
       statusIndex = 0;
     } else if (status == 'tiriamas') {
       statusIndex = 1;
-    } else if (status == 'ištirtas') {
+    } else if (status == 'išspręsta') {
       statusIndex = 2;
-    } else if (status == 'sutvarkyta') {
-      statusIndex = 3;
     } else if (status == 'nepasitvirtino') {
-      statusIndex = 4;
+      statusIndex = 3;
     }
   }
 
@@ -337,10 +335,8 @@ class _TrashWindowState extends State<TrashWindow> {
     } else if (index == 1) {
       status = 'tiriamas';
     } else if (index == 2) {
-      status = 'ištirtas';
+      status = 'išspręsta';
     } else if (index == 3) {
-      status = 'sutvarkyta';
-    } else if (index == 4) {
       status = 'nepasitvirtino';
     }
   }
