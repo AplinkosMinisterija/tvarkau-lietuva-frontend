@@ -123,7 +123,7 @@ class _BuildStatusSection extends StatelessWidget {
               ),
             ),
             DropdownMenuItem(
-              value: 4,
+              value: 3,
               alignment: Alignment.center,
               child: _BuildStatus(
                 status: 'nepasitvirtino',
