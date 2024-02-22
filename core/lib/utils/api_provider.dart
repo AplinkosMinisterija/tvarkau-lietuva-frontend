@@ -90,14 +90,14 @@ class ApiProvider {
   }
 
   Future<List<PublicReportDto>> getAllVisibleReports(String? category) async {
-    final response =
-        await reportsApi.reportControllerGetAllPublicReports(category: category);
+    final response = await reportsApi.reportControllerGetAllPublicReports(
+        category: category);
     return response.data!.toList(); //TODO: add error handling
   }
 
   Future<ReportStatisticsDto> getReportStatistics(String? category) async {
-    final response =
-        await reportsApi.reportControllerGetReportStatistics(category: category);
+    final response = await reportsApi.reportControllerGetReportStatistics(
+        category: category);
     return response.data!;
   }
 
@@ -179,17 +179,17 @@ class ApiProvider {
     required bool isVisible,
   }) async {
     final response = await adminApi.adminControllerUpdateDump(
-        updateDumpDto: UpdateDumpDto((builder) => {
-              builder.id = id,
-              builder.address = address,
-              builder.longitude = longitude,
-              builder.latitude = latitude,
-              builder.name = name,
-              builder.moreInformation = moreInformation,
-              builder.workingHours = workingHours,
-              builder.phone = phone,
-              builder.isVisible = isVisible,
-            }));
+        updateDumpDto: UpdateDumpDto((builder) {
+      builder.id = id;
+      builder.address = address;
+      builder.longitude = longitude;
+      builder.latitude = latitude;
+      builder.name = name;
+      builder.moreInformation = moreInformation;
+      builder.workingHours = workingHours;
+      builder.phone = phone;
+      builder.isVisible = isVisible;
+    }));
     return response.data!;
   }
 

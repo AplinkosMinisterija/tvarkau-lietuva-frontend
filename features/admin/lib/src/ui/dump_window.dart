@@ -231,17 +231,17 @@ class _DumpWindowState extends State<DumpWindow> {
               CustomButton(
                 text: 'Išsaugoti',
                 onPressed: () {
-                  widget.onUpdate(FullDumpDto((builder) => {
-                        builder.refId = id,
-                        builder.name = name,
-                        builder.moreInformation = moreInformation,
-                        builder.workingHours = workingHours,
-                        builder.phone = phone,
-                        builder.isVisible = isVisible,
-                        builder.latitude = latitude,
-                        builder.longitude = longitude,
-                        builder.address = address,
-                      }));
+                  widget.onUpdate(FullDumpDto((builder) {
+                    builder.refId = id;
+                    builder.name = name;
+                    builder.moreInformation = moreInformation;
+                    builder.workingHours = workingHours;
+                    builder.phone = phone;
+                    builder.isVisible = isVisible;
+                    builder.latitude = latitude;
+                    builder.longitude = longitude;
+                    builder.address = address;
+                  }));
                 },
               ),
             ],
