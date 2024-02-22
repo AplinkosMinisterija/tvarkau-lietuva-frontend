@@ -46,10 +46,10 @@ class SecureStorageProvider {
   Future<LogInDto> getUserInfo() async {
     String? email = await storage.read(key: _userEmailKey);
     String? name = await storage.read(key: _userNameKey);
-    return LogInDto((builder) => {
-          builder.name = name ?? '',
-          builder.email = email ?? '',
-          builder.accessKey = '',
-        });
+    return LogInDto((builder) {
+      builder.name = name ?? '';
+      builder.email = email ?? '';
+      builder.accessKey = '';
+    });
   }
 }
