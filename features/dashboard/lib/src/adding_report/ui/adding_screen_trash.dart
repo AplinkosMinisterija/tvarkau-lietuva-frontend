@@ -9,8 +9,8 @@ import 'mobile/confirmation_screen_mobile.dart';
 
 class AddingScreenTrash extends StatelessWidget {
   const AddingScreenTrash({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,8 @@ class AddingScreenTrash extends StatelessWidget {
                               category: 'trash',
                             ),
                           );
-                    }, onDataSecurityTap: () {  },
+                    },
+                    onDataSecurityTap: () {},
                   );
                 }
               } else if (state is LoadingState) {

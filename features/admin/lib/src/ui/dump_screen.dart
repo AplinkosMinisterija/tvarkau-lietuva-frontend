@@ -12,8 +12,8 @@ class DumpScreen extends StatefulWidget {
 
   const DumpScreen({
     required this.refId,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<DumpScreen> createState() => _DumpScreenState();

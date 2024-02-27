@@ -1,4 +1,4 @@
-part of app_theme;
+part of 'app_theme.dart';
 
 class AppIconsTheme {
   static const String _svgPath = 'assets/svg/';
@@ -17,7 +17,6 @@ class AppIconsTheme {
   /// Path to the SVG files
   static const String _pinIconPathKey = '${_svgPath}pin_icon.svg';
 
-
   /// HomeScreen
   static AppIcon get confirm => AppIcon(iconKey: _confirmPathKey);
   static AppIcon get exclude => AppIcon(iconKey: _excludePathKey);
@@ -28,5 +27,4 @@ class AppIconsTheme {
   static AppIcon get securityLogo => AppIcon(iconKey: _securitylogoPathKey);
   static AppIcon get ukraine => AppIcon(iconKey: _ukrainePathKey);
   static AppIcon get pinIcon => AppIcon(iconKey: _pinIconPathKey);
-
 }

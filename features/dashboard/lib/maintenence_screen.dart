@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 
 class MaintenenceScreen extends StatefulWidget {
   const MaintenenceScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<MaintenenceScreen> createState() => _MaintenenceScreenState();

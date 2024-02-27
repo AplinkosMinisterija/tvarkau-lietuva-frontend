@@ -28,8 +28,8 @@ class TrashWindow extends StatefulWidget {
     required this.onUpdate,
     required this.onDelete,
     required this.onRestore,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<TrashWindow> createState() => _TrashWindowState();

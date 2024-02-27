@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'dart:ui' as ui;
 
 class InformationScreenWeb extends StatefulWidget {
   const InformationScreenWeb({
@@ -388,7 +389,10 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                   width: widget.width * 0.05555,
                   child: SvgPicture.asset(
                     'assets/svg/progress_third_stage_icon.svg',
-                    color: const Color.fromRGBO(255, 255, 255, 1),
+                    colorFilter: const ui.ColorFilter.mode(
+                      Color.fromRGBO(255, 255, 255, 1),
+                      ui.BlendMode.srcIn,
+                    ),
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -412,7 +416,10 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                         width: widget.width * 0.05555,
                         child: SvgPicture.asset(
                           'assets/svg/progress_fourth_stage_icon.svg',
-                          color: const Color.fromRGBO(57, 97, 84, 1),
+                          colorFilter: const ui.ColorFilter.mode(
+                            Color.fromRGBO(57, 97, 84, 1),
+                            ui.BlendMode.srcIn,
+                          ),
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -525,7 +532,10 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
             width: widget.width * 0.05555,
             child: SvgPicture.asset(
               'assets/svg/progress_second_stage_icon.svg',
-              color: const Color.fromRGBO(57, 97, 84, 1),
+              colorFilter: const ui.ColorFilter.mode(
+                Color.fromRGBO(57, 97, 84, 1),
+                ui.BlendMode.srcIn,
+              ),
               fit: BoxFit.fill,
             ),
           ),
@@ -606,7 +616,10 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
             width: widget.width * 0.05555,
             child: SvgPicture.asset(
               'assets/svg/progress_fourth_stage_icon.svg',
-              color: const Color.fromRGBO(57, 97, 84, 1),
+              colorFilter: const ui.ColorFilter.mode(
+                Color.fromRGBO(57, 97, 84, 1),
+                ui.BlendMode.srcIn,
+              ),
               fit: BoxFit.fill,
             ),
           ),
@@ -654,7 +667,10 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
             width: widget.width * 0.05555,
             child: SvgPicture.asset(
               'assets/svg/progress_fourth_stage_icon.svg',
-              color: const Color.fromRGBO(57, 97, 84, 1),
+              colorFilter: const ui.ColorFilter.mode(
+                Color.fromRGBO(57, 97, 84, 1),
+                ui.BlendMode.srcIn,
+              ),
               fit: BoxFit.fill,
             ),
           ),
@@ -716,7 +732,10 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
             width: widget.width * 0.05555,
             child: SvgPicture.asset(
               'assets/svg/progress_first_stage_icon.svg',
-              color: const Color.fromRGBO(57, 97, 84, 1),
+              colorFilter: const ui.ColorFilter.mode(
+                Color.fromRGBO(57, 97, 84, 1),
+                ui.BlendMode.srcIn,
+              ),
               fit: BoxFit.fill,
             ),
           ),

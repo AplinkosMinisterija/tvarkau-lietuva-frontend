@@ -1,4 +1,4 @@
-part of app_theme;
+part of 'app_theme.dart';
 
 class AppColors {
   static const Color transparent = Color.fromRGBO(0, 0, 0, 0);
