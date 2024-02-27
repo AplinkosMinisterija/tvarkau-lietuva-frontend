@@ -37,7 +37,7 @@ class ReportsApi {
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
   /// Returns a [Future] containing a [Response] with a [PublicReportDto] as data
-  /// Throws [DioError] if API call or serialization fails
+  /// Throws [DioException] if API call or serialization fails
   Future<Response<PublicReportDto>> reportControllerCreateNewReport({
     required BuiltList<MultipartFile> images,
     required String name,
@@ -83,12 +83,12 @@ class ReportsApi {
             encodeFormParameter(_serializers, email, const FullType(String)),
       });
     } catch (error, stackTrace) {
-      throw DioError(
+      throw DioException(
         requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.unknown,
+        type: DioExceptionType.unknown,
         error: error,
         stackTrace: stackTrace,
       );
@@ -114,10 +114,10 @@ class ReportsApi {
               specifiedType: const FullType(PublicReportDto),
             ) as PublicReportDto;
     } catch (error, stackTrace) {
-      throw DioError(
+      throw DioException(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.unknown,
+        type: DioExceptionType.unknown,
         error: error,
         stackTrace: stackTrace,
       );
@@ -148,7 +148,7 @@ class ReportsApi {
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
   /// Returns a [Future] containing a [Response] with a [BuiltList<PublicReportDto>] as data
-  /// Throws [DioError] if API call or serialization fails
+  /// Throws [DioException] if API call or serialization fails
   Future<Response<BuiltList<PublicReportDto>>>
       reportControllerGetAllPublicReports({
     String? category,
@@ -199,10 +199,10 @@ class ReportsApi {
                   const FullType(BuiltList, [FullType(PublicReportDto)]),
             ) as BuiltList<PublicReportDto>;
     } catch (error, stackTrace) {
-      throw DioError(
+      throw DioException(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.unknown,
+        type: DioExceptionType.unknown,
         error: error,
         stackTrace: stackTrace,
       );
@@ -233,7 +233,7 @@ class ReportsApi {
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
   /// Returns a [Future] containing a [Response] with a [PublicReportDto] as data
-  /// Throws [DioError] if API call or serialization fails
+  /// Throws [DioException] if API call or serialization fails
   Future<Response<PublicReportDto>> reportControllerGetReportById({
     required num refId,
     CancelToken? cancelToken,
@@ -243,8 +243,10 @@ class ReportsApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path =
-        r'/reports/{refId}'.replaceAll('{' r'refId' '}', refId.toString());
+    final _path = r'/reports/{refId}'.replaceAll(
+        '{' r'refId' '}',
+        encodeQueryParameter(_serializers, refId, const FullType(num))
+            .toString());
     final _options = Options(
       method: r'GET',
       headers: <String, dynamic>{
@@ -276,10 +278,10 @@ class ReportsApi {
               specifiedType: const FullType(PublicReportDto),
             ) as PublicReportDto;
     } catch (error, stackTrace) {
-      throw DioError(
+      throw DioException(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.unknown,
+        type: DioExceptionType.unknown,
         error: error,
         stackTrace: stackTrace,
       );
@@ -310,7 +312,7 @@ class ReportsApi {
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
   /// Returns a [Future] containing a [Response] with a [ReportStatisticsDto] as data
-  /// Throws [DioError] if API call or serialization fails
+  /// Throws [DioException] if API call or serialization fails
   Future<Response<ReportStatisticsDto>> reportControllerGetReportStatistics({
     String? category,
     CancelToken? cancelToken,
@@ -359,10 +361,10 @@ class ReportsApi {
               specifiedType: const FullType(ReportStatisticsDto),
             ) as ReportStatisticsDto;
     } catch (error, stackTrace) {
-      throw DioError(
+      throw DioException(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.unknown,
+        type: DioExceptionType.unknown,
         error: error,
         stackTrace: stackTrace,
       );

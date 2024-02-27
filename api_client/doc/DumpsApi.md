@@ -26,7 +26,7 @@ final api = ApiClient().getDumpsApi();
 try {
     final response = api.dumpControllerGetAllVisibleDumps();
     print(response);
-} catch on DioError (e) {
+} catch on DioException (e) {
     print('Exception when calling DumpsApi->dumpControllerGetAllVisibleDumps: $e\n');
 }
 ```

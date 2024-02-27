@@ -52,7 +52,7 @@ final CreateDumpDto createDumpDto = ; // CreateDumpDto |
 try {
     final response = await api.adminControllerCreateDump(createDumpDto);
     print(response);
-} catch on DioError (e) {
+} catch on DioException (e) {
     print("Exception when calling AdminApi->adminControllerCreateDump: $e\n");
 }
 
@@ -101,7 +101,7 @@ Class | Method | HTTP request | Description
 Authentication schemes defined for the API:
 ### bearer
 
-- **Type**: HTTP basic authentication
+- **Type**: HTTP Bearer Token authentication (JWT)
 
 
 ## Author
