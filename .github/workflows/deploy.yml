@@ -48,7 +48,7 @@ jobs:
         uses: bluefireteam/melos-action@v3
 
       - name: Build production web
-        run: flutter build web --release --web-renderer canvaskit --source-maps --build-number ${{ github.run_number }} --dart-define="SENTRY_ENVIRONMENT=${{ github.ref == 'refs/heads/main' && 'production' ||  'preview'  }}" --dart-define="SENTRY_RELEASE=${{ github.sha }}"
+        run: flutter build web --release --web-renderer html --source-maps --build-number ${{ github.run_number }} --dart-define="SENTRY_ENVIRONMENT=${{ github.ref == 'refs/heads/main' && 'production' ||  'preview'  }}" --dart-define="SENTRY_RELEASE=${{ github.sha }}"
 
       - name: Publish to Cloudflare Pages
         uses: cloudflare/pages-action@v1
