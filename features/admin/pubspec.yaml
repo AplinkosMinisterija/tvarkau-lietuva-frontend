@@ -26,8 +26,8 @@ dependencies:
   aad_oauth: ^1.0.1
   dropdown_button2: ^2.3.9
   go_router: ^13.2.0
-  syncfusion_flutter_core: ^24.2.8
-  syncfusion_flutter_datagrid: ^24.2.8
+  syncfusion_flutter_core: 24.1.41
+  syncfusion_flutter_datagrid: 24.1.41
   collection: ^1.17.2
 
 dev_dependencies:

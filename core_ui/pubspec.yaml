@@ -24,7 +24,8 @@ dependencies:
   auto_size_text: ^3.0.0
   flutter_staggered_grid_view: ^0.7.0
   pointer_interceptor: ^0.10.1
-  syncfusion_flutter_datagrid: ^24.2.8
+  syncfusion_flutter_core: 24.1.41
+  syncfusion_flutter_datagrid: 24.1.41
   animated_custom_dropdown: ^3.0.0
 
 dev_dependencies:
