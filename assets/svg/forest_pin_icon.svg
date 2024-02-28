@@ -1,10 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<svg viewBox="0 0 32 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="color-0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1, 0, 0, 1, 0.048001, 2.371927)">
-      <stop style="stop-color: rgb(255, 255, 255);"/>
-    </linearGradient>
-  </defs>
-  <path d="M32 16C32 26.5593 21.1733 38.6932 17.3319 42.666C16.5931 43.4301 15.4069 43.4301 14.6681 42.666C10.8267 38.6932 0 26.5593 0 16C0 7.16344 7.16344 0 16 0C24.8366 0 32 7.16344 32 16Z" fill="#2A6354"/>
-  <ellipse style="fill: url(#color-0); stroke: url(#color-0);" cx="15.901" cy="16.001" rx="8.694" ry="8.694"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 44"><defs><linearGradient id="color-0" gradientTransform="matrix(1, 0, 0, 1, 0.048001, 2.371927)" gradientUnits="userSpaceOnUse"><stop style="stop-color:#fff"/></linearGradient></defs><path fill="#2A6354" d="M32 16C32 26.5593 21.1733 38.6932 17.3319 42.666C16.5931 43.4301 15.4069 43.4301 14.6681 42.666C10.8267 38.6932 0 26.5593 0 16C0 7.16344 7.16344 0 16 0C24.8366 0 32 7.16344 32 16Z"/><ellipse style="fill:url(#color-0);stroke:url(#color-0)" cx="15.901" cy="16.001" rx="8.694" ry="8.694"/></svg>
