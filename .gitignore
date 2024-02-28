@@ -45,3 +45,6 @@ app.*.map.json
 
 # Melos
 pubspec_overrides.yaml
+
+# FVM Version Cache
+.fvm/
