@@ -35,7 +35,7 @@ final String email = email_example; // String |
 try {
     final response = api.reportControllerCreateNewReport(images, name, longitude, latitude, category, email);
     print(response);
-} catch on DioError (e) {
+} catch on DioException (e) {
     print('Exception when calling ReportsApi->reportControllerCreateNewReport: $e\n');
 }
 ```
@@ -81,7 +81,7 @@ final String category = category_example; // String |
 try {
     final response = api.reportControllerGetAllPublicReports(category);
     print(response);
-} catch on DioError (e) {
+} catch on DioException (e) {
     print('Exception when calling ReportsApi->reportControllerGetAllPublicReports: $e\n');
 }
 ```
@@ -122,7 +122,7 @@ final num refId = 8.14; // num |
 try {
     final response = api.reportControllerGetReportById(refId);
     print(response);
-} catch on DioError (e) {
+} catch on DioException (e) {
     print('Exception when calling ReportsApi->reportControllerGetReportById: $e\n');
 }
 ```
@@ -163,7 +163,7 @@ final String category = category_example; // String |
 try {
     final response = api.reportControllerGetReportStatistics(category);
     print(response);
-} catch on DioError (e) {
+} catch on DioException (e) {
     print('Exception when calling ReportsApi->reportControllerGetReportStatistics: $e\n');
 }
 ```

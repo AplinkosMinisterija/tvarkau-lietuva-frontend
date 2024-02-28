@@ -26,9 +26,6 @@ Method | HTTP request | Description
 ### Example
 ```dart
 import 'package:api_client/api.dart';
-// TODO Configure HTTP basic authorization: bearer
-//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').username = 'YOUR_USERNAME'
-//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').password = 'YOUR_PASSWORD';
 
 final api = ApiClient().getAdminApi();
 final CreateDumpDto createDumpDto = ; // CreateDumpDto | 
@@ -36,7 +33,7 @@ final CreateDumpDto createDumpDto = ; // CreateDumpDto |
 try {
     final response = api.adminControllerCreateDump(createDumpDto);
     print(response);
-} catch on DioError (e) {
+} catch on DioException (e) {
     print('Exception when calling AdminApi->adminControllerCreateDump: $e\n');
 }
 ```
@@ -70,16 +67,13 @@ Name | Type | Description  | Notes
 ### Example
 ```dart
 import 'package:api_client/api.dart';
-// TODO Configure HTTP basic authorization: bearer
-//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').username = 'YOUR_USERNAME'
-//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').password = 'YOUR_PASSWORD';
 
 final api = ApiClient().getAdminApi();
 
 try {
     final response = api.adminControllerGetAllDumps();
     print(response);
-} catch on DioError (e) {
+} catch on DioException (e) {
     print('Exception when calling AdminApi->adminControllerGetAllDumps: $e\n');
 }
 ```
@@ -110,9 +104,6 @@ This endpoint does not need any parameter.
 ### Example
 ```dart
 import 'package:api_client/api.dart';
-// TODO Configure HTTP basic authorization: bearer
-//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').username = 'YOUR_USERNAME'
-//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').password = 'YOUR_PASSWORD';
 
 final api = ApiClient().getAdminApi();
 final bool isDeleted = true; // bool | 
@@ -121,7 +112,7 @@ final String category = category_example; // String |
 try {
     final response = api.adminControllerGetAllReports(isDeleted, category);
     print(response);
-} catch on DioError (e) {
+} catch on DioException (e) {
     print('Exception when calling AdminApi->adminControllerGetAllReports: $e\n');
 }
 ```
@@ -156,9 +147,6 @@ Name | Type | Description  | Notes
 ### Example
 ```dart
 import 'package:api_client/api.dart';
-// TODO Configure HTTP basic authorization: bearer
-//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').username = 'YOUR_USERNAME'
-//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').password = 'YOUR_PASSWORD';
 
 final api = ApiClient().getAdminApi();
 final String refId = refId_example; // String | 
@@ -166,7 +154,7 @@ final String refId = refId_example; // String |
 try {
     final response = api.adminControllerGetDumpById(refId);
     print(response);
-} catch on DioError (e) {
+} catch on DioException (e) {
     print('Exception when calling AdminApi->adminControllerGetDumpById: $e\n');
 }
 ```
@@ -200,9 +188,6 @@ Name | Type | Description  | Notes
 ### Example
 ```dart
 import 'package:api_client/api.dart';
-// TODO Configure HTTP basic authorization: bearer
-//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').username = 'YOUR_USERNAME'
-//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').password = 'YOUR_PASSWORD';
 
 final api = ApiClient().getAdminApi();
 final num refId = 8.14; // num | 
@@ -210,7 +195,7 @@ final num refId = 8.14; // num |
 try {
     final response = api.adminControllerGetReportById(refId);
     print(response);
-} catch on DioError (e) {
+} catch on DioException (e) {
     print('Exception when calling AdminApi->adminControllerGetReportById: $e\n');
 }
 ```
@@ -244,9 +229,6 @@ Name | Type | Description  | Notes
 ### Example
 ```dart
 import 'package:api_client/api.dart';
-// TODO Configure HTTP basic authorization: bearer
-//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').username = 'YOUR_USERNAME'
-//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').password = 'YOUR_PASSWORD';
 
 final api = ApiClient().getAdminApi();
 final UpdateDumpDto updateDumpDto = ; // UpdateDumpDto | 
@@ -254,7 +236,7 @@ final UpdateDumpDto updateDumpDto = ; // UpdateDumpDto |
 try {
     final response = api.adminControllerUpdateDump(updateDumpDto);
     print(response);
-} catch on DioError (e) {
+} catch on DioException (e) {
     print('Exception when calling AdminApi->adminControllerUpdateDump: $e\n');
 }
 ```
@@ -288,9 +270,6 @@ Name | Type | Description  | Notes
 ### Example
 ```dart
 import 'package:api_client/api.dart';
-// TODO Configure HTTP basic authorization: bearer
-//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').username = 'YOUR_USERNAME'
-//defaultApiClient.getAuthentication<HttpBasicAuth>('bearer').password = 'YOUR_PASSWORD';
 
 final api = ApiClient().getAdminApi();
 final String refId = refId_example; // String | 
@@ -308,7 +287,7 @@ final BuiltList<MultipartFile> images = /path/to/file.txt; // BuiltList<Multipar
 try {
     final response = api.adminControllerUpdateReport(refId, name, longitude, latitude, isVisible, isDeleted, comment, status, officerImageUrls, imageUrls, images);
     print(response);
-} catch on DioError (e) {
+} catch on DioException (e) {
     print('Exception when calling AdminApi->adminControllerUpdateReport: $e\n');
 }
 ```

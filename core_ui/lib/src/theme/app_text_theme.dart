@@ -1,4 +1,4 @@
-part of app_theme;
+part of 'app_theme.dart';
 
 class AppTextTheme {
   static const String _poppinsFamily = 'poppins';

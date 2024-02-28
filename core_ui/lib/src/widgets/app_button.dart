@@ -32,8 +32,8 @@ class AppButton extends StatelessWidget {
     this.disabledTextStyle,
     this.textColor,
     this.icon,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,9 @@ class AppButton extends StatelessWidget {
                     ? onPressedBackgroundColor ?? backgroundColor
                     : disabledBackgroundColor ?? backgroundColor;
               } else {
-                return isEnabled ? backgroundColor : disabledBackgroundColor ?? backgroundColor;
+                return isEnabled
+                    ? backgroundColor
+                    : disabledBackgroundColor ?? backgroundColor;
               }
             },
           ),

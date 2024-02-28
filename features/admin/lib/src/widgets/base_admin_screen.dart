@@ -3,9 +3,9 @@ import '../common/custom_colors.dart';
 
 class BaseAdminScreen extends StatelessWidget {
   const BaseAdminScreen({
-    Key? key,
+    super.key,
     required this.child,
-  }) : super(key: key);
+  });
 
   final Widget child;
 

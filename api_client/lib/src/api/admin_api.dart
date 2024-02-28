@@ -35,7 +35,7 @@ class AdminApi {
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
   /// Returns a [Future] containing a [Response] with a [FullDumpDto] as data
-  /// Throws [DioError] if API call or serialization fails
+  /// Throws [DioException] if API call or serialization fails
   Future<Response<FullDumpDto>> adminControllerCreateDump({
     required CreateDumpDto createDumpDto,
     CancelToken? cancelToken,
@@ -71,12 +71,12 @@ class AdminApi {
       const _type = FullType(CreateDumpDto);
       _bodyData = _serializers.serialize(createDumpDto, specifiedType: _type);
     } catch (error, stackTrace) {
-      throw DioError(
+      throw DioException(
         requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.unknown,
+        type: DioExceptionType.unknown,
         error: error,
         stackTrace: stackTrace,
       );
@@ -102,10 +102,10 @@ class AdminApi {
               specifiedType: const FullType(FullDumpDto),
             ) as FullDumpDto;
     } catch (error, stackTrace) {
-      throw DioError(
+      throw DioException(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.unknown,
+        type: DioExceptionType.unknown,
         error: error,
         stackTrace: stackTrace,
       );
@@ -135,7 +135,7 @@ class AdminApi {
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
   /// Returns a [Future] containing a [Response] with a [BuiltList<FullDumpDto>] as data
-  /// Throws [DioError] if API call or serialization fails
+  /// Throws [DioException] if API call or serialization fails
   Future<Response<BuiltList<FullDumpDto>>> adminControllerGetAllDumps({
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -182,10 +182,10 @@ class AdminApi {
               specifiedType: const FullType(BuiltList, [FullType(FullDumpDto)]),
             ) as BuiltList<FullDumpDto>;
     } catch (error, stackTrace) {
-      throw DioError(
+      throw DioException(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.unknown,
+        type: DioExceptionType.unknown,
         error: error,
         stackTrace: stackTrace,
       );
@@ -217,7 +217,7 @@ class AdminApi {
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
   /// Returns a [Future] containing a [Response] with a [BuiltList<FullReportDto>] as data
-  /// Throws [DioError] if API call or serialization fails
+  /// Throws [DioException] if API call or serialization fails
   Future<Response<BuiltList<FullReportDto>>> adminControllerGetAllReports({
     required bool isDeleted,
     String? category,
@@ -276,10 +276,10 @@ class AdminApi {
                   const FullType(BuiltList, [FullType(FullReportDto)]),
             ) as BuiltList<FullReportDto>;
     } catch (error, stackTrace) {
-      throw DioError(
+      throw DioException(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.unknown,
+        type: DioExceptionType.unknown,
         error: error,
         stackTrace: stackTrace,
       );
@@ -310,7 +310,7 @@ class AdminApi {
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
   /// Returns a [Future] containing a [Response] with a [FullDumpDto] as data
-  /// Throws [DioError] if API call or serialization fails
+  /// Throws [DioException] if API call or serialization fails
   Future<Response<FullDumpDto>> adminControllerGetDumpById({
     required String refId,
     CancelToken? cancelToken,
@@ -320,8 +320,10 @@ class AdminApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path =
-        r'/admin/dumps/{refId}'.replaceAll('{' r'refId' '}', refId.toString());
+    final _path = r'/admin/dumps/{refId}'.replaceAll(
+        '{' r'refId' '}',
+        encodeQueryParameter(_serializers, refId, const FullType(String))
+            .toString());
     final _options = Options(
       method: r'GET',
       headers: <String, dynamic>{
@@ -359,10 +361,10 @@ class AdminApi {
               specifiedType: const FullType(FullDumpDto),
             ) as FullDumpDto;
     } catch (error, stackTrace) {
-      throw DioError(
+      throw DioException(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.unknown,
+        type: DioExceptionType.unknown,
         error: error,
         stackTrace: stackTrace,
       );
@@ -393,7 +395,7 @@ class AdminApi {
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
   /// Returns a [Future] containing a [Response] with a [FullReportDto] as data
-  /// Throws [DioError] if API call or serialization fails
+  /// Throws [DioException] if API call or serialization fails
   Future<Response<FullReportDto>> adminControllerGetReportById({
     required num refId,
     CancelToken? cancelToken,
@@ -403,8 +405,10 @@ class AdminApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/admin/reports/{refId}'
-        .replaceAll('{' r'refId' '}', refId.toString());
+    final _path = r'/admin/reports/{refId}'.replaceAll(
+        '{' r'refId' '}',
+        encodeQueryParameter(_serializers, refId, const FullType(num))
+            .toString());
     final _options = Options(
       method: r'GET',
       headers: <String, dynamic>{
@@ -442,10 +446,10 @@ class AdminApi {
               specifiedType: const FullType(FullReportDto),
             ) as FullReportDto;
     } catch (error, stackTrace) {
-      throw DioError(
+      throw DioException(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.unknown,
+        type: DioExceptionType.unknown,
         error: error,
         stackTrace: stackTrace,
       );
@@ -476,7 +480,7 @@ class AdminApi {
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
   /// Returns a [Future] containing a [Response] with a [FullDumpDto] as data
-  /// Throws [DioError] if API call or serialization fails
+  /// Throws [DioException] if API call or serialization fails
   Future<Response<FullDumpDto>> adminControllerUpdateDump({
     required UpdateDumpDto updateDumpDto,
     CancelToken? cancelToken,
@@ -512,12 +516,12 @@ class AdminApi {
       const _type = FullType(UpdateDumpDto);
       _bodyData = _serializers.serialize(updateDumpDto, specifiedType: _type);
     } catch (error, stackTrace) {
-      throw DioError(
+      throw DioException(
         requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.unknown,
+        type: DioExceptionType.unknown,
         error: error,
         stackTrace: stackTrace,
       );
@@ -543,10 +547,10 @@ class AdminApi {
               specifiedType: const FullType(FullDumpDto),
             ) as FullDumpDto;
     } catch (error, stackTrace) {
-      throw DioError(
+      throw DioException(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.unknown,
+        type: DioExceptionType.unknown,
         error: error,
         stackTrace: stackTrace,
       );
@@ -587,7 +591,7 @@ class AdminApi {
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
   /// Returns a [Future] containing a [Response] with a [FullReportDto] as data
-  /// Throws [DioError] if API call or serialization fails
+  /// Throws [DioException] if API call or serialization fails
   Future<Response<FullReportDto>> adminControllerUpdateReport({
     required String refId,
     required String name,
@@ -654,12 +658,12 @@ class AdminApi {
         r'images': images.toList(),
       });
     } catch (error, stackTrace) {
-      throw DioError(
+      throw DioException(
         requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.unknown,
+        type: DioExceptionType.unknown,
         error: error,
         stackTrace: stackTrace,
       );
@@ -685,10 +689,10 @@ class AdminApi {
               specifiedType: const FullType(FullReportDto),
             ) as FullReportDto;
     } catch (error, stackTrace) {
-      throw DioError(
+      throw DioException(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.unknown,
+        type: DioExceptionType.unknown,
         error: error,
         stackTrace: stackTrace,
       );

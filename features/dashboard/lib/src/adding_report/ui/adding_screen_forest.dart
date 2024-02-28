@@ -9,8 +9,8 @@ import 'mobile/confirmation_screen_mobile.dart';
 
 class AddingScreenForest extends StatelessWidget {
   const AddingScreenForest({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

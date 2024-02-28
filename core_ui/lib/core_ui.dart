@@ -1,6 +1,5 @@
 library core_ui;
 
-export 'src/routes/bottom_slide_route.dart';
 export 'src/theme/app_theme.dart';
 export 'src/widgets/app_button.dart';
 export 'src/widgets/app_confirm_dialog.dart';

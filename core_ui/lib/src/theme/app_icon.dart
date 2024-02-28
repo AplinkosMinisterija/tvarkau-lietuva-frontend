@@ -1,4 +1,4 @@
-part of app_theme;
+part of 'app_theme.dart';
 
 class AppIcon {
   static const String _packageName = 'core_ui';
@@ -26,7 +26,12 @@ class AppIcon {
     return SvgPicture.asset(
       iconKey,
       package: _packageName,
-      color: color,
+      colorFilter: color != null
+          ? ui.ColorFilter.mode(
+              color,
+              ui.BlendMode.srcIn,
+            )
+          : null,
       height: width,
       width: height,
       fit: fit ?? BoxFit.contain,
@@ -44,7 +49,12 @@ class AppIcon {
         iconKey,
         semanticsLabel: semanticsLabel,
         package: _packageName,
-        color: color,
+        colorFilter: color != null
+            ? ui.ColorFilter.mode(
+                color,
+                ui.BlendMode.srcIn,
+              )
+            : null,
         height: height ?? _defaultIconSize,
         width: width ?? _defaultIconSize,
         fit: fit ?? _defaultBoxFit,

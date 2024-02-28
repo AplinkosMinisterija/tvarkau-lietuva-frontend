@@ -18,8 +18,8 @@ class DumpWindow extends StatefulWidget {
     required this.dump,
     required this.onBackPress,
     required this.onUpdate,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<DumpWindow> createState() => _DumpWindowState();

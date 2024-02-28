@@ -5,8 +5,8 @@ import 'package:go_router/go_router.dart';
 
 class ReportCategoryScreen extends StatelessWidget {
   const ReportCategoryScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

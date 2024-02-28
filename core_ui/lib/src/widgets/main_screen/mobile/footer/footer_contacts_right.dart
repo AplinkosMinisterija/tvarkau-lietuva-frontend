@@ -2,6 +2,7 @@ import 'package:core/utils/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'dart:ui' as ui;
 
 class FooterContactsRight extends StatelessWidget {
   const FooterContactsRight({
@@ -79,7 +80,10 @@ class FooterContactsRight extends StatelessWidget {
                     'assets/svg/linkedin.svg',
                     height: width * 0.05,
                     width: width * 0.05,
-                    color: const Color.fromRGBO(57, 97, 84, 1),
+                    colorFilter: const ui.ColorFilter.mode(
+                      Color.fromRGBO(57, 97, 84, 1),
+                      ui.BlendMode.srcIn,
+                    ),
                   ),
                   SizedBox(width: width * 0.043),
                   Text(

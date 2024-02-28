@@ -25,8 +25,8 @@ class AdminWindow extends StatefulWidget {
     required this.onCategoryChange,
     required this.isShowDumps,
     required this.activeCategory,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String name;
   final String email;

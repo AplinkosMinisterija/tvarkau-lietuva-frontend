@@ -8,8 +8,8 @@ class AppConfirmDialog extends StatelessWidget {
   const AppConfirmDialog({
     required this.onConfirm,
     required this.confirmDescription,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

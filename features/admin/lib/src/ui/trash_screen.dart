@@ -12,8 +12,8 @@ class TrashScreen extends StatefulWidget {
 
   const TrashScreen({
     required this.refId,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<TrashScreen> createState() => _TrashScreenState();

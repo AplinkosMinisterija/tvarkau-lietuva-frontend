@@ -8,8 +8,8 @@ class AppErrorDialog extends StatelessWidget {
   const AppErrorDialog({
     required this.errorTitle,
     required this.errorDescription,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

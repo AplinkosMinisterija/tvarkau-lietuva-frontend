@@ -7,6 +7,7 @@ import 'package:core_ui/core_ui.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
+import 'dart:ui' as ui;
 
 class InformationScreenMobile extends StatefulWidget {
   const InformationScreenMobile({
@@ -289,7 +290,6 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                             ],
                           )
                         : const SizedBox.shrink(),
-
                     widget.report.status == 'išspręsta'
                         ? Stack(
                             children: [
@@ -383,7 +383,10 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                   width: widget.width * 0.05555,
                   child: SvgPicture.asset(
                     'assets/svg/progress_third_stage_icon.svg',
-                    color: const Color.fromRGBO(255, 255, 255, 1),
+                    colorFilter: const ui.ColorFilter.mode(
+                      Color.fromRGBO(255, 255, 255, 1),
+                      ui.BlendMode.srcIn,
+                    ),
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -407,7 +410,10 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                         width: widget.width * 0.05555,
                         child: SvgPicture.asset(
                           'assets/svg/progress_fourth_stage_icon.svg',
-                          color: const Color.fromRGBO(57, 97, 84, 1),
+                          colorFilter: const ui.ColorFilter.mode(
+                            Color.fromRGBO(57, 97, 84, 1),
+                            ui.BlendMode.srcIn,
+                          ),
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -518,7 +524,10 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
             width: widget.width * 0.05555,
             child: SvgPicture.asset(
               'assets/svg/progress_second_stage_icon.svg',
-              color: const Color.fromRGBO(57, 97, 84, 1),
+              colorFilter: const ui.ColorFilter.mode(
+                Color.fromRGBO(57, 97, 84, 1),
+                ui.BlendMode.srcIn,
+              ),
               fit: BoxFit.fill,
             ),
           ),
@@ -544,24 +553,23 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                   fontWeight: FontWeight.w400,
                   color: const Color.fromRGBO(0, 0, 0, 0.72)),
             ),
-
-            if(widget.report.status == 'tiriamas')...[
+            if (widget.report.status == 'tiriamas') ...[
               SizedBox(
                   height:
-                  widget.report.comment != ' ' ? widget.width * 0.0805 : 0),
+                      widget.report.comment != ' ' ? widget.width * 0.0805 : 0),
               widget.report.comment != ' ' && widget.report.comment != ''
                   ? SizedBox(
-                width: widget.width * 0.713055,
-                child: Text(
-                  'AAD atsakymas:',
-                  textAlign: TextAlign.left,
-                  style: GoogleFonts.roboto(
-                    fontSize: widget.width * 0.04444,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black,
-                  ),
-                ),
-              )
+                      width: widget.width * 0.713055,
+                      child: Text(
+                        'AAD atsakymas:',
+                        textAlign: TextAlign.left,
+                        style: GoogleFonts.roboto(
+                          fontSize: widget.width * 0.04444,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black,
+                        ),
+                      ),
+                    )
                   : const SizedBox.shrink(),
               SizedBox(height: widget.width * 0.02777),
               SizedBox(
@@ -600,7 +608,10 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
             width: widget.width * 0.05555,
             child: SvgPicture.asset(
               'assets/svg/progress_fourth_stage_icon.svg',
-              color: const Color.fromRGBO(57, 97, 84, 1),
+              colorFilter: const ui.ColorFilter.mode(
+                Color.fromRGBO(57, 97, 84, 1),
+                ui.BlendMode.srcIn,
+              ),
               fit: BoxFit.fill,
             ),
           ),
@@ -648,7 +659,10 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
             width: widget.width * 0.05555,
             child: SvgPicture.asset(
               'assets/svg/progress_fourth_stage_icon.svg',
-              color: const Color.fromRGBO(57, 97, 84, 1),
+              colorFilter: const ui.ColorFilter.mode(
+                Color.fromRGBO(57, 97, 84, 1),
+                ui.BlendMode.srcIn,
+              ),
               fit: BoxFit.fill,
             ),
           ),
@@ -710,7 +724,10 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
             width: widget.width * 0.05555,
             child: SvgPicture.asset(
               'assets/svg/progress_first_stage_icon.svg',
-              color: const Color.fromRGBO(57, 97, 84, 1),
+              colorFilter: const ui.ColorFilter.mode(
+                Color.fromRGBO(57, 97, 84, 1),
+                ui.BlendMode.srcIn,
+              ),
               fit: BoxFit.fill,
             ),
           ),

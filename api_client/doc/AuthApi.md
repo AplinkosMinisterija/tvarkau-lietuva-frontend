@@ -27,7 +27,7 @@ final LoginRequestDto loginRequestDto = ; // LoginRequestDto |
 try {
     final response = api.authControllerLogin(loginRequestDto);
     print(response);
-} catch on DioError (e) {
+} catch on DioException (e) {
     print('Exception when calling AuthApi->authControllerLogin: $e\n');
 }
 ```

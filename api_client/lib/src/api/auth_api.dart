@@ -30,7 +30,7 @@ class AuthApi {
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
   /// Returns a [Future] containing a [Response] with a [LogInDto] as data
-  /// Throws [DioError] if API call or serialization fails
+  /// Throws [DioException] if API call or serialization fails
   Future<Response<LogInDto>> authControllerLogin({
     required LoginRequestDto loginRequestDto,
     CancelToken? cancelToken,
@@ -60,12 +60,12 @@ class AuthApi {
       const _type = FullType(LoginRequestDto);
       _bodyData = _serializers.serialize(loginRequestDto, specifiedType: _type);
     } catch (error, stackTrace) {
-      throw DioError(
+      throw DioException(
         requestOptions: _options.compose(
           _dio.options,
           _path,
         ),
-        type: DioErrorType.unknown,
+        type: DioExceptionType.unknown,
         error: error,
         stackTrace: stackTrace,
       );
@@ -91,10 +91,10 @@ class AuthApi {
               specifiedType: const FullType(LogInDto),
             ) as LogInDto;
     } catch (error, stackTrace) {
-      throw DioError(
+      throw DioException(
         requestOptions: _response.requestOptions,
         response: _response,
-        type: DioErrorType.unknown,
+        type: DioExceptionType.unknown,
         error: error,
         stackTrace: stackTrace,
       );

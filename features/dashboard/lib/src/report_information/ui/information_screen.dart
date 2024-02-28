@@ -10,8 +10,8 @@ class InformationScreen extends StatelessWidget {
 
   const InformationScreen({
     required this.reportId,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
