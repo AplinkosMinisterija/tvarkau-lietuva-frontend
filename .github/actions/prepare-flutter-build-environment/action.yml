@@ -1,0 +1,19 @@
+name: Prepare Flutter build environment
+description: Prepare application's build environment
+
+runs:
+  using: composite
+  steps:
+    - name: Detect Flutter version from FVM
+      uses: kuhnroyal/flutter-fvm-config-action@v2
+      id: fvm-config-action
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ steps.fvm-config-action.outputs.FLUTTER_VERSION }}
+        channel: ${{ steps.fvm-config-action.outputs.FLUTTER_CHANNEL }}
+        cache: true
+
+    - name: Set up Melos
+      uses: bluefireteam/melos-action@v3

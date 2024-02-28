@@ -19,13 +19,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          cache: true
-
-      - name: Set up Melos
-        uses: bluefireteam/melos-action@v3
+      - name: Prepare Flutter build environment
+        uses: ./.github/actions/prepare-flutter-build-environment
 
       - run: flutter analyze --write=flutter_analyze.log
 
