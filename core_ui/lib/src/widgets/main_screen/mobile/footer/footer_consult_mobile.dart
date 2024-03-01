@@ -1,5 +1,4 @@
 import 'package:core/utils/url_launcher.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
 class FooterConsultMobile extends StatelessWidget {
@@ -29,7 +28,7 @@ class FooterConsultMobile extends StatelessWidget {
               child: Text(
                 'Apie aplinkosaugą galite pasikonsultuoti\ndarbo dienomis',
                 textAlign: TextAlign.left,
-                style: GoogleFonts.roboto(
+                style: TextStyle(
                   fontSize: width * 0.03888,
                   fontWeight: FontWeight.w600,
                   color: const Color.fromRGBO(57, 97, 84, 1),
@@ -53,7 +52,7 @@ class FooterConsultMobile extends StatelessWidget {
                   },
                   child: Text(
                     '8 700 02022',
-                    style: GoogleFonts.roboto(
+                    style: TextStyle(
                         fontSize: width * 0.03333, fontWeight: FontWeight.w400),
                   ),
                 ),
@@ -71,7 +70,7 @@ class FooterConsultMobile extends StatelessWidget {
                   },
                   child: Text(
                     'konsultacijos@aad.am.lt',
-                    style: GoogleFonts.roboto(
+                    style: TextStyle(
                         fontSize: width * 0.03333, fontWeight: FontWeight.w400),
                   ),
                 ),
@@ -94,7 +93,7 @@ class FooterConsultMobile extends StatelessWidget {
                   },
                   child: Text(
                     'Pastebėję galimą aplinkosauginį pažeidimą,\npraneškite tel. 112',
-                    style: GoogleFonts.roboto(
+                    style: TextStyle(
                         fontSize: width * 0.03333, fontWeight: FontWeight.w400),
                   ),
                 ),

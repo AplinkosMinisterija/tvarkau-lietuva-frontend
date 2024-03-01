@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class AddButton extends StatefulWidget {
   const AddButton({required this.width, required this.onTap, super.key});
@@ -51,11 +50,11 @@ class _AddButtonState extends State<AddButton> {
             ),
             SizedBox(
               width: widget.width * 0.0474,
-              child: FittedBox(
+              child: const FittedBox(
                 fit: BoxFit.fitWidth,
                 child: Text(
                   'Pranešti',
-                  style: GoogleFonts.raleway(
+                  style: TextStyle(
                     fontWeight: FontWeight.w600,
                     color: Colors.white,
                   ),

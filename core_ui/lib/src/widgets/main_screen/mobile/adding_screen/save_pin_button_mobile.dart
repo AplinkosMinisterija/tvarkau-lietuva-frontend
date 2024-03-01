@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class SavePinButtonMobile extends StatefulWidget {
   const SavePinButtonMobile({
@@ -46,7 +45,7 @@ class _SavePinButtonMobileState extends State<SavePinButtonMobile> {
               fit: BoxFit.fitWidth,
               child: Text(
                 "Išsaugoti pažymėtą vietą",
-                style: GoogleFonts.roboto(
+                style: TextStyle(
                   fontWeight: FontWeight.w600,
                   color: widget.isActive
                       ? const Color.fromRGBO(57, 97, 84, 1)

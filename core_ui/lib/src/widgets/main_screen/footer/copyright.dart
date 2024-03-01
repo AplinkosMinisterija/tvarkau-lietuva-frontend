@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class Copyright extends StatelessWidget {
   const Copyright({
@@ -13,13 +12,13 @@ class Copyright extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: width * 0.0828,
-      child: FittedBox(
+      child: const FittedBox(
         fit: BoxFit.fitWidth,
         child: Text(
           '© 2024, Tvarkau Lietuvą',
-          style: GoogleFonts.roboto(
+          style: TextStyle(
             fontWeight: FontWeight.w500,
-            color: const Color(0xad0a3328),
+            color: Color(0xad0a3328),
           ),
         ),
       ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ConfirmationScreenMobile extends StatelessWidget {
   const ConfirmationScreenMobile({required this.width, super.key});
@@ -34,12 +33,12 @@ class ConfirmationScreenMobile extends StatelessWidget {
                 ),
                 SizedBox(
                   width: width * 0.75,
-                  child: FittedBox(
+                  child: const FittedBox(
                     fit: BoxFit.fitWidth,
                     child: Text(
                       textAlign: TextAlign.center,
                       'Dėkojame už Jūsų pilietiškumą!',
-                      style: GoogleFonts.raleway(
+                      style: TextStyle(
                         fontWeight: FontWeight.w800,
                         color: Colors.black,
                       ),
@@ -59,12 +58,12 @@ class ConfirmationScreenMobile extends StatelessWidget {
                 ),
                 SizedBox(
                   width: width * 0.500,
-                  child: FittedBox(
+                  child: const FittedBox(
                     fit: BoxFit.fitWidth,
                     child: Text(
                       textAlign: TextAlign.center,
                       'Pranešimas sėkmingai gautas.',
-                      style: GoogleFonts.raleway(
+                      style: TextStyle(
                         fontWeight: FontWeight.w700,
                         color: Colors.black,
                       ),
@@ -76,12 +75,12 @@ class ConfirmationScreenMobile extends StatelessWidget {
                 ),
                 SizedBox(
                   width: width * 0.75,
-                  child: FittedBox(
+                  child: const FittedBox(
                     fit: BoxFit.fitWidth,
                     child: Text(
                       'Aplinkos apsaugos departamento pareigūnai netrukus pradės\n darbuotis ieškodami pažeidėjo.',
                       textAlign: TextAlign.center,
-                      style: GoogleFonts.raleway(
+                      style: TextStyle(
                         fontWeight: FontWeight.w500,
                         color: Colors.black,
                       ),
@@ -104,11 +103,11 @@ class ConfirmationScreenMobile extends StatelessWidget {
                     child: Center(
                       child: SizedBox(
                         width: width * 0.15,
-                        child: FittedBox(
+                        child: const FittedBox(
                           fit: BoxFit.fitWidth,
                           child: Text(
                             'Grįžti į svetainę',
-                            style: GoogleFonts.raleway(
+                            style: TextStyle(
                               fontWeight: FontWeight.w600,
                               color: Colors.white,
                             ),

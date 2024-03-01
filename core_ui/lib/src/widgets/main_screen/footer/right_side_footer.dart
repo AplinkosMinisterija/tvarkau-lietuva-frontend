@@ -1,7 +1,6 @@
 import 'package:core/utils/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class RightSideFooter extends StatelessWidget {
   const RightSideFooter({
@@ -23,13 +22,13 @@ class RightSideFooter extends StatelessWidget {
           children: <Widget>[
             SizedBox(
               width: width * 0.0817,
-              child: FittedBox(
+              child: const FittedBox(
                 fit: BoxFit.fitWidth,
                 child: Text(
                   'tvarkaulietuva.lt',
-                  style: GoogleFonts.raleway(
+                  style: TextStyle(
                     fontWeight: FontWeight.w700,
-                    color: const Color(0xff2a6354),
+                    color: Color(0xff2a6354),
                   ),
                 ),
               ),
@@ -39,11 +38,11 @@ class RightSideFooter extends StatelessWidget {
             ),
             SizedBox(
               width: width * 0.2333,
-              child: FittedBox(
+              child: const FittedBox(
                 fit: BoxFit.fitWidth,
                 child: Text(
                   'Tai bandomoji sistemos versija, skirta viešinti visas Aplinkos apsaugos \ndepartamentui žinomas ir potencialiai nelegalias atliekų susidarymo vietas. \nSistemoje suteikiama galimybė visuomenei pranešti apie dar neužfiksuotas vietas \nbei sekti jų nagrinėjimo situaciją.',
-                  style: GoogleFonts.raleway(
+                  style: TextStyle(
                     fontWeight: FontWeight.w500,
                     color: Colors.black,
                   ),
@@ -57,7 +56,7 @@ class RightSideFooter extends StatelessWidget {
               onTap: onDataSecurityTap,
               child: Text(
                 'BDAR duomenų apsaugos informacija',
-                style: GoogleFonts.roboto(
+                style: TextStyle(
                   fontSize: width * 0.009,
                   color: Colors.blue,
                   decoration: TextDecoration.underline,
@@ -67,10 +66,10 @@ class RightSideFooter extends StatelessWidget {
             SizedBox(
               height: width * 0.005,
             ),
-            Text(
+            const Text(
               'Apie aplinkosaugą galite pasikonsultuoti darbo dienomis',
               maxLines: 2,
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                   fontSize: 13,
                   color: Colors.black,
                   fontWeight: FontWeight.w700),
@@ -85,9 +84,9 @@ class RightSideFooter extends StatelessWidget {
                   height: width * 0.015,
                   width: width * 0.015,
                 ),
-                Text(
+                const Text(
                   '8 700 02022',
-                  style: GoogleFonts.roboto(
+                  style: TextStyle(
                       fontSize: 13,
                       color: Colors.black,
                       fontWeight: FontWeight.w500),
@@ -102,9 +101,9 @@ class RightSideFooter extends StatelessWidget {
                     LaunchUrl().launch(
                         'mailto:konsultacijos@aad.am.lt?subject=Konsultacija');
                   },
-                  child: Text(
+                  child: const Text(
                     'konsultacijos@aad.am.lt',
-                    style: GoogleFonts.roboto(
+                    style: TextStyle(
                         fontSize: 13,
                         color: Colors.blue,
                         fontWeight: FontWeight.w500),
@@ -119,10 +118,10 @@ class RightSideFooter extends StatelessWidget {
                   height: width * 0.015,
                   width: width * 0.015,
                 ),
-                Text(
+                const Text(
                   'Pastebėję galimą aplinkosauginį\npažeidimą, praneškite tel. 112',
                   maxLines: 2,
-                  style: GoogleFonts.roboto(
+                  style: TextStyle(
                       fontSize: 13,
                       color: Colors.black,
                       fontWeight: FontWeight.w500),

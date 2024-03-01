@@ -85,7 +85,7 @@ class AppButton extends StatelessWidget {
                   ? Text(
                       text,
                       style: textStyle ??
-                          AppTextTheme.manrope18Regular.copyWith(
+                          TextStyle(
                             color: textColor ?? AppTheme.buttonTextColor,
                           ),
                       overflow: TextOverflow.visible,
@@ -95,9 +95,7 @@ class AppButton extends StatelessWidget {
                       disabledText != null ? disabledText! : text,
                       style: disabledTextStyle ??
                           textStyle ??
-                          AppTextTheme.manrope18Regular.copyWith(
-                            color: AppTheme.buttonTextColor,
-                          ),
+                          TextStyle(color: AppTheme.buttonTextColor),
                       overflow: TextOverflow.visible,
                       textAlign: TextAlign.center,
                     ),

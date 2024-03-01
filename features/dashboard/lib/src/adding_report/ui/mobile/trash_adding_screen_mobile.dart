@@ -1,6 +1,5 @@
 import 'package:api_client/api_client.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:core_ui/core_ui.dart';
@@ -22,8 +21,7 @@ class TrashAddingScreenMobile extends StatefulWidget {
   final double width;
   final double height;
   final List<PublicReportDto> reports;
-  final Function(String, String, double, double, List<Uint8List>)
-      onAddTap;
+  final Function(String, String, double, double, List<Uint8List>) onAddTap;
   final VoidCallback onDataSecurityTap;
 
   @override
@@ -114,7 +112,7 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                         children: [
                           Text(
                             'Pranešti apie pažeidimą',
-                            style: GoogleFonts.roboto(
+                            style: TextStyle(
                               fontSize: widget.width * 0.04444,
                               fontWeight: FontWeight.w700,
                             ),
@@ -194,7 +192,7 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                                       SizedBox(width: widget.width * 0.0277),
                                       Text(
                                         'Pažymėkite vietą, kur pastebėjote pažeidimą',
-                                        style: GoogleFonts.roboto(
+                                        style: TextStyle(
                                             fontSize: widget.width * 0.028888,
                                             fontWeight: FontWeight.w400),
                                       )
@@ -211,7 +209,7 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                         alignment: Alignment.centerLeft,
                         child: Text(
                           'Pranešimo turinys',
-                          style: GoogleFonts.roboto(
+                          style: TextStyle(
                               fontSize: widget.width * 0.03888,
                               fontWeight: FontWeight.w400),
                         ),
@@ -240,7 +238,7 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                                 currentTextValue = textValue;
                               });
                             },
-                            style: GoogleFonts.roboto(
+                            style: TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: widget.width * 0.03333,
                                 color: Colors.black),
@@ -257,7 +255,7 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                         alignment: Alignment.centerLeft,
                         child: Text(
                           'Jūsų el. paštas',
-                          style: GoogleFonts.roboto(
+                          style: TextStyle(
                               fontSize: widget.width * 0.03888,
                               fontWeight: FontWeight.w400),
                         ),
@@ -292,7 +290,7 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                                 currentEmailValue = emailValue;
                               });
                             },
-                            style: GoogleFonts.roboto(
+                            style: TextStyle(
                                 fontWeight: FontWeight.w400,
                                 fontSize: widget.width * 0.03333,
                                 color: Colors.black),
@@ -309,7 +307,7 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                         alignment: Alignment.centerLeft,
                         child: Text(
                           'Įkelkite bent 2 pažeidimo nuotraukas',
-                          style: GoogleFonts.roboto(
+                          style: TextStyle(
                               fontSize: widget.width * 0.03888,
                               fontWeight: FontWeight.w400),
                         ),
@@ -328,7 +326,7 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                         alignment: Alignment.centerLeft,
                         child: Text(
                           'Maksimalus nuotraukų kiekis: 4',
-                          style: GoogleFonts.roboto(
+                          style: TextStyle(
                               fontSize: widget.width * 0.03333,
                               fontWeight: FontWeight.w400),
                         ),
@@ -392,7 +390,7 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                                       ]);
                                 },
                                 itemCount: getImageWidget(
-                                    _selectedImages, widget.width * 0.4333)
+                                        _selectedImages, widget.width * 0.4333)
                                     .length,
                               ),
                             )
@@ -407,7 +405,7 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                             children: [
                               Text(
                                 'Sutinku su  ',
-                                style: GoogleFonts.roboto(
+                                style: TextStyle(
                                   fontSize: widget.width * 0.033,
                                   color: Colors.black,
                                 ),
@@ -421,7 +419,7 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                                 child: Text(
                                   'Asmens duomenų apsaugos\ntvarkymo taisyklėmis',
                                   textAlign: TextAlign.center,
-                                  style: GoogleFonts.roboto(
+                                  style: TextStyle(
                                     fontSize: widget.width * 0.033,
                                     color: Colors.blue,
                                     decoration: TextDecoration.underline,
@@ -467,7 +465,6 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                                 _selectedImages,
                               );
                             }
-
                           }
                         },
                       ),

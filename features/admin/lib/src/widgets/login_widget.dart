@@ -1,6 +1,5 @@
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class LoginWidget extends StatelessWidget {
   const LoginWidget({
@@ -67,10 +66,9 @@ class LoginWidget extends StatelessWidget {
                           width: width * 0.02,
                         ),
                         SizedBox(width: width * 0.01),
-                        Text(
+                        const Text(
                           'Prisijungti per AAD',
-                          style: GoogleFonts.poppins(
-                              fontSize: 20, color: Colors.white),
+                          style: TextStyle(fontSize: 20, color: Colors.white),
                         )
                       ],
                     ),

@@ -2,8 +2,6 @@ library core_ui;
 
 export 'src/theme/app_theme.dart';
 export 'src/widgets/app_button.dart';
-export 'src/widgets/app_confirm_dialog.dart';
-export 'src/widgets/app_error_dialog.dart';
 export 'src/widgets/app_loader.dart';
 export 'src/widgets/error_reload_widget.dart';
 

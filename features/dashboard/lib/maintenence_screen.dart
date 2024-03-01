@@ -1,6 +1,5 @@
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import 'package:flutter/material.dart';
 
@@ -40,9 +39,9 @@ class _MaintenenceScreenState extends State<MaintenenceScreen> {
                       SizedBox(
                         height: constraints.maxWidth * 0.058,
                       ),
-                      Text(
+                      const Text(
                         'Tvarkau Lietuvą',
-                        style: GoogleFonts.raleway(
+                        style: TextStyle(
                           fontWeight: FontWeight.w800,
                           color: Colors.white,
                           fontSize: 60,
@@ -51,9 +50,9 @@ class _MaintenenceScreenState extends State<MaintenenceScreen> {
                       SizedBox(
                         height: constraints.maxWidth * 0.0291,
                       ),
-                      Text(
+                      const Text(
                         'Vyksta puslapio atnaujinimo darbai',
-                        style: GoogleFonts.poppins(
+                        style: TextStyle(
                           fontSize: 40,
                           fontWeight: FontWeight.w800,
                           color: Colors.white,

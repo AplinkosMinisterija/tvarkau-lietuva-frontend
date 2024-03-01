@@ -1,6 +1,5 @@
 import 'package:api_client/api_client.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:core_ui/core_ui.dart';
@@ -62,14 +61,14 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
 
     span = TextSpan(
         text: widget.report.name,
-        style: GoogleFonts.roboto(
+        style: TextStyle(
           fontSize: widget.width * 0.04444,
           fontWeight: FontWeight.w400,
           color: Colors.black,
         ));
     span2 = TextSpan(
         text: widget.report.comment != ' ' ? widget.report.comment : '',
-        style: GoogleFonts.roboto(
+        style: TextStyle(
           fontSize: widget.width * 0.04444,
           fontWeight: FontWeight.w400,
           color: Colors.black,
@@ -165,11 +164,11 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                             SizedBox(width: widget.width * 0.0416),
                             SizedBox(
                               width: widget.width * 0.2111,
-                              child: FittedBox(
+                              child: const FittedBox(
                                 fit: BoxFit.fitWidth,
                                 child: Text(
                                   'Grįžti atgal',
-                                  style: GoogleFonts.roboto(
+                                  style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400,
                                       color: Colors.white),
@@ -189,7 +188,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                               fit: BoxFit.fitWidth,
                               child: Text(
                                 '#TLP-A$str${widget.report.refId.toUpperCase()}',
-                                style: GoogleFonts.roboto(
+                                style: const TextStyle(
                                     fontSize: 32,
                                     fontWeight: FontWeight.w600,
                                     color: Colors.white),
@@ -435,7 +434,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
           children: [
             Text(
               'Pranešimas išspręstas',
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                 fontSize: widget.width * 0.05555,
                 fontWeight: FontWeight.w500,
                 color: Colors.black,
@@ -444,7 +443,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
             SizedBox(height: widget.width * 0.01111),
             Text(
               getFormattedDate('išspręsta'),
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                   fontSize: widget.width * 0.03888,
                   fontWeight: FontWeight.w400,
                   color: const Color.fromRGBO(0, 0, 0, 0.72)),
@@ -458,7 +457,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                     child: Text(
                       'AAD atsakymas:',
                       textAlign: TextAlign.left,
-                      style: GoogleFonts.roboto(
+                      style: TextStyle(
                         fontSize: widget.width * 0.04444,
                         fontWeight: FontWeight.w700,
                         color: Colors.black,
@@ -472,7 +471,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
               child: Text(
                 widget.report.comment,
                 textAlign: TextAlign.left,
-                style: GoogleFonts.roboto(
+                style: TextStyle(
                   fontSize: widget.width * 0.04444,
                   fontWeight: FontWeight.w400,
                   color: Colors.black,
@@ -547,7 +546,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
           children: [
             Text(
               'Pranešimas tiriamas',
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                 fontSize: widget.width * 0.05555,
                 fontWeight: FontWeight.w500,
                 color: Colors.black,
@@ -556,7 +555,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
             SizedBox(height: widget.width * 0.01111),
             Text(
               getFormattedDate('tiriamas'),
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                   fontSize: widget.width * 0.03888,
                   fontWeight: FontWeight.w400,
                   color: const Color.fromRGBO(0, 0, 0, 0.72)),
@@ -571,7 +570,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                       child: Text(
                         'AAD atsakymas:',
                         textAlign: TextAlign.left,
-                        style: GoogleFonts.roboto(
+                        style: TextStyle(
                           fontSize: widget.width * 0.04444,
                           fontWeight: FontWeight.w700,
                           color: Colors.black,
@@ -585,7 +584,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                 child: Text(
                   widget.report.comment,
                   textAlign: TextAlign.left,
-                  style: GoogleFonts.roboto(
+                  style: TextStyle(
                     fontSize: widget.width * 0.04444,
                     fontWeight: FontWeight.w400,
                     color: Colors.black,
@@ -631,7 +630,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
           children: [
             Text(
               'Išspręsta',
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                 fontSize: widget.width * 0.05555,
                 fontWeight: FontWeight.w500,
                 color: Colors.black,
@@ -640,7 +639,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
             SizedBox(height: widget.width * 0.01111),
             Text(
               getFormattedDate('išspręsta'),
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                   fontSize: widget.width * 0.03888,
                   fontWeight: FontWeight.w400,
                   color: const Color.fromRGBO(0, 0, 0, 0.72)),
@@ -682,7 +681,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
           children: [
             Text(
               'Pranešimas nepasitvirtino',
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                 fontSize: widget.width * 0.05555,
                 fontWeight: FontWeight.w500,
                 color: Colors.black,
@@ -691,7 +690,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
             SizedBox(height: widget.width * 0.01111),
             Text(
               getFormattedDate('nepasitvirtino'),
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                   fontSize: widget.width * 0.03888,
                   fontWeight: FontWeight.w400,
                   color: const Color.fromRGBO(0, 0, 0, 0.72)),
@@ -702,7 +701,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
               child: Text(
                 widget.report.comment,
                 textAlign: TextAlign.left,
-                style: GoogleFonts.roboto(
+                style: TextStyle(
                   fontSize: widget.width * 0.04444,
                   fontWeight: FontWeight.w400,
                   color: Colors.black,
@@ -747,7 +746,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
           children: [
             Text(
               'Gautas pranešimas',
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                 fontSize: widget.width * 0.05555,
                 fontWeight: FontWeight.w500,
                 color: Colors.black,
@@ -756,7 +755,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
             SizedBox(height: widget.width * 0.01111),
             Text(
               getFormattedDate('gautas'),
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                   fontSize: widget.width * 0.03888,
                   fontWeight: FontWeight.w400,
                   color: const Color.fromRGBO(0, 0, 0, 0.72)),
@@ -767,7 +766,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
               child: Text(
                 widget.report.name,
                 textAlign: TextAlign.left,
-                style: GoogleFonts.roboto(
+                style: TextStyle(
                   fontSize: widget.width * 0.04444,
                   fontWeight: FontWeight.w400,
                   color: Colors.black,
@@ -933,7 +932,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
   }
 
   TextStyle getStatusBoxTextStyle(Color textColor) {
-    return GoogleFonts.roboto(
+    return TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.w400,
       color: textColor,

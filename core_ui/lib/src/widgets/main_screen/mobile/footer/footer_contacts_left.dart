@@ -1,6 +1,5 @@
 import 'package:core/utils/url_launcher.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class FooterContactsLeft extends StatelessWidget {
   const FooterContactsLeft({
@@ -35,7 +34,7 @@ class FooterContactsLeft extends StatelessWidget {
                   SizedBox(width: width * 0.033),
                   Text(
                     'Biudžetinė įstaiga,\nSmolensko g. 15, 03201\nVilnius',
-                    style: GoogleFonts.roboto(
+                    style: TextStyle(
                         fontSize: width * 0.03333, fontWeight: FontWeight.w400),
                   )
                 ],
@@ -61,7 +60,7 @@ class FooterContactsLeft extends StatelessWidget {
                   SizedBox(width: width * 0.033),
                   Text(
                     'Facebook',
-                    style: GoogleFonts.roboto(
+                    style: TextStyle(
                         fontSize: width * 0.03333, fontWeight: FontWeight.w400),
                   ),
                 ],

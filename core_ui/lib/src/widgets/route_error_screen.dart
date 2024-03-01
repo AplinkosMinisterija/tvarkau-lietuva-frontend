@@ -38,9 +38,7 @@ class RouteErrorScreen extends StatelessWidget {
                     ),
                     child: Text(
                       "Puslapis  tvarkaulietuva.lt$errorText  nerastas",
-                      style: AppTextTheme.ploni16medium.copyWith(
-                        color: AppTheme.defaultTextColor,
-                      ),
+                      style: TextStyle(color: AppTheme.defaultTextColor),
                       textAlign: TextAlign.center,
                     ),
                   ),

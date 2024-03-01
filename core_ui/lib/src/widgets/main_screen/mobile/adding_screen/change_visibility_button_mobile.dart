@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ChangeVisibilityButtonMobile extends StatefulWidget {
   const ChangeVisibilityButtonMobile({
@@ -60,7 +59,7 @@ class _ChangeVisibilityButtonMobileState
                   widget.isActive
                       ? "Slėpti patvirtintus pranešimus"
                       : "Rodyti patvirtintus pranešimus",
-                  style: GoogleFonts.roboto(
+                  style: const TextStyle(
                     fontWeight: FontWeight.w400,
                     color: Colors.black,
                   ),

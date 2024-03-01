@@ -1,6 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class MapTypeSwitcherButton extends StatefulWidget {
   const MapTypeSwitcherButton({
@@ -57,7 +56,7 @@ class _MapTypeSwitcherButtonState extends State<MapTypeSwitcherButton> {
               maxLines: 1,
               wrapWords: false,
               textAlign: TextAlign.center,
-              style: GoogleFonts.raleway(
+              style: TextStyle(
                 fontWeight: FontWeight.w600,
                 fontSize: 14,
                 color: widget.isActive ? Colors.white : Colors.black,
