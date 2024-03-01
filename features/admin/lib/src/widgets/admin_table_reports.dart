@@ -1,5 +1,5 @@
 import 'package:api_client/api_client.dart';
-import 'package:core/utils/date_formatter.dart';
+import 'package:core/utils/formatter_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
@@ -124,7 +124,7 @@ class ReportDataSourceAdmin extends DataGridSource {
                       'TLP-A${'0' * (8 - e.refId.length)}${e.refId.toUpperCase()}'),
               DataGridCell<String>(
                 columnName: 'date',
-                value: DateFormatter().format(e.reportDate),
+                value: FormatterUtils().formatDate(e.reportDate),
               ),
               DataGridCell<String>(
                   columnName: 'lat',

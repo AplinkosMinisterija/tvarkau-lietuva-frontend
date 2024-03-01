@@ -1,9 +1,11 @@
 import 'package:api_client/api_client.dart';
+import 'package:dashboard/src/report_information/ui/information_screen_widget_utils.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:core_ui/core_ui.dart';
+import 'package:core/core.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'dart:ui' as ui;
@@ -106,7 +108,8 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
         icon: markerIcon,
       ),
     );
-    statusWidget = getStatusWidget(widget.report.status, widget.width);
+    statusWidget = InformationScreenWidgetUtils()
+        .getStatusWidget(widget.report.status, widget.width);
     firstStageWidget = getFirstStageWidget();
     falseReportWidget = getFalseReportWidget();
     secondStageWidget = getSecondStageWidget();
@@ -137,6 +140,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                 child: Padding(
                   padding: EdgeInsets.all(widget.width * 0.0444),
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       SizedBox(height: widget.width * 0.05),
                       Align(
@@ -480,33 +484,11 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
               ),
             ),
             widget.report.officerImageUrls.isNotEmpty
-                ? SizedBox(
-                    height: widget.report.officerImageUrls.length <= 2
-                        ? widget.width * 0.27778
-                        : widget.width * 0.61,
-                    width: widget.width * 0.6001,
-                    child: GridView.count(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: widget.width * 0.04444,
-                      crossAxisSpacing: widget.width * 0.04444,
-                      children: List.generate(
-                          widget.report.officerImageUrls.length, (index) {
-                        return Container(
-                          height: widget.width * 0.27777,
-                          width: widget.width * 0.27777,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8)),
-                          child: Image.network(
-                            getFormattedImageUrl(
-                              getFormattedImageUrl(
-                                  widget.report.officerImageUrls[index]),
-                            ),
-                            fit: BoxFit.fill,
-                          ),
-                        );
-                      }),
-                    ),
-                  )
+                ? AppImageDisplay().buildImages(
+                    imageUrls: FormatterUtils().formatImageUrls(
+                        widget.report.officerImageUrls.toList()),
+                    context: context,
+                    width: widget.width * 0.7)
                 : const SizedBox.shrink(),
           ],
         )
@@ -774,33 +756,12 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                 ),
               ),
             ),
-            SizedBox(height: widget.width * 0.0666),
             widget.report.imageUrls.isNotEmpty
-                ? SizedBox(
-                    height: widget.report.imageUrls.length < 3
-                        ? widget.width * 0.27778
-                        : widget.width * 0.61,
-                    width: widget.width * 0.6001,
-                    child: GridView.count(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: widget.width * 0.04444,
-                      crossAxisSpacing: widget.width * 0.04444,
-                      children: List.generate(widget.report.imageUrls.length,
-                          (index) {
-                        return Container(
-                          height: widget.width * 0.27777,
-                          width: widget.width * 0.27777,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8)),
-                          child: Image.network(
-                            getFormattedImageUrl(
-                                widget.report.imageUrls[index]),
-                            fit: BoxFit.fill,
-                          ),
-                        );
-                      }),
-                    ),
-                  )
+                ? AppImageDisplay().buildImages(
+                    imageUrls: FormatterUtils()
+                        .formatImageUrls(widget.report.imageUrls.toList()),
+                    context: context,
+                    width: widget.width * 0.7)
                 : const SizedBox.shrink(),
           ],
         )
@@ -809,135 +770,11 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
   }
 
   String getFormattedDate(String status) {
-    StatusRecordsDto? recordObject = widget.report.statusRecords
+    final statusRecord = widget.report.statusRecords
         .where((element) => element.status == status)
         .singleOrNull;
-    String day = '';
-    String hour = '';
-    if (recordObject != null) {
-      DateTime formattedDate = recordObject.date.add(const Duration(hours: 3));
-      day = formattedDate.toString().substring(0, 10);
-      hour = formattedDate.toString().substring(11, 16);
-    } else {
-      DateTime formattedDate =
-          widget.report.reportDate.add(const Duration(hours: 3));
-      day = formattedDate.toString().substring(0, 10);
-      hour = formattedDate.toString().substring(11, 16);
-    }
-    return '$day $hour';
-  }
-
-  Widget getStatusWidget(String status, double width) {
-    if (status == 'gautas') {
-      return Container(
-        height: width * 0.07777,
-        width: width * 0.17777,
-        decoration: getStatusBoxDecoration(
-          const Color.fromRGBO(237, 12, 12, 1),
-          const Color.fromRGBO(253, 225, 225, 1),
-        ),
-        child: Center(
-          child: SizedBox(
-            width: width * 0.1222,
-            child: FittedBox(
-              child: Text(
-                'Gauta',
-                style: getStatusBoxTextStyle(
-                  const Color.fromRGBO(237, 12, 12, 1),
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
-    } else if (status == 'tiriamas') {
-      return Container(
-        height: width * 0.07777,
-        width: width * 0.2055,
-        decoration: getStatusBoxDecoration(
-          const Color.fromRGBO(255, 119, 0, 1),
-          const Color.fromRGBO(255, 238, 224, 1),
-        ),
-        child: Center(
-          child: SizedBox(
-            width: width * 0.15,
-            child: FittedBox(
-              child: Text(
-                'Tiriama',
-                style: getStatusBoxTextStyle(
-                  const Color.fromRGBO(255, 119, 0, 1),
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
-    } else if (status == 'išspręsta') {
-      return Container(
-        height: width * 0.07777,
-        width: width * 0.17777,
-        decoration: getStatusBoxDecoration(
-          const Color.fromRGBO(0, 174, 6, 1),
-          const Color.fromRGBO(224, 245, 224, 1),
-        ),
-        child: Center(
-          child: SizedBox(
-            width: width * 0.1222,
-            child: FittedBox(
-              child: Text(
-                'Išspręsta',
-                style: getStatusBoxTextStyle(
-                  const Color.fromRGBO(0, 174, 6, 1),
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
-    } else if (status == 'nepasitvirtino') {
-      return Container(
-        height: width * 0.07777,
-        width: width * 0.2477,
-        decoration: getStatusBoxDecoration(
-          const Color.fromRGBO(100, 100, 100, 1.0),
-          const Color.fromRGBO(220, 220, 220, 1.0),
-        ),
-        child: Center(
-          child: SizedBox(
-            width: width * 0.1922,
-            child: FittedBox(
-              child: Text(
-                'Nepasitvirtino',
-                style: getStatusBoxTextStyle(
-                  const Color.fromRGBO(100, 100, 100, 1.0),
-                ),
-              ),
-            ),
-          ),
-        ),
-      );
-    } else {
-      return const SizedBox.shrink();
-    }
-  }
-
-  BoxDecoration getStatusBoxDecoration(Color borderColor, Color fillColor) {
-    return BoxDecoration(
-      borderRadius: BorderRadius.circular(8),
-      border: Border.all(
-        width: 1,
-        color: borderColor,
-      ),
-      color: fillColor,
-    );
-  }
-
-  TextStyle getStatusBoxTextStyle(Color textColor) {
-    return GoogleFonts.roboto(
-      fontSize: 14,
-      fontWeight: FontWeight.w400,
-      color: textColor,
-    );
+    return FormatterUtils()
+        .formatDate(statusRecord?.date ?? widget.report.reportDate);
   }
 
   void addCustomIcon() {
@@ -948,17 +785,5 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
         markerIcon = icon;
       });
     });
-  }
-
-  String getFormattedImageUrl(String unformattedImageUrl) {
-    if (unformattedImageUrl.endsWith('.heic') ||
-        unformattedImageUrl.endsWith('.heif')) {
-      var convertedString =
-          unformattedImageUrl.substring(0, unformattedImageUrl.length - 5);
-      convertedString = '$convertedString.jpg';
-      return convertedString;
-    } else {
-      return unformattedImageUrl;
-    }
   }
 }

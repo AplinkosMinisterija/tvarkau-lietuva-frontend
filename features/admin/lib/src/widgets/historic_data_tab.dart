@@ -265,7 +265,7 @@ class _BuildHistoricDataCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                DateFormatter().format(data.date),
+                FormatterUtils().formatDate(data.date),
                 style: CustomStyles.body1.copyWith(
                   fontWeight: FontWeight.w500,
                 ),
@@ -362,7 +362,7 @@ class _BuildStatusRecordCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                DateFormatter().format(data.date),
+                FormatterUtils().formatDate(data.date),
                 style: CustomStyles.body1.copyWith(
                   fontWeight: FontWeight.w500,
                 ),

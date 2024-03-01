@@ -10,6 +10,7 @@ export 'errors/no_internet_exception.dart';
 export 'utils/field_validator.dart';
 export 'utils/image_picker.dart';
 export 'utils/url_launcher.dart';
-export 'utils/date_formatter.dart';
+export 'utils/formatter_utils.dart';
 export 'utils/loader_widget.dart';
 export 'utils/extensions.dart';
+export 'utils/image_display/image_display.dart';
