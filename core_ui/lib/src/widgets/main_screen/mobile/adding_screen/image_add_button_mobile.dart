@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ImageAddButtonMobile extends StatefulWidget {
   const ImageAddButtonMobile({
@@ -62,9 +61,9 @@ class _ImageAddButtonMobileState extends State<ImageAddButtonMobile> {
                   fit: BoxFit.fitWidth,
                   child: Text(
                     widget.title,
-                    style: GoogleFonts.raleway(
+                    style: const TextStyle(
                       fontWeight: FontWeight.w600,
-                      color: const Color.fromRGBO(57, 97, 84, 1),
+                      color: Color.fromRGBO(57, 97, 84, 1),
                     ),
                   ),
                 ),

@@ -1,6 +1,5 @@
 import 'package:core/utils/url_launcher.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class InfoDumpWindowBox extends StatefulWidget {
   const InfoDumpWindowBox({
@@ -55,7 +54,7 @@ class _InfoDumpWindowBoxState extends State<InfoDumpWindowBox> {
               children: <Widget>[
                 Text(
                   widget.address,
-                  style: GoogleFonts.raleway(
+                  style: const TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 14,
                   ),
@@ -63,18 +62,18 @@ class _InfoDumpWindowBoxState extends State<InfoDumpWindowBox> {
                 const SizedBox(height: 12),
                 Text(
                   widget.title,
-                  style: GoogleFonts.raleway(
+                  style: const TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 14,
                   ),
                 ),
                 const SizedBox(height: 12),
-                Text(
+                const Text(
                   'KONTAKTAI:',
-                  style: GoogleFonts.raleway(
+                  style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 12,
-                      color: const Color.fromRGBO(10, 51, 40, 0.4)),
+                      color: Color.fromRGBO(10, 51, 40, 0.4)),
                 ),
                 const SizedBox(height: 4),
                 InkWell(
@@ -93,17 +92,17 @@ class _InfoDumpWindowBoxState extends State<InfoDumpWindowBox> {
                     child: Center(
                       child: Column(
                         children: [
-                          Text(
+                          const Text(
                             'Aikštelės darbuotojo tel.',
                             maxLines: 1,
-                            style: GoogleFonts.raleway(
+                            style: TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 12,
                             ),
                           ),
                           Text(
                             widget.phone,
-                            style: GoogleFonts.roboto(
+                            style: const TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 12,
                             ),
@@ -114,12 +113,12 @@ class _InfoDumpWindowBoxState extends State<InfoDumpWindowBox> {
                   ),
                 ),
                 const SizedBox(height: 12),
-                Text(
+                const Text(
                   'DARBO LAIKAS:',
-                  style: GoogleFonts.raleway(
+                  style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 12,
-                      color: const Color.fromRGBO(10, 51, 40, 0.4)),
+                      color: Color.fromRGBO(10, 51, 40, 0.4)),
                 ),
                 const SizedBox(height: 4),
                 Container(
@@ -134,7 +133,7 @@ class _InfoDumpWindowBoxState extends State<InfoDumpWindowBox> {
                   child: Center(
                     child: Text(
                       widget.workingHours,
-                      style: GoogleFonts.roboto(
+                      style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 12,
                       ),
@@ -142,12 +141,12 @@ class _InfoDumpWindowBoxState extends State<InfoDumpWindowBox> {
                   ),
                 ),
                 const SizedBox(height: 12),
-                Text(
+                const Text(
                   'DAUGIAU INFORMACIJOS:',
-                  style: GoogleFonts.raleway(
+                  style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 12,
-                      color: const Color.fromRGBO(10, 51, 40, 0.4)),
+                      color: Color.fromRGBO(10, 51, 40, 0.4)),
                 ),
                 const SizedBox(height: 4),
                 Container(
@@ -162,7 +161,7 @@ class _InfoDumpWindowBoxState extends State<InfoDumpWindowBox> {
                   child: Center(
                     child: Text(
                       widget.moreInformation,
-                      style: GoogleFonts.roboto(
+                      style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 12,
                       ),

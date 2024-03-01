@@ -2,7 +2,6 @@ import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:core_ui/core_ui.dart';
@@ -293,7 +292,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 'Pranešimo turinys',
-                                style: GoogleFonts.roboto(
+                                style: TextStyle(
                                   fontSize: widget.width * 0.01145,
                                   fontWeight: FontWeight.w600,
                                   color: const Color(0x660a3328),
@@ -324,7 +323,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                                     currentTextValue = textValue;
                                   });
                                 },
-                                style: GoogleFonts.roboto(
+                                style: TextStyle(
                                     fontSize: widget.width * 0.0125,
                                     fontWeight: FontWeight.w400,
                                     color: Colors.black),
@@ -340,7 +339,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 'Jūsų el. pašto adresas',
-                                style: GoogleFonts.roboto(
+                                style: TextStyle(
                                   fontSize: widget.width * 0.01145,
                                   fontWeight: FontWeight.w600,
                                   color: const Color(0x660a3328),
@@ -383,7 +382,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                                         currentEmailValue = emailValue;
                                       });
                                     },
-                                    style: GoogleFonts.roboto(
+                                    style: TextStyle(
                                         fontSize: widget.width * 0.0125,
                                         fontWeight: FontWeight.w400,
                                         color: Colors.black),
@@ -401,7 +400,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                               alignment: Alignment.centerLeft,
                               child: Text(
                                 'Įkelkite bent 2 pažeidimo nuotraukas',
-                                style: GoogleFonts.roboto(
+                                style: TextStyle(
                                   fontSize: widget.width * 0.01145,
                                   fontWeight: FontWeight.w600,
                                   color: const Color(0x660a3328),
@@ -426,7 +425,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                               alignment: Alignment.topCenter,
                               child: Text(
                                 'Maksimalus nuotraukų kiekis: ${GlobalConstants.maxAllowedImageCount}',
-                                style: GoogleFonts.roboto(
+                                style: TextStyle(
                                   fontSize: widget.width * 0.009375,
                                   fontWeight: FontWeight.w600,
                                   color: const Color(0x660a3328),
@@ -519,7 +518,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                                     children: [
                                       Text(
                                         'Sutinku su departamento  ',
-                                        style: GoogleFonts.roboto(
+                                        style: TextStyle(
                                           fontSize: widget.width * 0.01,
                                           color: Colors.black,
                                         ),
@@ -532,7 +531,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                                         child: Text(
                                           'Asmens duomenų apsaugos\n tvarkymo taisyklėmis',
                                           textAlign: TextAlign.center,
-                                          style: GoogleFonts.roboto(
+                                          style: TextStyle(
                                             fontSize: widget.width * 0.01,
                                             color: Colors.blue,
                                             decoration:

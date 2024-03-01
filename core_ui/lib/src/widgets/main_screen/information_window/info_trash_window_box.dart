@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class InfoTrashWindowBox extends StatelessWidget {
   const InfoTrashWindowBox({
@@ -51,13 +50,13 @@ class InfoTrashWindowBox extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
             color: const Color.fromRGBO(241, 244, 243, 1)),
-        child: Center(
+        child: const Center(
           child: Text(
             'Plačiau',
-            style: GoogleFonts.roboto(
+            style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w500,
-                color: const Color.fromRGBO(57, 97, 84, 1)),
+                color: Color.fromRGBO(57, 97, 84, 1)),
           ),
         ),
       ),
@@ -67,14 +66,14 @@ class InfoTrashWindowBox extends StatelessWidget {
   Widget getMiddleInformationRow() {
     return Column(
       children: [
-        Align(
+        const Align(
           alignment: Alignment.topLeft,
           child: Text(
             'Pranešimas:',
-            style: GoogleFonts.roboto(
+            style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w400,
-              color: const Color.fromRGBO(0, 0, 0, 0.72),
+              color: Color.fromRGBO(0, 0, 0, 0.72),
             ),
           ),
         ),
@@ -86,10 +85,10 @@ class InfoTrashWindowBox extends StatelessWidget {
             maxLines: 2,
             textAlign: TextAlign.left,
             overflow: TextOverflow.ellipsis,
-            style: GoogleFonts.roboto(
+            style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w400,
-                color: const Color.fromRGBO(0, 0, 0, 1)),
+                color: Color.fromRGBO(0, 0, 0, 1)),
           ),
         )
       ],
@@ -116,17 +115,16 @@ class InfoTrashWindowBox extends StatelessWidget {
                   child: Text(
                     '#TLP-A$str${reportId.toUpperCase()}',
                     textAlign: TextAlign.left,
-                    style: GoogleFonts.roboto(
-                        fontWeight: FontWeight.w500, fontSize: 20),
+                    style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
                   ),
                 ),
               ),
               Text(
                 getFormattedDate(date),
-                style: GoogleFonts.roboto(
+                style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
-                    color: const Color.fromRGBO(0, 0, 0, 0.72)),
+                    color: Color.fromRGBO(0, 0, 0, 0.72)),
               ),
             ],
           ),
@@ -230,7 +228,7 @@ class InfoTrashWindowBox extends StatelessWidget {
   }
 
   TextStyle getStatusBoxTextStyle(Color textColor) {
-    return GoogleFonts.roboto(
+    return TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.w400,
       color: textColor,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class CancelButton extends StatelessWidget {
   const CancelButton({
@@ -23,11 +22,11 @@ class CancelButton extends StatelessWidget {
         child: Center(
           child: SizedBox(
             width: width * 0.0323,
-            child: FittedBox(
+            child: const FittedBox(
               fit: BoxFit.fitWidth,
               child: Text(
                 'Atšaukti',
-                style: GoogleFonts.raleway(
+                style: TextStyle(
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
                 ),

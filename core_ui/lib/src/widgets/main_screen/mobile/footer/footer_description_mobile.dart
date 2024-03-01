@@ -1,4 +1,3 @@
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
 class FooterDescriptionMobile extends StatelessWidget {
@@ -19,7 +18,7 @@ class FooterDescriptionMobile extends StatelessWidget {
           Text(
             'tvarkaulietuva.lt',
             textAlign: TextAlign.left,
-            style: GoogleFonts.roboto(
+            style: TextStyle(
               fontSize: width * 0.03888,
               fontWeight: FontWeight.w600,
               color: const Color.fromRGBO(57, 97, 84, 1),
@@ -33,7 +32,7 @@ class FooterDescriptionMobile extends StatelessWidget {
               child: Text(
                 'Tai bandomoji sistemos versija, skirta Aplinkos apsaugos\ndepartamentui pranešti apie aplinkosauginius pažeidimus,\nkurie nereikalauja staigaus reagavimo ir vietas, kuriose\ndaroma žala aplinkai. Sistemoje galite pranešti apie dar\nneužfiksuotas vietas bei sekti jų nagrinėjimo procesą.',
                 textAlign: TextAlign.left,
-                style: GoogleFonts.roboto(
+                style: TextStyle(
                   fontSize: width * 0.03333,
                   fontWeight: FontWeight.w400,
                   color: const Color.fromRGBO(0, 0, 0, 1),

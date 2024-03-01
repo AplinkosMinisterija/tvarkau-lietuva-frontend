@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class TitleWidgetMobile extends StatelessWidget {
   const TitleWidgetMobile({
@@ -17,7 +16,7 @@ class TitleWidgetMobile extends StatelessWidget {
       children: <Widget>[
         Text(
           'Tvarkau Lietuvą',
-          style: GoogleFonts.roboto(
+          style: TextStyle(
             fontWeight: FontWeight.w700,
             fontSize: width * 0.1111,
             color: Colors.white,
@@ -29,7 +28,7 @@ class TitleWidgetMobile extends StatelessWidget {
         Text(
           'Žemėlapyje pažymėkite gamtoje pastebėtus pažeidimus. Aplinkos apsaugos departamento pareigūnai išnagrinės pranešimus ir pasirūpins, kad pažeidėjai būtų surasti ir pašalintų padarytus pažeidimus ar atlygintų padarytą žalą gamtai.',
           textAlign: TextAlign.center,
-          style: GoogleFonts.roboto(
+          style: TextStyle(
             fontSize: width * 0.04444,
             height: width * 0.003222,
             fontWeight: FontWeight.w400,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class MarkButton extends StatefulWidget {
   const MarkButton({
@@ -56,11 +55,11 @@ class _MarkButtonState extends State<MarkButton> {
               ),
               SizedBox(
                 width: widget.width * 0.0438,
-                child: FittedBox(
+                child: const FittedBox(
                   fit: BoxFit.fitWidth,
                   child: Text(
                     'Pranešti',
-                    style: GoogleFonts.raleway(
+                    style: TextStyle(
                       fontWeight: FontWeight.w600,
                       color: Colors.white,
                     ),

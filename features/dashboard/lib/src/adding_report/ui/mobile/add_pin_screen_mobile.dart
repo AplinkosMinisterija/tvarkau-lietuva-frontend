@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -115,11 +114,11 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                 SizedBox(width: widget.width * 0.0278),
                 SizedBox(
                   width: widget.width * 0.561,
-                  child: FittedBox(
+                  child: const FittedBox(
                     fit: BoxFit.fitWidth,
                     child: Text(
                       'Pasirinkite vietą žemėlapyje',
-                      style: GoogleFonts.roboto(
+                      style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class SupportTag extends StatelessWidget {
   const SupportTag({
@@ -39,11 +38,11 @@ class SupportTag extends StatelessWidget {
         ),
         SizedBox(
           width: width * 0.105,
-          child: FittedBox(
+          child: const FittedBox(
             fit: BoxFit.fitWidth,
             child: Text(
               'AAD remia Ukrainą iki pergalės',
-              style: GoogleFonts.raleway(
+              style: TextStyle(
                 fontWeight: FontWeight.w500,
                 color: Colors.black,
               ),

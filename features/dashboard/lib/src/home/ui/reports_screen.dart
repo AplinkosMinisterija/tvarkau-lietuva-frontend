@@ -3,7 +3,6 @@ import 'package:api_client/api_client.dart';
 import 'package:core/utils/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:core_ui/core_ui.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 class ReportsScreen extends StatefulWidget {
@@ -103,7 +102,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                               padding: const EdgeInsets.only(right: 20),
                               child: Text(
                                 "Pranešimų skaičius: ${widget.reports.length}",
-                                style: GoogleFonts.roboto(
+                                style: const TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w400,
                                     color: Colors.white),
@@ -161,14 +160,13 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                       child: CustomDropdown<String>(
                                         hintText: 'Pasirinkite kategoriją',
                                         overlayHeight: 20,
-                                        decoration: CustomDropdownDecoration(
-                                          listItemStyle: GoogleFonts.roboto(
+                                        decoration:
+                                            const CustomDropdownDecoration(
+                                          listItemStyle: TextStyle(
                                             fontSize: 13,
                                           ),
-                                          hintStyle:
-                                              GoogleFonts.roboto(fontSize: 13),
-                                          headerStyle:
-                                              GoogleFonts.roboto(fontSize: 13),
+                                          hintStyle: TextStyle(fontSize: 13),
+                                          headerStyle: TextStyle(fontSize: 13),
                                         ),
                                         items: _dropdownList,
                                         initialItem: initialItem,
@@ -281,7 +279,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                             alignment: Alignment.centerRight,
                             child: Text(
                               "Pranešimų skaičius: ${widget.reports.length}",
-                              style: GoogleFonts.roboto(
+                              style: TextStyle(
                                   fontSize: constraints.maxWidth * 0.0333,
                                   fontWeight: FontWeight.w400,
                                   color: Colors.white),
@@ -351,7 +349,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                 },
                                 child: Text(
                                   'Departamento BDAR taisyklės',
-                                  style: GoogleFonts.roboto(
+                                  style: TextStyle(
                                     fontSize: constraints.maxWidth * 0.04,
                                     color: Colors.blue,
                                     decoration: TextDecoration.underline,

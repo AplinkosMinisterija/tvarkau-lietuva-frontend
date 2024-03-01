@@ -1,4 +1,3 @@
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
 class AddingInformationHeader extends StatelessWidget {
@@ -28,35 +27,35 @@ class AddingInformationHeader extends StatelessWidget {
             Text(
               '1. Spustelėkite „Pažymėkite vietą” ir suteikite prieigą prie jūsų vietos nustatymo.',
               textAlign: TextAlign.left,
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                   fontSize: width * 0.03333, fontWeight: FontWeight.w400),
             ),
             SizedBox(height: width * 0.02),
             Text(
               '2. Jei vieta automatiškai nustatyta teisingai - spauskite „Išsaugoti pažymėtą vietą” arba prieš tai patikslinkite vietą nuvilkdami smeigtuką į reikiamą vietą.',
               textAlign: TextAlign.left,
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                   fontSize: width * 0.03333, fontWeight: FontWeight.w400),
             ),
             SizedBox(height: width * 0.02),
             Text(
               '3. Jeigu nesuteikėte prieigos naudoti jūsų įrenginio vietos, nurodykite pažeidimo vietą nuvildami smeigtuką ant žemėlapio.',
               textAlign: TextAlign.left,
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                   fontSize: width * 0.03333, fontWeight: FontWeight.w400),
             ),
             SizedBox(height: width * 0.02),
             Text(
               '4. Aprašykite informaciją susijusią su pastebėtu pažeidimu, pridėkite nuotraukas.',
               textAlign: TextAlign.left,
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                   fontSize: width * 0.03333, fontWeight: FontWeight.w400),
             ),
             SizedBox(height: width * 0.02),
             Text(
               '5. Spauskite mygtuką „Pranešti“, o kilus klausimams su Jumis susisieks departamento pareigūnai.',
               textAlign: TextAlign.left,
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                   fontSize: width * 0.03333, fontWeight: FontWeight.w400),
             ),
           ],

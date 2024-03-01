@@ -1,7 +1,6 @@
 import 'package:core/utils/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'dart:ui' as ui;
 
 class FooterContactsRight extends StatelessWidget {
@@ -38,7 +37,7 @@ class FooterContactsRight extends StatelessWidget {
                   },
                   child: Text(
                     '+370 5 216 3385',
-                    style: GoogleFonts.roboto(
+                    style: TextStyle(
                         fontSize: width * 0.03333, fontWeight: FontWeight.w400),
                   ),
                 )
@@ -61,7 +60,7 @@ class FooterContactsRight extends StatelessWidget {
                   SizedBox(width: width * 0.043),
                   Text(
                     'info@aad.am.lt',
-                    style: GoogleFonts.roboto(
+                    style: TextStyle(
                         fontSize: width * 0.03333, fontWeight: FontWeight.w400),
                   ),
                 ],
@@ -88,7 +87,7 @@ class FooterContactsRight extends StatelessWidget {
                   SizedBox(width: width * 0.043),
                   Text(
                     'LinkedIn',
-                    style: GoogleFonts.roboto(
+                    style: TextStyle(
                         fontSize: width * 0.03333, fontWeight: FontWeight.w400),
                   ),
                 ],

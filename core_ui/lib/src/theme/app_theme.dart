@@ -2,7 +2,6 @@ library app_theme;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'dart:ui' as ui;
 
 part 'app_icon.dart';
@@ -10,8 +9,6 @@ part 'app_icon.dart';
 part 'app_colors.dart';
 
 part 'app_icons_theme.dart';
-
-part 'app_text_theme.dart';
 
 class AppTheme {
   //Common colors

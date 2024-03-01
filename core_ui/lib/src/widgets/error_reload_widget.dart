@@ -36,9 +36,7 @@ class ErrorReloadWidget extends StatelessWidget {
                   ),
                   child: Text(
                     errorText ?? 'Klaida',
-                    style: AppTextTheme.ploni16medium.copyWith(
-                      color: AppTheme.defaultTextColor,
-                    ),
+                    style: TextStyle(color: AppTheme.defaultTextColor),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -49,9 +47,7 @@ class ErrorReloadWidget extends StatelessWidget {
                   ),
                   child: Text(
                     descriptionText ?? '',
-                    style: AppTextTheme.ploni16medium.copyWith(
-                      color: AppTheme.defaultTextColor,
-                    ),
+                    style: TextStyle(color: AppTheme.defaultTextColor),
                     textAlign: TextAlign.center,
                   ),
                 ),

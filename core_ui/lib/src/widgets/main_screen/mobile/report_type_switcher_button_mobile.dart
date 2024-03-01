@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ReportTypeSwitcherButtonMobile extends StatefulWidget {
   const ReportTypeSwitcherButtonMobile({
@@ -51,7 +50,7 @@ class _ReportTypeSwitcherButtonMobileState
           child: Text(
             widget.buttonText,
             textAlign: TextAlign.center,
-            style: GoogleFonts.raleway(
+            style: TextStyle(
               fontWeight: FontWeight.w500,
               color: widget.isActive ? Colors.white : Colors.black,
             ),

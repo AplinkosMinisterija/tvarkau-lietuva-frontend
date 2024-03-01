@@ -1,6 +1,5 @@
 import 'package:core/utils/url_launcher.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:core_ui/core_ui.dart';
 
 class Footer extends StatelessWidget {
@@ -29,12 +28,12 @@ class Footer extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                LaunchUrl().launch(
-                    'https://aad.lrv.lt/lt/asmens-duomenu-apsauga/');
+                LaunchUrl()
+                    .launch('https://aad.lrv.lt/lt/asmens-duomenu-apsauga/');
               },
               child: Text(
                 'Departamento BDAR taisyklės',
-                style: GoogleFonts.roboto(
+                style: TextStyle(
                   fontSize: width / 2.7 * 0.03333,
                   color: Colors.blue,
                   decoration: TextDecoration.underline,

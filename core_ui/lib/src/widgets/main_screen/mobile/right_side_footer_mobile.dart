@@ -1,7 +1,6 @@
 import 'package:core/utils/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class RightSideFooterMobile extends StatelessWidget {
   const RightSideFooterMobile({
@@ -23,13 +22,13 @@ class RightSideFooterMobile extends StatelessWidget {
             children: [
               SizedBox(
                 width: width * 0.15,
-                child: FittedBox(
+                child: const FittedBox(
                   fit: BoxFit.fitWidth,
                   child: Text(
                     'tvarkaulietuva.lt',
-                    style: GoogleFonts.raleway(
+                    style: TextStyle(
                       fontWeight: FontWeight.w700,
-                      color: const Color(0xff2a6354),
+                      color: Color(0xff2a6354),
                     ),
                   ),
                 ),
@@ -39,11 +38,11 @@ class RightSideFooterMobile extends StatelessWidget {
               ),
               SizedBox(
                 width: width * 0.4,
-                child: FittedBox(
+                child: const FittedBox(
                   fit: BoxFit.fitWidth,
                   child: Text(
                     'Tai bandomoji sistemos versija, skirta viešinti visas Aplinkos\napsaugos departamentui žinomas ir potencialiai nelegalias\natliekų susidarymo vietas. Sistemoje suteikiama galimybė\nvisuomenei pranešti apie dar neužfiksuotas vietas bei sekti\njų nagrinėjimo situaciją.',
-                    style: GoogleFonts.raleway(
+                    style: TextStyle(
                       fontWeight: FontWeight.w500,
                       color: Colors.black,
                     ),
@@ -58,10 +57,10 @@ class RightSideFooterMobile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Apie aplinkosaugą galite\npasikonsultuoti darbo dienomis',
                 maxLines: 2,
-                style: GoogleFonts.roboto(
+                style: TextStyle(
                     fontSize: 13,
                     color: Colors.black,
                     fontWeight: FontWeight.w700),
@@ -76,9 +75,9 @@ class RightSideFooterMobile extends StatelessWidget {
                     height: width * 0.052,
                     width: width * 0.052,
                   ),
-                  Text(
+                  const Text(
                     '8 700 02022',
-                    style: GoogleFonts.roboto(
+                    style: TextStyle(
                         fontSize: 13,
                         color: Colors.black,
                         fontWeight: FontWeight.w500),
@@ -97,9 +96,9 @@ class RightSideFooterMobile extends StatelessWidget {
                       LaunchUrl().launch(
                           'mailto:konsultacijos@aad.am.lt?subject=Konsultacija');
                     },
-                    child: Text(
+                    child: const Text(
                       'konsultacijos@aad.am.lt',
-                      style: GoogleFonts.roboto(
+                      style: TextStyle(
                           fontSize: 13,
                           color: Colors.blue,
                           fontWeight: FontWeight.w500),
@@ -116,10 +115,10 @@ class RightSideFooterMobile extends StatelessWidget {
                     width: width * 0.04,
                   ),
                   SizedBox(width: width * 0.01),
-                  Text(
+                  const Text(
                     'Pastebėję galimą aplinkosauginį\npažeidimą, praneškite tel. 112',
                     maxLines: 2,
-                    style: GoogleFonts.roboto(
+                    style: TextStyle(
                         fontSize: 12,
                         color: Colors.black,
                         fontWeight: FontWeight.w500),

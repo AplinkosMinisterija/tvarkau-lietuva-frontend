@@ -1,5 +1,4 @@
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
 class FooterSupportMobile extends StatelessWidget {
@@ -18,11 +17,11 @@ class FooterSupportMobile extends StatelessWidget {
       children: [
         SizedBox(
           width: width * 0.3555,
-          child: FittedBox(
+          child: const FittedBox(
             fit: BoxFit.fitWidth,
             child: Text(
               '© 2024, Tvarkau Lietuvą',
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
               ),
@@ -40,11 +39,11 @@ class FooterSupportMobile extends StatelessWidget {
             SizedBox(width: width * 0.0064),
             SizedBox(
               width: width * 0.4555,
-              child: FittedBox(
+              child: const FittedBox(
                 fit: BoxFit.fitWidth,
                 child: Text(
                   'AAD remia Ukrainą iki pergalės',
-                  style: GoogleFonts.roboto(
+                  style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
                   ),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class InstructionsWidget extends StatelessWidget {
   const InstructionsWidget({
@@ -31,21 +30,21 @@ class InstructionsWidget extends StatelessWidget {
             Text(
               '1. Spustelėkite ant žemėlapio ir pele nutempkite smeigtuką į vietą, kurioje pastebėjote pažeidimą.',
               textAlign: TextAlign.center,
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                   fontSize: width * 0.0125, fontWeight: FontWeight.w400),
             ),
             SizedBox(height: width * 0.00833),
             Text(
               '2. Aprašykite informaciją susijusią su pastebėtu pažeidimu, pridėkite nuotraukas.',
               textAlign: TextAlign.center,
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                   fontSize: width * 0.0125, fontWeight: FontWeight.w400),
             ),
             SizedBox(height: width * 0.00833),
             Text(
               '3. Spauskite mygtuką „Pranešti“, o kilus klausimams su Jumis susisieks departamento pareigūnai.',
               textAlign: TextAlign.center,
-              style: GoogleFonts.roboto(
+              style: TextStyle(
                   fontSize: width * 0.0125, fontWeight: FontWeight.w400),
             )
           ],

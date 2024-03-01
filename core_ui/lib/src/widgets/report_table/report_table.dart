@@ -1,6 +1,5 @@
 import 'package:api_client/api_client.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class ReportTable extends StatefulWidget {
@@ -172,7 +171,7 @@ class ReportDataSource extends DataGridSource {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                       textAlign: TextAlign.start,
-                      style: GoogleFonts.roboto(
+                      style: const TextStyle(
                         fontWeight: FontWeight.w500,
                         color: Colors.black,
                       ),
@@ -185,7 +184,7 @@ class ReportDataSource extends DataGridSource {
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,
                         maxLines: 1,
-                        style: GoogleFonts.roboto(
+                        style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.black,
                         ),
@@ -195,7 +194,7 @@ class ReportDataSource extends DataGridSource {
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,
                         maxLines: 2,
-                        style: GoogleFonts.roboto(
+                        style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.black,
                         ),
@@ -291,7 +290,7 @@ BoxDecoration getStatusBoxDecoration(Color borderColor, Color fillColor) {
 }
 
 TextStyle getStatusBoxTextStyle(Color textColor) {
-  return GoogleFonts.roboto(
+  return TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w400,
     color: textColor,

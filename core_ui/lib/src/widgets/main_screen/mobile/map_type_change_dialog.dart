@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
@@ -51,14 +50,14 @@ class _MapTypeChangeDialogState extends State<MapTypeChangeDialog> {
                         children: [
                           SizedBox(
                             width: widget.width * 0.278,
-                            child: FittedBox(
+                            child: const FittedBox(
                               fit: BoxFit.fitWidth,
                               child: Text(
                                 'Žemėlapio tipas',
-                                style: GoogleFonts.roboto(
+                                style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
-                                    color: const Color.fromRGBO(57, 97, 84, 1)),
+                                    color: Color.fromRGBO(57, 97, 84, 1)),
                               ),
                             ),
                           ),

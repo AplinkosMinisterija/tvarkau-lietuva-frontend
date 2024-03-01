@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class TitleWidget extends StatelessWidget {
   const TitleWidget({
@@ -20,11 +19,11 @@ class TitleWidget extends StatelessWidget {
           child: Text(
             'Tvarkau Lietuvą',
             textAlign: TextAlign.center,
-            style: GoogleFonts.roboto(
-              fontWeight: FontWeight.w800,
-              color: Colors.white,
-              fontSize: width * 0.0580,
-            ),
+            style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                  fontWeight: FontWeight.w800,
+                  color: Colors.white,
+                  fontSize: width * 0.0580,
+                ),
           ),
         ),
         SizedBox(
@@ -35,7 +34,7 @@ class TitleWidget extends StatelessWidget {
           child: Text(
             'Žemėlapyje pažymėkite gamtoje pastebėtus pažeidimus. Aplinkos apsaugos departamento pareigūnai išnagrinės pranešimus ir pasirūpins, kad pažeidėjai būtų surasti ir pašalintų padarytus pažeidimus ar atlygintų padarytą žalą gamtai.',
             textAlign: TextAlign.center,
-            style: GoogleFonts.roboto(
+            style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: width * 0.009,
               color: Colors.white,

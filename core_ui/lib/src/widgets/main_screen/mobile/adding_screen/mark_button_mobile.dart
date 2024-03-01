@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class MarkButtonMobile extends StatefulWidget {
   const MarkButtonMobile({
@@ -54,11 +53,11 @@ class _MarkButtonMobileState extends State<MarkButtonMobile> {
             SizedBox(width: widget.width * 0.0361),
             SizedBox(
               width: widget.width * 0.211,
-              child: FittedBox(
+              child: const FittedBox(
                 fit: BoxFit.fitWidth,
                 child: Text(
                   'Pranešti',
-                  style: GoogleFonts.roboto(
+                  style: TextStyle(
                     fontWeight: FontWeight.w500,
                     color: Colors.white,
                   ),

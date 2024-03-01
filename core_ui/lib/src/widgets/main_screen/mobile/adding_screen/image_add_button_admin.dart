@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ImageAddButtonAdmin extends StatefulWidget {
   const ImageAddButtonAdmin({
@@ -58,7 +57,7 @@ class _ImageAddButtonAdminState extends State<ImageAddButtonAdmin> {
                   fit: BoxFit.fitWidth,
                   child: Text(
                     widget.title,
-                    style: GoogleFonts.raleway(
+                    style: const TextStyle(
                       fontWeight: FontWeight.w600,
                       color: Colors.white,
                     ),
