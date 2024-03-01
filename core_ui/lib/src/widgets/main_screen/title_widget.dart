@@ -19,11 +19,11 @@ class TitleWidget extends StatelessWidget {
           child: Text(
             'Tvarkau Lietuvą',
             textAlign: TextAlign.center,
-            style: TextStyle(
-              fontWeight: FontWeight.w800,
-              color: Colors.white,
-              fontSize: width * 0.0580,
-            ),
+            style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                  fontWeight: FontWeight.w800,
+                  color: Colors.white,
+                  fontSize: width * 0.0580,
+                ),
           ),
         ),
         SizedBox(
