@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:collection/collection.dart';
 import 'package:mime/mime.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:sentry_dio/sentry_dio.dart';
 
 class ApiProvider {
   ApiProvider._(
@@ -20,12 +21,18 @@ class ApiProvider {
     adminClient: _adminClient,
   );
 
-  static get _publicClient => ApiClient(
-        basePathOverride: GlobalConstants.basePath,
-      );
+  static Dio get _dio => Dio(
+        BaseOptions(
+          baseUrl: GlobalConstants.basePath,
+          connectTimeout: const Duration(milliseconds: 5000),
+          receiveTimeout: const Duration(milliseconds: 3000),
+        ),
+      )..addSentry();
 
-  static get _adminClient => ApiClient(
-        basePathOverride: GlobalConstants.basePath,
+  static ApiClient get _publicClient => ApiClient(dio: _dio);
+
+  static ApiClient get _adminClient => ApiClient(
+        dio: _dio,
         interceptors: [
           InterceptorsWrapper(
             onRequest: (RequestOptions options,

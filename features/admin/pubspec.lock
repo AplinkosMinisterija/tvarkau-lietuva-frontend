@@ -749,6 +749,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.0"
+  sentry:
+    dependency: transitive
+    description:
+      name: sentry
+      sha256: d2ee9c850d876d285f22e2e662f400ec2438df9939fe4acd5d780df9841794ce
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.16.1"
+  sentry_dio:
+    dependency: transitive
+    description:
+      name: sentry_dio
+      sha256: "3812f44fb6657cb04806cbfbd1dd03d00fb6aceb06bf5dd236ecff56b754a1cf"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.16.1"
   shared_preferences:
     dependency: transitive
     description:
@@ -818,6 +834,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.0"
+  sprintf:
+    dependency: transitive
+    description:
+      name: sprintf
+      sha256: "1fc9ffe69d4df602376b52949af107d8f5703b77cda567c4d7d86a0693120f23"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.0.0"
   stack_trace:
     dependency: transitive
     description:
@@ -954,6 +978,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
+  uuid:
+    dependency: transitive
+    description:
+      name: uuid
+      sha256: cd210a09f7c18cbe5a02511718e0334de6559871052c90a90c0cca46a4aa81c8
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.3.3"
   vector_graphics:
     dependency: transitive
     description:
