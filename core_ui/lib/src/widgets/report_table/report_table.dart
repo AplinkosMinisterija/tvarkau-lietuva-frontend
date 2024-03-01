@@ -1,4 +1,5 @@
 import 'package:api_client/api_client.dart';
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
@@ -121,14 +122,6 @@ class _ReportTableState extends State<ReportTable> {
   }
 }
 
-String getFormattedDate(String unformattedDate) {
-  DateTime formattedDate =
-      DateTime.parse(unformattedDate).add(const Duration(hours: 3));
-  String day = formattedDate.toString().substring(0, 10);
-  String hour = formattedDate.toString().substring(11, 16);
-  return '$day\n$hour';
-}
-
 class ReportDataSource extends DataGridSource {
   ReportDataSource({required List<PublicReportDto> reportData}) {
     _reportData = reportData
@@ -140,7 +133,7 @@ class ReportDataSource extends DataGridSource {
                       'TLP-A${'0' * (8 - e.refId.length)}${e.refId.toUpperCase()}'),
               DataGridCell<String>(
                   columnName: 'date',
-                  value: getFormattedDate(e.reportDate.toString())),
+                  value: FormatterUtils().getFormattedTime(e.reportDate)),
               DataGridCell<String>(columnName: 'name', value: e.name),
               DataGridCell<String>(columnName: 'comment', value: e.comment),
               DataGridCell<String>(columnName: 'status', value: e.status),

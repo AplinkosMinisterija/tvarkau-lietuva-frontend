@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:core/utils/extensions.dart';
 import 'package:api_client/api_client.dart';
+import 'package:core/utils/image_display/image_display.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../common/custom_colors.dart';
@@ -12,7 +13,6 @@ import '../widgets/custom_button.dart';
 import '../widgets/custom_switch.dart';
 import '../widgets/custom_text_button.dart';
 import '../widgets/dump_tabs.dart';
-import '../widgets/image_preview.dart';
 
 class TrashWindow extends StatefulWidget {
   final FullReportDto trash;
@@ -147,39 +147,6 @@ class _TrashWindowState extends State<TrashWindow> {
     );
   }
 
-  Widget _buildImages(List<String> imageUrls) {
-    return Wrap(
-      spacing: 16,
-      runSpacing: 16,
-      alignment: WrapAlignment.start,
-      children: [
-        ...imageUrls.map((e) {
-          return GestureDetector(
-            onTap: () {
-              Navigator.of(context).push(
-                PageRouteBuilder(
-                  opaque: false,
-                  pageBuilder: (_, __, ___) => ImagePreview(imageUrl: e),
-                ),
-              );
-            },
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: SizedBox(
-                width: 100,
-                height: 100,
-                child: Image.network(
-                  e,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          );
-        })
-      ],
-    );
-  }
-
   Widget _buildDesktopLayout(
       FullReportDto trash, Set<Marker> markers, double height) {
     final List<String> imageUrls = [];
@@ -242,7 +209,11 @@ class _TrashWindowState extends State<TrashWindow> {
               ),
               if (trash.imageUrls.isNotEmpty) ...[
                 15.heightBox,
-                _buildImages(imageUrls)
+                ImageGallery().buildImages(
+                  imageUrls: imageUrls,
+                  context: context,
+                  width: 700,
+                ),
               ],
               24.heightBox,
               const Divider(
@@ -263,7 +234,11 @@ class _TrashWindowState extends State<TrashWindow> {
                 ),
                 10.heightBox,
                 trash.officerImageUrls.isNotEmpty
-                    ? _buildImages(officerImageUrls)
+                    ? ImageGallery().buildImages(
+                        imageUrls: officerImageUrls,
+                        context: context,
+                        width: 700,
+                      )
                     : 10.heightBox,
                 10.heightBox,
               ],
@@ -402,9 +377,11 @@ class _TrashWindowState extends State<TrashWindow> {
             ),
             if (trash.imageUrls.isNotEmpty) ...[
               15.heightBox,
-              _buildImages(
-                imageUrls,
-              )
+              ImageGallery().buildImages(
+                imageUrls: imageUrls,
+                context: context,
+                width: 700,
+              ),
             ],
             15.heightBox,
             const Divider(
@@ -425,7 +402,11 @@ class _TrashWindowState extends State<TrashWindow> {
               ),
               10.heightBox,
               trash.officerImageUrls.isNotEmpty
-                  ? _buildImages(officerImageUrls)
+                  ? ImageGallery().buildImages(
+                      imageUrls: officerImageUrls,
+                      context: context,
+                      width: 700,
+                    )
                   : 10.heightBox,
               10.heightBox,
             ],
