@@ -477,7 +477,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
               ),
             ),
             widget.report.officerImageUrls.isNotEmpty
-                ? AppImageDisplay().buildImages(
+                ? ImageGallery().buildImages(
                     imageUrls: FormatterUtils().formatImageUrls(
                         widget.report.officerImageUrls.toList()),
                     context: context,
@@ -750,7 +750,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
               ),
             ),
             widget.report.imageUrls.isNotEmpty
-                ? AppImageDisplay().buildImages(
+                ? ImageGallery().buildImages(
                     imageUrls: FormatterUtils()
                         .formatImageUrls(widget.report.imageUrls.toList()),
                     context: context,

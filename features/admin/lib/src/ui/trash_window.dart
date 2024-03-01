@@ -209,7 +209,7 @@ class _TrashWindowState extends State<TrashWindow> {
               ),
               if (trash.imageUrls.isNotEmpty) ...[
                 15.heightBox,
-                AppImageDisplay().buildImages(
+                ImageGallery().buildImages(
                   imageUrls: imageUrls,
                   context: context,
                   width: 700,
@@ -234,7 +234,7 @@ class _TrashWindowState extends State<TrashWindow> {
                 ),
                 10.heightBox,
                 trash.officerImageUrls.isNotEmpty
-                    ? AppImageDisplay().buildImages(
+                    ? ImageGallery().buildImages(
                         imageUrls: officerImageUrls,
                         context: context,
                         width: 700,
@@ -377,7 +377,7 @@ class _TrashWindowState extends State<TrashWindow> {
             ),
             if (trash.imageUrls.isNotEmpty) ...[
               15.heightBox,
-              AppImageDisplay().buildImages(
+              ImageGallery().buildImages(
                 imageUrls: imageUrls,
                 context: context,
                 width: 700,
@@ -402,7 +402,7 @@ class _TrashWindowState extends State<TrashWindow> {
               ),
               10.heightBox,
               trash.officerImageUrls.isNotEmpty
-                  ? AppImageDisplay().buildImages(
+                  ? ImageGallery().buildImages(
                       imageUrls: officerImageUrls,
                       context: context,
                       width: 700,

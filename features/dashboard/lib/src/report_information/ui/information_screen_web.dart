@@ -484,7 +484,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
               ),
             ),
             widget.report.officerImageUrls.isNotEmpty
-                ? AppImageDisplay().buildImages(
+                ? ImageGallery().buildImages(
                     imageUrls: FormatterUtils().formatImageUrls(
                         widget.report.officerImageUrls.toList()),
                     context: context,
@@ -757,7 +757,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
               ),
             ),
             widget.report.imageUrls.isNotEmpty
-                ? AppImageDisplay().buildImages(
+                ? ImageGallery().buildImages(
                     imageUrls: FormatterUtils()
                         .formatImageUrls(widget.report.imageUrls.toList()),
                     context: context,

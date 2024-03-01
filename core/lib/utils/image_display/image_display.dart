@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'image_preview.dart';
 
-class AppImageDisplay {
-  static final AppImageDisplay _instance = AppImageDisplay._();
+class ImageGallery {
+  static final ImageGallery _instance = ImageGallery._();
 
-  AppImageDisplay._();
+  ImageGallery._();
 
-  factory AppImageDisplay() => _instance;
+  factory ImageGallery() => _instance;
 
   Padding buildImages({
     required List<String> imageUrls,
