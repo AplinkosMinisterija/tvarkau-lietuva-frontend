@@ -28,7 +28,12 @@ Future<void> mainCommon(Flavor flavor) async {
             'https://a2b91fc626e0481e8e690e57d537bcd5@sentry.biip.lt/37';
         options.tracesSampleRate = 1.0;
       },
-      appRunner: () => runApp(AadApp()),
+      appRunner: () => runApp(
+        DefaultAssetBundle(
+          bundle: SentryAssetBundle(),
+          child: AadApp(),
+        ),
+      ),
     );
   } else {
     runApp(AadApp());
