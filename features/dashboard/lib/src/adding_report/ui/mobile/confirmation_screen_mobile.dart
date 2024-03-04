@@ -72,7 +72,24 @@ class ConfirmationScreenMobile extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: width * 0.00625,
+                  height: width * 0.01,
+                ),
+                SizedBox(
+                  width: width * 0.75,
+                  child: FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Text(
+                      'Pranešimas taps viešai matomas, kai tik pareigūnai įsitikins,\nkad nepateikėte asmens duomenų.',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.raleway(
+                        fontWeight: FontWeight.w800,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: width * 0.01,
                 ),
                 SizedBox(
                   width: width * 0.75,
