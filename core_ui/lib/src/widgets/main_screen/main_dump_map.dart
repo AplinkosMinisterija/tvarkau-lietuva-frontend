@@ -27,63 +27,16 @@ class _MainDumpMapState extends State<MainDumpMap> {
   final CustomInfoWindowController _customDumpInfoWindowController =
       CustomInfoWindowController();
   BitmapDescriptor dumpMarkerIcon = BitmapDescriptor.defaultMarker;
-  Set<Marker> dumpMarkers = {};
-  Set<Marker> _dumpMarkers = {};
   late bool isMapHover;
 
-  voidAddDumpMarkers() async {
-    int index = 1000;
-    Set<Marker> tempDumpMarkers = {};
-    for (var element in widget.dumpReports) {
-      tempDumpMarkers.add(
-        Marker(
-            markerId: MarkerId(
-              element.name.toString() + index.toString(),
-            ),
-            position: LatLng(
-              element.reportLat.toDouble(),
-              element.reportLong.toDouble(),
-            ),
-            icon: await BitmapDescriptor.fromAssetImage(
-                const ImageConfiguration(size: Size(50, 50)),
-                'assets/svg/dump_icon.svg'),
-            onTap: () {
-              _customDumpInfoWindowController.addInfoWindow!(
-                InfoDumpWindowBox(
-                  title: element.name,
-                  address: element.address ?? '',
-                  phone: element.phone ?? '',
-                  workingHours: element.workingHours,
-                  moreInformation: element.moreInformation,
-                  isHovering: (bool value) {
-                    setState(() {
-                      isMapHover = value;
-                    });
-                  },
-                ),
-                LatLng(
-                  element.reportLat.toDouble(),
-                  element.reportLong.toDouble(),
-                ),
-              );
-            }),
-      );
-      index++;
-    }
-    setState(() {
-      _dumpMarkers = tempDumpMarkers;
-    });
-  }
-
-  late MapType _currentMapType;
-  final CameraPosition _lithuaniaCameraPosition =
-      const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 7.0);
+  late final markersLayer = AppMapMarkersLayer.fromDumps(
+    widget.dumpReports,
+    onTap: _onMarkerTap,
+  );
 
   @override
   void initState() {
     isMapHover = false;
-    _currentMapType = MapType.normal;
-    voidAddDumpMarkers();
     super.initState();
   }
 
@@ -107,11 +60,9 @@ class _MainDumpMapState extends State<MainDumpMap> {
                   borderRadius: const BorderRadius.all(Radius.circular(32)),
                   child: Stack(
                     children: [
-                      GoogleMap(
+                      AppMap(
+                        markersLayer: markersLayer,
                         scrollGesturesEnabled: isMapHover ? false : true,
-                        mapType: _currentMapType,
-                        initialCameraPosition: _lithuaniaCameraPosition,
-                        markers: _dumpMarkers,
                         onMapCreated: (GoogleMapController controller) async {
                           _customDumpInfoWindowController.googleMapController =
                               controller;
@@ -129,29 +80,6 @@ class _MainDumpMapState extends State<MainDumpMap> {
                         offset: 100,
                         controller: _customDumpInfoWindowController,
                         isDump: widget.isShowDumps,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 110, right: 10),
-                        child: Align(
-                            alignment: Alignment.bottomRight,
-                            child: GoogleMapTypeButton(
-                              height: 40,
-                              width: 40,
-                              onPressed: () {
-                                showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        MapTypeChangeDialog(
-                                            width: widget.width / 2.4,
-                                            currentMapType: _currentMapType,
-                                            onHover: (isHover) {},
-                                            onChangeTap: (MapType mapType) {
-                                              setState(() {
-                                                _currentMapType = mapType;
-                                              });
-                                            }));
-                              },
-                            )),
                       ),
                     ],
                   ),
@@ -175,6 +103,27 @@ class _MainDumpMapState extends State<MainDumpMap> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  void _onMarkerTap(DumpDto dump) {
+    _customDumpInfoWindowController.addInfoWindow!(
+      InfoDumpWindowBox(
+        title: dump.name,
+        address: dump.address ?? '',
+        phone: dump.phone ?? '',
+        workingHours: dump.workingHours,
+        moreInformation: dump.moreInformation,
+        isHovering: (bool value) {
+          setState(() {
+            isMapHover = value;
+          });
+        },
+      ),
+      LatLng(
+        dump.reportLat.toDouble(),
+        dump.reportLong.toDouble(),
       ),
     );
   }

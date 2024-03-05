@@ -65,3 +65,7 @@ export 'src/widgets/main_screen/mobile/report_statistics.dart';
 //Report table
 export 'src/widgets/report_table/report_table.dart';
 export 'src/widgets/report_table/report_title_bar.dart';
+
+// Map
+export 'src/widgets/map/app_map.dart';
+export 'src/widgets/map/app_map_markers_layer.dart';

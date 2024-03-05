@@ -1,3 +1,4 @@
+import 'package:api_client/api_client.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,15 +7,18 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class AddPinScreenMobile extends StatefulWidget {
-  const AddPinScreenMobile(
-      {required this.width,
-      required this.markers,
-      required this.onTap,
-      super.key});
+  const AddPinScreenMobile({
+    required this.width,
+    required this.selectedLocation,
+    required this.onTap,
+    required this.reports,
+    super.key,
+  });
 
   final double width;
-  final Set<Marker> markers;
-  final Function(double, double, Marker) onTap;
+  final LatLng? selectedLocation;
+  final List<PublicReportDto> reports;
+  final Function(LatLng) onTap;
 
   @override
   State<AddPinScreenMobile> createState() => _AddPinScreenMobileState();
@@ -22,29 +26,17 @@ class AddPinScreenMobile extends StatefulWidget {
 
 class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
   MapType currentMapType = MapType.normal;
-  CameraPosition _lithuaniaCameraPosition =
-      const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 7.0);
-  double selectedLat = 0;
-  double selectedLong = 0;
-  Set<Marker> markers = {};
-  List<Marker> addedMarker = [];
   bool isShowMarkers = true;
   bool isSaveButtonActive = false;
   bool isMapDisabled = false;
-  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
   late GoogleMapController mapController;
   LatLng? _currentPosition;
   bool _isLoading = false;
+  late LatLng? _selectedLocation = widget.selectedLocation;
 
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      addCustomIcon();
-    });
-    markers = widget.markers;
-    getLocation();
-    super.initState();
-  }
+  late final _reportMarkersLayer = AppMapMarkersLayer.fromPublicReports(
+    widget.reports,
+  );
 
   getLocation() async {
     setState(() {
@@ -66,15 +58,21 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
       LatLng location = LatLng(position.latitude, position.longitude);
 
       setState(() {
-        selectedLat = position.latitude;
-        selectedLong = position.longitude;
         _currentPosition = location;
         _isLoading = false;
         _handleTap(location);
-        _lithuaniaCameraPosition =
-            CameraPosition(target: _currentPosition!, zoom: 13);
       });
     }
+  }
+
+  AppMapMarkersLayer _getMarkerLayers() {
+    final selectedLocation = _selectedLocation;
+    if (selectedLocation == null) {
+      return _reportMarkersLayer;
+    }
+    return _reportMarkersLayer.combine(
+      AppMapMarkersLayer.fromPinLocation(selectedLocation),
+    );
   }
 
   void _onMapCreated(GoogleMapController controller) {
@@ -99,11 +97,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                 InkWell(
                   onTap: () {
                     setState(() {
-                      if (addedMarker.isNotEmpty) {
-                        markers.remove(addedMarker[0]);
-                        addedMarker.clear();
-                      }
-                      Navigator.of(context).pop();
+                      Navigator.of(context).pop(_selectedLocation);
                     });
                   },
                   child: Icon(
@@ -139,14 +133,9 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                         children: [
                           Opacity(
                             opacity: 0.5,
-                            child: GoogleMap(
+                            child: AppMap(
                               onMapCreated: _onMapCreated,
-                              initialCameraPosition: _lithuaniaCameraPosition,
-                              mapType: currentMapType,
-                              onTap: null,
-                              markers: isShowMarkers
-                                  ? markers
-                                  : addedMarker.map((e) => e).toSet(),
+                              markersLayer: _reportMarkersLayer,
                             ),
                           ),
                           Center(
@@ -157,14 +146,10 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                           ),
                         ],
                       )
-                    : GoogleMap(
+                    : AppMap(
                         onMapCreated: _onMapCreated,
-                        initialCameraPosition: _lithuaniaCameraPosition,
-                        mapType: currentMapType,
                         onTap: _currentPosition == null ? _handleTap : null,
-                        markers: isShowMarkers
-                            ? markers
-                            : addedMarker.map((e) => e).toSet(),
+                        markersLayer: _getMarkerLayers(),
                       ),
               ),
               Align(
@@ -180,15 +165,12 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                       });
                     },
                     onTap: () {
-                      widget.onTap(
-                          selectedLat,
-                          selectedLong,
-                          Marker(
-                            markerId: const MarkerId('99899'),
-                            position: LatLng(selectedLat, selectedLong),
-                            icon: markerIcon,
-                          ));
-                      Navigator.of(context).pop();
+                      final selectedLocation = _selectedLocation;
+                      if (selectedLocation != null) {
+                        widget.onTap(selectedLocation);
+                      }
+
+                      Navigator.of(context).pop(_selectedLocation);
                     },
                   ),
                 ),
@@ -275,47 +257,16 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
   }
 
   _handleTap(LatLng tappedPoint) {
-    markers
-        .removeWhere((element) => element.markerId == const MarkerId('99899'));
-    addedMarker
-        .removeWhere((element) => element.markerId == const MarkerId('99899'));
-    Marker newMarker = Marker(
-      markerId: const MarkerId(
-        '99899',
-      ),
-      icon: markerIcon,
-      position: LatLng(
-        tappedPoint.latitude,
-        tappedPoint.longitude,
-      ),
-      draggable: true,
-      onDrag: _handleDrag,
-    );
-
     setState(() {
-      markers.add(newMarker);
-      addedMarker.add(newMarker);
-      selectedLat = tappedPoint.latitude;
-      selectedLong = tappedPoint.longitude;
+      _selectedLocation = tappedPoint;
       isSaveButtonActive = true;
     });
   }
 
   _handleDrag(LatLng tappedPoint) {
     setState(() {
-      selectedLat = tappedPoint.latitude;
-      selectedLong = tappedPoint.longitude;
+      _selectedLocation = tappedPoint;
       isSaveButtonActive = true;
-    });
-  }
-
-  void addCustomIcon() {
-    BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(), 'assets/svg/pin_icon.svg')
-        .then((icon) {
-      setState(() {
-        markerIcon = icon;
-      });
     });
   }
 }

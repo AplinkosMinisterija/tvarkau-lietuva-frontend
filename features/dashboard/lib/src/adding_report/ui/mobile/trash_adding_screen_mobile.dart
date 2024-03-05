@@ -22,8 +22,7 @@ class TrashAddingScreenMobile extends StatefulWidget {
   final double width;
   final double height;
   final List<PublicReportDto> reports;
-  final Function(String, String, double, double, List<Uint8List>)
-      onAddTap;
+  final Function(String, String, double, double, List<Uint8List>) onAddTap;
   final VoidCallback onDataSecurityTap;
 
   @override
@@ -45,48 +44,10 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
   }
 
   bool isTermsAccepted = false;
-  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
   final _formKey = GlobalKey<FormState>();
   String currentTextValue = '';
   String currentEmailValue = '';
-  Set<Marker> markers = {};
-  List<Marker> newMarkers = [];
-  Set<Marker> newMarker = {};
-  double selectedLat = 0;
-  double selectedLong = 0;
-
-  void addCustomIcon() {
-    BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(), 'assets/svg/pin_icon.svg')
-        .then((icon) {
-      setState(() {
-        markerIcon = icon;
-      });
-    });
-  }
-
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      addCustomIcon();
-    });
-    int index = 0;
-    for (var element in widget.reports) {
-      markers.add(
-        Marker(
-          markerId: MarkerId(
-            element.name + index.toString(),
-          ),
-          position: LatLng(
-            element.latitude.toDouble(),
-            element.longitude.toDouble(),
-          ),
-        ),
-      );
-      index++;
-    }
-    super.initState();
-  }
+  LatLng? _selectedLocation;
 
   void removeSelectedImage(int imageIndex) {
     setState(() {
@@ -138,33 +99,20 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                         children: [
                           AddingMapRedirectWindow(
                             width: widget.width,
-                            marker: newMarker,
+                            selectedLocation: _selectedLocation,
                           ),
                           InkWell(
                             onTap: () {
-                              setState(() {
-                                if (newMarker.isNotEmpty) {
-                                  newMarker.removeWhere((element) =>
-                                      element.markerId ==
-                                      const MarkerId('99899'));
-                                  markers.removeWhere((element) =>
-                                      element.markerId ==
-                                      const MarkerId('99899'));
-                                }
-                              });
-
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => AddPinScreenMobile(
                                           width: widget.width,
-                                          markers: markers,
-                                          onTap: (lat, long, marker) {
+                                          selectedLocation: _selectedLocation,
+                                          reports: widget.reports,
+                                          onTap: (location) {
                                             setState(() {
-                                              newMarker.clear();
-                                              selectedLat = lat;
-                                              selectedLong = long;
-                                              newMarker.add(marker);
+                                              _selectedLocation = location;
                                             });
                                           },
                                         )),
@@ -392,7 +340,7 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                                       ]);
                                 },
                                 itemCount: getImageWidget(
-                                    _selectedImages, widget.width * 0.4333)
+                                        _selectedImages, widget.width * 0.4333)
                                     .length,
                               ),
                             )
@@ -453,21 +401,20 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                         isActive: true,
                         width: widget.width,
                         onTap: () async {
+                          final selectedLocation = _selectedLocation;
                           if (_formKey.currentState!.validate() &&
-                              selectedLat != 0 &&
-                              selectedLong != 0 &&
+                              selectedLocation != null &&
                               isTermsAccepted &&
                               _selectedImages.isNotEmpty) {
                             if (_selectedImages.length >= 2) {
                               widget.onAddTap(
                                 currentEmailValue,
                                 currentTextValue,
-                                selectedLat,
-                                selectedLong,
+                                selectedLocation.latitude,
+                                selectedLocation.longitude,
                                 _selectedImages,
                               );
                             }
-
                           }
                         },
                       ),
