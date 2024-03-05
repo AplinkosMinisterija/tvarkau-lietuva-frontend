@@ -133,7 +133,7 @@ class ReportDataSource extends DataGridSource {
                       'TLP-A${'0' * (8 - e.refId.length)}${e.refId.toUpperCase()}'),
               DataGridCell<String>(
                   columnName: 'date',
-                  value: FormatterUtils().getFormattedTime(e.reportDate)),
+                  value: FormatterUtils().formatDate(e.reportDate)),
               DataGridCell<String>(columnName: 'name', value: e.name),
               DataGridCell<String>(columnName: 'comment', value: e.comment),
               DataGridCell<String>(columnName: 'status', value: e.status),
