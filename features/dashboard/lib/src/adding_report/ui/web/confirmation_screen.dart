@@ -79,6 +79,23 @@ class ConfirmationDialog extends StatelessWidget {
                   child: FittedBox(
                     fit: BoxFit.fitWidth,
                     child: Text(
+                      'Pranešimas taps viešai matomas, kai tik pareigūnai įsitikins,\nkad nepateikėte asmens duomenų.',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.raleway(
+                        fontWeight: FontWeight.w800,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: width * 0.00625,
+                ),
+                SizedBox(
+                  width: width * 0.25,
+                  child: FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Text(
                       'Aplinkos apsaugos departamento pareigūnai netrukus pradės\n darbuotis ieškodami pažeidėjo.',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.raleway(
