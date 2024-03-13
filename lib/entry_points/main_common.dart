@@ -25,7 +25,7 @@ Future<void> mainCommon(Flavor flavor) async {
     await SentryFlutter.init(
       (options) {
         options.dsn =
-            'https://a2b91fc626e0481e8e690e57d537bcd5@sentry.biip.lt/37';
+            'https://a5fa926d775d54e54d0be1403ede3953@sentry.biip.lt/49';
         options.tracesSampleRate = 1.0;
       },
       appRunner: () => runApp(
