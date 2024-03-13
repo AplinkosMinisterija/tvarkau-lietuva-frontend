@@ -30,63 +30,13 @@ class MainTrashMap extends StatefulWidget {
 class _MainTrashMapState extends State<MainTrashMap> {
   final CustomInfoWindowController _customTrashInfoWindowController =
       CustomInfoWindowController();
-  BitmapDescriptor trashMarkerIcon = BitmapDescriptor.defaultMarker;
   bool isShowMarkers = false;
   bool isShowDumps = true;
-  Set<Marker> trashMarkers = {};
-  Set<Marker> _trashMarkers = {};
 
-  Future<void> voidAddTrashMarkers() async {
-    int index = 0;
-    Set<Marker> tempMarkers = {};
-    for (var element in widget.trashReports) {
-      tempMarkers.add(
-        Marker(
-            markerId: MarkerId(
-              element.name.toString() + index.toString(),
-            ),
-            position: LatLng(
-              element.latitude.toDouble(),
-              element.longitude.toDouble(),
-            ),
-            icon: await BitmapDescriptor.fromAssetImage(
-                const ImageConfiguration(size: Size(25, 30)),
-                getTrashIconPath(element.status)),
-            onTap: () {
-              _customTrashInfoWindowController.addInfoWindow!(
-                InfoTrashWindowBox(
-                    title: element.name,
-                    imageUrls: element.imageUrls.toList(),
-                    status: element.status,
-                    date: element.reportDate.toString(),
-                    reportId: element.refId,
-                    onTap: () {
-                      widget.onInformationTap(element.refId);
-                    }),
-                LatLng(
-                  element.latitude.toDouble(),
-                  element.longitude.toDouble(),
-                ),
-              );
-            }),
-      );
-      index++;
-    }
-    setState(() {
-      _trashMarkers = tempMarkers;
-    });
-  }
-
-  late MapType _currentMapType;
-  final CameraPosition _lithuaniaCameraPosition =
-      const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 7.0);
-
-  @override
-  void initState() {
-    voidAddTrashMarkers();
-    _currentMapType = MapType.normal;
-    super.initState();
-  }
+  late final markersLayer = AppMapMarkersLayer.fromPublicReports(
+    widget.trashReports,
+    onTap: _onMarkerTap,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -108,21 +58,17 @@ class _MainTrashMapState extends State<MainTrashMap> {
                   borderRadius: const BorderRadius.all(Radius.circular(32)),
                   child: Stack(
                     children: [
-                      GoogleMap(
-                        mapType: _currentMapType,
-                        initialCameraPosition: _lithuaniaCameraPosition,
-                        markers: _trashMarkers,
-                        myLocationButtonEnabled: true,
-                        myLocationEnabled: true,
-                        onMapCreated: (GoogleMapController controller) async {
-                          _customTrashInfoWindowController.googleMapController =
-                              controller;
-                        },
+                      AppMap(
+                        markersLayer: markersLayer,
                         onCameraMove: (position) {
                           _customTrashInfoWindowController.onCameraMove!();
                         },
                         onTap: (position) {
                           _customTrashInfoWindowController.hideInfoWindow!();
+                        },
+                        onMapCreated: (GoogleMapController controller) async {
+                          _customTrashInfoWindowController.googleMapController =
+                              controller;
                         },
                       ),
                       CustomInfoWindow(
@@ -130,29 +76,6 @@ class _MainTrashMapState extends State<MainTrashMap> {
                         leftMargin: 200,
                         controller: _customTrashInfoWindowController,
                         isDump: widget.isShowDumps,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 110, right: 10),
-                        child: Align(
-                            alignment: Alignment.bottomRight,
-                            child: GoogleMapTypeButton(
-                              height: 40,
-                              width: 40,
-                              onPressed: () {
-                                showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        MapTypeChangeDialog(
-                                            width: widget.width / 2.4,
-                                            currentMapType: _currentMapType,
-                                            onHover: (isHover) {},
-                                            onChangeTap: (MapType mapType) {
-                                              setState(() {
-                                                _currentMapType = mapType;
-                                              });
-                                            }));
-                              },
-                            )),
                       ),
                     ],
                   ),
@@ -182,17 +105,26 @@ class _MainTrashMapState extends State<MainTrashMap> {
     );
   }
 
-  String getTrashIconPath(String status) {
-    if (status == "gautas") {
-      return 'assets/icons/marker_pins/red_marker.png';
-    } else if (status == "tiriamas") {
-      return 'assets/icons/marker_pins/orange_marker.png';
-    } else if (status == "išspręsta") {
-      return 'assets/icons/marker_pins/green_marker.png';
-    } else if (status == "nepasitvirtino") {
-      return 'assets/icons/marker_pins/gray_marker.png';
-    } else {
-      return 'assets/icons/marker_pins/red_marker.png';
-    }
+  void _onMarkerTap(PublicReportDto report) {
+    print('OnTap $report');
+    _customTrashInfoWindowController.addInfoWindow!(
+      InfoTrashWindowBox(
+          title: report.name,
+          imageUrls: report.imageUrls.toList(),
+          status: report.status,
+          date: report.reportDate.toString(),
+          reportId: report.refId,
+          onTap: () {
+            widget.onInformationTap(report.refId);
+          }),
+      LatLng(report.latitude, report.longitude),
+    );
+  }
+
+  @override
+  void dispose() {
+    _customTrashInfoWindowController.dispose();
+
+    super.dispose();
   }
 }

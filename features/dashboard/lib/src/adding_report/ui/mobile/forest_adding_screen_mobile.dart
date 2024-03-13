@@ -24,7 +24,8 @@ class ForestAddingScreenMobile extends StatefulWidget {
   final Function(String, String, double, double, List<Uint8List>) onAddTap;
 
   @override
-  State<ForestAddingScreenMobile> createState() => _ForestAddingScreenMobileState();
+  State<ForestAddingScreenMobile> createState() =>
+      _ForestAddingScreenMobileState();
 }
 
 class _ForestAddingScreenMobileState extends State<ForestAddingScreenMobile> {
@@ -48,8 +49,7 @@ class _ForestAddingScreenMobileState extends State<ForestAddingScreenMobile> {
   Set<Marker> markers = {};
   List<Marker> newMarkers = [];
   Set<Marker> newMarker = {};
-  double selectedLat = 0;
-  double selectedLong = 0;
+  LatLng? selectedLocation;
 
   void addCustomIcon() {
     BitmapDescriptor.fromAssetImage(
@@ -134,7 +134,7 @@ class _ForestAddingScreenMobileState extends State<ForestAddingScreenMobile> {
                         children: [
                           AddingMapRedirectWindow(
                             width: widget.width,
-                            marker: newMarker,
+                            selectedLocation: selectedLocation,
                           ),
                           InkWell(
                             onTap: () {
@@ -154,13 +154,11 @@ class _ForestAddingScreenMobileState extends State<ForestAddingScreenMobile> {
                                 MaterialPageRoute(
                                     builder: (context) => AddPinScreenMobile(
                                           width: widget.width,
-                                          markers: markers,
-                                          onTap: (lat, long, marker) {
+                                          reports: widget.reports,
+                                          selectedLocation: selectedLocation,
+                                          onTap: (location) {
                                             setState(() {
-                                              newMarker.clear();
-                                              selectedLat = lat;
-                                              selectedLong = long;
-                                              newMarker.add(marker);
+                                              selectedLocation = location;
                                             });
                                           },
                                         )),
@@ -353,7 +351,6 @@ class _ForestAddingScreenMobileState extends State<ForestAddingScreenMobile> {
                           },
                         ),
                       ),
-
                       _selectedImages.isNotEmpty
                           ? SizedBox(
                               width: widget.width * 0.9111,
@@ -394,7 +391,6 @@ class _ForestAddingScreenMobileState extends State<ForestAddingScreenMobile> {
                               ),
                             )
                           : const SizedBox.shrink(),
-
                       SizedBox(height: widget.width * 0.03333),
                       SizedBox(
                         width: widget.width,
@@ -451,40 +447,20 @@ class _ForestAddingScreenMobileState extends State<ForestAddingScreenMobile> {
                         isActive: true,
                         width: widget.width,
                         onTap: () async {
+                          final location = selectedLocation;
                           if (_formKey.currentState!.validate() &&
-                              selectedLat != 0 &&
-                              selectedLong != 0 &&
+                              location != null &&
                               isTermsAccepted &&
                               _selectedImages.isNotEmpty) {
                             if (_selectedImages.length >= 2) {
                               widget.onAddTap(
                                 currentEmailValue,
                                 currentTextValue,
-                                selectedLat,
-                                selectedLong,
+                                location.latitude,
+                                location.longitude,
                                 _selectedImages,
                               );
                             }
-
-                            //TODO: FIX CAPTCHA
-                            // showDialog(
-                            //     context: context,
-                            //     builder: (context) {
-                            //       return CaptchaDialog(
-                            //         onSuccess: () async {
-                            //           await Future.delayed(
-                            //               const Duration(seconds: 1));
-                            //           Navigator.of(context).pop();
-                            //           widget.onAddTap(
-                            //             currentEmailValue,
-                            //             currentTextValue,
-                            //             selectedLat,
-                            //             selectedLong,
-                            //             multipartList,
-                            //           );
-                            //         },
-                            //       );
-                            //     });
                           }
                         },
                       ),
