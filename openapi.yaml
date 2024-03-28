@@ -206,6 +206,24 @@ paths:
                 items:
                   $ref: '#/components/schemas/PublicReportDto'
       tags: *ref_2
+  /reports/bark-beetle:
+    post:
+      operationId: ReportController_sendBarkBeetleReport
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CreateReportDto'
+      responses:
+        '201':
+          description: New Report has been successfully sent
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Message'
+      tags: *ref_2
   /reports/statistics:
     get:
       operationId: ReportController_getReportStatistics
@@ -562,10 +580,10 @@ components:
         latitude:
           type: number
         category:
-          type: string
           enum:
             - trash
             - forest
+          type: string
         email:
           type: string
       required:
@@ -624,6 +642,9 @@ components:
         - officerImageUrls
         - imageUrls
         - statusRecords
+    Message:
+      type: object
+      properties: {}
     ReportStatisticsDto:
       type: object
       properties:

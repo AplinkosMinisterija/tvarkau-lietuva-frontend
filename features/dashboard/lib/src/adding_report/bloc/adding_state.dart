@@ -20,6 +20,10 @@ class ForestContentState implements AddingState {
   });
 }
 
+class BeetleInformationState implements AddingState {}
+
+class BeetleContentState implements AddingState {}
+
 class ConfirmationState implements AddingState {}
 
 class ErrorState implements AddingState {

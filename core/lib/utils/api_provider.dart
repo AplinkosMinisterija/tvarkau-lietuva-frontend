@@ -145,6 +145,25 @@ class ApiProvider {
     return response.data!;
   }
 
+  Future<void> sendNewBeetleReport({
+    required String emailValue,
+    required String textValue,
+    required double selectedLat,
+    required double selectedLong,
+    required List<Uint8List> imageFiles,
+    required String category,
+  }) async {
+    await reportsApi.reportControllerSendBarkBeetleReport(
+        images: _toMultiPartFiles(imageFiles),
+        name: textValue,
+        longitude: selectedLong,
+        latitude: selectedLat,
+        category: category,
+        email: emailValue);
+
+    return;
+  }
+
   Future<FullReportDto> updateTrashReport({
     required String id,
     required String refId,

@@ -66,6 +66,14 @@ class _ReportCategoryScreenBody extends StatelessWidget {
                     },
                     iconName: 'recycle_icon',
                   ),
+                  ReportCategorySelector(
+                    title: 'Žievėgraužis tipografas',
+                    description: 'Jeigu pastebite žievėgraužį',
+                    onTap: () {
+                      context.goNamed('newReportBeetle');
+                    },
+                    iconName: 'bug_icon',
+                  ),
                 ],
               ),
             ),
