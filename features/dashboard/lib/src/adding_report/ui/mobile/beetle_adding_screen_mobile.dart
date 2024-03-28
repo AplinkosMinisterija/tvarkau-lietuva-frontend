@@ -1,4 +1,3 @@
-import 'package:api_client/api_client.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
@@ -9,26 +8,24 @@ import 'package:core/core.dart';
 import 'add_pin_screen_mobile.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class ForestAddingScreenMobile extends StatefulWidget {
-  const ForestAddingScreenMobile({
+class BeetleAddingScreenMobile extends StatefulWidget {
+  const BeetleAddingScreenMobile({
     required this.width,
     required this.height,
-    required this.reports,
     required this.onAddTap,
     super.key,
   });
 
   final double width;
   final double height;
-  final List<PublicReportDto> reports;
   final Function(String, String, double, double, List<Uint8List>) onAddTap;
 
   @override
-  State<ForestAddingScreenMobile> createState() =>
-      _ForestAddingScreenMobileState();
+  State<BeetleAddingScreenMobile> createState() =>
+      _BeetleAddingScreenMobileState();
 }
 
-class _ForestAddingScreenMobileState extends State<ForestAddingScreenMobile> {
+class _BeetleAddingScreenMobileState extends State<BeetleAddingScreenMobile> {
   List<Uint8List> _selectedImages = [];
 
   Future<void> getMultipleImageInfos() async {
@@ -67,21 +64,6 @@ class _ForestAddingScreenMobileState extends State<ForestAddingScreenMobile> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       addCustomIcon();
     });
-    int index = 0;
-    for (var element in widget.reports) {
-      markers.add(
-        Marker(
-          markerId: MarkerId(
-            element.name + index.toString(),
-          ),
-          position: LatLng(
-            element.latitude.toDouble(),
-            element.longitude.toDouble(),
-          ),
-        ),
-      );
-      index++;
-    }
     super.initState();
   }
 
@@ -94,7 +76,7 @@ class _ForestAddingScreenMobileState extends State<ForestAddingScreenMobile> {
   @override
   Widget build(BuildContext context) {
     return Title(
-      title: "Pranešti apie sugadintą miško paklotę ar kelius",
+      title: "Pranešti apie žievėgraužį",
       color: Colors.green,
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(250, 242, 234, 1),
@@ -110,7 +92,7 @@ class _ForestAddingScreenMobileState extends State<ForestAddingScreenMobile> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Pranešti apie sugadintą miško\npaklotę ar kelius',
+                            'Pranešti apie žievėgraužį',
                             style: GoogleFonts.roboto(
                               fontSize: widget.width * 0.04444,
                               fontWeight: FontWeight.w700,
@@ -130,7 +112,7 @@ class _ForestAddingScreenMobileState extends State<ForestAddingScreenMobile> {
                       SizedBox(height: widget.width * 0.0611),
                       AddingInformationHeader(
                         width: widget.width,
-                        isBeetleCategory: false,
+                        isBeetleCategory: true,
                       ),
                       SizedBox(height: widget.width * 0.0444),
                       Stack(
@@ -159,7 +141,7 @@ class _ForestAddingScreenMobileState extends State<ForestAddingScreenMobile> {
                                     builder: (context) => AddPinScreenMobile(
                                           width: widget.width,
                                           markers: markers,
-                                          isLayerSwitchVisible: true,
+                                          isLayerSwitchVisible: false,
                                           onTap: (lat, long, marker) {
                                             setState(() {
                                               newMarker.clear();
@@ -194,7 +176,7 @@ class _ForestAddingScreenMobileState extends State<ForestAddingScreenMobile> {
                                       ),
                                       SizedBox(width: widget.width * 0.0277),
                                       Text(
-                                        'Pažymėkite vietą, kur pastebėjote pažeidimą',
+                                        'Pažymėkite vietą, kur pastebėjote žievėgraužį',
                                         style: GoogleFonts.roboto(
                                             fontSize: widget.width * 0.028888,
                                             fontWeight: FontWeight.w400),
@@ -309,7 +291,7 @@ class _ForestAddingScreenMobileState extends State<ForestAddingScreenMobile> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'Įkelkite bent 2 pažeidimo nuotraukas',
+                          'Įkelkite bent 2 žievėgraužio nuotraukas',
                           style: GoogleFonts.roboto(
                               fontSize: widget.width * 0.03888,
                               fontWeight: FontWeight.w400),
