@@ -10,8 +10,8 @@ import 'src/widgets/admin_table_reports.dart';
 import 'src/widgets/base_admin_screen.dart';
 import 'src/widgets/custom_switch.dart';
 import 'src/widgets/header.dart';
-import 'src/widgets/updated_admin_view_type_switch.dart';
-import 'src/widgets/updated_report_type_switch.dart';
+import 'src/widgets/admin_view_type_switch.dart';
+import 'src/widgets/admin_report_type_switch.dart';
 
 class AdminWindow extends StatefulWidget {
   const AdminWindow({
@@ -173,7 +173,7 @@ class _AdminWindowState extends State<AdminWindow> {
                   Row(
                     children: [
                       !isShowDeleted
-                          ? UpdatedReportTypeSwitch(
+                          ? AdminReportTypeSwitch(
                               activeCategory: widget.activeCategory,
                               onReportCategoryChange: (String value) {
                                 widget.onCategoryChange(value);
@@ -181,7 +181,7 @@ class _AdminWindowState extends State<AdminWindow> {
                             )
                           : Opacity(
                               opacity: 0.3,
-                              child: UpdatedReportTypeSwitch(
+                              child: AdminReportTypeSwitch(
                                 activeCategory: widget.activeCategory,
                                 onReportCategoryChange: (String value) {},
                               ),
@@ -211,7 +211,7 @@ class _AdminWindowState extends State<AdminWindow> {
                       ],
                       const Spacer(),
                       if (!isShowDeleted)
-                        UpdatedAdminViewTypeSwitch(
+                        AdminViewTypeSwitch(
                           isMapView: isMapView,
                           onIsMapViewChange: (value) {
                             setState(() {

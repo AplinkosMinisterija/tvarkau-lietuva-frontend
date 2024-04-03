@@ -203,24 +203,7 @@ class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
                                   )),
                             )
                           : const SizedBox.shrink(),
-                      Positioned(
-                        left: widget.width * 0.0111,
-                        bottom: widget.width * 0.0111,
-                        child: ChangeVisibilityButtonMobile(
-                          width: widget.width / 2.4,
-                          isActive: isShowMarkers,
-                          onHover: (isHover) {
-                            setState(() {
-                              isMapDisabled = isHover;
-                            });
-                          },
-                          onTap: () {
-                            setState(() {
-                              isShowMarkers = !isShowMarkers;
-                            });
-                          },
-                        ),
-                      ),
+                      
                       Positioned(
                         bottom: 110,
                         right: 10,
@@ -268,7 +251,7 @@ class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
                           children: [
                             ExitHeader(
                                 title:
-                                    'Pranešti apie sugadintą miško\npaklotę ar kelius',
+                                    'Pranešti apie žievėgraužį\ntipografą',
                                 width: widget.width,
                                 onTap: () {
                                   context.goNamed("home");

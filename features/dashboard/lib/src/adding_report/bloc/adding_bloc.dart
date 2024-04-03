@@ -13,7 +13,6 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
     on<LoadForestData>(_onLoadForestData);
     on<LoadBeetleData>(_onLoadBeetleData);
     on<LoadBeetleInformation>(_onLoadBeetleInformation);
-    on<AddBeetleReport>(_onAddBeetleReport);
     on<AddReport>(_onAddReport);
     on<ReloadPage>(_onReloadEvent);
   }
@@ -104,34 +103,6 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
       );
 
       await ApiProvider().sendNewTrashReport(
-        emailValue: event.emailValue,
-        textValue: event.textValue,
-        selectedLat: event.selectedLat,
-        selectedLong: event.selectedLong,
-        imageFiles: event.images,
-        category: event.category,
-      );
-
-      emit(
-        ConfirmationState(),
-      );
-    } catch (e) {
-      emit(
-        ErrorState(errorMessage: 'Įvyko netikėta klaida'),
-      );
-    }
-  }
-
-  Future<void> _onAddBeetleReport(
-    AddBeetleReport event,
-    Emitter<AddingState> emit,
-  ) async {
-    try {
-      emit(
-        LoadingState(),
-      );
-
-      await ApiProvider().sendNewBeetleReport(
         emailValue: event.emailValue,
         textValue: event.textValue,
         selectedLat: event.selectedLat,

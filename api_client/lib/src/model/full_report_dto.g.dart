@@ -10,6 +10,8 @@ const FullReportDtoCategoryEnum _$fullReportDtoCategoryEnum_trash =
     const FullReportDtoCategoryEnum._('trash');
 const FullReportDtoCategoryEnum _$fullReportDtoCategoryEnum_forest =
     const FullReportDtoCategoryEnum._('forest');
+const FullReportDtoCategoryEnum _$fullReportDtoCategoryEnum_beetle =
+    const FullReportDtoCategoryEnum._('beetle');
 
 FullReportDtoCategoryEnum _$fullReportDtoCategoryEnumValueOf(String name) {
   switch (name) {
@@ -17,8 +19,10 @@ FullReportDtoCategoryEnum _$fullReportDtoCategoryEnumValueOf(String name) {
       return _$fullReportDtoCategoryEnum_trash;
     case 'forest':
       return _$fullReportDtoCategoryEnum_forest;
+    case 'beetle':
+      return _$fullReportDtoCategoryEnum_beetle;
     default:
-      return _$fullReportDtoCategoryEnum_forest;
+      return _$fullReportDtoCategoryEnum_beetle;
   }
 }
 
@@ -26,6 +30,7 @@ final BuiltSet<FullReportDtoCategoryEnum> _$fullReportDtoCategoryEnumValues =
     new BuiltSet<FullReportDtoCategoryEnum>(const <FullReportDtoCategoryEnum>[
   _$fullReportDtoCategoryEnum_trash,
   _$fullReportDtoCategoryEnum_forest,
+  _$fullReportDtoCategoryEnum_beetle,
 ]);
 
 Serializer<FullReportDtoCategoryEnum> _$fullReportDtoCategoryEnumSerializer =
@@ -36,10 +41,12 @@ class _$FullReportDtoCategoryEnumSerializer
   static const Map<String, Object> _toWire = const <String, Object>{
     'trash': 'trash',
     'forest': 'forest',
+    'beetle': 'beetle',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
     'trash': 'trash',
     'forest': 'forest',
+    'beetle': 'beetle',
   };
 
   @override

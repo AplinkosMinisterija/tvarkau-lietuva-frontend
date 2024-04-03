@@ -38,13 +38,13 @@ class AddingScreenBeetle extends StatelessWidget {
                     height: height,
                     onAddTap: (email, text, lat, long, files) {
                       context.read<AddingBloc>().add(
-                            AddBeetleReport(
-                                emailValue: email,
-                                textValue: text,
-                                selectedLat: lat,
-                                selectedLong: long,
-                                images: files,
-                                category: 'forest'),
+                        AddReport(
+                            emailValue: email,
+                            textValue: text,
+                            selectedLat: lat,
+                            selectedLong: long,
+                            images: files,
+                            category: 'beetle'),
                           );
                     },
                     onDataSecurityTap: () {},
@@ -55,13 +55,13 @@ class AddingScreenBeetle extends StatelessWidget {
                     height: height,
                     onAddTap: (email, text, lat, long, files) {
                       context.read<AddingBloc>().add(
-                            AddBeetleReport(
-                                emailValue: email,
-                                textValue: text,
-                                selectedLat: lat,
-                                selectedLong: long,
-                                images: files,
-                                category: 'forest'),
+                        AddReport(
+                            emailValue: email,
+                            textValue: text,
+                            selectedLat: lat,
+                            selectedLong: long,
+                            images: files,
+                            category: 'beetle'),
                           );
                     },
                   );

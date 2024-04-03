@@ -77,7 +77,6 @@ Class | Method | HTTP request | Description
 [*ReportsApi*](doc/ReportsApi.md) | [**reportControllerGetAllPublicReports**](doc/ReportsApi.md#reportcontrollergetallpublicreports) | **GET** /reports | 
 [*ReportsApi*](doc/ReportsApi.md) | [**reportControllerGetReportById**](doc/ReportsApi.md#reportcontrollergetreportbyid) | **GET** /reports/{refId} | 
 [*ReportsApi*](doc/ReportsApi.md) | [**reportControllerGetReportStatistics**](doc/ReportsApi.md#reportcontrollergetreportstatistics) | **GET** /reports/statistics | 
-[*ReportsApi*](doc/ReportsApi.md) | [**reportControllerSendBarkBeetleReport**](doc/ReportsApi.md#reportcontrollersendbarkbeetlereport) | **POST** /reports/bark-beetle | 
 
 
 ## Documentation For Models

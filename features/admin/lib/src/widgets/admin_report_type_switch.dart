@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import '../common/custom_styles.dart';
 import '../common/custom_colors.dart';
 
-class UpdatedReportTypeSwitch extends StatelessWidget {
-  const UpdatedReportTypeSwitch({
+class AdminReportTypeSwitch extends StatelessWidget {
+  const AdminReportTypeSwitch({
     super.key,
     required this.activeCategory,
     required this.onReportCategoryChange,
@@ -45,6 +45,14 @@ class UpdatedReportTypeSwitch extends StatelessWidget {
             isActive: activeCategory == 'dump',
             onPressed: () {
               onReportCategoryChange('dump');
+            },
+          ),
+          4.widthBox,
+          _BuildButton(
+            buttonText: 'Žievėgraužis tipografas',
+            isActive: activeCategory == 'beetle',
+            onPressed: () {
+              onReportCategoryChange('beetle');
             },
           ),
         ],
