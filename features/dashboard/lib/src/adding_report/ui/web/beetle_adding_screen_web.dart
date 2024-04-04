@@ -203,7 +203,6 @@ class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
                                   )),
                             )
                           : const SizedBox.shrink(),
-                      
                       Positioned(
                         bottom: 110,
                         right: 10,
@@ -250,8 +249,7 @@ class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
                         child: Column(
                           children: [
                             ExitHeader(
-                                title:
-                                    'Pranešti apie žievėgraužį\ntipografą',
+                                title: 'Pranešti apie žievėgraužį\ntipografą',
                                 width: widget.width,
                                 onTap: () {
                                   context.goNamed("home");

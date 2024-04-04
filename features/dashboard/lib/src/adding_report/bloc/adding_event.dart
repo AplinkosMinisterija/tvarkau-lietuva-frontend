@@ -28,22 +28,4 @@ class AddReport implements AddingEvent {
   });
 }
 
-class AddBeetleReport implements AddingEvent {
-  final String emailValue;
-  final String textValue;
-  final double selectedLat;
-  final double selectedLong;
-  final List<Uint8List> images;
-  final String category;
-
-  AddBeetleReport({
-    required this.emailValue,
-    required this.textValue,
-    required this.selectedLat,
-    required this.selectedLong,
-    required this.images,
-    required this.category,
-  });
-}
-
 class ReloadPage implements AddingEvent {}
