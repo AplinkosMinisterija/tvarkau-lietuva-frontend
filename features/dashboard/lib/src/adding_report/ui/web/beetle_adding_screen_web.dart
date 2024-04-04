@@ -238,7 +238,7 @@ class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
                         ),
                       ),
                       InstructionsWidget(
-                        width: widget.width,
+                        width: widget.width*0.9,
                         isBeetleCategory: true,
                       ),
                     ],

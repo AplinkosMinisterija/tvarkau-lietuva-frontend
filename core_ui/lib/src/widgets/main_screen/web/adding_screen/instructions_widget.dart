@@ -19,7 +19,7 @@ class InstructionsWidget extends StatelessWidget {
         top: width * 0.0167,
       ),
       height: width * 0.0838,
-      width: width * 0.6,
+      width: isBeetleCategory ? width * 0.75 : width * 0.6,
       decoration: BoxDecoration(
           color: const Color.fromRGBO(255, 253, 251, 1),
           borderRadius: BorderRadius.circular(8),
