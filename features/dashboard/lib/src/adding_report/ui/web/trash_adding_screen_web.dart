@@ -269,7 +269,10 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                           ),
                         ),
                       ),
-                      InstructionsWidget(width: widget.width),
+                      InstructionsWidget(
+                        width: widget.width,
+                        isBeetleCategory: false,
+                      ),
                     ],
                   ),
                   SizedBox(

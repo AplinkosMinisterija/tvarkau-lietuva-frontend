@@ -64,7 +64,8 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
 
   void addCustomIcon() {
     BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(size: Size(45, 45)), 'assets/svg/forest_pin_icon.svg')
+            const ImageConfiguration(size: Size(45, 45)),
+            'assets/svg/forest_pin_icon.svg')
         .then((icon) {
       setState(() {
         markerIcon = icon;
@@ -272,7 +273,10 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
                           ),
                         ),
                       ),
-                      InstructionsWidget(width: widget.width),
+                      InstructionsWidget(
+                        width: widget.width,
+                        isBeetleCategory: false,
+                      ),
                     ],
                   ),
                   SizedBox(

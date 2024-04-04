@@ -1,5 +1,6 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -32,7 +33,7 @@ class BeetleInformationScreen extends StatelessWidget {
                 ),
               ),
               Text(
-                'Pasitikrinkite ar tikrai aptikote žievėgraužį tipografą',
+                'Pasitikrinkite, ar aptikote žievėgraužio tipografo apniktus medžius',
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge
@@ -40,23 +41,23 @@ class BeetleInformationScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               Text(
-                'Žievėgraužis tipogrãfas (Ips typographus), straubliukų (Curculionidae) šeimos vabalas. Paplitęs Europoje ir Sibire. Kūnas 4–5,5 mm ilgio, ritiniškas, tamsiai rudas, blizgantis, apaugęs plaukeliais. Antsparniai su taškų eilėmis. Kiekvieno karučio (įdubimas antsparnių gale) šone 4 danteliai. Antrasis dantelis nuo apačios yra didžiausias ir platėjantis į viršūnę.',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              const SizedBox(height: 24),
-              Text(
-                'Pažeistos medienos žievėje galima pastebėti mažas skylutes, aplink kurias tarsi paberta smulkių, rusvos spalvos pjuvenų. Tokioje vietoje prapjovus ar nulupus medžio žievę rastume įmantrios formos takus, kuriuos išgraužia vabalai ir jų lervos.',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              const SizedBox(height: 24),
-              Text(
-                'Medžiai, kurie pažeisti žievėgraužio tipografo:',
+                'Kaip atpažinti ar medyje įsiveisė šis kenkėjas/žievėgraužis tipografas?',
                 style: Theme.of(context)
                     .textTheme
-                    .titleSmall
+                    .bodyMedium
                     ?.copyWith(fontWeight: FontWeight.bold),
               ),
+              const SizedBox(height: 6),
+              Text(
+                'Pažeistos eglių medienos žievėje galima pastebėti mažas skylutes, aplink kurias tarsi paberta, smulkių, rusvos spalvos pjuvenų. Tokioje vietoje prapjovus ar nulupus medžio žievę rastume įmantrios formos takus, kuriuos išgraužia vabalai ir jų lervos.',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
               const SizedBox(height: 24),
+              Text(
+                'Žievėgraužis dauginasi ir plinta pusamžiuose ir vyresniuose eglynuose bei eglių nuvirtusiose eglėse.',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              const SizedBox(height: 12),
               ImageGallery().buildImages(
                 imageUrls: [
                   'https://res.cloudinary.com/dms8ku4iv/image/upload/v1711572859/kvusnlpak8zgoi9bpyga.jpg',
@@ -68,6 +69,31 @@ class BeetleInformationScreen extends StatelessWidget {
                 width: 300,
               ),
               AddButton(width: 1600, onTap: onContinue),
+              const SizedBox(height: 24),
+              RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text:
+                          'Kviečiame susipažinti su šiuo reiškiniu Valstybinės miškų tarnybos parengtame ',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    TextSpan(
+                      text: 'pristatyme',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(color: Colors.blue),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          LaunchUrl().launch(
+                              'https://amvmt.lrv.lt/uploads/amvmt/documents/files/MSAS/Patarimai/Zievegrauzis_tipografas_ATMINTINE_VMT_2021.pdf');
+                        },
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 24),
             ],
           ),
         ),
