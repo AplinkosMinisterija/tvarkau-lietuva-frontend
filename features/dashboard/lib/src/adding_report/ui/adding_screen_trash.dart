@@ -72,10 +72,12 @@ class AddingScreenTrash extends StatelessWidget {
                 if (width > 900) {
                   return ConfirmationDialog(
                     width: width,
+                    category: 'trash',
                   );
                 } else {
                   return ConfirmationScreenMobile(
                     width: width,
+                    category: 'trash',
                   );
                 }
               } else if (state is ErrorState) {

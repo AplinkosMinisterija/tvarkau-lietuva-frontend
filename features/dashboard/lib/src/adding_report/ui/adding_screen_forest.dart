@@ -70,10 +70,12 @@ class AddingScreenForest extends StatelessWidget {
                 if (width > 900) {
                   return ConfirmationDialog(
                     width: width,
+                    category: 'forest',
                   );
                 } else {
                   return ConfirmationScreenMobile(
                     width: width,
+                    category: 'forest',
                   );
                 }
               } else if (state is ErrorState) {

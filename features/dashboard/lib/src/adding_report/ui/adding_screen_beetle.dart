@@ -38,13 +38,13 @@ class AddingScreenBeetle extends StatelessWidget {
                     height: height,
                     onAddTap: (email, text, lat, long, files) {
                       context.read<AddingBloc>().add(
-                        AddReport(
-                            emailValue: email,
-                            textValue: text,
-                            selectedLat: lat,
-                            selectedLong: long,
-                            images: files,
-                            category: 'beetle'),
+                            AddReport(
+                                emailValue: email,
+                                textValue: text,
+                                selectedLat: lat,
+                                selectedLong: long,
+                                images: files,
+                                category: 'beetle'),
                           );
                     },
                     onDataSecurityTap: () {},
@@ -55,13 +55,13 @@ class AddingScreenBeetle extends StatelessWidget {
                     height: height,
                     onAddTap: (email, text, lat, long, files) {
                       context.read<AddingBloc>().add(
-                        AddReport(
-                            emailValue: email,
-                            textValue: text,
-                            selectedLat: lat,
-                            selectedLong: long,
-                            images: files,
-                            category: 'beetle'),
+                            AddReport(
+                                emailValue: email,
+                                textValue: text,
+                                selectedLat: lat,
+                                selectedLong: long,
+                                images: files,
+                                category: 'beetle'),
                           );
                     },
                   );
@@ -75,10 +75,12 @@ class AddingScreenBeetle extends StatelessWidget {
                 if (width > 900) {
                   return ConfirmationDialog(
                     width: width,
+                    category: 'beetle',
                   );
                 } else {
                   return ConfirmationScreenMobile(
                     width: width,
+                    category: 'beetle',
                   );
                 }
               } else if (state is ErrorState) {

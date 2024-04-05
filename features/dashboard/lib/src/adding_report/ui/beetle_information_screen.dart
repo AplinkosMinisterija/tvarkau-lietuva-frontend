@@ -33,7 +33,7 @@ class BeetleInformationScreen extends StatelessWidget {
                 ),
               ),
               Text(
-                'Pasitikrinkite, ar aptikote žievėgraužio tipografo apniktus medžius',
+                'Pasitikrinkite ar aptikote žievėgraužio tipografo apniktus medžius',
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge
@@ -41,7 +41,7 @@ class BeetleInformationScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               Text(
-                'Kaip atpažinti ar medyje įsiveisė šis kenkėjas/žievėgraužis tipografas?',
+                'Kaip atpažinti ar medyje įsiveisė žievėgraužis tipografas?',
                 style: Theme.of(context)
                     .textTheme
                     .bodyMedium
@@ -54,7 +54,7 @@ class BeetleInformationScreen extends StatelessWidget {
               ),
               const SizedBox(height: 24),
               Text(
-                'Žievėgraužis dauginasi ir plinta pusamžiuose ir vyresniuose eglynuose bei eglių nuvirtusiose eglėse.',
+                'Žievėgraužis dauginasi ir plinta pusamžiuose ir vyresniuose eglynuose bei nuvirtusiose eglėse.',
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: 12),
@@ -70,6 +70,11 @@ class BeetleInformationScreen extends StatelessWidget {
               ),
               AddButton(width: 1600, onTap: onContinue),
               const SizedBox(height: 24),
+              Text(
+                'Žievėgraužis tipografas yra medžių liemenų kenkėjas — 4-5,5 mm ilgio vabalas. Šis vabalas veisdamasis po eglių žieve nulemia masinį jų žuvimą, todėl yra būtina jo kontrolė.',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              const SizedBox(height: 12),
               RichText(
                 text: TextSpan(
                   children: [

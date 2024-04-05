@@ -1,11 +1,18 @@
+import 'package:core/utils/url_launcher.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ConfirmationDialog extends StatelessWidget {
-  const ConfirmationDialog({required this.width, super.key});
+  const ConfirmationDialog({
+    required this.width,
+    required this.category,
+    super.key,
+  });
 
   final double width;
+  final String category;
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +86,9 @@ class ConfirmationDialog extends StatelessWidget {
                   child: FittedBox(
                     fit: BoxFit.fitWidth,
                     child: Text(
-                      'Pranešimas taps viešai matomas, kai tik pareigūnai įsitikins,\nkad nepateikėte asmens duomenų.',
+                      category == 'beetle'
+                          ? 'Pranešimo informacija bus panaudota efektyvesnei miškų sanitarinei apsaugai.'
+                          : 'Pranešimas taps viešai matomas, kai tik pareigūnai įsitikins,\nkad nepateikėte asmens duomenų.',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.raleway(
                         fontWeight: FontWeight.w800,
@@ -95,14 +104,38 @@ class ConfirmationDialog extends StatelessWidget {
                   width: width * 0.25,
                   child: FittedBox(
                     fit: BoxFit.fitWidth,
-                    child: Text(
-                      'Aplinkos apsaugos departamento pareigūnai netrukus pradės\n darbuotis ieškodami pažeidėjo.',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.raleway(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black,
-                      ),
-                    ),
+                    child: category == 'beetle'
+                        ? RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text:
+                                      'Sekti stebimus kenkėjų veisimosi židinius galite sekti ',
+                                  style: Theme.of(context).textTheme.bodyMedium,
+                                ),
+                                TextSpan(
+                                  text: 'šioje švieslentėje.',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.copyWith(color: Colors.blue),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      LaunchUrl().launch(
+                                          'https://aad-am.maps.arcgis.com/apps/webappviewer/index.html?id=255e7fc354d649abaf537848963bf865');
+                                    },
+                                ),
+                              ],
+                            ),
+                          )
+                        : Text(
+                            'Aplinkos apsaugos departamento pareigūnai netrukus pradės\n darbuotis ieškodami pažeidėjo.',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.raleway(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                            ),
+                          ),
                   ),
                 ),
                 SizedBox(
