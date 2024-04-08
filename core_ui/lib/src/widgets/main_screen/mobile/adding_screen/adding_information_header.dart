@@ -11,7 +11,7 @@ class AddingInformationHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: width * 0.8,
+      height: width * 0.815,
       width: width * 0.911,
       padding: EdgeInsets.all(width * 0.028),
       decoration: BoxDecoration(
@@ -39,7 +39,7 @@ class AddingInformationHeader extends StatelessWidget {
             ),
             SizedBox(height: width * 0.02),
             Text(
-              '3. Jeigu nesuteikėte prieigos naudoti jūsų įrenginio vietos, nurodykite pažeidimo vietą nuvildami smeigtuką ant žemėlapio.',
+              '3. Jeigu nesuteikėte prieigos naudoti jūsų įrenginio vietos, nurodykite pažeidimo vietą nuvilkdami smeigtuką ant žemėlapio.',
               textAlign: TextAlign.left,
               style: GoogleFonts.roboto(
                   fontSize: width * 0.03333, fontWeight: FontWeight.w400),
@@ -47,7 +47,7 @@ class AddingInformationHeader extends StatelessWidget {
             SizedBox(height: width * 0.02),
             Text(
               isBeetleCategory
-                  ? '4. Aprašykite informaciją susijusią su pastebėtu žievėgraužiu, pridėkite nuotraukas.'
+                  ? '4. Jeigu pastebite žievėgraužio tipografo apniktas egles arba tikėtiną jo veisimosi vietą, pridėkite nuotraukas.'
                   : '4. Aprašykite informaciją susijusią su pastebėtu pažeidimu, pridėkite nuotraukas.',
               textAlign: TextAlign.left,
               style: GoogleFonts.roboto(

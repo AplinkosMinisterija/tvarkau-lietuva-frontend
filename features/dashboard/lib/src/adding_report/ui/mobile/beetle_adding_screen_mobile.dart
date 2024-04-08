@@ -92,7 +92,7 @@ class _BeetleAddingScreenMobileState extends State<BeetleAddingScreenMobile> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Pranešti apie žievėgraužį',
+                            'Pranešti apie žievėgraužį tipografą',
                             style: GoogleFonts.roboto(
                               fontSize: widget.width * 0.04444,
                               fontWeight: FontWeight.w700,
