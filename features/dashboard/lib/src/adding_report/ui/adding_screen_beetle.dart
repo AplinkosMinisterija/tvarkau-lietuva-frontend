@@ -1,14 +1,15 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
+import 'package:dashboard/src/adding_report/ui/beetle_information_screen.dart';
+import 'package:dashboard/src/adding_report/ui/web/beetle_adding_screen_web.dart';
 import 'package:dashboard/src/adding_report/ui/web/confirmation_screen.dart';
-import 'package:dashboard/src/adding_report/ui/web/forest_adding_screen_web.dart';
 import 'package:flutter/material.dart';
 import '../bloc/adding_bloc.dart';
-import 'mobile/forest_adding_screen_mobile.dart';
+import 'mobile/beetle_adding_screen_mobile.dart';
 import 'mobile/confirmation_screen_mobile.dart';
 
-class AddingScreenForest extends StatelessWidget {
-  const AddingScreenForest({
+class AddingScreenBeetle extends StatelessWidget {
+  const AddingScreenBeetle({
     super.key,
   });
 
@@ -19,17 +20,22 @@ class AddingScreenForest extends StatelessWidget {
     double height = size.height;
     return BlocProvider(
       create: (BuildContext context) =>
-          AddingBloc('forest')..add(LoadForestData()),
+          AddingBloc('beetle')..add(LoadBeetleInformation()),
       child: BlocBuilder<AddingBloc, AddingState>(
         builder: (BuildContext context, AddingState state) {
           return BlocBuilder<AddingBloc, AddingState>(
             builder: (BuildContext context, AddingState state) {
-              if (state is ForestContentState) {
+              if (state is BeetleInformationState) {
+                return BeetleInformationScreen(
+                  onContinue: () {
+                    context.read<AddingBloc>().add(LoadBeetleData());
+                  },
+                );
+              } else if (state is BeetleContentState) {
                 if (width > 900) {
-                  return ForestAddingScreenWeb(
+                  return BeetleAddingScreenWeb(
                     width: width,
                     height: height,
-                    reports: state.forestReports,
                     onAddTap: (email, text, lat, long, files) {
                       context.read<AddingBloc>().add(
                             AddReport(
@@ -38,16 +44,15 @@ class AddingScreenForest extends StatelessWidget {
                                 selectedLat: lat,
                                 selectedLong: long,
                                 images: files,
-                                category: 'forest'),
+                                category: 'beetle'),
                           );
                     },
                     onDataSecurityTap: () {},
                   );
                 } else {
-                  return ForestAddingScreenMobile(
+                  return BeetleAddingScreenMobile(
                     width: width,
                     height: height,
-                    reports: state.forestReports,
                     onAddTap: (email, text, lat, long, files) {
                       context.read<AddingBloc>().add(
                             AddReport(
@@ -56,7 +61,7 @@ class AddingScreenForest extends StatelessWidget {
                                 selectedLat: lat,
                                 selectedLong: long,
                                 images: files,
-                                category: 'forest'),
+                                category: 'beetle'),
                           );
                     },
                   );
@@ -70,12 +75,12 @@ class AddingScreenForest extends StatelessWidget {
                 if (width > 900) {
                   return ConfirmationDialog(
                     width: width,
-                    category: 'forest',
+                    category: 'beetle',
                   );
                 } else {
                   return ConfirmationScreenMobile(
                     width: width,
-                    category: 'forest',
+                    category: 'beetle',
                   );
                 }
               } else if (state is ErrorState) {

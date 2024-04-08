@@ -1,4 +1,3 @@
-import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
@@ -10,25 +9,25 @@ import 'dart:typed_data';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class TrashAddingScreenWeb extends StatefulWidget {
-  const TrashAddingScreenWeb({
+class BeetleAddingScreenWeb extends StatefulWidget {
+  const BeetleAddingScreenWeb({
     required this.width,
     required this.height,
-    required this.reports,
     required this.onAddTap,
+    required this.onDataSecurityTap,
     super.key,
   });
 
   final double width;
   final double height;
-  final List<PublicReportDto> reports;
   final Function(String, String, double, double, List<Uint8List>) onAddTap;
+  final VoidCallback onDataSecurityTap;
 
   @override
-  State<TrashAddingScreenWeb> createState() => _TrashAddingScreenWebState();
+  State<BeetleAddingScreenWeb> createState() => _BeetleAddingScreenWebState();
 }
 
-class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
+class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
   List<Uint8List> _selectedImages = [];
 
   Future<void> getMultipleImageInfos() async {
@@ -62,7 +61,8 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
 
   void addCustomIcon() {
     BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(), 'assets/svg/pin_icon.svg')
+            const ImageConfiguration(size: Size(45, 45)),
+            'assets/svg/forest_pin_icon.svg')
         .then((icon) {
       setState(() {
         markerIcon = icon;
@@ -81,21 +81,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       addCustomIcon();
     });
-    int index = 0;
-    for (var element in widget.reports) {
-      markers.add(
-        Marker(
-          markerId: MarkerId(
-            element.name + index.toString(),
-          ),
-          position: LatLng(
-            element.latitude.toDouble(),
-            element.longitude.toDouble(),
-          ),
-        ),
-      );
-      index++;
-    }
+
     getLocation();
     super.initState();
   }
@@ -138,7 +124,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
   @override
   Widget build(BuildContext context) {
     return Title(
-      title: "Pranešti apie atliekas",
+      title: "Pranešti apie žievėgraužį",
       color: Colors.green,
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(250, 242, 234, 1),
@@ -218,24 +204,6 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                             )
                           : const SizedBox.shrink(),
                       Positioned(
-                        left: widget.width * 0.0111,
-                        bottom: widget.width * 0.0111,
-                        child: ChangeVisibilityButtonMobile(
-                          width: widget.width / 2.4,
-                          isActive: isShowMarkers,
-                          onHover: (isHover) {
-                            setState(() {
-                              isMapDisabled = isHover;
-                            });
-                          },
-                          onTap: () {
-                            setState(() {
-                              isShowMarkers = !isShowMarkers;
-                            });
-                          },
-                        ),
-                      ),
-                      Positioned(
                         bottom: 110,
                         right: 10,
                         child: InkWell(
@@ -270,8 +238,8 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                         ),
                       ),
                       InstructionsWidget(
-                        width: widget.width,
-                        isBeetleCategory: false,
+                        width: widget.width*0.9,
+                        isBeetleCategory: true,
                       ),
                     ],
                   ),
@@ -284,7 +252,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                         child: Column(
                           children: [
                             ExitHeader(
-                                title: 'Pranešti apie atliekas',
+                                title: 'Pranešti apie žievėgraužį\ntipografą',
                                 width: widget.width,
                                 onTap: () {
                                   context.goNamed("home");

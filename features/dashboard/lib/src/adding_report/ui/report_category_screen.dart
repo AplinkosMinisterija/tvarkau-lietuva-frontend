@@ -66,6 +66,15 @@ class _ReportCategoryScreenBody extends StatelessWidget {
                     },
                     iconName: 'recycle_icon',
                   ),
+                  ReportCategorySelector(
+                    title: 'Kenkėjų apniktos ar nuvirtusios eglės',
+                    description:
+                        'Jeigu pastebite žievėgraužį tipografą ar tikėtiną jo veisimosi vietą',
+                    onTap: () {
+                      context.goNamed('newReportBeetle');
+                    },
+                    iconName: 'bug_icon',
+                  ),
                 ],
               ),
             ),

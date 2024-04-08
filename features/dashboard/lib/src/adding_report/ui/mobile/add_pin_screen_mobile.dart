@@ -9,11 +9,13 @@ class AddPinScreenMobile extends StatefulWidget {
   const AddPinScreenMobile(
       {required this.width,
       required this.markers,
+      required this.isLayerSwitchVisible,
       required this.onTap,
       super.key});
 
   final double width;
   final Set<Marker> markers;
+  final bool isLayerSwitchVisible;
   final Function(double, double, Marker) onTap;
 
   @override
@@ -215,24 +217,26 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                           )),
                     )
                   : const SizedBox.shrink(),
-              Positioned(
-                left: widget.width * 0.0333,
-                bottom: widget.width * 0.0333,
-                child: ChangeVisibilityButtonMobile(
-                  width: widget.width,
-                  isActive: isShowMarkers,
-                  onHover: (isHover) {
-                    setState(() {
-                      isMapDisabled = isHover;
-                    });
-                  },
-                  onTap: () {
-                    setState(() {
-                      isShowMarkers = !isShowMarkers;
-                    });
-                  },
-                ),
-              ),
+              widget.isLayerSwitchVisible
+                  ? Positioned(
+                      left: widget.width * 0.0333,
+                      bottom: widget.width * 0.0333,
+                      child: ChangeVisibilityButtonMobile(
+                        width: widget.width,
+                        isActive: isShowMarkers,
+                        onHover: (isHover) {
+                          setState(() {
+                            isMapDisabled = isHover;
+                          });
+                        },
+                        onTap: () {
+                          setState(() {
+                            isShowMarkers = !isShowMarkers;
+                          });
+                        },
+                      ),
+                    )
+                  : const SizedBox.shrink(),
               Positioned(
                 bottom: 110,
                 right: 10,

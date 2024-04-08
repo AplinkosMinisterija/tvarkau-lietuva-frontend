@@ -6,6 +6,10 @@ class LoadTrashData implements AddingEvent {}
 
 class LoadForestData implements AddingEvent {}
 
+class LoadBeetleData implements AddingEvent {}
+
+class LoadBeetleInformation implements AddingEvent {}
+
 class AddReport implements AddingEvent {
   final String emailValue;
   final String textValue;

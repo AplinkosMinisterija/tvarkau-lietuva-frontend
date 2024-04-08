@@ -1,4 +1,4 @@
-// Openapi Generator last run: : 2024-02-27T19:39:31.737179
+// Openapi Generator last run: : 2024-04-03T12:44:43.196727
 import 'package:admin/admin.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:dashboard/dashboard_screen.dart';
@@ -73,6 +73,10 @@ class AadApp extends StatelessWidget {
           name: 'newReportForest',
           path: '/pranesti-sugadinta-misko-paklote-ir-keliai',
           builder: (context, state) => const AddingScreenForest()),
+      GoRoute(
+          name: 'newReportBeetle',
+          path: '/pranesti-zievegrauzis',
+          builder: (context, state) => const AddingScreenBeetle()),
       GoRoute(
           name: 'report_category',
           path: '/pasirinkti-kategorija',

@@ -145,6 +145,7 @@ class ApiProvider {
     return response.data!;
   }
 
+
   Future<FullReportDto> updateTrashReport({
     required String id,
     required String refId,

@@ -22,8 +22,7 @@ class TrashAddingScreenMobile extends StatefulWidget {
   final double width;
   final double height;
   final List<PublicReportDto> reports;
-  final Function(String, String, double, double, List<Uint8List>)
-      onAddTap;
+  final Function(String, String, double, double, List<Uint8List>) onAddTap;
   final VoidCallback onDataSecurityTap;
 
   @override
@@ -131,7 +130,10 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                         ],
                       ),
                       SizedBox(height: widget.width * 0.0611),
-                      AddingInformationHeader(width: widget.width),
+                      AddingInformationHeader(
+                        width: widget.width,
+                        isBeetleCategory: false,
+                      ),
                       SizedBox(height: widget.width * 0.0444),
                       Stack(
                         alignment: Alignment.bottomCenter,
@@ -159,6 +161,7 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                                     builder: (context) => AddPinScreenMobile(
                                           width: widget.width,
                                           markers: markers,
+                                          isLayerSwitchVisible: true,
                                           onTap: (lat, long, marker) {
                                             setState(() {
                                               newMarker.clear();
@@ -392,7 +395,7 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                                       ]);
                                 },
                                 itemCount: getImageWidget(
-                                    _selectedImages, widget.width * 0.4333)
+                                        _selectedImages, widget.width * 0.4333)
                                     .length,
                               ),
                             )
@@ -467,7 +470,6 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                                 _selectedImages,
                               );
                             }
-
                           }
                         },
                       ),

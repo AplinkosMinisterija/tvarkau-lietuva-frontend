@@ -2,17 +2,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
 class AddingInformationHeader extends StatelessWidget {
-  const AddingInformationHeader({
-    super.key,
-    required this.width,
-  });
+  const AddingInformationHeader(
+      {super.key, required this.width, required this.isBeetleCategory});
 
   final double width;
+  final bool isBeetleCategory;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: width * 0.8,
+      height: width * 0.815,
       width: width * 0.911,
       padding: EdgeInsets.all(width * 0.028),
       decoration: BoxDecoration(
@@ -40,14 +39,16 @@ class AddingInformationHeader extends StatelessWidget {
             ),
             SizedBox(height: width * 0.02),
             Text(
-              '3. Jeigu nesuteikėte prieigos naudoti jūsų įrenginio vietos, nurodykite pažeidimo vietą nuvildami smeigtuką ant žemėlapio.',
+              '3. Jeigu nesuteikėte prieigos naudoti jūsų įrenginio vietos, nurodykite pažeidimo vietą nuvilkdami smeigtuką ant žemėlapio.',
               textAlign: TextAlign.left,
               style: GoogleFonts.roboto(
                   fontSize: width * 0.03333, fontWeight: FontWeight.w400),
             ),
             SizedBox(height: width * 0.02),
             Text(
-              '4. Aprašykite informaciją susijusią su pastebėtu pažeidimu, pridėkite nuotraukas.',
+              isBeetleCategory
+                  ? '4. Jeigu pastebite žievėgraužio tipografo apniktas egles arba tikėtiną jo veisimosi vietą, pridėkite nuotraukas.'
+                  : '4. Aprašykite informaciją susijusią su pastebėtu pažeidimu, pridėkite nuotraukas.',
               textAlign: TextAlign.left,
               style: GoogleFonts.roboto(
                   fontSize: width * 0.03333, fontWeight: FontWeight.w400),

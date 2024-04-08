@@ -11,6 +11,8 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
   AddingBloc(this.type) : super(LoadingState()) {
     on<LoadTrashData>(_onLoadTrashData);
     on<LoadForestData>(_onLoadForestData);
+    on<LoadBeetleData>(_onLoadBeetleData);
+    on<LoadBeetleInformation>(_onLoadBeetleInformation);
     on<AddReport>(_onAddReport);
     on<ReloadPage>(_onReloadEvent);
   }
@@ -49,6 +51,40 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
         ForestContentState(
           forestReports: trashReports,
         ),
+      );
+    } catch (e) {
+      emit(
+        ErrorState(errorMessage: 'Netikėta klaida'),
+      );
+    }
+  }
+
+  Future<void> _onLoadBeetleData(
+    LoadBeetleData _,
+    Emitter<AddingState> emit,
+  ) async {
+    try {
+      emit(LoadingState());
+
+      emit(
+        BeetleContentState(),
+      );
+    } catch (e) {
+      emit(
+        ErrorState(errorMessage: 'Netikėta klaida'),
+      );
+    }
+  }
+
+  Future<void> _onLoadBeetleInformation(
+    LoadBeetleInformation _,
+    Emitter<AddingState> emit,
+  ) async {
+    try {
+      emit(LoadingState());
+
+      emit(
+        BeetleInformationState(),
       );
     } catch (e) {
       emit(

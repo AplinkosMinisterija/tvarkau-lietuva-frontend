@@ -16,6 +16,7 @@ paths:
             enum:
               - trash
               - forest
+              - beetle
             type: string
       responses:
         '200':
@@ -195,6 +196,7 @@ paths:
             enum:
               - trash
               - forest
+              - beetle
             type: string
       responses:
         '200':
@@ -217,6 +219,7 @@ paths:
             enum:
               - trash
               - forest
+              - beetle
             type: string
       responses:
         '200':
@@ -334,6 +337,7 @@ components:
           enum:
             - trash
             - forest
+            - beetle
           type: string
         refId:
           type: string
@@ -566,6 +570,7 @@ components:
           enum:
             - trash
             - forest
+            - beetle
         email:
           type: string
       required:
@@ -584,6 +589,7 @@ components:
           enum:
             - trash
             - forest
+            - beetle
           type: string
         refId:
           type: string

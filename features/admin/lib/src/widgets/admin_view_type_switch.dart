@@ -2,8 +2,8 @@ import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import '../common/custom_colors.dart';
 
-class UpdatedAdminViewTypeSwitch extends StatelessWidget {
-  const UpdatedAdminViewTypeSwitch({
+class AdminViewTypeSwitch extends StatelessWidget {
+  const AdminViewTypeSwitch({
     super.key,
     required this.isMapView,
     required this.onIsMapViewChange,
