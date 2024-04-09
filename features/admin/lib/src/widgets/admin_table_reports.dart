@@ -186,11 +186,11 @@ class ReportDataSourceAdmin extends DataGridSource {
                           color: CustomColors.primary,
                         ),
                         onPressed: () {
-                          final int index = effectiveRows.indexOf(row);
-                          final FullReportDto report = reportData[index];
-                          String str = '0' * (8 - report.refId.length);
+                          final String reportId =
+                              row.getCells()[0].value.toString();
+                          String str = '0' * (8 - reportId.length);
                           context.goNamed('report_admin', queryParameters: {
-                            'id': 'TLP-A$str${report.refId.toUpperCase()}'
+                            'id': 'TLP-A$str${reportId.toUpperCase()}'
                           });
                         },
                         icon: const Icon(
