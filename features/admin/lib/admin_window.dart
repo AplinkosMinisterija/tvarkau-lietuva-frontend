@@ -137,6 +137,10 @@ class _AdminWindowState extends State<AdminWindow> {
     super.initState();
     isShowDeleted = widget.isShowDeleted;
     isShowDumps = widget.isShowDumps;
+    if (widget.email == GlobalConstants.adminBeetleAccount &&
+        widget.activeCategory != 'beetle') {
+      widget.onCategoryChange('beetle');
+    }
     setupMarker();
   }
 
@@ -178,12 +182,16 @@ class _AdminWindowState extends State<AdminWindow> {
                               onReportCategoryChange: (String value) {
                                 widget.onCategoryChange(value);
                               },
+                              isEmailBoundToBeetle: widget.email ==
+                                  GlobalConstants.adminBeetleAccount,
                             )
                           : Opacity(
                               opacity: 0.3,
                               child: AdminReportTypeSwitch(
                                 activeCategory: widget.activeCategory,
                                 onReportCategoryChange: (String value) {},
+                                isEmailBoundToBeetle: widget.email ==
+                                    GlobalConstants.adminBeetleAccount,
                               ),
                             ),
                       20.widthBox,
