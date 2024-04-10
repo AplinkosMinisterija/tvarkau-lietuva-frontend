@@ -8,10 +8,12 @@ class AdminReportTypeSwitch extends StatelessWidget {
     super.key,
     required this.activeCategory,
     required this.onReportCategoryChange,
+    required this.isEmailBoundToBeetle,
   });
 
   final String activeCategory;
   final ValueChanged<String> onReportCategoryChange;
+  final bool isEmailBoundToBeetle;
 
   @override
   Widget build(BuildContext context) {
@@ -23,39 +25,49 @@ class AdminReportTypeSwitch extends StatelessWidget {
       padding: const EdgeInsets.all(4),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          _BuildButton(
-            buttonText: 'Pranešimai apie atliekas',
-            isActive: activeCategory == 'trash',
-            onPressed: () {
-              onReportCategoryChange('trash');
-            },
-          ),
-          4.widthBox,
-          _BuildButton(
-            buttonText: 'Pranešimai apie miškus',
-            isActive: activeCategory == 'forest',
-            onPressed: () {
-              onReportCategoryChange('forest');
-            },
-          ),
-          4.widthBox,
-          _BuildButton(
-            buttonText: 'Atliekų surinkimo aikštelės',
-            isActive: activeCategory == 'dump',
-            onPressed: () {
-              onReportCategoryChange('dump');
-            },
-          ),
-          4.widthBox,
-          _BuildButton(
-            buttonText: 'Žievėgraužis tipografas',
-            isActive: activeCategory == 'beetle',
-            onPressed: () {
-              onReportCategoryChange('beetle');
-            },
-          ),
-        ],
+        children: !isEmailBoundToBeetle
+            ? [
+                _BuildButton(
+                  buttonText: 'Pranešimai apie atliekas',
+                  isActive: activeCategory == 'trash',
+                  onPressed: () {
+                    onReportCategoryChange('trash');
+                  },
+                ),
+                4.widthBox,
+                _BuildButton(
+                  buttonText: 'Pranešimai apie miškus',
+                  isActive: activeCategory == 'forest',
+                  onPressed: () {
+                    onReportCategoryChange('forest');
+                  },
+                ),
+                4.widthBox,
+                _BuildButton(
+                  buttonText: 'Atliekų surinkimo aikštelės',
+                  isActive: activeCategory == 'dump',
+                  onPressed: () {
+                    onReportCategoryChange('dump');
+                  },
+                ),
+                4.widthBox,
+                _BuildButton(
+                  buttonText: 'Žievėgraužis tipografas',
+                  isActive: activeCategory == 'beetle',
+                  onPressed: () {
+                    onReportCategoryChange('beetle');
+                  },
+                ),
+              ]
+            : [
+                _BuildButton(
+                  buttonText: 'Žievėgraužis tipografas',
+                  isActive: activeCategory == 'beetle',
+                  onPressed: () {
+                    onReportCategoryChange('beetle');
+                  },
+                ),
+              ],
       ),
     );
   }
