@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ImagePreview extends StatelessWidget {
-  const ImagePreview({super.key, required this.imageUrl});
+class ImagePreviewNetwork extends StatelessWidget {
+  const ImagePreviewNetwork({super.key, required this.imageUrl});
 
   final String imageUrl;
 

@@ -30,14 +30,25 @@ class TrashAddingScreenWeb extends StatefulWidget {
 
 class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
   List<Uint8List> _selectedImages = [];
+  int imageSizes = 0;
 
   Future<void> getMultipleImageInfos() async {
     final images = await AppImagePicker().pickMultipleImages();
 
     setState(() {
+      imageSizes = 0;
+
       _selectedImages = (_selectedImages + images)
           .take(GlobalConstants.maxAllowedImageCount)
           .toList();
+      _selectedImages.forEach((element) {
+        imageSizes += element.lengthInBytes;
+      });
+      if (imageSizes > GlobalConstants.maxAllowedImageSize) {
+        isImagesSizeValid = false;
+      } else {
+        isImagesSizeValid = true;
+      }
     });
   }
 
@@ -46,6 +57,8 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
   bool isShowMarkers = true;
   bool isMapDisabled = false;
+  bool isImagesSizeValid = true;
+
   String currentTextValue = '';
   String currentEmailValue = '';
   Set<Marker> markers = {};
@@ -73,6 +86,15 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
   void removeSelectedImage(int imageIndex) {
     setState(() {
       _selectedImages.removeAt(imageIndex);
+      imageSizes = 0;
+      _selectedImages.forEach((element) {
+        imageSizes += element.lengthInBytes;
+      });
+      if (imageSizes > GlobalConstants.maxAllowedImageSize) {
+        isImagesSizeValid = false;
+      } else {
+        isImagesSizeValid = true;
+      }
     });
   }
 
@@ -467,8 +489,8 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                                 ? SizedBox(
                                     width: widget.width / 2.4 * 0.9111,
                                     height: _selectedImages.length > 2
-                                        ? widget.width / 2.4 * 0.9111
-                                        : widget.width / 2.4 * 0.4555,
+                                        ? widget.width / 2.4 * 0.7111
+                                        : widget.width / 2.4 * 0.3555,
                                     child: AlignedGridView.count(
                                       crossAxisCount: 2,
                                       mainAxisSpacing: 8,
@@ -476,36 +498,24 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                                       physics:
                                           const NeverScrollableScrollPhysics(),
                                       itemBuilder: (context, index) {
-                                        return Stack(
-                                            alignment: Alignment.topRight,
-                                            children: [
-                                              getImageWidget(
-                                                  _selectedImages,
-                                                  widget.width /
-                                                      2.4 *
-                                                      0.4333)[index],
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 5, right: 5),
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    removeSelectedImage(index);
-                                                  },
-                                                  child: Icon(
-                                                    Icons
-                                                        .remove_circle_outline_outlined,
-                                                    color: Colors.white,
-                                                    size: widget.width /
-                                                        2.4 *
-                                                        0.05,
-                                                  ),
-                                                ),
-                                              )
-                                            ]);
+                                        return ImageGallery().buildPickerImage(
+                                            image: _selectedImages[index],
+                                            context: context,
+                                            width: widget.width,
+                                            onRemoveTap: () {
+                                              removeSelectedImage(index);
+                                            });
                                       },
-                                      itemCount: getImageWidget(_selectedImages,
-                                              widget.width / 2.4 * 0.4333)
-                                          .length,
+                                      itemCount: _selectedImages.length,
+                                    ),
+                                  )
+                                : const SizedBox.shrink(),
+                            !isImagesSizeValid
+                                ? Text(
+                                    'Nuotraukos per didelės',
+                                    style: TextStyle(
+                                      color: const Color(0xFFe53935),
+                                      fontSize: widget.width * 0.01,
                                     ),
                                   )
                                 : const SizedBox.shrink(),
@@ -575,7 +585,8 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                                     selectedLat != 0 &&
                                     selectedLong != 0 &&
                                     isTermsAccepted &&
-                                    _selectedImages.isNotEmpty) {
+                                    _selectedImages.isNotEmpty &&
+                                    isImagesSizeValid) {
                                   if (_selectedImages.length >= 2) {
                                     widget.onAddTap(
                                       currentEmailValue,

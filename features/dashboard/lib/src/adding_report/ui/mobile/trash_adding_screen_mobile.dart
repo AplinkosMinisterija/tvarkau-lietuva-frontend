@@ -32,18 +32,30 @@ class TrashAddingScreenMobile extends StatefulWidget {
 
 class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
   List<Uint8List> _selectedImages = [];
+  int imageSizes = 0;
 
   Future<void> getMultipleImageInfos() async {
     final images = await AppImagePicker().pickMultipleImages();
 
     setState(() {
+      imageSizes = 0;
       _selectedImages = (_selectedImages + images)
           .take(GlobalConstants.maxAllowedImageCount)
           .toList();
+      _selectedImages.forEach((element) {
+        imageSizes += element.lengthInBytes;
+      });
+      if (imageSizes > GlobalConstants.maxAllowedImageSize) {
+        isImagesSizeValid = false;
+      } else {
+        isImagesSizeValid = true;
+      }
     });
   }
 
   bool isTermsAccepted = false;
+  bool isImagesSizeValid = true;
+
   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
   final _formKey = GlobalKey<FormState>();
   String currentTextValue = '';
@@ -90,6 +102,15 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
   void removeSelectedImage(int imageIndex) {
     setState(() {
       _selectedImages.removeAt(imageIndex);
+      imageSizes = 0;
+      _selectedImages.forEach((element) {
+        imageSizes += element.lengthInBytes;
+      });
+      if (imageSizes > GlobalConstants.maxAllowedImageSize) {
+        isImagesSizeValid = false;
+      } else {
+        isImagesSizeValid = true;
+      }
     });
   }
 
@@ -372,31 +393,24 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                                 crossAxisSpacing: 8,
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (context, index) {
-                                  return Stack(
-                                      alignment: Alignment.topRight,
-                                      children: [
-                                        getImageWidget(_selectedImages,
-                                            widget.width * 0.4333)[index],
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              top: 5, right: 5),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              removeSelectedImage(index);
-                                            },
-                                            child: Icon(
-                                              Icons
-                                                  .remove_circle_outline_outlined,
-                                              color: Colors.white,
-                                              size: widget.width * 0.05,
-                                            ),
-                                          ),
-                                        )
-                                      ]);
+                                  return ImageGallery().buildPickerImage(
+                                      image: _selectedImages[index],
+                                      context: context,
+                                      width: widget.width * 2.4,
+                                      onRemoveTap: () {
+                                        removeSelectedImage(index);
+                                      });
                                 },
-                                itemCount: getImageWidget(
-                                        _selectedImages, widget.width * 0.4333)
-                                    .length,
+                                itemCount: _selectedImages.length,
+                              ),
+                            )
+                          : const SizedBox.shrink(),
+                      !isImagesSizeValid
+                          ? Text(
+                              'Nuotraukos per didelės',
+                              style: TextStyle(
+                                color: const Color(0xFFe53935),
+                                fontSize: widget.width * 0.03,
                               ),
                             )
                           : const SizedBox.shrink(),
@@ -460,7 +474,8 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                               selectedLat != 0 &&
                               selectedLong != 0 &&
                               isTermsAccepted &&
-                              _selectedImages.isNotEmpty) {
+                              _selectedImages.isNotEmpty &&
+                              isImagesSizeValid) {
                             if (_selectedImages.length >= 2) {
                               widget.onAddTap(
                                 currentEmailValue,
