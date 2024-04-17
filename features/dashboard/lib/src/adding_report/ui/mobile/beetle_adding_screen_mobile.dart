@@ -37,9 +37,9 @@ class _BeetleAddingScreenMobileState extends State<BeetleAddingScreenMobile> {
       _selectedImages = (_selectedImages + images)
           .take(GlobalConstants.maxAllowedImageCount)
           .toList();
-      _selectedImages.forEach((element) {
+      for (var element in _selectedImages) {
         imageSizes += element.lengthInBytes;
-      });
+      }
       if (imageSizes > GlobalConstants.maxAllowedImageSize) {
         isImagesSizeValid = false;
       } else {
@@ -83,9 +83,9 @@ class _BeetleAddingScreenMobileState extends State<BeetleAddingScreenMobile> {
     setState(() {
       _selectedImages.removeAt(imageIndex);
       imageSizes = 0;
-      _selectedImages.forEach((element) {
+      for (var element in _selectedImages) {
         imageSizes += element.lengthInBytes;
-      });
+      }
       if (imageSizes > GlobalConstants.maxAllowedImageSize) {
         isImagesSizeValid = false;
       } else {

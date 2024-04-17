@@ -43,9 +43,9 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
           .take(GlobalConstants.maxAllowedImageCount)
           .toList();
 
-      _selectedImages.forEach((element) {
+      for (var element in _selectedImages) {
         imageSizes += element.lengthInBytes;
-      });
+      }
       if (imageSizes > GlobalConstants.maxAllowedImageSize) {
         isImagesSizeValid = false;
       } else {
@@ -89,9 +89,9 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
     setState(() {
       _selectedImages.removeAt(imageIndex);
       imageSizes = 0;
-      _selectedImages.forEach((element) {
+      for (var element in _selectedImages) {
         imageSizes += element.lengthInBytes;
-      });
+      }
       if (imageSizes > GlobalConstants.maxAllowedImageSize) {
         isImagesSizeValid = false;
       } else {
