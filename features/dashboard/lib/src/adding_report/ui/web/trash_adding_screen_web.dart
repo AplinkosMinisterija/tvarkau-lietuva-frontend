@@ -30,25 +30,15 @@ class TrashAddingScreenWeb extends StatefulWidget {
 
 class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
   List<Uint8List> _selectedImages = [];
-  int imageSizes = 0;
 
   Future<void> getMultipleImageInfos() async {
     final images = await AppImagePicker().pickMultipleImages();
 
     setState(() {
-      imageSizes = 0;
-
       _selectedImages = (_selectedImages + images)
           .take(GlobalConstants.maxAllowedImageCount)
           .toList();
-      for (var element in _selectedImages) {
-        imageSizes += element.lengthInBytes;
-      }
-      if (imageSizes > GlobalConstants.maxAllowedImageSize) {
-        isImagesSizeValid = false;
-      } else {
-        isImagesSizeValid = true;
-      }
+      calculateImagesSize();
     });
   }
 
@@ -86,15 +76,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
   void removeSelectedImage(int imageIndex) {
     setState(() {
       _selectedImages.removeAt(imageIndex);
-      imageSizes = 0;
-      for (var element in _selectedImages) {
-        imageSizes += element.lengthInBytes;
-      }
-      if (imageSizes > GlobalConstants.maxAllowedImageSize) {
-        isImagesSizeValid = false;
-      } else {
-        isImagesSizeValid = true;
-      }
+      calculateImagesSize();
     });
   }
 
@@ -150,6 +132,18 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
         _lithuaniaCameraPosition =
             CameraPosition(target: _currentPosition!, zoom: 13);
       });
+    }
+  }
+
+  void calculateImagesSize() {
+    var imageSizes = 0;
+    for (var element in _selectedImages) {
+      imageSizes += element.lengthInBytes;
+    }
+    if (imageSizes > GlobalConstants.maxAllowedImageSizeInBytes) {
+      isImagesSizeValid = false;
+    } else {
+      isImagesSizeValid = true;
     }
   }
 
@@ -512,7 +506,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                                 : const SizedBox.shrink(),
                             !isImagesSizeValid
                                 ? Text(
-                                    'Nuotraukos per didelės',
+                                    'Maksimalus nuotraukų dydis 20 MB',
                                     style: TextStyle(
                                       color: const Color(0xFFe53935),
                                       fontSize: widget.width * 0.01,

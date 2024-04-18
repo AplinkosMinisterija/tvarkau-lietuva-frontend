@@ -42,9 +42,12 @@ class ImageGallery {
                   borderRadius: BorderRadius.circular(8),
                   child: AspectRatio(
                     aspectRatio: 1,
-                    child: Image.network(
-                      image,
-                      fit: BoxFit.cover,
+                    child: MouseRegion(
+                      cursor: SystemMouseCursors.zoomIn,
+                      child: Image.network(
+                        image,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
@@ -77,23 +80,26 @@ class ImageGallery {
             borderRadius: BorderRadius.circular(8),
             child: AspectRatio(
               aspectRatio: 1,
-              child: Image.memory(
-                image,
-                fit: BoxFit.cover,
+              child: MouseRegion(
+                cursor: SystemMouseCursors.zoomIn,
+                child: Image.memory(
+                  image,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
         ),
         Padding(
           padding: const EdgeInsets.only(top: 5, right: 5),
-          child: GestureDetector(
-            onTap: () {
+          child: IconButton(
+            onPressed: () {
               onRemoveTap();
             },
-            child: Icon(
+            iconSize: 24,
+            icon: const Icon(
               Icons.remove_circle_outline_outlined,
               color: Colors.white,
-              size: width / 2.4 * 0.05,
             ),
           ),
         )
