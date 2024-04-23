@@ -40,6 +40,8 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
       _selectedImages = (_selectedImages + images)
           .take(GlobalConstants.maxAllowedImageCount)
           .toList();
+
+      calculateImagesSize();
     });
   }
 
@@ -48,6 +50,7 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
   bool isShowMarkers = true;
   bool isMapDisabled = false;
+  bool isImagesSizeValid = true;
   String currentTextValue = '';
   String currentEmailValue = '';
   Set<Marker> markers = {};
@@ -76,6 +79,7 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
   void removeSelectedImage(int imageIndex) {
     setState(() {
       _selectedImages.removeAt(imageIndex);
+      calculateImagesSize();
     });
   }
 
@@ -132,6 +136,18 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
         _lithuaniaCameraPosition =
             CameraPosition(target: _currentPosition!, zoom: 13);
       });
+    }
+  }
+
+  void calculateImagesSize() {
+    var imageSizes = 0;
+    for (var element in _selectedImages) {
+      imageSizes += element.lengthInBytes;
+    }
+    if (imageSizes > GlobalConstants.maxAllowedImageSizeInBytes) {
+      isImagesSizeValid = false;
+    } else {
+      isImagesSizeValid = true;
     }
   }
 
@@ -472,8 +488,8 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
                                 ? SizedBox(
                                     width: widget.width / 2.4 * 0.9111,
                                     height: _selectedImages.length > 2
-                                        ? widget.width / 2.4 * 0.9111
-                                        : widget.width / 2.4 * 0.4555,
+                                        ? widget.width / 2.4 * 0.7111
+                                        : widget.width / 2.4 * 0.3555,
                                     child: AlignedGridView.count(
                                       crossAxisCount: 2,
                                       mainAxisSpacing: 8,
@@ -481,36 +497,24 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
                                       physics:
                                           const NeverScrollableScrollPhysics(),
                                       itemBuilder: (context, index) {
-                                        return Stack(
-                                            alignment: Alignment.topRight,
-                                            children: [
-                                              getImageWidget(
-                                                  _selectedImages,
-                                                  widget.width /
-                                                      2.4 *
-                                                      0.4333)[index],
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 5, right: 5),
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    removeSelectedImage(index);
-                                                  },
-                                                  child: Icon(
-                                                    Icons
-                                                        .remove_circle_outline_outlined,
-                                                    color: Colors.white,
-                                                    size: widget.width /
-                                                        2.4 *
-                                                        0.05,
-                                                  ),
-                                                ),
-                                              )
-                                            ]);
+                                        return ImageGallery().buildPickerImage(
+                                            image: _selectedImages[index],
+                                            context: context,
+                                            width: widget.width,
+                                            onRemoveTap: () {
+                                              removeSelectedImage(index);
+                                            });
                                       },
-                                      itemCount: getImageWidget(_selectedImages,
-                                              widget.width / 2.4 * 0.4333)
-                                          .length,
+                                      itemCount: _selectedImages.length,
+                                    ),
+                                  )
+                                : const SizedBox.shrink(),
+                            !isImagesSizeValid
+                                ? Text(
+                                    'Maksimalus nuotraukų dydis 20 MB',
+                                    style: TextStyle(
+                                      color: const Color(0xFFe53935),
+                                      fontSize: widget.width * 0.01,
                                     ),
                                   )
                                 : const SizedBox.shrink(),
@@ -580,7 +584,8 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
                                     selectedLat != 0 &&
                                     selectedLong != 0 &&
                                     isTermsAccepted &&
-                                    _selectedImages.isNotEmpty) {
+                                    _selectedImages.isNotEmpty &&
+                                    isImagesSizeValid) {
                                   if (_selectedImages.length >= 2) {
                                     widget.onAddTap(
                                       currentEmailValue,
