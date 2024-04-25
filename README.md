@@ -56,7 +56,14 @@ To get started with the Tvarkau Lietuvą Frontend, follow the instructions below
 
 ### Usage
 
-1. Start the application:
+In order to launch the application you need to provide Google Maps API key. [Generate one with these instructions](https://developers.google.com/maps/documentation/javascript/get-api-key)
+
+Insert the key in the web/index.html file:
+ ```bash
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+ ```
+
+Start the application:
 
    ```bash
    flutter run --flavor dev
