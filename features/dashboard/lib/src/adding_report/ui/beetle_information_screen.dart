@@ -33,7 +33,7 @@ class BeetleInformationScreen extends StatelessWidget {
                 ),
               ),
               Text(
-                'Pasitikrinkite ar aptikote žievėgraužio tipografo apniktus medžius',
+                'Pasitikrinkite ar aptikote žievėgraužio tipografo apniktas arba šviežiai nuvirtusias egles',
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge
@@ -60,8 +60,8 @@ class BeetleInformationScreen extends StatelessWidget {
               const SizedBox(height: 12),
               ImageGallery().buildImages(
                 imageUrls: [
-                  'https://res.cloudinary.com/dms8ku4iv/image/upload/v1711572859/kvusnlpak8zgoi9bpyga.jpg',
-                  'https://res.cloudinary.com/dms8ku4iv/image/upload/v1711572860/ljm7qg9twn1a5ydm9cxb.jpg',
+                  'https://res.cloudinary.com/dms8ku4iv/image/upload/v1714134279/medziai.jpg',
+                  'https://res.cloudinary.com/dms8ku4iv/image/upload/v1714134279/nuvirtusi-egle.jpg',
                   'https://res.cloudinary.com/dms8ku4iv/image/upload/v1711572859/lblbzwcw416t2tmiyras.jpg',
                   'https://res.cloudinary.com/dms8ku4iv/image/upload/v1711572860/bm0u9sclakngjvtwpiup.jpg',
                 ],
