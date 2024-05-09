@@ -127,7 +127,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                       ),
                     ),
                   ),
-                )
+                ),
               ],
             ),
           ),
