@@ -50,15 +50,6 @@ class _ReportCategoryScreenBody extends StatelessWidget {
                     ),
                   ),
                   ReportCategorySelector(
-                    title: 'Sugadinta miško paklotė ir keliai',
-                    description:
-                        'Jeigu matote sudraskytas samanas, sugadintą miško paklotę, itin gilias provėžas miške arba sugadintą miško kelią',
-                    onTap: () {
-                      context.goNamed('newReportForest');
-                    },
-                    iconName: 'forest_icon',
-                  ),
-                  ReportCategorySelector(
                     title: 'Atliekos',
                     description: 'Jeigu pastebite gamtoje paliktas atliekas',
                     onTap: () {
@@ -74,6 +65,15 @@ class _ReportCategoryScreenBody extends StatelessWidget {
                       context.goNamed('newReportBeetle');
                     },
                     iconName: 'bug_icon',
+                  ),
+                  ReportCategorySelector(
+                    title: 'Sugadinta miško paklotė ir keliai',
+                    description:
+                        'Jeigu matote sudraskytas samanas, sugadintą miško paklotę, itin gilias provėžas miške arba sugadintą miško kelią',
+                    onTap: () {
+                      context.goNamed('newReportForest');
+                    },
+                    iconName: 'forest_icon',
                   ),
                 ],
               ),
