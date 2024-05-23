@@ -50,6 +50,15 @@ class _ReportCategoryScreenBody extends StatelessWidget {
                     ),
                   ),
                   ReportCategorySelector(
+                    title: 'Nelegalūs kirtimai ir leidimai',
+                    description:
+                    'Jeigu matote nelegalų kirtimą',
+                    onTap: () {
+                      context.goNamed('newReportPermits');
+                    },
+                    iconName: 'forest_icon',
+                  ),
+                  ReportCategorySelector(
                     title: 'Sugadinta miško paklotė ir keliai',
                     description:
                         'Jeigu matote sudraskytas samanas, sugadintą miško paklotę, itin gilias provėžas miške arba sugadintą miško kelią',
