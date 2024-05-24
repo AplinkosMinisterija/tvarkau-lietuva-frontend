@@ -574,6 +574,13 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                   ),
                 ),
               ),
+              widget.report.officerImageUrls.isNotEmpty
+                  ? ImageGallery().buildImages(
+                      imageUrls: FormatterUtils().formatImageUrls(
+                          widget.report.officerImageUrls.toList()),
+                      context: context,
+                      width: widget.width * 0.7)
+                  : const SizedBox.shrink(),
             ],
             SizedBox(height: widget.width * 0.1),
           ],
