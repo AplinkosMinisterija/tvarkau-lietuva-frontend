@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:core/utils/permit.dart';
@@ -18,6 +16,7 @@ class PermitsAddingScreenWeb extends StatefulWidget {
     required this.width,
     required this.height,
     required this.permits,
+    required this.reports,
     required this.onAddTap,
     required this.onDataSecurityTap,
     super.key,
@@ -26,6 +25,7 @@ class PermitsAddingScreenWeb extends StatefulWidget {
   final double width;
   final double height;
   final Permit permits;
+  final List<PublicReportDto> reports;
   final Function(String, String, double, double, List<Uint8List>) onAddTap;
   final VoidCallback onDataSecurityTap;
 
@@ -54,21 +54,20 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
   bool isShowMarkers = true;
   bool isMapDisabled = false;
   bool isImagesSizeValid = true;
+  bool isShowPolygons = true;
   String currentTextValue = '';
   String currentEmailValue = '';
   Set<Marker> markers = {};
+  Set<Polygon> polygons = {};
   List<Marker> addedMarker = [];
   double selectedLat = 0;
   double selectedLong = 0;
   MapType currentMapType = MapType.normal;
   CameraPosition _lithuaniaCameraPosition =
       const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 7.0);
-  final CustomInfoWindowController _customTrashInfoWindowController =
-      CustomInfoWindowController();
   late GoogleMapController mapController;
   LatLng? _currentPosition;
   bool _isLoading = false;
-  bool _isPermitLayer = false;
 
   void addCustomIcon() {
     BitmapDescriptor.fromAssetImage(
@@ -93,23 +92,22 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       addCustomIcon();
     });
-    voidAddTrashMarkers();
     int index = 0;
-    // for (var element in widget.reports) {
-    //   markers.add(
-    //     Marker(
-    //       markerId: MarkerId(
-    //         element.name + index.toString(),
-    //       ),
-    //       position: LatLng(
-    //         element.latitude.toDouble(),
-    //         element.longitude.toDouble(),
-    //       ),
-    //     ),
-    //   );
-    //   index++;
-    // }
-
+    for (var element in widget.reports) {
+      markers.add(
+        Marker(
+          markerId: MarkerId(
+            element.name + index.toString(),
+          ),
+          position: LatLng(
+            element.latitude.toDouble(),
+            element.longitude.toDouble(),
+          ),
+        ),
+      );
+      index++;
+    }
+    mapPolygons(widget.permits);
     getLocation();
     super.initState();
   }
@@ -161,61 +159,10 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
     mapController = controller;
   }
 
-  Set<Polygon> _polygons = HashSet<Polygon>();
-  List<LatLng> coords1 = [
-    const LatLng(54.411006314519589, 25.460623269139671),
-    const LatLng(54.411259303147503, 25.460238613229947),
-    const LatLng(54.412222023939613, 25.461251514018439),
-    const LatLng(54.412092017123705, 25.461506936494754),
-    const LatLng(54.411681398726259, 25.460919517350725),
-    const LatLng(54.411588216037877, 25.461559037882921),
-    const LatLng(54.411518080560654, 25.461721527846482),
-    const LatLng(54.411366658242855, 25.462227949494654),
-    const LatLng(54.411081050367301, 25.461825242837591),
-    const LatLng(54.411210732078494, 25.461482151976092),
-    const LatLng(54.411247887058956, 25.461079280927368),
-    const LatLng(54.411006314519589, 25.460623269139671),
-  ];
-
-  Future<void> voidAddTrashMarkers() async {
-    Set<Polygon> tempPolygons = {};
-
-    tempPolygons.add(
-      Polygon(
-        polygonId: const PolygonId("1"),
-        points: coords1,
-        fillColor: Colors.red,
-        strokeWidth: 1,
-        onTap: () {
-          _customTrashInfoWindowController.addInfoWindow!(
-            InfoPermitWindowBox(
-              type: 'sklypas',
-              issuedFrom: '2024-04-03',
-              issuedTo: '2025-04-02',
-              cadastralNumber: '8182/0001:0087',
-              subdivision: 'Ukmergės',
-              forestryDistrict: 'Pašilės',
-              block: '243',
-              plot: '8b,8c,9,10b,16',
-              cuttableArea: '5.4',
-              dominantTree: 'Eglė',
-              cuttingType: 'Einamasis kirtimas',
-              reinstatementType: null,
-            ),
-            LatLng(54.411006, 25.460623),
-          );
-        },
-      ),
-    );
-    setState(() {
-      _polygons = tempPolygons;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Title(
-      title: "Pranešti apie sugadintą miško paklotę ar kelius",
+      title: "Pranešti apie nelegalų kirtimą",
       color: Colors.green,
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(250, 242, 234, 1),
@@ -257,53 +204,19 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                                   ),
                                 ],
                               )
-                            : _isPermitLayer
-                                ? Stack(
-                                    children: [
-                                      GoogleMap(
-                                        polygons: _polygons,
-                                        webGestureHandling: WebGestureHandling.cooperative,
-                                        buildingsEnabled: true,
-                                        initialCameraPosition:
-                                            _lithuaniaCameraPosition,
-                                        mapType: currentMapType,
-                                        onMapCreated: (GoogleMapController
-                                            controller) async {
-                                          _customTrashInfoWindowController
-                                              .googleMapController = controller;
-                                          mapController = controller;
-                                        },
-                                        onCameraMove: (position) {
-                                          _customTrashInfoWindowController
-                                              .onCameraMove!();
-                                        },
-                                        onTap: (position) {
-                                          _customTrashInfoWindowController
-                                              .hideInfoWindow!();
-                                        },
-                                      ),
-                                      CustomInfoWindow(
-                                        (top, left, width, height) => {},
-                                        leftMargin: 200,
-                                        controller:
-                                            _customTrashInfoWindowController,
-                                        isDump: false,
-                                      ),
-                                    ],
-                                  )
-                                : GoogleMap(
-                                    onMapCreated: _onMapCreated,
-                                    buildingsEnabled: true,
-                                    initialCameraPosition:
-                                        _lithuaniaCameraPosition,
-                                    mapType: currentMapType,
-                                    onTap: _currentPosition == null
-                                        ? _handleTap
-                                        : null,
-                                    markers: isShowMarkers
-                                        ? markers
-                                        : addedMarker.map((e) => e).toSet(),
-                                  ),
+                            : GoogleMap(
+                                onMapCreated: _onMapCreated,
+                                buildingsEnabled: true,
+                                initialCameraPosition: _lithuaniaCameraPosition,
+                                mapType: currentMapType,
+                                onTap: _currentPosition == null
+                                    ? _handleTap
+                                    : null,
+                                polygons: isShowPolygons ? polygons : {},
+                                markers: isShowMarkers
+                                    ? markers
+                                    : addedMarker.map((e) => e).toSet(),
+                              ),
                       ),
                       _currentPosition != null
                           ? Positioned(
@@ -330,43 +243,22 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                             )
                           : const SizedBox.shrink(),
                       Positioned(
-                        bottom: 220,
-                        right: 10,
-                        child: InkWell(
-                          onTap: () {},
+                        left: widget.width * 0.0111,
+                        bottom: widget.width * 0.0511,
+                        child: ChangeVisibilityButtonMobile(
+                          width: widget.width / 2.4,
+                          isActive: isShowPolygons,
+                          isPermits: true,
                           onHover: (isHover) {
                             setState(() {
                               isMapDisabled = isHover;
                             });
                           },
-                          child: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                _isPermitLayer = !_isPermitLayer;
-                              });
-                            },
-                            icon: Icon(Icons.library_add_check_outlined),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 300,
-                        right: 10,
-                        child: InkWell(
-                          onTap: () {},
-                          onHover: (isHover) {
+                          onTap: () {
                             setState(() {
-                              isMapDisabled = isHover;
+                              isShowPolygons = !isShowPolygons;
                             });
                           },
-                          child: IconButton(
-                            onPressed: () {
-                              mapController.animateCamera(
-                                  CameraUpdate.newLatLngZoom(
-                                      const LatLng(54.411006, 25.460623), 13));
-                            },
-                            icon: Icon(Icons.map_sharp),
-                          ),
                         ),
                       ),
                       Positioned(
@@ -375,7 +267,7 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                         child: ChangeVisibilityButtonMobile(
                           width: widget.width / 2.4,
                           isActive: isShowMarkers,
-                          isPermits: true,
+                          isPermits: false,
                           onHover: (isHover) {
                             setState(() {
                               isMapDisabled = isHover;
@@ -437,8 +329,7 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                         child: Column(
                           children: [
                             ExitHeader(
-                                title:
-                                    'Pranešti apie sugadintą miško\npaklotę ar kelius',
+                                title: 'Pranešti apie nelegalų kirtimą',
                                 width: widget.width,
                                 onTap: () {
                                   context.goNamed("home");
@@ -775,6 +666,65 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
     setState(() {
       selectedLat = tappedPoint.latitude;
       selectedLong = tappedPoint.longitude;
+    });
+  }
+
+  Future<void> mapPolygons(Permit permit) async {
+    Set<Polygon> tempPolygons = {};
+    for (var i = 0; i < permit.features!.length; i++) {
+      List<LatLng> coordinates = [];
+      for (var j = 0;
+          j < permit.features![i].geometry!.coordinates![0][0].length;
+          j++) {
+        coordinates.add(LatLng(
+            permit.features![i].geometry!.coordinates![0][0][j][1],
+            permit.features![i].geometry!.coordinates![0][0][j][0]));
+      }
+      tempPolygons.add(
+        Polygon(
+          polygonId: PolygonId("P-$i"),
+          points: coordinates,
+          fillColor: Colors.red,
+          strokeWidth: 1,
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (_) => Dialog(
+                      child: InfoPermitWindowBox(
+                        type: permit.features![i].properties!.tipas ?? '',
+                        issuedFrom:
+                            permit.features![i].properties!.galiojaNuo ?? '',
+                        issuedTo:
+                            permit.features![i].properties!.galiojaIki ?? '',
+                        cadastralNumber:
+                            permit.features![i].properties!.kadastrinisNr ?? '',
+                        subdivision:
+                            permit.features![i].properties!.vmuPadalinys ?? '',
+                        forestryDistrict:
+                            permit.features![i].properties!.girininkija ?? '',
+                        block: permit.features![i].properties!.kvartalas
+                                .toString() ??
+                            '',
+                        plot: permit.features![i].properties!.sklypas ?? '',
+                        cuttableArea: permit
+                                .features![i].properties!.kertamasPlotas
+                                .toString() ??
+                            '',
+                        dominantTree: permit
+                                .features![i].properties!.vyraujantysMedziai ??
+                            '',
+                        cuttingType:
+                            permit.features![i].properties!.kirtimoRusis ?? '',
+                        reinstatementType:
+                            permit.features![i].properties!.atkurimoBudas ?? '',
+                      ),
+                    ));
+          },
+        ),
+      );
+    }
+    setState(() {
+      polygons = tempPolygons;
     });
   }
 }

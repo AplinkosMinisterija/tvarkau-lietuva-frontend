@@ -32,6 +32,7 @@ class AddingScreenPermits extends StatelessWidget {
                     width: width,
                     height: height,
                     permits: state.permits,
+                    reports: state.permitReports,
                     onAddTap: (email, text, lat, long, files) {
                       context.read<AddingBloc>().add(
                             AddReport(
