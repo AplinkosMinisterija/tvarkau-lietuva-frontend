@@ -158,6 +158,7 @@ class _BeetleAddingScreenMobileState extends State<BeetleAddingScreenMobile> {
                                           width: widget.width,
                                           markers: markers,
                                           isLayerSwitchVisible: false,
+                                          isPermitSwitchVisible: false,
                                           onTap: (lat, long, marker) {
                                             setState(() {
                                               newMarker.clear();

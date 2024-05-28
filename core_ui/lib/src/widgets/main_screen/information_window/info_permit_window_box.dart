@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 class InfoPermitWindowBox extends StatelessWidget {
   InfoPermitWindowBox({
@@ -33,29 +34,31 @@ class InfoPermitWindowBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 328,
-      height: 211,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(14),
-        color: Colors.white,
-      ),
-      padding: const EdgeInsets.all(16),
-      child: ListView(
-        children: [
-          getListTile(titles[0], type ?? '-'),
-          getListTile(titles[1], issuedFrom ?? '-'),
-          getListTile(titles[2], issuedTo ?? '-'),
-          getListTile(titles[3], cadastralNumber ?? '-'),
-          getListTile(titles[4], subdivision ?? '-'),
-          getListTile(titles[5], forestryDistrict ?? '-'),
-          getListTile(titles[6], block ?? '-'),
-          getListTile(titles[7], plot ?? '-'),
-          getListTile(titles[8], cuttableArea ?? '-'),
-          getListTile(titles[9], dominantTree ?? '-'),
-          getListTile(titles[10], cuttingType ?? '-'),
-          getListTile(titles[11], reinstatementType ?? '-'),
-        ],
+    return PointerInterceptor(
+      child: Container(
+        width: 328,
+        height: 211,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(14),
+          color: Colors.white,
+        ),
+        padding: const EdgeInsets.all(16),
+        child: ListView(
+          children: [
+            getListTile(titles[0], type ?? '-'),
+            getListTile(titles[1], issuedFrom ?? '-'),
+            getListTile(titles[2], issuedTo ?? '-'),
+            getListTile(titles[3], cadastralNumber ?? '-'),
+            getListTile(titles[4], subdivision ?? '-'),
+            getListTile(titles[5], forestryDistrict ?? '-'),
+            getListTile(titles[6], block ?? '-'),
+            getListTile(titles[7], plot ?? '-'),
+            getListTile(titles[8], cuttableArea ?? '-'),
+            getListTile(titles[9], dominantTree ?? '-'),
+            getListTile(titles[10], cuttingType ?? '-'),
+            getListTile(titles[11], reinstatementType ?? '-'),
+          ],
+        ),
       ),
     );
   }
@@ -77,13 +80,9 @@ class InfoPermitWindowBox extends StatelessWidget {
 
   Widget getListTile(String title, String description) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         getListTileItem(title),
-        Divider(
-          height: 50,
-          thickness: 2,
-          color: Colors.black,
-        ),
         getListTileItem(description),
       ],
     );
@@ -91,8 +90,12 @@ class InfoPermitWindowBox extends StatelessWidget {
 
   Widget getListTileItem(String content) {
     return Container(
-      margin: const EdgeInsets.all(2),
-      width: 140,
+      alignment: Alignment.topCenter,
+      margin: const EdgeInsets.symmetric(
+        vertical: 5,
+      ),
+      width: 145,
+      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(5)),
         color: Colors.grey.withOpacity(0.1),

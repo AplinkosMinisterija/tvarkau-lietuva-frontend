@@ -239,6 +239,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                         child: ChangeVisibilityButtonMobile(
                           width: widget.width / 2.4,
                           isActive: isShowMarkers,
+                          isPermits: false,
                           onHover: (isHover) {
                             setState(() {
                               isMapDisabled = isHover;

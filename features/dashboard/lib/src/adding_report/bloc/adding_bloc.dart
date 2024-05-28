@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
+import 'package:core/utils/permit.dart';
 
 part 'adding_event.dart';
 
@@ -11,6 +12,7 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
   AddingBloc(this.type) : super(LoadingState()) {
     on<LoadTrashData>(_onLoadTrashData);
     on<LoadForestData>(_onLoadForestData);
+    on<LoadPermitsData>(_onLoadPermitsData);
     on<LoadBeetleData>(_onLoadBeetleData);
     on<LoadBeetleInformation>(_onLoadBeetleInformation);
     on<AddReport>(_onAddReport);
@@ -24,6 +26,7 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
     Emitter<AddingState> emit,
   ) async {
     try {
+      emit(LoadingState());
       final List<PublicReportDto> trashReports =
           await ApiProvider().getAllVisibleReports('trash');
 
@@ -44,12 +47,36 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
     Emitter<AddingState> emit,
   ) async {
     try {
+      emit(LoadingState());
       final List<PublicReportDto> trashReports =
           await ApiProvider().getAllVisibleReports('forest');
 
       emit(
         ForestContentState(
           forestReports: trashReports,
+        ),
+      );
+    } catch (e) {
+      emit(
+        ErrorState(errorMessage: 'Netikėta klaida'),
+      );
+    }
+  }
+
+  Future<void> _onLoadPermitsData(
+    LoadPermitsData _,
+    Emitter<AddingState> emit,
+  ) async {
+    try {
+      emit(LoadingState());
+      final Permit permits = await ApiProvider().getAllPermits();
+      final List<PublicReportDto> permitReports =
+          await ApiProvider().getAllVisibleReports('permits');
+
+      emit(
+        PermitsContentState(
+          permits: permits,
+          permitReports: permitReports,
         ),
       );
     } catch (e) {
@@ -125,6 +152,15 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
     ReloadPage _,
     Emitter<AddingState> emit,
   ) async {
-    type == 'trash' ? add(LoadTrashData()) : add(LoadForestData());
+    switch (type) {
+      case 'trash':
+        add(LoadTrashData());
+      case 'forest':
+        add(LoadForestData());
+      case 'beetle':
+        add(LoadBeetleData());
+      case 'permits':
+        add(LoadPermitsData());
+    }
   }
 }

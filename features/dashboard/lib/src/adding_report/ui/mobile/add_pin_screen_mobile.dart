@@ -1,3 +1,4 @@
+import 'package:core/utils/permit.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,13 +10,17 @@ class AddPinScreenMobile extends StatefulWidget {
   const AddPinScreenMobile(
       {required this.width,
       required this.markers,
+      this.permits,
       required this.isLayerSwitchVisible,
+      required this.isPermitSwitchVisible,
       required this.onTap,
       super.key});
 
   final double width;
   final Set<Marker> markers;
+  final Permit? permits;
   final bool isLayerSwitchVisible;
+  final bool isPermitSwitchVisible;
   final Function(double, double, Marker) onTap;
 
   @override
@@ -29,8 +34,10 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
   double selectedLat = 0;
   double selectedLong = 0;
   Set<Marker> markers = {};
+  Set<Polygon> polygons = {};
   List<Marker> addedMarker = [];
   bool isShowMarkers = true;
+  bool isShowPolygons = false;
   bool isSaveButtonActive = false;
   bool isMapDisabled = false;
   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
@@ -44,6 +51,10 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
       addCustomIcon();
     });
     markers = widget.markers;
+    if (widget.permits != null) {
+      isShowPolygons = true;
+      mapPolygons(widget.permits!);
+    }
     getLocation();
     super.initState();
   }
@@ -159,15 +170,28 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                           ),
                         ],
                       )
-                    : GoogleMap(
-                        onMapCreated: _onMapCreated,
-                        initialCameraPosition: _lithuaniaCameraPosition,
-                        mapType: currentMapType,
-                        onTap: _currentPosition == null ? _handleTap : null,
-                        markers: isShowMarkers
-                            ? markers
-                            : addedMarker.map((e) => e).toSet(),
-                      ),
+                    : widget.permits == null
+                        ? GoogleMap(
+                            onMapCreated: _onMapCreated,
+                            initialCameraPosition: _lithuaniaCameraPosition,
+                            mapType: currentMapType,
+                            onTap: _currentPosition == null ? _handleTap : null,
+                            markers: isShowMarkers
+                                ? markers
+                                : addedMarker.map((e) => e).toSet(),
+                          )
+                        : GoogleMap(
+                            polygons: isShowPolygons ? polygons : {},
+                            markers: isShowMarkers
+                                ? markers
+                                : addedMarker.map((e) => e).toSet(),
+                            webGestureHandling: WebGestureHandling.cooperative,
+                            mapType: currentMapType,
+                            onTap: _currentPosition == null ? _handleTap : null,
+                            buildingsEnabled: true,
+                            initialCameraPosition: _lithuaniaCameraPosition,
+                            onMapCreated: _onMapCreated,
+                          ),
               ),
               Align(
                 alignment: Alignment.topCenter,
@@ -217,6 +241,27 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                           )),
                     )
                   : const SizedBox.shrink(),
+              widget.isPermitSwitchVisible
+                  ? Positioned(
+                      left: widget.width * 0.0333,
+                      bottom: widget.width * 0.1333,
+                      child: ChangeVisibilityButtonMobile(
+                        width: widget.width,
+                        isActive: isShowPolygons,
+                        isPermits: true,
+                        onHover: (isHover) {
+                          setState(() {
+                            isMapDisabled = isHover;
+                          });
+                        },
+                        onTap: () {
+                          setState(() {
+                            isShowPolygons = !isShowPolygons;
+                          });
+                        },
+                      ),
+                    )
+                  : const SizedBox.shrink(),
               widget.isLayerSwitchVisible
                   ? Positioned(
                       left: widget.width * 0.0333,
@@ -224,6 +269,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                       child: ChangeVisibilityButtonMobile(
                         width: widget.width,
                         isActive: isShowMarkers,
+                        isPermits: false,
                         onHover: (isHover) {
                           setState(() {
                             isMapDisabled = isHover;
@@ -270,7 +316,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                     },
                   ),
                 ),
-              )
+              ),
             ],
           )
         ],
@@ -320,6 +366,65 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
       setState(() {
         markerIcon = icon;
       });
+    });
+  }
+
+  Future<void> mapPolygons(Permit permit) async {
+    Set<Polygon> tempPolygons = {};
+    for (var i = 0; i < permit.features!.length; i++) {
+      List<LatLng> coordinates = [];
+      for (var j = 0;
+          j < permit.features![i].geometry!.coordinates![0][0].length;
+          j++) {
+        coordinates.add(LatLng(
+            permit.features![i].geometry!.coordinates![0][0][j][1],
+            permit.features![i].geometry!.coordinates![0][0][j][0]));
+      }
+      tempPolygons.add(
+        Polygon(
+          polygonId: PolygonId("P-$i"),
+          points: coordinates,
+          fillColor: Colors.red,
+          strokeWidth: 1,
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (_) => Dialog(
+                      child: InfoPermitWindowBox(
+                        type: permit.features![i].properties!.tipas ?? '',
+                        issuedFrom:
+                            permit.features![i].properties!.galiojaNuo ?? '',
+                        issuedTo:
+                            permit.features![i].properties!.galiojaIki ?? '',
+                        cadastralNumber:
+                            permit.features![i].properties!.kadastrinisNr ?? '',
+                        subdivision:
+                            permit.features![i].properties!.vmuPadalinys ?? '',
+                        forestryDistrict:
+                            permit.features![i].properties!.girininkija ?? '',
+                        block: permit.features![i].properties!.kvartalas
+                                .toString() ??
+                            '',
+                        plot: permit.features![i].properties!.sklypas ?? '',
+                        cuttableArea: permit
+                                .features![i].properties!.kertamasPlotas
+                                .toString() ??
+                            '',
+                        dominantTree: permit
+                                .features![i].properties!.vyraujantysMedziai ??
+                            '',
+                        cuttingType:
+                            permit.features![i].properties!.kirtimoRusis ?? '',
+                        reinstatementType:
+                            permit.features![i].properties!.atkurimoBudas ?? '',
+                      ),
+                    ));
+          },
+        ),
+      );
+    }
+    setState(() {
+      polygons = tempPolygons;
     });
   }
 }

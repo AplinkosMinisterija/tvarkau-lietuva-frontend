@@ -21,17 +21,17 @@ class AddingScreenPermits extends StatelessWidget {
     double height = size.height;
     return BlocProvider(
       create: (BuildContext context) =>
-          AddingBloc('permits')..add(LoadForestData()),
+          AddingBloc('permits')..add(LoadPermitsData()),
       child: BlocBuilder<AddingBloc, AddingState>(
         builder: (BuildContext context, AddingState state) {
           return BlocBuilder<AddingBloc, AddingState>(
             builder: (BuildContext context, AddingState state) {
-              if (state is ForestContentState) {
+              if (state is PermitsContentState) {
                 if (width > 900) {
                   return PermitsAddingScreenWeb(
                     width: width,
                     height: height,
-                    reports: state.forestReports,
+                    permits: state.permits,
                     onAddTap: (email, text, lat, long, files) {
                       context.read<AddingBloc>().add(
                             AddReport(
@@ -40,7 +40,7 @@ class AddingScreenPermits extends StatelessWidget {
                                 selectedLat: lat,
                                 selectedLong: long,
                                 images: files,
-                                category: 'forest'),
+                                category: 'permits'),
                           );
                     },
                     onDataSecurityTap: () {},
@@ -49,7 +49,8 @@ class AddingScreenPermits extends StatelessWidget {
                   return PermitsAddingScreenMobile(
                     width: width,
                     height: height,
-                    reports: state.forestReports,
+                    permits: state.permits,
+                    reports: state.permitReports,
                     onAddTap: (email, text, lat, long, files) {
                       context.read<AddingBloc>().add(
                             AddReport(
@@ -58,7 +59,7 @@ class AddingScreenPermits extends StatelessWidget {
                                 selectedLat: lat,
                                 selectedLong: long,
                                 images: files,
-                                category: 'forest'),
+                                category: 'permits'),
                           );
                     },
                   );
@@ -72,12 +73,12 @@ class AddingScreenPermits extends StatelessWidget {
                 if (width > 900) {
                   return ConfirmationDialog(
                     width: width,
-                    category: 'forest',
+                    category: 'permits',
                   );
                 } else {
                   return ConfirmationScreenMobile(
                     width: width,
-                    category: 'forest',
+                    category: 'permits',
                   );
                 }
               } else if (state is ErrorState) {

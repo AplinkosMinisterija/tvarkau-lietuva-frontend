@@ -6,17 +6,17 @@ class Permit {
 
   Permit({this.type, this.name, this.crs, this.features});
 
-
   Permit.fromJson(Map<String, dynamic> json) {
     type = json['type'];
     name = json['name'];
-    crs = json['crs'] != null ? new Crs.fromJson(json['crs']) : null;
+    crs = json['crs'] != null ? Crs.fromJson(json['crs']) : null;
     if (json['features'] != null) {
       features = <Features>[];
-      json['features'].forEach((v) { features!.add(new Features.fromJson(v)); });
+      json['features'].forEach((v) {
+        features!.add(Features.fromJson(v));
+      });
     }
   }
-
 }
 
 class Crs {
@@ -27,9 +27,10 @@ class Crs {
 
   Crs.fromJson(Map<String, dynamic> json) {
     type = json['type'];
-    properties = json['properties'] != null ? new CrsProperties.fromJson(json['properties']) : null;
+    properties = json['properties'] != null
+        ? CrsProperties.fromJson(json['properties'])
+        : null;
   }
-
 }
 
 class CrsProperties {
@@ -51,10 +52,12 @@ class Features {
 
   Features.fromJson(Map<String, dynamic> json) {
     type = json['type'];
-    properties = json['properties'] != null ? new Properties.fromJson(json['properties']) : null;
-    geometry = json['geometry'] != null ? new Geometry.fromJson(json['geometry']) : null;
+    properties = json['properties'] != null
+        ? Properties.fromJson(json['properties'])
+        : null;
+    geometry =
+        json['geometry'] != null ? Geometry.fromJson(json['geometry']) : null;
   }
-
 }
 
 class Properties {
@@ -71,7 +74,19 @@ class Properties {
   String? kirtimoRusis;
   String? atkurimoBudas;
 
-  Properties({this.tipas, this.galiojaNuo, this.galiojaIki, this.kadastrinisNr, this.vmuPadalinys, this.girininkija, this.kvartalas, this.sklypas, this.kertamasPlotas, this.vyraujantysMedziai, this.kirtimoRusis, this.atkurimoBudas});
+  Properties(
+      {this.tipas,
+      this.galiojaNuo,
+      this.galiojaIki,
+      this.kadastrinisNr,
+      this.vmuPadalinys,
+      this.girininkija,
+      this.kvartalas,
+      this.sklypas,
+      this.kertamasPlotas,
+      this.vyraujantysMedziai,
+      this.kirtimoRusis,
+      this.atkurimoBudas});
 
   Properties.fromJson(Map<String, dynamic> json) {
     tipas = json['tipas'];
@@ -87,7 +102,6 @@ class Properties {
     kirtimoRusis = json['kirtimo_rusis'];
     atkurimoBudas = json['atkurimo_budas'];
   }
-
 }
 
 class Geometry {
@@ -96,11 +110,19 @@ class Geometry {
 
   Geometry({this.type, this.coordinates});
 
-  factory Geometry.fromJson(Map<String, dynamic> json){
+  factory Geometry.fromJson(Map<String, dynamic> json) {
     return Geometry(
       type: json["type"],
-      coordinates: json["coordinates"] == null ? [] : List<List<List<List<double>>>>.from(json["coordinates"]!.map((x) => x == null ? [] : List<List<List<double>>>.from(x!.map((x) => x == null ? [] : List<List<double>>.from(x!.map((x) => x == null ? [] : List<double>.from(x!.map((x) => x)))))))),
+      coordinates: json["coordinates"] == null
+          ? []
+          : List<List<List<List<double>>>>.from(json["coordinates"]!.map((x) =>
+              x == null
+                  ? []
+                  : List<List<List<double>>>.from(x!.map((x) => x == null
+                      ? []
+                      : List<List<double>>.from(x!.map((x) => x == null
+                          ? []
+                          : List<double>.from(x!.map((x) => x)))))))),
     );
   }
-
 }

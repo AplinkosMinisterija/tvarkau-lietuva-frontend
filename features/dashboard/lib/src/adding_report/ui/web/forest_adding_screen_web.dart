@@ -62,12 +62,9 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
   MapType currentMapType = MapType.normal;
   CameraPosition _lithuaniaCameraPosition =
       const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 7.0);
-  final CustomInfoWindowController _customTrashInfoWindowController =
-      CustomInfoWindowController();
   late GoogleMapController mapController;
   LatLng? _currentPosition;
   bool _isLoading = false;
-  bool _isPermitLayer = false;
 
   void addCustomIcon() {
     BitmapDescriptor.fromAssetImage(
@@ -92,7 +89,6 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       addCustomIcon();
     });
-    voidAddTrashMarkers();
     int index = 0;
     for (var element in widget.reports) {
       markers.add(
@@ -160,57 +156,6 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
     mapController = controller;
   }
 
-  Set<Polygon> _polygons = HashSet<Polygon>();
-  List<LatLng> coords1 = [
-    const LatLng(54.411006314519589, 25.460623269139671),
-    const LatLng(54.411259303147503, 25.460238613229947),
-    const LatLng(54.412222023939613, 25.461251514018439),
-    const LatLng(54.412092017123705, 25.461506936494754),
-    const LatLng(54.411681398726259, 25.460919517350725),
-    const LatLng(54.411588216037877, 25.461559037882921),
-    const LatLng(54.411518080560654, 25.461721527846482),
-    const LatLng(54.411366658242855, 25.462227949494654),
-    const LatLng(54.411081050367301, 25.461825242837591),
-    const LatLng(54.411210732078494, 25.461482151976092),
-    const LatLng(54.411247887058956, 25.461079280927368),
-    const LatLng(54.411006314519589, 25.460623269139671),
-  ];
-
-  Future<void> voidAddTrashMarkers() async {
-    Set<Polygon> tempPolygons = {};
-
-    tempPolygons.add(
-      Polygon(
-        polygonId: const PolygonId("1"),
-        points: coords1,
-        fillColor: Colors.red,
-        strokeWidth: 1,
-        onTap: () {
-          _customTrashInfoWindowController.addInfoWindow!(
-            InfoPermitWindowBox(
-              type: 'sklypas',
-              issuedFrom: '2024-04-03',
-              issuedTo: '2025-04-02',
-              cadastralNumber: '8182/0001:0087',
-              subdivision: 'Ukmergės',
-              forestryDistrict: 'Pašilės',
-              block: '243',
-              plot: '8b,8c,9,10b,16',
-              cuttableArea: '5.4',
-              dominantTree: 'Eglė',
-              cuttingType: 'Einamasis kirtimas',
-              reinstatementType: null,
-            ),
-            LatLng(54.411006, 25.460623),
-          );
-        },
-      ),
-    );
-    setState(() {
-      _polygons = tempPolygons;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Title(
@@ -256,53 +201,18 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
                                   ),
                                 ],
                               )
-                            : _isPermitLayer
-                                ? Stack(
-                                    children: [
-                                      GoogleMap(
-                                        polygons: _polygons,
-                                        webGestureHandling: WebGestureHandling.cooperative,
-                                        buildingsEnabled: true,
-                                        initialCameraPosition:
-                                            _lithuaniaCameraPosition,
-                                        mapType: currentMapType,
-                                        onMapCreated: (GoogleMapController
-                                            controller) async {
-                                          _customTrashInfoWindowController
-                                              .googleMapController = controller;
-                                          mapController = controller;
-                                        },
-                                        onCameraMove: (position) {
-                                          _customTrashInfoWindowController
-                                              .onCameraMove!();
-                                        },
-                                        onTap: (position) {
-                                          _customTrashInfoWindowController
-                                              .hideInfoWindow!();
-                                        },
-                                      ),
-                                      CustomInfoWindow(
-                                        (top, left, width, height) => {},
-                                        leftMargin: 200,
-                                        controller:
-                                            _customTrashInfoWindowController,
-                                        isDump: false,
-                                      ),
-                                    ],
-                                  )
-                                : GoogleMap(
-                                    onMapCreated: _onMapCreated,
-                                    buildingsEnabled: true,
-                                    initialCameraPosition:
-                                        _lithuaniaCameraPosition,
-                                    mapType: currentMapType,
-                                    onTap: _currentPosition == null
-                                        ? _handleTap
-                                        : null,
-                                    markers: isShowMarkers
-                                        ? markers
-                                        : addedMarker.map((e) => e).toSet(),
-                                  ),
+                            : GoogleMap(
+                                onMapCreated: _onMapCreated,
+                                buildingsEnabled: true,
+                                initialCameraPosition: _lithuaniaCameraPosition,
+                                mapType: currentMapType,
+                                onTap: _currentPosition == null
+                                    ? _handleTap
+                                    : null,
+                                markers: isShowMarkers
+                                    ? markers
+                                    : addedMarker.map((e) => e).toSet(),
+                              ),
                       ),
                       _currentPosition != null
                           ? Positioned(
@@ -329,51 +239,12 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
                             )
                           : const SizedBox.shrink(),
                       Positioned(
-                        bottom: 220,
-                        right: 10,
-                        child: InkWell(
-                          onTap: () {},
-                          onHover: (isHover) {
-                            setState(() {
-                              isMapDisabled = isHover;
-                            });
-                          },
-                          child: IconButton(
-                            onPressed: () {
-                              setState(() {
-                                _isPermitLayer = !_isPermitLayer;
-                              });
-                            },
-                            icon: Icon(Icons.library_add_check_outlined),
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 300,
-                        right: 10,
-                        child: InkWell(
-                          onTap: () {},
-                          onHover: (isHover) {
-                            setState(() {
-                              isMapDisabled = isHover;
-                            });
-                          },
-                          child: IconButton(
-                            onPressed: () {
-                              mapController.animateCamera(
-                                  CameraUpdate.newLatLngZoom(
-                                      const LatLng(54.411006, 25.460623), 13));
-                            },
-                            icon: Icon(Icons.map_sharp),
-                          ),
-                        ),
-                      ),
-                      Positioned(
                         left: widget.width * 0.0111,
                         bottom: widget.width * 0.0111,
                         child: ChangeVisibilityButtonMobile(
                           width: widget.width / 2.4,
                           isActive: isShowMarkers,
+                          isPermits: false,
                           onHover: (isHover) {
                             setState(() {
                               isMapDisabled = isHover;

@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
+import 'package:core/utils/permit.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,7 +17,7 @@ class PermitsAddingScreenWeb extends StatefulWidget {
   const PermitsAddingScreenWeb({
     required this.width,
     required this.height,
-    required this.reports,
+    required this.permits,
     required this.onAddTap,
     required this.onDataSecurityTap,
     super.key,
@@ -24,7 +25,7 @@ class PermitsAddingScreenWeb extends StatefulWidget {
 
   final double width;
   final double height;
-  final List<PublicReportDto> reports;
+  final Permit permits;
   final Function(String, String, double, double, List<Uint8List>) onAddTap;
   final VoidCallback onDataSecurityTap;
 
@@ -94,20 +95,20 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
     });
     voidAddTrashMarkers();
     int index = 0;
-    for (var element in widget.reports) {
-      markers.add(
-        Marker(
-          markerId: MarkerId(
-            element.name + index.toString(),
-          ),
-          position: LatLng(
-            element.latitude.toDouble(),
-            element.longitude.toDouble(),
-          ),
-        ),
-      );
-      index++;
-    }
+    // for (var element in widget.reports) {
+    //   markers.add(
+    //     Marker(
+    //       markerId: MarkerId(
+    //         element.name + index.toString(),
+    //       ),
+    //       position: LatLng(
+    //         element.latitude.toDouble(),
+    //         element.longitude.toDouble(),
+    //       ),
+    //     ),
+    //   );
+    //   index++;
+    // }
 
     getLocation();
     super.initState();
@@ -374,6 +375,7 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                         child: ChangeVisibilityButtonMobile(
                           width: widget.width / 2.4,
                           isActive: isShowMarkers,
+                          isPermits: true,
                           onHover: (isHover) {
                             setState(() {
                               isMapDisabled = isHover;
