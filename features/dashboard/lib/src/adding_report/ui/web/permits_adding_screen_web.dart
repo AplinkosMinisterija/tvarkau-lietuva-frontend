@@ -702,14 +702,10 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                             permit.features![i].properties!.vmuPadalinys ?? '',
                         forestryDistrict:
                             permit.features![i].properties!.girininkija ?? '',
-                        block: permit.features![i].properties!.kvartalas
-                                .toString() ??
-                            '',
+                        block: permit.features![i].properties!.kvartalas,
                         plot: permit.features![i].properties!.sklypas ?? '',
-                        cuttableArea: permit
-                                .features![i].properties!.kertamasPlotas
-                                .toString() ??
-                            '',
+                        cuttableArea:
+                            permit.features![i].properties!.kertamasPlotas,
                         dominantTree: permit
                                 .features![i].properties!.vyraujantysMedziai ??
                             '',

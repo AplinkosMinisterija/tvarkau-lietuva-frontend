@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 class InfoPermitWindowBox extends StatelessWidget {
-  InfoPermitWindowBox({
+  const InfoPermitWindowBox({
     super.key,
     required this.type,
     required this.issuedFrom,
@@ -25,9 +25,9 @@ class InfoPermitWindowBox extends StatelessWidget {
   final String? cadastralNumber;
   final String? subdivision;
   final String? forestryDistrict;
-  final String? block;
+  final int? block;
   final String? plot;
-  final String? cuttableArea;
+  final double? cuttableArea;
   final String? dominantTree;
   final String? cuttingType;
   final String? reinstatementType;
@@ -51,9 +51,10 @@ class InfoPermitWindowBox extends StatelessWidget {
             getListTile(titles[3], cadastralNumber ?? '-'),
             getListTile(titles[4], subdivision ?? '-'),
             getListTile(titles[5], forestryDistrict ?? '-'),
-            getListTile(titles[6], block ?? '-'),
+            getListTile(titles[6], block != null ? block.toString() : '-'),
             getListTile(titles[7], plot ?? '-'),
-            getListTile(titles[8], cuttableArea ?? '-'),
+            getListTile(titles[8],
+                cuttableArea != null ? cuttableArea.toString() : '-'),
             getListTile(titles[9], dominantTree ?? '-'),
             getListTile(titles[10], cuttingType ?? '-'),
             getListTile(titles[11], reinstatementType ?? '-'),
@@ -63,7 +64,7 @@ class InfoPermitWindowBox extends StatelessWidget {
     );
   }
 
-  List<String> titles = [
+  static const List<String> titles = [
     'Tipas',
     'Galioja nuo',
     'Galioja iki',

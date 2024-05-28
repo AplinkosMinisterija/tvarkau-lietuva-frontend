@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 class CustomInfoWindowController {
   Function(Widget, LatLng)? addInfoWindow;

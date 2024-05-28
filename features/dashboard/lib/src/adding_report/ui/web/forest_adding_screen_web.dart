@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:geolocator/geolocator.dart';

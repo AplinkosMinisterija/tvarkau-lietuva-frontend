@@ -1,11 +1,9 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:dashboard/src/adding_report/ui/web/confirmation_screen.dart';
-import 'package:dashboard/src/adding_report/ui/web/forest_adding_screen_web.dart';
 import 'package:dashboard/src/adding_report/ui/web/permits_adding_screen_web.dart';
 import 'package:flutter/material.dart';
 import '../bloc/adding_bloc.dart';
-import 'mobile/forest_adding_screen_mobile.dart';
 import 'mobile/confirmation_screen_mobile.dart';
 import 'mobile/permits_adding_screen_mobile.dart';
 
