@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:http/http.dart' as http;
 import 'package:api_client/api_client.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:core/core.dart';
@@ -204,10 +204,10 @@ class ApiProvider {
   }
 
   Future<Permit> getAllPermits() async {
-    final response = await _publicClient.dio.get(
-        GlobalConstants.woodcuttingPermitsUrl,
-        options: Options(responseType: ResponseType.bytes));
-    return Permit.fromJson(jsonDecode(utf8.decode(response.data)));
+    final response =
+        await http.get(Uri.parse(GlobalConstants.woodcuttingPermitsUrl));
+
+    return Permit.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
   }
 
   BuiltList<MultipartFile> _toMultiPartFiles(List<Uint8List> files) {
