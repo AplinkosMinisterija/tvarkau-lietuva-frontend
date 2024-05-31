@@ -8,4 +8,6 @@ class LoadTrashData implements HomeEvent {}
 
 class LoadForestData implements HomeEvent {}
 
+class LoadPermitsData implements HomeEvent {}
+
 class ReloadPage implements HomeEvent {}

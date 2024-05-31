@@ -39,6 +39,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
   static const List<String> _dropdownList = [
     'Atliekos',
     'Sugadinta miško paklotė ir keliai',
+    'Nelegalūs kirtimai',
   ];
 
   @override
@@ -49,6 +50,8 @@ class _ReportsScreenState extends State<ReportsScreen> {
       isTrash = true;
     } else if (widget.category == 'forest') {
       initialItem = 'Sugadinta miško paklotė ir keliai';
+    } else if (widget.category == 'permits') {
+      initialItem = 'Nelegalūs kirtimai';
     }
 
     super.initState();
