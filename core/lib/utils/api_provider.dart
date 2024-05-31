@@ -205,7 +205,7 @@ class ApiProvider {
 
   Future<Permit> getAllPermits() async {
     final response = await _publicClient.dio.get(
-        'https://cdn.startupgov.lt/tiles/poc/lkmp/lkmp.geojson',
+        'https://gis.tvarkaulietuva.lt/lkmp/lkmp.geojson',
         options: Options(responseType: ResponseType.bytes));
     return Permit.fromJson(jsonDecode(utf8.decode(response.data)));
   }
