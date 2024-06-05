@@ -33,14 +33,10 @@ class LoginWidget extends StatelessWidget {
               ),
               SizedBox(height: width / 20),
               LoginButton(
-                  width: width,
-                  onLogIn: onLogIn,
-                  tenant: 'aad'),
+                  width: width, scale: 1, onLogIn: onLogIn, tenant: 'aad'),
               SizedBox(height: width / 20),
               LoginButton(
-                  width: width,
-                  onLogIn: onLogIn,
-                  tenant: 'amvmt'),
+                  width: width, scale: 0.8, onLogIn: onLogIn, tenant: 'amvmt'),
             ],
           )
         ],
