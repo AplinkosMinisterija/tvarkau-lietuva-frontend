@@ -137,7 +137,7 @@ class _AdminWindowState extends State<AdminWindow> {
     super.initState();
     isShowDeleted = widget.isShowDeleted;
     isShowDumps = widget.isShowDumps;
-    if (widget.email == GlobalConstants.adminBeetleAccount &&
+    if (isEmailBoundToBeetle(widget.email) &&
         widget.activeCategory != 'beetle') {
       widget.onCategoryChange('beetle');
     }
@@ -182,17 +182,16 @@ class _AdminWindowState extends State<AdminWindow> {
                               onReportCategoryChange: (String value) {
                                 widget.onCategoryChange(value);
                               },
-                              isEmailBoundToBeetle: widget.email ==
-                                  GlobalConstants.adminBeetleAccount,
+                              isEmailBoundToBeetle:
+                                  isEmailBoundToBeetle(widget.email),
                             )
                           : Opacity(
                               opacity: 0.3,
                               child: AdminReportTypeSwitch(
-                                activeCategory: widget.activeCategory,
-                                onReportCategoryChange: (String value) {},
-                                isEmailBoundToBeetle: widget.email ==
-                                    GlobalConstants.adminBeetleAccount,
-                              ),
+                                  activeCategory: widget.activeCategory,
+                                  onReportCategoryChange: (String value) {},
+                                  isEmailBoundToBeetle:
+                                      isEmailBoundToBeetle(widget.email)),
                             ),
                       20.widthBox,
                       if (widget.activeCategory != 'dump') ...[
@@ -259,6 +258,11 @@ class _AdminWindowState extends State<AdminWindow> {
       }),
     );
   }
+}
+
+bool isEmailBoundToBeetle(String email) {
+  return email.endsWith(GlobalConstants.adminAmvmtAccountEnding) ||
+      email == GlobalConstants.adminBeetleAccount;
 }
 
 class _BuildMap extends StatelessWidget {
