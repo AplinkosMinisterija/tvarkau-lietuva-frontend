@@ -12,6 +12,8 @@ const FullReportDtoCategoryEnum _$fullReportDtoCategoryEnum_forest =
     const FullReportDtoCategoryEnum._('forest');
 const FullReportDtoCategoryEnum _$fullReportDtoCategoryEnum_beetle =
     const FullReportDtoCategoryEnum._('beetle');
+const FullReportDtoCategoryEnum _$fullReportDtoCategoryEnum_permits =
+    const FullReportDtoCategoryEnum._('permits');
 
 FullReportDtoCategoryEnum _$fullReportDtoCategoryEnumValueOf(String name) {
   switch (name) {
@@ -21,8 +23,10 @@ FullReportDtoCategoryEnum _$fullReportDtoCategoryEnumValueOf(String name) {
       return _$fullReportDtoCategoryEnum_forest;
     case 'beetle':
       return _$fullReportDtoCategoryEnum_beetle;
+    case 'permits':
+      return _$fullReportDtoCategoryEnum_permits;
     default:
-      return _$fullReportDtoCategoryEnum_beetle;
+      return _$fullReportDtoCategoryEnum_permits;
   }
 }
 
@@ -31,6 +35,7 @@ final BuiltSet<FullReportDtoCategoryEnum> _$fullReportDtoCategoryEnumValues =
   _$fullReportDtoCategoryEnum_trash,
   _$fullReportDtoCategoryEnum_forest,
   _$fullReportDtoCategoryEnum_beetle,
+  _$fullReportDtoCategoryEnum_permits,
 ]);
 
 Serializer<FullReportDtoCategoryEnum> _$fullReportDtoCategoryEnumSerializer =
@@ -42,11 +47,13 @@ class _$FullReportDtoCategoryEnumSerializer
     'trash': 'trash',
     'forest': 'forest',
     'beetle': 'beetle',
+    'permits': 'permits',
   };
   static const Map<Object, String> _fromWire = const <Object, String>{
     'trash': 'trash',
     'forest': 'forest',
     'beetle': 'beetle',
+    'permits': 'permits',
   };
 
   @override
@@ -100,6 +107,12 @@ class _$FullReportDto extends FullReportDto {
   final BuiltList<HistoryDataDto> historyData;
   @override
   final BuiltList<StatusRecordsDto> statusRecords;
+  @override
+  final String? inspection;
+  @override
+  final String? inspectionId;
+  @override
+  final bool? isTransferred;
 
   factory _$FullReportDto([void Function(FullReportDtoBuilder)? updates]) =>
       (new FullReportDtoBuilder()..update(updates))._build();
@@ -120,7 +133,10 @@ class _$FullReportDto extends FullReportDto {
       required this.officerImageUrls,
       required this.imageUrls,
       required this.historyData,
-      required this.statusRecords})
+      required this.statusRecords,
+      this.inspection,
+      this.inspectionId,
+      this.isTransferred})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, r'FullReportDto', 'id');
     BuiltValueNullFieldError.checkNotNull(name, r'FullReportDto', 'name');
@@ -176,7 +192,10 @@ class _$FullReportDto extends FullReportDto {
         officerImageUrls == other.officerImageUrls &&
         imageUrls == other.imageUrls &&
         historyData == other.historyData &&
-        statusRecords == other.statusRecords;
+        statusRecords == other.statusRecords &&
+        inspection == other.inspection &&
+        inspectionId == other.inspectionId &&
+        isTransferred == other.isTransferred;
   }
 
   @override
@@ -198,6 +217,9 @@ class _$FullReportDto extends FullReportDto {
     _$hash = $jc(_$hash, imageUrls.hashCode);
     _$hash = $jc(_$hash, historyData.hashCode);
     _$hash = $jc(_$hash, statusRecords.hashCode);
+    _$hash = $jc(_$hash, inspection.hashCode);
+    _$hash = $jc(_$hash, inspectionId.hashCode);
+    _$hash = $jc(_$hash, isTransferred.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -220,7 +242,10 @@ class _$FullReportDto extends FullReportDto {
           ..add('officerImageUrls', officerImageUrls)
           ..add('imageUrls', imageUrls)
           ..add('historyData', historyData)
-          ..add('statusRecords', statusRecords))
+          ..add('statusRecords', statusRecords)
+          ..add('inspection', inspection)
+          ..add('inspectionId', inspectionId)
+          ..add('isTransferred', isTransferred))
         .toString();
   }
 }
@@ -302,6 +327,19 @@ class FullReportDtoBuilder
   set statusRecords(ListBuilder<StatusRecordsDto>? statusRecords) =>
       _$this._statusRecords = statusRecords;
 
+  String? _inspection;
+  String? get inspection => _$this._inspection;
+  set inspection(String? inspection) => _$this._inspection = inspection;
+
+  String? _inspectionId;
+  String? get inspectionId => _$this._inspectionId;
+  set inspectionId(String? inspectionId) => _$this._inspectionId = inspectionId;
+
+  bool? _isTransferred;
+  bool? get isTransferred => _$this._isTransferred;
+  set isTransferred(bool? isTransferred) =>
+      _$this._isTransferred = isTransferred;
+
   FullReportDtoBuilder() {
     FullReportDto._defaults(this);
   }
@@ -325,6 +363,9 @@ class FullReportDtoBuilder
       _imageUrls = $v.imageUrls.toBuilder();
       _historyData = $v.historyData.toBuilder();
       _statusRecords = $v.statusRecords.toBuilder();
+      _inspection = $v.inspection;
+      _inspectionId = $v.inspectionId;
+      _isTransferred = $v.isTransferred;
       _$v = null;
     }
     return this;
@@ -374,7 +415,10 @@ class FullReportDtoBuilder
               officerImageUrls: officerImageUrls.build(),
               imageUrls: imageUrls.build(),
               historyData: historyData.build(),
-              statusRecords: statusRecords.build());
+              statusRecords: statusRecords.build(),
+              inspection: inspection,
+              inspectionId: inspectionId,
+              isTransferred: isTransferred);
     } catch (_) {
       late String _$failedField;
       try {

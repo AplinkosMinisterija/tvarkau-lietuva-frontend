@@ -95,6 +95,22 @@ class _TrashScreenState extends State<TrashScreen> {
                               officerImageFiles: [],
                             ));
                       },
+                      onTransfer: (String refId,
+                          String name,
+                          double longitude,
+                          double latitude,
+                          String status,
+                          DateTime reportDate,
+                          String email) {
+                        context.read<ReportBloc>().add(TransferReport(
+                            refId: refId,
+                            name: name,
+                            longitude: longitude,
+                            latitude: latitude,
+                            status: status,
+                            reportDate: reportDate,
+                            email: email));
+                      },
                     );
                   } else if (state is LoadingState) {
                     return LoaderWidget().loader();

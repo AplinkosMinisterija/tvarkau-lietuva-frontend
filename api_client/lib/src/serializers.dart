@@ -25,6 +25,7 @@ import 'package:api_client/src/model/login_request_dto.dart';
 import 'package:api_client/src/model/public_report_dto.dart';
 import 'package:api_client/src/model/report_statistics_dto.dart';
 import 'package:api_client/src/model/status_records_dto.dart';
+import 'package:api_client/src/model/transfer_report_dto.dart';
 import 'package:api_client/src/model/update_dump_dto.dart';
 
 part 'serializers.g.dart';
@@ -41,6 +42,7 @@ part 'serializers.g.dart';
   PublicReportDto,
   ReportStatisticsDto,
   StatusRecordsDto,
+  TransferReportDto,
   UpdateDumpDto,
 ])
 Serializers serializers = (_$serializers.toBuilder()

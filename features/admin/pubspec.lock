@@ -10,7 +10,7 @@ packages:
     source: hosted
     version: "1.0.1"
   animated_custom_dropdown:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: animated_custom_dropdown
       sha256: "9e286defa42f2e774285015d7ff29523a24260888d53f79a3635328fad5bdad7"

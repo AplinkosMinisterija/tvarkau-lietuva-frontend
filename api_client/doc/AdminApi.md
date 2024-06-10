@@ -14,6 +14,7 @@ Method | HTTP request | Description
 [**adminControllerGetAllReports**](AdminApi.md#admincontrollergetallreports) | **GET** /admin/reports | 
 [**adminControllerGetDumpById**](AdminApi.md#admincontrollergetdumpbyid) | **GET** /admin/dumps/{refId} | 
 [**adminControllerGetReportById**](AdminApi.md#admincontrollergetreportbyid) | **GET** /admin/reports/{refId} | 
+[**adminControllerTransferReport**](AdminApi.md#admincontrollertransferreport) | **POST** /admin/reports/transfer | 
 [**adminControllerUpdateDump**](AdminApi.md#admincontrollerupdatedump) | **POST** /admin/dumps | 
 [**adminControllerUpdateReport**](AdminApi.md#admincontrollerupdatereport) | **POST** /admin/reports | 
 
@@ -217,6 +218,47 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **adminControllerTransferReport**
+> TransferReportDto adminControllerTransferReport(transferReportDto)
+
+
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+
+final api = ApiClient().getAdminApi();
+final TransferReportDto transferReportDto = ; // TransferReportDto | 
+
+try {
+    final response = api.adminControllerTransferReport(transferReportDto);
+    print(response);
+} catch on DioException (e) {
+    print('Exception when calling AdminApi->adminControllerTransferReport: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **transferReportDto** | [**TransferReportDto**](TransferReportDto.md)|  | 
+
+### Return type
+
+[**TransferReportDto**](TransferReportDto.md)
+
+### Authorization
+
+[bearer](../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
