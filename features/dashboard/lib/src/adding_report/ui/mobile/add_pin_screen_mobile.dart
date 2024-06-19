@@ -294,6 +294,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
       ),
       draggable: true,
       onDrag: _handleDrag,
+      onDragEnd: _handleDragEnd,
     );
 
     setState(() {
@@ -310,6 +311,12 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
       selectedLat = tappedPoint.latitude;
       selectedLong = tappedPoint.longitude;
       isSaveButtonActive = true;
+    });
+  }
+
+  _handleDragEnd(LatLng tappedPoint) {
+    setState(() {
+      mapController.moveCamera(CameraUpdate.newLatLng(tappedPoint));
     });
   }
 

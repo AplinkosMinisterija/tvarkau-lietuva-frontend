@@ -628,6 +628,7 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
       ),
       draggable: true,
       onDrag: _handleDrag,
+      onDragEnd: _handleDragEnd,
     );
 
     setState(() {
@@ -642,6 +643,11 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
     setState(() {
       selectedLat = tappedPoint.latitude;
       selectedLong = tappedPoint.longitude;
+    });
+  }
+  _handleDragEnd(LatLng tappedPoint) {
+    setState(() {
+      mapController.moveCamera(CameraUpdate.newLatLng(tappedPoint));
     });
   }
 }

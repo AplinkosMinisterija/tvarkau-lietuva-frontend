@@ -591,6 +591,7 @@ class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
       ),
       draggable: true,
       onDrag: _handleDrag,
+      onDragEnd: _handleDragEnd,
     );
 
     setState(() {
@@ -605,6 +606,12 @@ class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
     setState(() {
       selectedLat = tappedPoint.latitude;
       selectedLong = tappedPoint.longitude;
+    });
+  }
+
+  _handleDragEnd(LatLng tappedPoint) {
+    setState(() {
+      mapController.moveCamera(CameraUpdate.newLatLng(tappedPoint));
     });
   }
 }
