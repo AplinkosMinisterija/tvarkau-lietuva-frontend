@@ -56,7 +56,7 @@ class _ReportCategoryScreenBody extends StatelessWidget {
                     onTap: () {
                       context.goNamed('newReportPermits');
                     },
-                    iconName: 'forest_icon',
+                    iconName: 'permit_icon',
                   ),
                   ReportCategorySelector(
                     title: 'Sugadinta miško paklotė ir keliai',

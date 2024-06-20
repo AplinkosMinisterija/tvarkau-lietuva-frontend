@@ -44,10 +44,6 @@ class ReportCategorySelector extends StatelessWidget {
       'assets/svg/$iconName.svg',
       height: size,
       width: size,
-      colorFilter: const ui.ColorFilter.mode(
-        Color.fromRGBO(70, 166, 0, 1.0),
-        ui.BlendMode.srcIn,
-      ),
     );
   }
 }

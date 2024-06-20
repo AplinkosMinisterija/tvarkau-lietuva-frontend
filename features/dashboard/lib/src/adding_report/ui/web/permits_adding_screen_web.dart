@@ -297,19 +297,32 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                               showDialog<String>(
                                   context: context,
                                   builder: (BuildContext context) =>
-                                      MapTypeChangeDialog(
-                                          width: widget.width / 2.4,
-                                          currentMapType: currentMapType,
-                                          onHover: (isHover) {
-                                            setState(() {
-                                              isMapDisabled = isHover;
-                                            });
-                                          },
-                                          onChangeTap: (MapType mapType) {
-                                            setState(() {
-                                              currentMapType = mapType;
-                                            });
-                                          }));
+                                      PermitMapTypeChangeDialog(
+                                        width: widget.width / 2.4,
+                                        currentMapType: currentMapType,
+                                        onHover: (isHover) {
+                                          setState(() {
+                                            isMapDisabled = isHover;
+                                          });
+                                        },
+                                        onChangeTap: (MapType mapType) {
+                                          setState(() {
+                                            currentMapType = mapType;
+                                          });
+                                        },
+                                        onPermitsVisibilityChange: () {
+                                          setState(() {
+                                            isShowPolygons = !isShowPolygons;
+                                          });
+                                        },
+                                        onReportVisibilityChange: () {
+                                          setState(() {
+                                            isShowMarkers = !isShowMarkers;
+                                          });
+                                        },
+                                        isReportsActive: isShowMarkers,
+                                        isPermitsActive: isShowPolygons,
+                                      ));
                             },
                           ),
                         ),

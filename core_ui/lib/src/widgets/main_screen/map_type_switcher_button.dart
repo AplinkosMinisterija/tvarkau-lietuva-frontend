@@ -42,7 +42,7 @@ class _MapTypeSwitcherButtonState extends State<MapTypeSwitcherButton> {
         height: widget.width * 0.0291,
         width: widget.width * 0.093,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(4),
           border: Border.all(
             width: 1,
             color: const Color(0xffff6a3d),
