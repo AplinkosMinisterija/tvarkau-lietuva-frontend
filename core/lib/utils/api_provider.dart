@@ -145,6 +145,27 @@ class ApiProvider {
     return response.data!;
   }
 
+  Future<TransferReportDto> transferTrashReport({
+    required String refId,
+    required String name,
+    required double longitude,
+    required double latitude,
+    required String status,
+    required DateTime reportDate,
+    required String email,
+  }) async {
+    final response = await adminApi.adminControllerTransferReport(
+        transferReportDto: TransferReportDto((builder) {
+      builder.refId = refId;
+      builder.name = name;
+      builder.longitude = longitude;
+      builder.latitude = latitude;
+      builder.status = status;
+      builder.reportDate = reportDate;
+      builder.email = email;
+    }));
+    return response.data!;
+  }
 
   Future<FullReportDto> updateTrashReport({
     required String id,

@@ -4,12 +4,33 @@ abstract class ReportEvent {}
 
 class LoadData implements ReportEvent {
   final String refId;
+
   LoadData({
     required this.refId,
   });
 }
 
 class ReloadPage implements ReportEvent {}
+
+class TransferReport implements ReportEvent {
+  final String refId;
+  final String name;
+  final double longitude;
+  final double latitude;
+  final String status;
+  final DateTime reportDate;
+  final String email;
+
+  TransferReport({
+    required this.refId,
+    required this.name,
+    required this.longitude,
+    required this.latitude,
+    required this.status,
+    required this.reportDate,
+    required this.email,
+  });
+}
 
 class UpdateReport implements ReportEvent {
   final String id;

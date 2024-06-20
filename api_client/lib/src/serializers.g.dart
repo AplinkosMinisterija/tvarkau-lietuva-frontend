@@ -20,6 +20,7 @@ Serializers _$serializers = (new Serializers().toBuilder()
       ..add(PublicReportDtoCategoryEnum.serializer)
       ..add(ReportStatisticsDto.serializer)
       ..add(StatusRecordsDto.serializer)
+      ..add(TransferReportDto.serializer)
       ..add(UpdateDumpDto.serializer)
       ..addBuilderFactory(
           const FullType(BuiltList, const [const FullType(HistoryEditsDto)]),

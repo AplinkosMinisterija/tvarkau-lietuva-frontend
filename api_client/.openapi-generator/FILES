@@ -15,6 +15,7 @@ doc/PublicReportDto.md
 doc/ReportStatisticsDto.md
 doc/ReportsApi.md
 doc/StatusRecordsDto.md
+doc/TransferReportDto.md
 doc/UpdateDumpDto.md
 lib/api_client.dart
 lib/src/api.dart
@@ -41,6 +42,7 @@ lib/src/model/login_request_dto.dart
 lib/src/model/public_report_dto.dart
 lib/src/model/report_statistics_dto.dart
 lib/src/model/status_records_dto.dart
+lib/src/model/transfer_report_dto.dart
 lib/src/model/update_dump_dto.dart
 lib/src/serializers.dart
 pubspec.yaml

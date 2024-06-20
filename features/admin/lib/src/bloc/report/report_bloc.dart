@@ -16,6 +16,7 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
     on<LoadData>(_onLoadData);
     on<UpdateReport>(_onUpdateReport);
     on<ReloadPage>(_onReloadEvent);
+    on<TransferReport>(_onTransferReport);
     add(LoadData(refId: refId));
   }
 
@@ -66,6 +67,39 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
         officerImageUrls: event.officerImageUrls,
         imageUrls: event.imageUrls,
       );
+
+      final FullReportDto trashReport =
+          await ApiProvider().getFullTrashReportById(event.refId);
+
+      emit(
+        ContentState(
+          trashReport: trashReport,
+        ),
+      );
+    } catch (e) {
+      emit(
+        ErrorState(errorMessage: 'Įvyko netikėta klaida'),
+      );
+    }
+  }
+
+  Future<void> _onTransferReport(
+    TransferReport event,
+    Emitter<ReportState> emit,
+  ) async {
+    try {
+      emit(
+        LoadingState(),
+      );
+
+      await ApiProvider().transferTrashReport(
+          refId: event.refId,
+          name: event.name,
+          longitude: event.longitude,
+          latitude: event.latitude,
+          status: event.status,
+          reportDate: event.reportDate,
+          email: event.email);
 
       final FullReportDto trashReport =
           await ApiProvider().getFullTrashReportById(event.refId);

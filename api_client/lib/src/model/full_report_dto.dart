@@ -30,6 +30,9 @@ part 'full_report_dto.g.dart';
 /// * [imageUrls]
 /// * [historyData]
 /// * [statusRecords]
+/// * [inspection]
+/// * [inspectionId]
+/// * [isTransferred]
 @BuiltValue()
 abstract class FullReportDto
     implements Built<FullReportDto, FullReportDtoBuilder> {
@@ -41,7 +44,7 @@ abstract class FullReportDto
 
   @BuiltValueField(wireName: r'category')
   FullReportDtoCategoryEnum get category;
-  // enum categoryEnum {  trash,  forest,  beetle,  };
+  // enum categoryEnum {  trash,  forest,  beetle,  permits,  };
 
   @BuiltValueField(wireName: r'refId')
   String get refId;
@@ -81,6 +84,15 @@ abstract class FullReportDto
 
   @BuiltValueField(wireName: r'statusRecords')
   BuiltList<StatusRecordsDto> get statusRecords;
+
+  @BuiltValueField(wireName: r'inspection')
+  String? get inspection;
+
+  @BuiltValueField(wireName: r'inspectionId')
+  String? get inspectionId;
+
+  @BuiltValueField(wireName: r'isTransferred')
+  bool? get isTransferred;
 
   FullReportDto._();
 
@@ -187,6 +199,27 @@ class _$FullReportDtoSerializer implements PrimitiveSerializer<FullReportDto> {
       object.statusRecords,
       specifiedType: const FullType(BuiltList, [FullType(StatusRecordsDto)]),
     );
+    if (object.inspection != null) {
+      yield r'inspection';
+      yield serializers.serialize(
+        object.inspection,
+        specifiedType: const FullType.nullable(String),
+      );
+    }
+    if (object.inspectionId != null) {
+      yield r'inspectionId';
+      yield serializers.serialize(
+        object.inspectionId,
+        specifiedType: const FullType.nullable(String),
+      );
+    }
+    if (object.isTransferred != null) {
+      yield r'isTransferred';
+      yield serializers.serialize(
+        object.isTransferred,
+        specifiedType: const FullType.nullable(bool),
+      );
+    }
   }
 
   @override
@@ -326,6 +359,30 @@ class _$FullReportDtoSerializer implements PrimitiveSerializer<FullReportDto> {
           ) as BuiltList<StatusRecordsDto>;
           result.statusRecords.replace(valueDes);
           break;
+        case r'inspection':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.inspection = valueDes;
+          break;
+        case r'inspectionId':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.inspectionId = valueDes;
+          break;
+        case r'isTransferred':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(bool),
+          ) as bool?;
+          if (valueDes == null) continue;
+          result.isTransferred = valueDes;
+          break;
         default:
           unhandled.add(key);
           unhandled.add(value);
@@ -362,9 +419,12 @@ class FullReportDtoCategoryEnum extends EnumClass {
   @BuiltValueEnumConst(wireName: r'forest')
   static const FullReportDtoCategoryEnum forest =
       _$fullReportDtoCategoryEnum_forest;
-  @BuiltValueEnumConst(wireName: r'beetle', fallback: true)
+  @BuiltValueEnumConst(wireName: r'beetle')
   static const FullReportDtoCategoryEnum beetle =
       _$fullReportDtoCategoryEnum_beetle;
+  @BuiltValueEnumConst(wireName: r'permits', fallback: true)
+  static const FullReportDtoCategoryEnum permits =
+      _$fullReportDtoCategoryEnum_permits;
 
   static Serializer<FullReportDtoCategoryEnum> get serializer =>
       _$fullReportDtoCategoryEnumSerializer;

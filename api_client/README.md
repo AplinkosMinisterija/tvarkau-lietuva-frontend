@@ -69,6 +69,7 @@ Class | Method | HTTP request | Description
 [*AdminApi*](doc/AdminApi.md) | [**adminControllerGetAllReports**](doc/AdminApi.md#admincontrollergetallreports) | **GET** /admin/reports | 
 [*AdminApi*](doc/AdminApi.md) | [**adminControllerGetDumpById**](doc/AdminApi.md#admincontrollergetdumpbyid) | **GET** /admin/dumps/{refId} | 
 [*AdminApi*](doc/AdminApi.md) | [**adminControllerGetReportById**](doc/AdminApi.md#admincontrollergetreportbyid) | **GET** /admin/reports/{refId} | 
+[*AdminApi*](doc/AdminApi.md) | [**adminControllerTransferReport**](doc/AdminApi.md#admincontrollertransferreport) | **POST** /admin/reports/transfer | 
 [*AdminApi*](doc/AdminApi.md) | [**adminControllerUpdateDump**](doc/AdminApi.md#admincontrollerupdatedump) | **POST** /admin/dumps | 
 [*AdminApi*](doc/AdminApi.md) | [**adminControllerUpdateReport**](doc/AdminApi.md#admincontrollerupdatereport) | **POST** /admin/reports | 
 [*AuthApi*](doc/AuthApi.md) | [**authControllerLogin**](doc/AuthApi.md#authcontrollerlogin) | **POST** /auth/login | 
@@ -92,6 +93,7 @@ Class | Method | HTTP request | Description
  - [PublicReportDto](doc/PublicReportDto.md)
  - [ReportStatisticsDto](doc/ReportStatisticsDto.md)
  - [StatusRecordsDto](doc/StatusRecordsDto.md)
+ - [TransferReportDto](doc/TransferReportDto.md)
  - [UpdateDumpDto](doc/UpdateDumpDto.md)
 
 

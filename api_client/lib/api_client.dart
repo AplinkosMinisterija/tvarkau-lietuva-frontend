@@ -25,4 +25,5 @@ export 'package:api_client/src/model/login_request_dto.dart';
 export 'package:api_client/src/model/public_report_dto.dart';
 export 'package:api_client/src/model/report_statistics_dto.dart';
 export 'package:api_client/src/model/status_records_dto.dart';
+export 'package:api_client/src/model/transfer_report_dto.dart';
 export 'package:api_client/src/model/update_dump_dto.dart';
