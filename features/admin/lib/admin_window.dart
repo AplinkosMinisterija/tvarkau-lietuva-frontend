@@ -146,6 +146,7 @@ class _AdminWindowState extends State<AdminWindow> {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: LayoutBuilder(builder: (context, constraints) {
         const minHeight = 300;
@@ -184,15 +185,16 @@ class _AdminWindowState extends State<AdminWindow> {
                               },
                               isEmailBoundToBeetle: widget.email ==
                                   GlobalConstants.adminBeetleAccount,
+                              width: width,
                             )
                           : Opacity(
                               opacity: 0.3,
                               child: AdminReportTypeSwitch(
-                                activeCategory: widget.activeCategory,
-                                onReportCategoryChange: (String value) {},
-                                isEmailBoundToBeetle: widget.email ==
-                                    GlobalConstants.adminBeetleAccount,
-                              ),
+                                  activeCategory: widget.activeCategory,
+                                  onReportCategoryChange: (String value) {},
+                                  isEmailBoundToBeetle: widget.email ==
+                                      GlobalConstants.adminBeetleAccount,
+                                  width: width),
                             ),
                       20.widthBox,
                       if (widget.activeCategory != 'dump') ...[
