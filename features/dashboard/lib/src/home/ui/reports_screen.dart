@@ -3,6 +3,7 @@ import 'package:api_client/api_client.dart';
 import 'package:core/utils/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:core_ui/core_ui.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
@@ -77,8 +78,9 @@ class _ReportsScreenState extends State<ReportsScreen> {
                         children: <Widget>[
                           Align(
                             alignment: Alignment.topLeft,
-                            child: DepartmentLogo(
-                              width: constraints.maxWidth,
+                            child: SvgPicture.asset(
+                              'assets/svg/TL_logo.svg',
+                              width: constraints.maxWidth * 0.3,
                             ),
                           ),
                           SizedBox(
@@ -248,11 +250,9 @@ class _ReportsScreenState extends State<ReportsScreen> {
                           SizedBox(height: constraints.maxWidth * 0.05),
                           Align(
                             alignment: Alignment.topLeft,
-                            child: DepartmentLogoMobile(
-                              width: constraints.maxWidth,
-                              onTap: () {
-                                LaunchUrl().launch('https://aad.lrv.lt/');
-                              },
+                            child: SvgPicture.asset(
+                              'assets/svg/TL_logo.svg',
+                              width: constraints.maxWidth * 0.5,
                             ),
                           ),
                           SizedBox(height: constraints.maxWidth * 0.0889),
