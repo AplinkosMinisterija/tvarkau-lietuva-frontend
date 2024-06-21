@@ -7,6 +7,7 @@ class SecureStorageProvider {
   static const String _keyJwtKey = 'jwt_key';
   static const String _userEmailKey = 'user_email_key';
   static const String _userNameKey = 'user_name_key';
+  static const String _tenantKey = 'tenant_key';
 
   setJwtToken(String jwtToken) async {
     await storage.write(
@@ -21,6 +22,23 @@ class SecureStorageProvider {
 
   deleteJwtToken() async {
     await storage.delete(key: _keyJwtKey);
+  }
+
+  setTenant(String tenant) async {
+    await storage.write(
+      key: _tenantKey,
+      value: tenant,
+    );
+  }
+
+  Future<String?> getTenant() {
+    return storage.read(key: _tenantKey);
+  }
+
+  deleteTenant() async {
+    await storage.delete(
+      key: _tenantKey,
+    );
   }
 
   setUserInfo(LogInDto userInfo) async {
