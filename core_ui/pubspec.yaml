@@ -19,7 +19,7 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   google_fonts: ^6.1.0
-  flutter_svg: ^2.0.10+1
+  flutter_svg: 2.0.5
   loading_animation_widget: ^1.2.0+4
   google_maps_flutter: ^2.5.3
   auto_size_text: ^3.0.0

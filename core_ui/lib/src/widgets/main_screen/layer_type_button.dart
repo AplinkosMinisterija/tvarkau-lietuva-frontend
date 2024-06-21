@@ -23,11 +23,23 @@ class LayerTypeButton extends StatefulWidget {
 
 class _LayerTypeButtonState extends State<LayerTypeButton> {
   Color activeColor = Colors.transparent;
+  late bool isActive;
+
+  @override
+  void initState() {
+    isActive = widget.isActive;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: widget.onTap,
+      onTap: () {
+        setState(() {
+          isActive = !isActive;
+        });
+        widget.onTap();
+      },
       onHover: (isHover) {
         if (isHover) {
           setState(() {
@@ -42,7 +54,7 @@ class _LayerTypeButtonState extends State<LayerTypeButton> {
       child: Container(
         width: widget.width,
         height: widget.width * 0.1,
-        padding: EdgeInsets.symmetric(horizontal: widget.width*0.05),
+        padding: EdgeInsets.symmetric(horizontal: widget.width * 0.05),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
             color: activeColor,
@@ -61,8 +73,14 @@ class _LayerTypeButtonState extends State<LayerTypeButton> {
               ),
             ),
             Checkbox(
-              value: widget.isActive,
-              onChanged: (val) {widget.onTap();},
+              value: isActive,
+              activeColor: const Color.fromRGBO(28, 63, 58, 1),
+              onChanged: (val) {
+                setState(() {
+                  isActive = !isActive;
+                });
+                widget.onTap();
+              },
             )
           ],
         ),

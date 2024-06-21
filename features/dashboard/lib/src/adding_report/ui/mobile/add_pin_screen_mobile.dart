@@ -241,28 +241,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                           )),
                     )
                   : const SizedBox.shrink(),
-              widget.isPermitSwitchVisible
-                  ? Positioned(
-                      left: widget.width * 0.0333,
-                      bottom: widget.width * 0.1333,
-                      child: ChangeVisibilityButtonMobile(
-                        width: widget.width,
-                        isActive: isShowPolygons,
-                        isPermits: true,
-                        onHover: (isHover) {
-                          setState(() {
-                            isMapDisabled = isHover;
-                          });
-                        },
-                        onTap: () {
-                          setState(() {
-                            isShowPolygons = !isShowPolygons;
-                          });
-                        },
-                      ),
-                    )
-                  : const SizedBox.shrink(),
-              widget.isLayerSwitchVisible
+              widget.isLayerSwitchVisible && !widget.isPermitSwitchVisible
                   ? Positioned(
                       left: widget.width * 0.0333,
                       bottom: widget.width * 0.0333,
@@ -300,19 +279,46 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                       showDialog<String>(
                           context: context,
                           builder: (BuildContext context) =>
-                              MapTypeChangeDialog(
-                                  width: widget.width,
-                                  currentMapType: currentMapType,
-                                  onHover: (isHover) {
-                                    setState(() {
-                                      isMapDisabled = isHover;
-                                    });
-                                  },
-                                  onChangeTap: (MapType mapType) {
-                                    setState(() {
-                                      currentMapType = mapType;
-                                    });
-                                  }));
+                              widget.isPermitSwitchVisible
+                                  ? PermitMapTypeChangeDialog(
+                                      width: widget.width,
+                                      currentMapType: currentMapType,
+                                      onHover: (isHover) {
+                                        setState(() {
+                                          isMapDisabled = isHover;
+                                        });
+                                      },
+                                      onChangeTap: (MapType mapType) {
+                                        setState(() {
+                                          currentMapType = mapType;
+                                        });
+                                      },
+                                      onPermitsVisibilityChange: () {
+                                        setState(() {
+                                          isShowPolygons = !isShowPolygons;
+                                        });
+                                      },
+                                      onReportVisibilityChange: () {
+                                        setState(() {
+                                          isShowMarkers = !isShowMarkers;
+                                        });
+                                      },
+                                      isReportsActive: isShowMarkers,
+                                      isPermitsActive: isShowPolygons,
+                                    )
+                                  : MapTypeChangeDialog(
+                                      width: widget.width,
+                                      currentMapType: currentMapType,
+                                      onHover: (isHover) {
+                                        setState(() {
+                                          isMapDisabled = isHover;
+                                        });
+                                      },
+                                      onChangeTap: (MapType mapType) {
+                                        setState(() {
+                                          currentMapType = mapType;
+                                        });
+                                      }));
                     },
                   ),
                 ),
@@ -384,13 +390,25 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
         Polygon(
           polygonId: PolygonId("P-$i"),
           points: coordinates,
-          fillColor: Colors.red,
+          fillColor: const Color.fromRGBO(28, 63, 58, 0.3),
           strokeWidth: 1,
+          strokeColor: const Color.fromRGBO(28, 63, 58, 1),
           onTap: () {
             showDialog(
                 context: context,
-                builder: (_) => Dialog(
+                barrierColor: Colors.white.withOpacity(0),
+                builder: (context) {
+                  return Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Material(
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(8),
+                            topRight: Radius.circular(8)),
+                      ),
                       child: InfoPermitWindowBox(
+                        width: widget.width,
+                        isMobile: true,
                         type: permit.features![i].properties!.tipas ?? '',
                         issuedFrom:
                             permit.features![i].properties!.galiojaNuo ?? '',
@@ -404,8 +422,8 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                             permit.features![i].properties!.girininkija ?? '',
                         block: permit.features![i].properties!.kvartalas,
                         plot: permit.features![i].properties!.sklypas ?? '',
-                        cuttableArea: permit
-                                .features![i].properties!.kertamasPlotas,
+                        cuttableArea:
+                            permit.features![i].properties!.kertamasPlotas,
                         dominantTree: permit
                                 .features![i].properties!.vyraujantysMedziai ??
                             '',
@@ -414,7 +432,9 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                         reinstatementType:
                             permit.features![i].properties!.atkurimoBudas ?? '',
                       ),
-                    ));
+                    ),
+                  );
+                });
           },
         ),
       );

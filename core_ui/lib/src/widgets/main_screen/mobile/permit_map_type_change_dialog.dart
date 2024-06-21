@@ -39,82 +39,82 @@ class _PermitMapTypeChangeDialogState extends State<PermitMapTypeChangeDialog> {
         backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
-            return PointerInterceptor(
-              child: SizedBox(
-                height: widget.width * 0.716,
-                width: widget.width,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      vertical: widget.width * 0.05,
-                      horizontal: widget.width * 0.044),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text('Žemėlapio tipas',
-                              style: GoogleFonts.roboto(
-                                fontSize: widget.width * 0.04,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black,
-                              )),
-                          GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Icon(
-                                Icons.close,
-                                size: 24,
-                              ))
-                        ],
-                      ),
-                      SizedBox(height: widget.width * 0.056),
-                      SizedBox(
-                        width: widget.width,
-                        child: FittedBox(
-                          fit: BoxFit.fitWidth,
-                          child: MapTypeSwitcher(
-                            width: widget.width * 2,
-                            onMapTypeChange: (MapType value) {
-                              widget.onChangeTap(value);
+            return SizedBox(
+              height: widget.width * 0.716,
+              width: widget.width,
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    vertical: widget.width * 0.05,
+                    horizontal: widget.width * 0.044),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text('Žemėlapio tipas',
+                            style: GoogleFonts.roboto(
+                              fontSize: widget.width * 0.04,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black,
+                            )),
+                        GestureDetector(
+                            onTap: () {
                               Navigator.of(context).pop();
                             },
-                            currentMapType: widget.currentMapType,
-                          ),
+                            child: const Icon(
+                              Icons.close,
+                              size: 24,
+                            ))
+                      ],
+                    ),
+                    SizedBox(height: widget.width * 0.056),
+                    SizedBox(
+                      width: widget.width,
+                      child: FittedBox(
+                        fit: BoxFit.fitWidth,
+                        child: MapTypeSwitcher(
+                          width: widget.width * 2,
+                          onMapTypeChange: (MapType value) {
+                            widget.onChangeTap(value);
+                            Navigator.of(context).pop();
+                          },
+                          currentMapType: widget.currentMapType,
                         ),
                       ),
-                      SizedBox(height: widget.width * 0.056),
-                      const Divider(
-                        height: 1,
-                        color: Color.fromRGBO(222, 224, 224, 1),
-                      ),
-                      SizedBox(height: widget.width * 0.056),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text('Sluoksnių duomenys',
-                            style: GoogleFonts.roboto(
-                                fontSize: widget.width * 0.04,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black)),
-                      ),
-                      LayerTypeButton(
-                          width: widget.width,
-                          title: 'Išduoti kirtimų leidimai',
-                          isActive: widget.isPermitsActive,
-                          onTap: () {
-                            widget.onPermitsVisibilityChange;
-                          }),
-                      LayerTypeButton(
-                          width: widget.width,
-                          title: 'Patvirtinti pranešimai',
-                          isActive: widget.isReportsActive,
-                          onTap: () {
-                            widget.onReportVisibilityChange;
-                          })
-                    ],
-                  ),
+                    ),
+                    SizedBox(height: widget.width * 0.056),
+                    const Divider(
+                      height: 1,
+                      color: Color.fromRGBO(222, 224, 224, 1),
+                    ),
+                    SizedBox(height: widget.width * 0.056),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text('Sluoksnių duomenys',
+                          style: GoogleFonts.roboto(
+                              fontSize: widget.width * 0.04,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black)),
+                    ),
+                    SizedBox(height: widget.width * 0.01),
+                    LayerTypeButton(
+                        width: widget.width,
+                        title: 'Išduoti kirtimų leidimai',
+                        isActive: widget.isPermitsActive,
+                        onTap: () {
+                          widget.onPermitsVisibilityChange();
+                        }),
+                    SizedBox(height: widget.width * 0.02),
+                    LayerTypeButton(
+                        width: widget.width,
+                        title: 'Patvirtinti pranešimai',
+                        isActive: widget.isReportsActive,
+                        onTap: () {
+                          widget.onReportVisibilityChange();
+                        })
+                  ],
                 ),
               ),
             );

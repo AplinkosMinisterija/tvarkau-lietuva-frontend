@@ -16,10 +16,10 @@ class InstructionsWidget extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(width * 0.0043),
       margin: EdgeInsets.only(
-        top: width * 0.0167,
+        top: width * 0.01,
       ),
       height: width * 0.0838,
-      width: isBeetleCategory ? width * 0.75 : width * 0.6,
+      width: isBeetleCategory ? width * 0.75 : width * 0.68,
       decoration: BoxDecoration(
           color: const Color.fromRGBO(255, 253, 251, 1),
           borderRadius: BorderRadius.circular(8),

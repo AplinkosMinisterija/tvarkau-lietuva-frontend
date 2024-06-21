@@ -5,6 +5,8 @@ import 'package:pointer_interceptor/pointer_interceptor.dart';
 class InfoPermitWindowBox extends StatelessWidget {
   const InfoPermitWindowBox({
     super.key,
+    required this.width,
+    required this.isMobile,
     required this.type,
     required this.issuedFrom,
     required this.issuedTo,
@@ -19,6 +21,8 @@ class InfoPermitWindowBox extends StatelessWidget {
     required this.reinstatementType,
   });
 
+  final double width;
+  final bool isMobile;
   final String? type;
   final String? issuedFrom;
   final String? issuedTo;
@@ -36,83 +40,94 @@ class InfoPermitWindowBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return PointerInterceptor(
       child: Container(
-        width: 328,
-        height: 211,
+        width: isMobile ? width : width * 0.228,
+        height: isMobile ? width * 0.7 : width * 0.3,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(4),
           color: Colors.white,
         ),
-        padding: const EdgeInsets.all(16),
-        child: ListView(
+        padding: EdgeInsets.all(isMobile ? width * 0.044 : width * 0.011),
+        child: Column(
           children: [
-            getListTile(titles[0], type ?? '-'),
-            getListTile(titles[1], issuedFrom ?? '-'),
-            getListTile(titles[2], issuedTo ?? '-'),
-            getListTile(titles[3], cadastralNumber ?? '-'),
-            getListTile(titles[4], subdivision ?? '-'),
-            getListTile(titles[5], forestryDistrict ?? '-'),
-            getListTile(titles[6], block != null ? block.toString() : '-'),
-            getListTile(titles[7], plot ?? '-'),
-            getListTile(titles[8],
-                cuttableArea != null ? cuttableArea.toString() : '-'),
-            getListTile(titles[9], dominantTree ?? '-'),
-            getListTile(titles[10], cuttingType ?? '-'),
-            getListTile(titles[11], reinstatementType ?? '-'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                      left: isMobile ? width * 0.01 : width * 0.005),
+                  child: Text(
+                    'Leidimo kirsti mišką duomenys',
+                    style: GoogleFonts.roboto(
+                        fontWeight: FontWeight.w700,
+                        fontSize: isMobile ? width * 0.036 : width * 0.009),
+                  ),
+                ),
+                IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    icon: Icon(
+                      Icons.close,
+                      size: isMobile ? width * 0.055 : width * 0.013,
+                    ))
+              ],
+            ),
+            Expanded(
+              child: ListView(
+                children: [
+                  getListTile('VĮ VMU Padalinys', subdivision ?? '-', false),
+                  getListTile('Girininkija', forestryDistrict ?? '-', true),
+                  getListTile('Galioja nuo', issuedFrom ?? '-', false),
+                  getListTile('Galioja iki', issuedTo ?? '-', true),
+                  getListTile('Kvartalas',
+                      block != null ? block.toString() : '-', false),
+                  getListTile('Sklypas', plot ?? '-', true),
+                  getListTile(
+                      'Kertamas plotas',
+                      cuttableArea != null ? cuttableArea.toString() : '-',
+                      false),
+                  getListTile('Kirtimo rūšis', cuttingType ?? '-', true),
+                  getListTile(
+                      'Vyraujantys medžiai', dominantTree ?? '-', false),
+                  getListTile('Atkūrimo būdas', reinstatementType ?? '-', true),
+                ],
+              ),
+            ),
           ],
         ),
       ),
     );
   }
 
-  static const List<String> titles = [
-    'Tipas',
-    'Galioja nuo',
-    'Galioja iki',
-    'Kadastrinis Nr.',
-    'VMU padalinys',
-    'Girininkija',
-    'Kvartalas',
-    'Sklypas',
-    'Kertamas plotas',
-    'Vyraujantys medžiai',
-    'Kirtimo rūšis',
-    'Atkūrimo būdas'
-  ];
-
-  Widget getListTile(String title, String description) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        getListTileItem(title),
-        getListTileItem(description),
-      ],
-    );
-  }
-
-  Widget getListTileItem(String content) {
+  Widget getListTile(String title, String description, bool isDarker) {
     return Container(
-      alignment: Alignment.topCenter,
-      margin: const EdgeInsets.symmetric(
-        vertical: 5,
+      width: isMobile ? width * 0.8 : width * 0.2,
+      padding: EdgeInsets.all(isMobile ? width * 0.01 : width * 0.005),
+      color: isDarker
+          ? const Color.fromRGBO(245, 245, 245, 1)
+          : const Color.fromRGBO(255, 255, 255, 1),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            '$title:',
+            style: GoogleFonts.roboto(
+              fontWeight: FontWeight.w500,
+              fontSize: isMobile ? width * 0.0388 : width * 0.01,
+            ),
+          ),
+          SizedBox(
+            width: isMobile ? width * 0.38 : width * 0.095,
+            child: Text(
+              description,
+              style: GoogleFonts.roboto(
+                fontWeight: FontWeight.w400,
+                fontSize: isMobile ? width * 0.0388 : width * 0.01,
+              ),
+            ),
+          )
+        ],
       ),
-      width: 145,
-      padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(5)),
-        color: Colors.grey.withOpacity(0.1),
-      ),
-      child: Text(
-        content,
-        textAlign: TextAlign.center,
-        style: getTextStyle(),
-      ),
-    );
-  }
-
-  TextStyle getTextStyle() {
-    return GoogleFonts.roboto(
-      fontSize: 14,
-      fontWeight: FontWeight.w400,
     );
   }
 }

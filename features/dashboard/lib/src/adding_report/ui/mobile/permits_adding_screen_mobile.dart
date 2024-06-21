@@ -4,6 +4,7 @@ import 'package:core/utils/image_display/image_display.dart';
 import 'package:core/utils/image_picker.dart';
 import 'package:core/utils/permit.dart';
 import 'package:core/utils/url_launcher.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -417,54 +418,54 @@ class _PermitsAddingScreenMobileState extends State<PermitsAddingScreenMobile> {
                             )
                           : const SizedBox.shrink(),
                       SizedBox(height: widget.width * 0.03333),
+                      CheckboxListTile(
+                        activeColor: const Color.fromRGBO(57, 97, 84, 1),
+                        title: SizedBox(
+                            width: widget.width * 0.2,
+                            child: RichText(
+                              text: TextSpan(
+                                  text: 'Sutinku su departamento ',
+                                  children: [
+                                    TextSpan(
+                                      text:
+                                          'asmens duomenų apsaugos tvarkymo taisyklėmis',
+                                      style: GoogleFonts.roboto(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: widget.width * 0.03,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () => LaunchUrl().launch(
+                                            'https://aad.lrv.lt/lt/asmens-duomenu-apsauga/'),
+                                    )
+                                  ]),
+                            )),
+                        value: isTermsAccepted,
+                        onChanged: (value) {
+                          setState(() {
+                            isTermsAccepted = value!;
+                          });
+                        },
+                        controlAffinity: ListTileControlAffinity.leading,
+                      ),
                       SizedBox(
-                        width: widget.width,
-                        child: CheckboxListTile(
-                          activeColor: const Color.fromRGBO(57, 97, 84, 1),
-                          title: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Sutinku su  ',
-                                style: GoogleFonts.roboto(
-                                  fontSize: widget.width * 0.033,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  LaunchUrl().launch(
-                                      'https://aad.lrv.lt/lt/asmens-duomenu-apsauga/');
-                                },
-                                //widget.onDataSecurityTap,
-                                child: Text(
-                                  'Asmens duomenų apsaugos\ntvarkymo taisyklėmis',
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.roboto(
-                                    fontSize: widget.width * 0.033,
-                                    color: Colors.blue,
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                ),
-                              ),
-                            ],
+                        height: widget.width * 0.03,
+                        child: TextFormField(
+                          enabled: true,
+                          maxLines: 1,
+                          readOnly: true,
+                          initialValue: " ",
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
                           ),
-                          value: isTermsAccepted,
-                          onChanged: (value) {
-                            setState(() {
-                              isTermsAccepted = value!;
-                            });
+                          textAlignVertical: TextAlignVertical.top,
+                          validator: (value) {
+                            if (!isTermsAccepted) {
+                              return 'Privaloma sutikti';
+                            } else {
+                              return null;
+                            }
                           },
-                          controlAffinity: ListTileControlAffinity.leading,
-                          subtitle: !isTermsAccepted
-                              ? Text(
-                                  'Privaloma',
-                                  style: TextStyle(
-                                    color: const Color(0xFFe53935),
-                                    fontSize: widget.width * 0.03,
-                                  ),
-                                )
-                              : null,
                         ),
                       ),
                       SizedBox(height: widget.width * 0.0488),
