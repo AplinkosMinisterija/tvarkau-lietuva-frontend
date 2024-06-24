@@ -293,6 +293,7 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
                       InstructionsWidget(
                         width: widget.width,
                         isBeetleCategory: false,
+                        isPermitsCategory: false,
                       ),
                     ],
                   ),

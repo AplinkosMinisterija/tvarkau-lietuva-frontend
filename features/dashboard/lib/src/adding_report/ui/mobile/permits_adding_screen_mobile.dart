@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:core_ui/core_ui.dart';
 import 'dart:typed_data';
+import '../widgets/data_security_terms_widget.dart';
 import 'add_pin_screen_mobile.dart';
 
 class PermitsAddingScreenMobile extends StatefulWidget {
@@ -155,6 +156,7 @@ class _PermitsAddingScreenMobileState extends State<PermitsAddingScreenMobile> {
                       AddingInformationHeader(
                         width: widget.width,
                         isBeetleCategory: false,
+                        isPermitsCategory: true,
                       ),
                       SizedBox(height: widget.width * 0.0444),
                       Stack(
@@ -418,35 +420,14 @@ class _PermitsAddingScreenMobileState extends State<PermitsAddingScreenMobile> {
                             )
                           : const SizedBox.shrink(),
                       SizedBox(height: widget.width * 0.03333),
-                      CheckboxListTile(
-                        activeColor: const Color.fromRGBO(57, 97, 84, 1),
-                        title: SizedBox(
-                            width: widget.width * 0.2,
-                            child: RichText(
-                              text: TextSpan(
-                                  text: 'Sutinku su departamento ',
-                                  children: [
-                                    TextSpan(
-                                      text:
-                                          'asmens duomenų apsaugos tvarkymo taisyklėmis',
-                                      style: GoogleFonts.roboto(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: widget.width * 0.03,
-                                        decoration: TextDecoration.underline,
-                                      ),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () => LaunchUrl().launch(
-                                            'https://aad.lrv.lt/lt/asmens-duomenu-apsauga/'),
-                                    )
-                                  ]),
-                            )),
-                        value: isTermsAccepted,
-                        onChanged: (value) {
+                      DataSecurityTermsButton(
+                        onTap: (value) {
                           setState(() {
                             isTermsAccepted = value!;
                           });
                         },
-                        controlAffinity: ListTileControlAffinity.leading,
+                        width: widget.width,
+                        isTermsAccepted: isTermsAccepted,
                       ),
                       SizedBox(
                         height: widget.width * 0.03,

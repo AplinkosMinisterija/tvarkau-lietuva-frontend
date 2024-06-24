@@ -293,6 +293,7 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                       InstructionsWidget(
                         width: widget.width,
                         isBeetleCategory: false,
+                        isPermitsCategory: true,
                       ),
                     ],
                   ),
@@ -670,7 +671,7 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: widget.width * 0.011,
-                        vertical: widget.width * 0.103,
+                        vertical: widget.width * 0.138,
                       ),
                       child: Material(
                         shape: const RoundedRectangleBorder(
