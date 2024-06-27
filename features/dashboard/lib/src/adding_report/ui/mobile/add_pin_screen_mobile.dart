@@ -390,9 +390,9 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
         Polygon(
           polygonId: PolygonId("P-$i"),
           points: coordinates,
-          fillColor: const Color.fromRGBO(28, 63, 58, 0.3),
+          fillColor: const Color.fromRGBO(255, 106, 61, 0.3),
           strokeWidth: 1,
-          strokeColor: const Color.fromRGBO(28, 63, 58, 1),
+          strokeColor: const Color.fromRGBO(255, 106, 61, 1),
           onTap: () {
             showDialog(
                 context: context,
