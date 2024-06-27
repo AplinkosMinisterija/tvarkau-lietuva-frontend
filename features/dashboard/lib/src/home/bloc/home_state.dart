@@ -36,6 +36,16 @@ class ForestState implements HomeState {
   });
 }
 
+class PermitsState implements HomeState {
+  final List<PublicReportDto> reports;
+  final ReportStatisticsDto reportStatistics;
+
+  PermitsState({
+    required this.reports,
+    required this.reportStatistics,
+  });
+}
+
 class ErrorState implements HomeState {
   final String errorMessage;
   final String type;

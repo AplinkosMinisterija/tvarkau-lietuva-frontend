@@ -1,4 +1,6 @@
 import 'package:api_client/api_client.dart';
+import 'package:dashboard/src/adding_report/ui/widgets/data_security_terms_widget.dart';
+import 'package:flutter/gestures.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
@@ -147,6 +149,7 @@ class _ForestAddingScreenMobileState extends State<ForestAddingScreenMobile> {
                       AddingInformationHeader(
                         width: widget.width,
                         isBeetleCategory: false,
+                        isPermitsCategory: false,
                       ),
                       SizedBox(height: widget.width * 0.0444),
                       Stack(
@@ -176,6 +179,7 @@ class _ForestAddingScreenMobileState extends State<ForestAddingScreenMobile> {
                                           width: widget.width,
                                           markers: markers,
                                           isLayerSwitchVisible: true,
+                                          isPermitSwitchVisible: false,
                                           onTap: (lat, long, marker) {
                                             setState(() {
                                               newMarker.clear();
@@ -408,54 +412,33 @@ class _ForestAddingScreenMobileState extends State<ForestAddingScreenMobile> {
                             )
                           : const SizedBox.shrink(),
                       SizedBox(height: widget.width * 0.03333),
-                      SizedBox(
+                      DataSecurityTermsButton(
+                        onTap: (value) {
+                          setState(() {
+                            isTermsAccepted = value!;
+                          });
+                        },
                         width: widget.width,
-                        child: CheckboxListTile(
-                          activeColor: const Color.fromRGBO(57, 97, 84, 1),
-                          title: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Sutinku su  ',
-                                style: GoogleFonts.roboto(
-                                  fontSize: widget.width * 0.033,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  LaunchUrl().launch(
-                                      'https://aad.lrv.lt/lt/asmens-duomenu-apsauga/');
-                                },
-                                //widget.onDataSecurityTap,
-                                child: Text(
-                                  'Asmens duomenų apsaugos\ntvarkymo taisyklėmis',
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.roboto(
-                                    fontSize: widget.width * 0.033,
-                                    color: Colors.blue,
-                                    decoration: TextDecoration.underline,
-                                  ),
-                                ),
-                              ),
-                            ],
+                        isTermsAccepted: isTermsAccepted,
+                      ),
+                      SizedBox(
+                        height: widget.width * 0.03,
+                        child: TextFormField(
+                          enabled: true,
+                          maxLines: 1,
+                          readOnly: true,
+                          initialValue: " ",
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
                           ),
-                          value: isTermsAccepted,
-                          onChanged: (value) {
-                            setState(() {
-                              isTermsAccepted = value!;
-                            });
+                          textAlignVertical: TextAlignVertical.top,
+                          validator: (value) {
+                            if (!isTermsAccepted) {
+                              return 'Privaloma sutikti';
+                            } else {
+                              return null;
+                            }
                           },
-                          controlAffinity: ListTileControlAffinity.leading,
-                          subtitle: !isTermsAccepted
-                              ? Text(
-                                  'Privaloma',
-                                  style: TextStyle(
-                                    color: const Color(0xFFe53935),
-                                    fontSize: widget.width * 0.03,
-                                  ),
-                                )
-                              : null,
                         ),
                       ),
                       SizedBox(height: widget.width * 0.0488),

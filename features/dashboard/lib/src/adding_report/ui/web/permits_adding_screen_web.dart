@@ -1,5 +1,6 @@
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
+import 'package:core/utils/permit.dart';
 import 'package:flutter/gestures.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
@@ -11,10 +12,11 @@ import 'dart:typed_data';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class ForestAddingScreenWeb extends StatefulWidget {
-  const ForestAddingScreenWeb({
+class PermitsAddingScreenWeb extends StatefulWidget {
+  const PermitsAddingScreenWeb({
     required this.width,
     required this.height,
+    required this.permits,
     required this.reports,
     required this.onAddTap,
     required this.onDataSecurityTap,
@@ -23,15 +25,16 @@ class ForestAddingScreenWeb extends StatefulWidget {
 
   final double width;
   final double height;
+  final Permit permits;
   final List<PublicReportDto> reports;
   final Function(String, String, double, double, List<Uint8List>) onAddTap;
   final VoidCallback onDataSecurityTap;
 
   @override
-  State<ForestAddingScreenWeb> createState() => _ForestAddingScreenWebState();
+  State<PermitsAddingScreenWeb> createState() => _PermitsAddingScreenWebState();
 }
 
-class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
+class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
   List<Uint8List> _selectedImages = [];
 
   Future<void> getMultipleImageInfos() async {
@@ -52,9 +55,11 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
   bool isShowMarkers = true;
   bool isMapDisabled = false;
   bool isImagesSizeValid = true;
+  bool isShowPolygons = true;
   String currentTextValue = '';
   String currentEmailValue = '';
   Set<Marker> markers = {};
+  Set<Polygon> polygons = {};
   List<Marker> addedMarker = [];
   double selectedLat = 0;
   double selectedLong = 0;
@@ -103,7 +108,7 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
       );
       index++;
     }
-
+    mapPolygons(widget.permits);
     getLocation();
     super.initState();
   }
@@ -158,7 +163,7 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
   @override
   Widget build(BuildContext context) {
     return Title(
-      title: "Pranešti apie sugadintą miško paklotę ar kelius",
+      title: "Pranešti apie nelegalų kirtimą",
       color: Colors.green,
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(250, 242, 234, 1),
@@ -208,6 +213,7 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
                                 onTap: _currentPosition == null
                                     ? _handleTap
                                     : null,
+                                polygons: isShowPolygons ? polygons : {},
                                 markers: isShowMarkers
                                     ? markers
                                     : addedMarker.map((e) => e).toSet(),
@@ -238,25 +244,6 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
                             )
                           : const SizedBox.shrink(),
                       Positioned(
-                        left: widget.width * 0.0111,
-                        bottom: widget.width * 0.0111,
-                        child: ChangeVisibilityButtonMobile(
-                          width: widget.width / 2.4,
-                          isActive: isShowMarkers,
-                          isPermits: false,
-                          onHover: (isHover) {
-                            setState(() {
-                              isMapDisabled = isHover;
-                            });
-                          },
-                          onTap: () {
-                            setState(() {
-                              isShowMarkers = !isShowMarkers;
-                            });
-                          },
-                        ),
-                      ),
-                      Positioned(
                         bottom: 110,
                         right: 10,
                         child: InkWell(
@@ -273,19 +260,32 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
                               showDialog<String>(
                                   context: context,
                                   builder: (BuildContext context) =>
-                                      MapTypeChangeDialog(
-                                          width: widget.width / 2.4,
-                                          currentMapType: currentMapType,
-                                          onHover: (isHover) {
-                                            setState(() {
-                                              isMapDisabled = isHover;
-                                            });
-                                          },
-                                          onChangeTap: (MapType mapType) {
-                                            setState(() {
-                                              currentMapType = mapType;
-                                            });
-                                          }));
+                                      PermitMapTypeChangeDialog(
+                                        width: widget.width / 2.4,
+                                        currentMapType: currentMapType,
+                                        onHover: (isHover) {
+                                          setState(() {
+                                            isMapDisabled = isHover;
+                                          });
+                                        },
+                                        onChangeTap: (MapType mapType) {
+                                          setState(() {
+                                            currentMapType = mapType;
+                                          });
+                                        },
+                                        onPermitsVisibilityChange: () {
+                                          setState(() {
+                                            isShowPolygons = !isShowPolygons;
+                                          });
+                                        },
+                                        onReportVisibilityChange: () {
+                                          setState(() {
+                                            isShowMarkers = !isShowMarkers;
+                                          });
+                                        },
+                                        isReportsActive: isShowMarkers,
+                                        isPermitsActive: isShowPolygons,
+                                      ));
                             },
                           ),
                         ),
@@ -293,7 +293,7 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
                       InstructionsWidget(
                         width: widget.width,
                         isBeetleCategory: false,
-                        isPermitsCategory: false,
+                        isPermitsCategory: true,
                       ),
                     ],
                   ),
@@ -306,8 +306,7 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
                         child: Column(
                           children: [
                             ExitHeader(
-                                title:
-                                    'Pranešti apie sugadintą miško\npaklotę ar kelius',
+                                title: 'Pranešti apie nelegalų kirtimą',
                                 width: widget.width,
                                 onTap: () {
                                   context.goNamed("home");
@@ -641,6 +640,83 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
     setState(() {
       selectedLat = tappedPoint.latitude;
       selectedLong = tappedPoint.longitude;
+    });
+  }
+
+  Future<void> mapPolygons(Permit permit) async {
+    Set<Polygon> tempPolygons = {};
+    for (var i = 0; i < permit.features!.length; i++) {
+      List<LatLng> coordinates = [];
+      for (var j = 0;
+          j < permit.features![i].geometry!.coordinates![0][0].length;
+          j++) {
+        coordinates.add(LatLng(
+            permit.features![i].geometry!.coordinates![0][0][j][1],
+            permit.features![i].geometry!.coordinates![0][0][j][0]));
+      }
+      tempPolygons.add(
+        Polygon(
+          polygonId: PolygonId("P-$i"),
+          points: coordinates,
+          fillColor: const Color.fromRGBO(255, 106, 61, 0.3),
+          strokeWidth: 1,
+          strokeColor: const Color.fromRGBO(255, 106, 61, 1),
+          onTap: () {
+            showDialog(
+                context: context,
+                barrierColor: Colors.white.withOpacity(0),
+                builder: (context) {
+                  return Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: widget.width * 0.011,
+                        vertical: widget.width * 0.138,
+                      ),
+                      child: Material(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                        ),
+                        child: InfoPermitWindowBox(
+                          width: widget.width,
+                          isMobile: false,
+                          type: permit.features![i].properties!.tipas ?? '',
+                          issuedFrom:
+                              permit.features![i].properties!.galiojaNuo ?? '',
+                          issuedTo:
+                              permit.features![i].properties!.galiojaIki ?? '',
+                          cadastralNumber:
+                              permit.features![i].properties!.kadastrinisNr ??
+                                  '',
+                          subdivision:
+                              permit.features![i].properties!.vmuPadalinys ??
+                                  '',
+                          forestryDistrict:
+                              permit.features![i].properties!.girininkija ?? '',
+                          block: permit.features![i].properties!.kvartalas,
+                          plot: permit.features![i].properties!.sklypas ?? '',
+                          cuttableArea:
+                              permit.features![i].properties!.kertamasPlotas,
+                          dominantTree: permit.features![i].properties!
+                                  .vyraujantysMedziai ??
+                              '',
+                          cuttingType:
+                              permit.features![i].properties!.kirtimoRusis ??
+                                  '',
+                          reinstatementType:
+                              permit.features![i].properties!.atkurimoBudas ??
+                                  '',
+                        ),
+                      ),
+                    ),
+                  );
+                });
+          },
+        ),
+      );
+    }
+    setState(() {
+      polygons = tempPolygons;
     });
   }
 }

@@ -1,33 +1,42 @@
+import 'package:api_client/api_client.dart';
+import 'package:core/constants/global_constants.dart';
+import 'package:core/utils/image_display/image_display.dart';
+import 'package:core/utils/image_picker.dart';
+import 'package:core/utils/permit.dart';
+import 'package:core/utils/url_launcher.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:core_ui/core_ui.dart';
 import 'dart:typed_data';
-import 'package:core/core.dart';
 import '../widgets/data_security_terms_widget.dart';
 import 'add_pin_screen_mobile.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class BeetleAddingScreenMobile extends StatefulWidget {
-  const BeetleAddingScreenMobile({
+class PermitsAddingScreenMobile extends StatefulWidget {
+  const PermitsAddingScreenMobile({
     required this.width,
     required this.height,
+    required this.permits,
+    required this.reports,
     required this.onAddTap,
     super.key,
   });
 
   final double width;
   final double height;
+  final Permit permits;
+  final List<PublicReportDto> reports;
   final Function(String, String, double, double, List<Uint8List>) onAddTap;
 
   @override
-  State<BeetleAddingScreenMobile> createState() =>
-      _BeetleAddingScreenMobileState();
+  State<PermitsAddingScreenMobile> createState() =>
+      _PermitsAddingScreenMobileState();
 }
 
-class _BeetleAddingScreenMobileState extends State<BeetleAddingScreenMobile> {
+class _PermitsAddingScreenMobileState extends State<PermitsAddingScreenMobile> {
   List<Uint8List> _selectedImages = [];
 
   Future<void> getMultipleImageInfos() async {
@@ -69,6 +78,22 @@ class _BeetleAddingScreenMobileState extends State<BeetleAddingScreenMobile> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       addCustomIcon();
     });
+    int index = 0;
+    for (var element in widget.reports) {
+      markers.add(
+        Marker(
+          markerId: MarkerId(
+            element.name + index.toString(),
+          ),
+          position: LatLng(
+            element.latitude.toDouble(),
+            element.longitude.toDouble(),
+          ),
+        ),
+      );
+      index++;
+    }
+
     super.initState();
   }
 
@@ -94,7 +119,7 @@ class _BeetleAddingScreenMobileState extends State<BeetleAddingScreenMobile> {
   @override
   Widget build(BuildContext context) {
     return Title(
-      title: "Pranešti apie žievėgraužį",
+      title: "Pranešti apie nelegalų kirtimą",
       color: Colors.green,
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(250, 242, 234, 1),
@@ -110,7 +135,7 @@ class _BeetleAddingScreenMobileState extends State<BeetleAddingScreenMobile> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            'Pranešti apie žievėgraužį tipografą',
+                            'Pranešti apie nelegalų kirtimą',
                             style: GoogleFonts.roboto(
                               fontSize: widget.width * 0.04444,
                               fontWeight: FontWeight.w700,
@@ -130,8 +155,8 @@ class _BeetleAddingScreenMobileState extends State<BeetleAddingScreenMobile> {
                       SizedBox(height: widget.width * 0.0611),
                       AddingInformationHeader(
                         width: widget.width,
-                        isBeetleCategory: true,
-                        isPermitsCategory: false,
+                        isBeetleCategory: false,
+                        isPermitsCategory: true,
                       ),
                       SizedBox(height: widget.width * 0.0444),
                       Stack(
@@ -160,8 +185,9 @@ class _BeetleAddingScreenMobileState extends State<BeetleAddingScreenMobile> {
                                     builder: (context) => AddPinScreenMobile(
                                           width: widget.width,
                                           markers: markers,
-                                          isLayerSwitchVisible: false,
-                                          isPermitSwitchVisible: false,
+                                          permits: widget.permits,
+                                          isLayerSwitchVisible: true,
+                                          isPermitSwitchVisible: true,
                                           onTap: (lat, long, marker) {
                                             setState(() {
                                               newMarker.clear();
@@ -196,7 +222,7 @@ class _BeetleAddingScreenMobileState extends State<BeetleAddingScreenMobile> {
                                       ),
                                       SizedBox(width: widget.width * 0.0277),
                                       Text(
-                                        'Pažymėkite vietą, kur pastebėjote žievėgraužį',
+                                        'Pažymėkite vietą, kur pastebėjote pažeidimą',
                                         style: GoogleFonts.roboto(
                                             fontSize: widget.width * 0.028888,
                                             fontWeight: FontWeight.w400),
@@ -311,7 +337,7 @@ class _BeetleAddingScreenMobileState extends State<BeetleAddingScreenMobile> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'Įkelkite bent 2 žievėgraužio nuotraukas',
+                          'Įkelkite bent 2 pažeidimo nuotraukas',
                           style: GoogleFonts.roboto(
                               fontSize: widget.width * 0.03888,
                               fontWeight: FontWeight.w400),
@@ -443,26 +469,6 @@ class _BeetleAddingScreenMobileState extends State<BeetleAddingScreenMobile> {
                                 _selectedImages,
                               );
                             }
-
-                            //TODO: FIX CAPTCHA
-                            // showDialog(
-                            //     context: context,
-                            //     builder: (context) {
-                            //       return CaptchaDialog(
-                            //         onSuccess: () async {
-                            //           await Future.delayed(
-                            //               const Duration(seconds: 1));
-                            //           Navigator.of(context).pop();
-                            //           widget.onAddTap(
-                            //             currentEmailValue,
-                            //             currentTextValue,
-                            //             selectedLat,
-                            //             selectedLong,
-                            //             multipartList,
-                            //           );
-                            //         },
-                            //       );
-                            //     });
                           }
                         },
                       ),

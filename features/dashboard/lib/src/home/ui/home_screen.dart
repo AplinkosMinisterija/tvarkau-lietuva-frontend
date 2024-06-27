@@ -39,13 +39,7 @@ class HomeScreen extends StatelessWidget {
                       },
                       category: ' ',
                       onCategoryChange: (value) {
-                        value == 'Atliekos'
-                            ? context.read<HomeBloc>().add(
-                                  LoadTrashData(),
-                                )
-                            : context.read<HomeBloc>().add(
-                                  LoadForestData(),
-                                );
+                        context.read<HomeBloc>().add(getEventByCategory(value));
                       },
                     );
                   case TrashState():
@@ -66,13 +60,7 @@ class HomeScreen extends StatelessWidget {
                       },
                       category: 'trash',
                       onCategoryChange: (value) {
-                        value == 'Atliekos'
-                            ? context.read<HomeBloc>().add(
-                                  LoadTrashData(),
-                                )
-                            : context.read<HomeBloc>().add(
-                                  LoadForestData(),
-                                );
+                        context.read<HomeBloc>().add(getEventByCategory(value));
                       },
                     );
                   case ForestState():
@@ -93,13 +81,28 @@ class HomeScreen extends StatelessWidget {
                       },
                       category: 'forest',
                       onCategoryChange: (value) {
-                        value == 'Atliekos'
-                            ? context.read<HomeBloc>().add(
-                                  LoadTrashData(),
-                                )
-                            : context.read<HomeBloc>().add(
-                                  LoadForestData(),
-                                );
+                        context.read<HomeBloc>().add(getEventByCategory(value));
+                      },
+                    );
+                  case PermitsState():
+                    return ReportsScreen(
+                      reports: state.reports,
+                      dumpReports: null,
+                      reportStatistics: state.reportStatistics,
+                      onAddTap: (double width, double height) {
+                        context.goNamed('report_category');
+                      },
+                      onInformationTap: (String refId) {
+                        int strLength = 8 - refId.length;
+                        String str = '0' * strLength;
+
+                        context.goNamed('report', queryParameters: {
+                          'id': 'TLP-A$str${refId.toUpperCase()}'
+                        });
+                      },
+                      category: 'permits',
+                      onCategoryChange: (value) {
+                        context.read<HomeBloc>().add(getEventByCategory(value));
                       },
                     );
                   case ErrorState():
@@ -117,5 +120,18 @@ class HomeScreen extends StatelessWidget {
             );
           },
         ));
+  }
+
+  HomeEvent getEventByCategory(String category) {
+    switch (category) {
+      case 'Atliekos':
+        return LoadTrashData();
+      case 'Sugadinta miško paklotė ir keliai':
+        return LoadForestData();
+      case 'Nelegalūs kirtimai':
+        return LoadPermitsData();
+      default:
+        return LoadTrashData();
+    }
   }
 }

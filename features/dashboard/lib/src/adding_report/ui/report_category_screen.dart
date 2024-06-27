@@ -58,6 +58,14 @@ class _ReportCategoryScreenBody extends StatelessWidget {
                     iconName: 'recycle_icon',
                   ),
                   ReportCategorySelector(
+                    title: 'Nelegalūs kirtimai ir leidimai',
+                    description: 'Jeigu matote nelegalų kirtimą',
+                    onTap: () {
+                      context.goNamed('newReportPermits');
+                    },
+                    iconName: 'permit_icon',
+                  ),
+                  ReportCategorySelector(
                     title: 'Kenkėjų apniktos ar nuvirtusios eglės',
                     description:
                         'Jeigu pastebite žievėgraužį tipografą ar tikėtiną jo veisimosi vietą',
