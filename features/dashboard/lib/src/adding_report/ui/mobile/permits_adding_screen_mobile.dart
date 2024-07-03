@@ -344,14 +344,16 @@ class _PermitsAddingScreenMobileState extends State<PermitsAddingScreenMobile> {
                         ),
                       ),
                       SizedBox(height: widget.width * 0.0111),
-                      ImageAddButtonMobile(
-                          width: widget.width,
-                          title: _selectedImages.isNotEmpty
-                              ? 'Įkelti kitas nuotraukas'
-                              : 'Įkelti nuotraukas',
-                          onTap: () {
-                            getMultipleImageInfos();
-                          }),
+                      ImageAddButton(
+                        width: widget.width,
+                        title: _selectedImages.isNotEmpty
+                            ? 'Įkelti kitas nuotraukas'
+                            : 'Įkelti nuotraukas',
+                        onTap: () {
+                          getMultipleImageInfos();
+                        },
+                        isMobile: true,
+                      ),
                       SizedBox(height: widget.width * 0.0133),
                       Align(
                         alignment: Alignment.centerLeft,

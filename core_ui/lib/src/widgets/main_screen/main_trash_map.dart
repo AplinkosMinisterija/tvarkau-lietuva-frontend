@@ -102,8 +102,8 @@ class _MainTrashMapState extends State<MainTrashMap> {
           Column(
             children: <Widget>[
               SizedBox(
-                height: widget.width * 0.354,
-                width: widget.width * 0.625,
+                height: widget.width * 0.4765,
+                width: widget.width * 0.84375,
                 child: ClipRRect(
                   borderRadius: const BorderRadius.all(Radius.circular(32)),
                   child: Stack(

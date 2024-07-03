@@ -71,53 +71,31 @@ class _ReportsScreenState extends State<ReportsScreen> {
                     BackgroundWidget(width: constraints.maxWidth),
                     Padding(
                       padding: EdgeInsets.symmetric(
-                        horizontal: constraints.maxWidth * 0.1875,
-                        vertical: constraints.maxWidth * 0.0083,
+                        horizontal: constraints.maxWidth * 0.078125,
+                        vertical: constraints.maxWidth * 0.03125,
                       ),
                       child: Column(
                         children: <Widget>[
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: SvgPicture.asset(
-                              'assets/svg/TL_logo.svg',
-                              width: constraints.maxWidth * 0.3,
-                            ),
-                          ),
-                          SizedBox(
-                            height: constraints.maxWidth * 0.058,
-                          ),
-                          TitleWidget(width: constraints.maxWidth),
-                          SizedBox(
-                            height: constraints.maxWidth * 0.009,
-                          ),
-                          Align(
-                            alignment: Alignment.topCenter,
-                            child: AddButton(
-                              onTap: () {
-                                widget.onAddTap(
-                                  constraints.maxWidth,
-                                  constraints.maxHeight,
-                                );
-                              },
-                              width: constraints.maxWidth,
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 20),
-                              child: Text(
-                                "Pranešimų skaičius: ${widget.reports.length}",
-                                style: GoogleFonts.roboto(
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.white),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SvgPicture.asset(
+                                'assets/svg/TL_logo.svg',
+                                width: constraints.maxWidth * 0.3615,
                               ),
-                            ),
+                              TitleWidget(
+                                width: constraints.maxWidth,
+                                onTap: () {
+                                  widget.onAddTap(
+                                    constraints.maxWidth,
+                                    constraints.maxHeight,
+                                  );
+                                },
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                            height: constraints.maxWidth * 0.009,
-                          ),
+                          SizedBox(height: constraints.maxWidth * 0.03125),
                           Stack(
                             children: [
                               isShowDumps

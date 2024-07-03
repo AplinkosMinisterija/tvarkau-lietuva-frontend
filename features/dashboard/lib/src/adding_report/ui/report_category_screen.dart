@@ -58,8 +58,8 @@ class _ReportCategoryScreenBody extends StatelessWidget {
                     iconName: 'recycle_icon',
                   ),
                   ReportCategorySelector(
-                    title: 'Nelegalūs kirtimai ir leidimai',
-                    description: 'Jeigu matote nelegalų kirtimą',
+                    title: 'Pažeidimai kirtimuose ir leidimai',
+                    description: 'Jeigu matote pažeidimą kirtimuose',
                     onTap: () {
                       context.goNamed('newReportPermits');
                     },

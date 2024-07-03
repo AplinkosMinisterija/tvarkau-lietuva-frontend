@@ -15,7 +15,7 @@ class BackgroundWidget extends StatelessWidget {
         Container(
           width: width,
           height: width * 0.430,
-          color: const Color(0xff2a6354),
+          color: const Color.fromRGBO(28, 63, 58, 1),
         ),
       ],
     );

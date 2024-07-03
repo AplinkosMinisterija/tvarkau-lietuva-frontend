@@ -400,14 +400,16 @@ class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
                             SizedBox(
                               height: widget.width * 0.004,
                             ),
-                            ImageAddButtonMobile(
-                                width: widget.width / 2.4,
-                                title: _selectedImages.isNotEmpty
-                                    ? 'Įkelti kitas nuotraukas'
-                                    : 'Įkelti nuotraukas',
-                                onTap: () {
-                                  getMultipleImageInfos();
-                                }),
+                            ImageAddButton(
+                              width: widget.width,
+                              title: _selectedImages.isNotEmpty
+                                  ? 'Įkelti kitas nuotraukas'
+                                  : 'Įkelti nuotraukas',
+                              onTap: () {
+                                getMultipleImageInfos();
+                              },
+                              isMobile: false,
+                            ),
                             SizedBox(
                               height: widget.width * 0.004,
                             ),
