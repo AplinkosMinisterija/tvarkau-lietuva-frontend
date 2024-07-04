@@ -71,7 +71,7 @@ class AadApp extends StatelessWidget {
           builder: (context, state) => const AddingScreenTrash()),
       GoRoute(
           name: 'newReportPermits',
-          path: '/pranesti-nelegalus-kirtimai',
+          path: '/pranesti-pazeidimai-kirtimuose',
           builder: (context, state) => const AddingScreenPermits()),
       GoRoute(
           name: 'newReportForest',
