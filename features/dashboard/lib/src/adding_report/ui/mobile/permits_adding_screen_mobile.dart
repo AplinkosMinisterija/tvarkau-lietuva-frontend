@@ -3,8 +3,6 @@ import 'package:core/constants/global_constants.dart';
 import 'package:core/utils/image_display/image_display.dart';
 import 'package:core/utils/image_picker.dart';
 import 'package:core/utils/permit.dart';
-import 'package:core/utils/url_launcher.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';

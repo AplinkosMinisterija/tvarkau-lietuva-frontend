@@ -280,7 +280,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                           context: context,
                           builder: (BuildContext context) =>
                               widget.isPermitSwitchVisible
-                                  ? PermitMapTypeChangeDialog(
+                                  ? MapTypeChangeDialog(
                                       width: widget.width,
                                       currentMapType: currentMapType,
                                       onHover: (isHover) {

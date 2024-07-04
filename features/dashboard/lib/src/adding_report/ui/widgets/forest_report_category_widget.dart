@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'dart:ui' as ui;
 
 class ReportCategorySelector extends StatelessWidget {
   const ReportCategorySelector({

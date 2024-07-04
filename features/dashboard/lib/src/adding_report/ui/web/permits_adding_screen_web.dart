@@ -2,16 +2,13 @@ import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:core/utils/permit.dart';
 import 'package:dashboard/src/adding_report/ui/widgets/adding_screen_side_bar.dart';
-import 'package:flutter/gestures.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:core_ui/core_ui.dart';
 import 'dart:typed_data';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class PermitsAddingScreenWeb extends StatefulWidget {
   const PermitsAddingScreenWeb({
@@ -261,7 +258,7 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                               showDialog<String>(
                                   context: context,
                                   builder: (BuildContext context) =>
-                                      PermitMapTypeChangeDialog(
+                                      MapTypeChangeDialog(
                                         width: widget.width / 2.4,
                                         currentMapType: currentMapType,
                                         onHover: (isHover) {

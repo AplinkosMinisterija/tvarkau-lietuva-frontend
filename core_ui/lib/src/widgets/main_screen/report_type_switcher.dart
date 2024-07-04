@@ -9,7 +9,7 @@ class ReportTypeSwitcher extends StatelessWidget {
   });
 
   final bool isShowDumps;
-  final ValueChanged<bool> onReportTypeChange;
+  final ValueChanged<String> onReportTypeChange;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class ReportTypeSwitcher extends StatelessWidget {
             buttonText: 'Peržiūrėti pranešimus\napie atliekas',
             isActive: isShowDumps ? false : true,
             onPressed: () {
-              onReportTypeChange(false);
+              onReportTypeChange('trash');
             },
           ),
           ReportTypeSwitcherButton(
@@ -40,7 +40,7 @@ class ReportTypeSwitcher extends StatelessWidget {
             buttonText: 'Peržiūrėti atliekų\nsurinkimo aikšteles',
             isActive: isShowDumps ? true : false,
             onPressed: () {
-              onReportTypeChange(true);
+              onReportTypeChange('dumps');
             },
           ),
         ],

@@ -1,137 +1,99 @@
-import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
-import 'package:dashboard/src/home/bloc/home_bloc.dart';
-import 'package:dashboard/src/home/ui/reports_screen.dart';
+import 'package:dashboard/src/home/ui/map_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (BuildContext context) => HomeBloc()..add(LoadData()),
-        child: BlocBuilder<HomeBloc, HomeState>(
-          builder: (BuildContext context, HomeState state) {
-            return BlocBuilder<HomeBloc, HomeState>(
-              builder: (BuildContext context, HomeState state) {
-                switch (state) {
-                  case LoadingState():
-                    return LoaderWidget().loader();
-                  case InitState():
-                    return ReportsScreen(
-                      reports: state.reports,
-                      dumpReports: null,
-                      reportStatistics: state.reportStatistics,
-                      onAddTap: (double width, double height) {
-                        context.goNamed('report_category');
-                      },
-                      onInformationTap: (String refId) {
-                        int strLength = 8 - refId.length;
-                        String str = '0' * strLength;
+  State<HomeScreen> createState() => _HomeScreenState();
+}
 
-                        context.goNamed('report', queryParameters: {
-                          'id': 'TLP-A$str${refId.toUpperCase()}'
-                        });
-                      },
-                      category: ' ',
-                      onCategoryChange: (value) {
-                        context.read<HomeBloc>().add(getEventByCategory(value));
-                      },
-                    );
-                  case TrashState():
-                    return ReportsScreen(
-                      reports: state.reports,
-                      dumpReports: state.dumpReports,
-                      reportStatistics: state.reportStatistics,
-                      onAddTap: (double width, double height) {
-                        context.goNamed('report_category');
-                      },
-                      onInformationTap: (String refId) {
-                        int strLength = 8 - refId.length;
-                        String str = '0' * strLength;
+class _HomeScreenState extends State<HomeScreen> {
+  late bool isMapHover;
 
-                        context.goNamed('report', queryParameters: {
-                          'id': 'TLP-A$str${refId.toUpperCase()}'
-                        });
-                      },
-                      category: 'trash',
-                      onCategoryChange: (value) {
-                        context.read<HomeBloc>().add(getEventByCategory(value));
-                      },
-                    );
-                  case ForestState():
-                    return ReportsScreen(
-                      reports: state.reports,
-                      dumpReports: null,
-                      reportStatistics: state.reportStatistics,
-                      onAddTap: (double width, double height) {
-                        context.goNamed('report_category');
-                      },
-                      onInformationTap: (String refId) {
-                        int strLength = 8 - refId.length;
-                        String str = '0' * strLength;
-
-                        context.goNamed('report', queryParameters: {
-                          'id': 'TLP-A$str${refId.toUpperCase()}'
-                        });
-                      },
-                      category: 'forest',
-                      onCategoryChange: (value) {
-                        context.read<HomeBloc>().add(getEventByCategory(value));
-                      },
-                    );
-                  case PermitsState():
-                    return ReportsScreen(
-                      reports: state.reports,
-                      dumpReports: null,
-                      reportStatistics: state.reportStatistics,
-                      onAddTap: (double width, double height) {
-                        context.goNamed('report_category');
-                      },
-                      onInformationTap: (String refId) {
-                        int strLength = 8 - refId.length;
-                        String str = '0' * strLength;
-
-                        context.goNamed('report', queryParameters: {
-                          'id': 'TLP-A$str${refId.toUpperCase()}'
-                        });
-                      },
-                      category: 'permits',
-                      onCategoryChange: (value) {
-                        context.read<HomeBloc>().add(getEventByCategory(value));
-                      },
-                    );
-                  case ErrorState():
-                    return ErrorReloadWidget(
-                      onPressed: () {
-                        context.read<HomeBloc>().add(
-                              ReloadPage(),
-                            );
-                      },
-                      errorText: state.errorMessage,
-                    );
-                }
-                return const SizedBox.shrink();
-              },
-            );
-          },
-        ));
+  @override
+  void initState() {
+    isMapHover = false;
+    super.initState();
   }
 
-  HomeEvent getEventByCategory(String category) {
-    switch (category) {
-      case 'Atliekos':
-        return LoadTrashData();
-      case 'Sugadinta miško paklotė ir keliai':
-        return LoadForestData();
-      case 'Nelegalūs kirtimai':
-        return LoadPermitsData();
-      default:
-        return LoadTrashData();
-    }
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+      return constraints.maxWidth > 900
+          ? SingleChildScrollView(
+              physics: isMapHover ? const NeverScrollableScrollPhysics() : null,
+              child: Stack(
+                children: [
+                  BackgroundWidget(width: constraints.maxWidth),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: constraints.maxWidth * 0.078125,
+                      vertical: constraints.maxWidth * 0.03125,
+                    ),
+                    child: Column(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SvgPicture.asset(
+                              'assets/svg/TL_logo.svg',
+                              width: constraints.maxWidth * 0.3615,
+                            ),
+                            TitleWidget(
+                              width: constraints.maxWidth,
+                              onTap: () {
+                                context.goNamed('report_category');
+                              },
+                            ),
+                          ],
+                        ),
+                        MapScreen(
+                            isMapHover: (isHover) {
+                              setState(() {
+                                isMapHover = isHover;
+                              });
+                            },
+                            width: constraints.maxWidth),
+                        SizedBox(height: constraints.maxWidth * 0.03125),
+                        const Divider(
+                          height: 1,
+                          color: Color.fromRGBO(10, 51, 40, 0.1),
+                        ),
+                        SizedBox(height: constraints.maxWidth * 0.0343),
+                        Footer(
+                          width: constraints.maxWidth,
+                        ),
+                        SizedBox(height: constraints.maxWidth * 0.0166),
+                        const Divider(
+                          height: 1,
+                          color: Color.fromRGBO(10, 51, 40, 0.1),
+                        ),
+                        SizedBox(height: constraints.maxWidth * 0.0166),
+                        Row(
+                          children: <Widget>[
+                            Copyright(
+                              width: constraints.maxWidth,
+                            ),
+                            const Spacer(),
+                            SupportTag(
+                              width: constraints.maxWidth,
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ))
+          : Container();
+    });
   }
 }

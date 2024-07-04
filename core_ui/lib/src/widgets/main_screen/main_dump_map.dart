@@ -168,8 +168,8 @@ class _MainDumpMapState extends State<MainDumpMap> {
               alignment: Alignment.topLeft,
               child: ReportTypeSwitcher(
                 isShowDumps: widget.isShowDumps,
-                onReportTypeChange: (bool value) {
-                  widget.onReportTypeChange(value);
+                onReportTypeChange: (var value) {
+                  //widget.onReportTypeChange(value);
                 },
               ),
             ),

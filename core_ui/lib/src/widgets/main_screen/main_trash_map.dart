@@ -35,6 +35,9 @@ class _MainTrashMapState extends State<MainTrashMap> {
   bool isShowDumps = true;
   Set<Marker> trashMarkers = {};
   Set<Marker> _trashMarkers = {};
+  late MapType _currentMapType;
+  final CameraPosition _lithuaniaCameraPosition =
+      const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 7.0);
 
   Future<void> voidAddTrashMarkers() async {
     int index = 0;
@@ -76,10 +79,6 @@ class _MainTrashMapState extends State<MainTrashMap> {
       _trashMarkers = tempMarkers;
     });
   }
-
-  late MapType _currentMapType;
-  final CameraPosition _lithuaniaCameraPosition =
-      const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 7.0);
 
   @override
   void initState() {
@@ -170,8 +169,8 @@ class _MainTrashMapState extends State<MainTrashMap> {
                     alignment: Alignment.topLeft,
                     child: ReportTypeSwitcher(
                       isShowDumps: widget.isShowDumps,
-                      onReportTypeChange: (bool value) {
-                        widget.onReportTypeChange(value);
+                      onReportTypeChange: (var value) {
+                        //widget.onReportTypeChange(value);
                       },
                     ),
                   ),
