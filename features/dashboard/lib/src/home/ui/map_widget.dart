@@ -211,7 +211,7 @@ class _MapWidgetState extends State<MapWidget> {
                                         context: context,
                                         builder: (BuildContext context) =>
                                             MapTypeChangeDialog(
-                                                width: widget.width / 2.4,
+                                                width: widget.width,
                                                 currentMapType: _currentMapType,
                                                 onChangeTap: (MapType mapType) {
                                                   setState(() {

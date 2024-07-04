@@ -260,7 +260,7 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                                   context: context,
                                   builder: (BuildContext context) =>
                                       MapTypeChangeDialog(
-                                        width: widget.width / 2.4,
+                                        width: widget.width,
                                         currentMapType: currentMapType,
                                         onHover: (isHover) {
                                           setState(() {

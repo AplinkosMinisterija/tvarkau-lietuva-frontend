@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import 'map_type_switcher_button.dart';
 
-class MapTypeSwitcher extends StatefulWidget {
+class MapTypeSwitcher extends StatelessWidget {
   const MapTypeSwitcher({
     super.key,
     required this.width,
@@ -16,46 +15,33 @@ class MapTypeSwitcher extends StatefulWidget {
   final MapType currentMapType;
 
   @override
-  State<MapTypeSwitcher> createState() => _MapTypeSwitcherState();
-}
-
-class _MapTypeSwitcherState extends State<MapTypeSwitcher> {
-  @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         MapTypeSwitcherButton(
-          width: widget.width,
+          width: width,
           title: 'Įprastas',
-          isActive: widget.currentMapType == MapType.normal,
+          isActive: currentMapType == MapType.normal,
           onTap: () {
-            setState(() {
-              widget.onMapTypeChange(MapType.normal);
-            });
+            onMapTypeChange(MapType.normal);
           },
         ),
-        SizedBox(width: widget.width * 0.0083),
         MapTypeSwitcherButton(
-          width: widget.width,
+          width: width,
           title: 'Palydovinis',
-          isActive: widget.currentMapType == MapType.satellite,
+          isActive: currentMapType == MapType.satellite,
           onTap: () {
-            setState(() {
-              widget.onMapTypeChange(MapType.satellite);
-            });
+            onMapTypeChange(MapType.satellite);
           },
         ),
-        SizedBox(width: widget.width * 0.0083),
         MapTypeSwitcherButton(
-          width: widget.width,
+          width: width,
           title: 'Hibridinis',
-          isActive: widget.currentMapType == MapType.hybrid,
+          isActive: currentMapType == MapType.hybrid,
           onTap: () {
-            setState(() {
-              widget.onMapTypeChange(MapType.hybrid);
-            });
+            onMapTypeChange(MapType.hybrid);
           },
         ),
       ],

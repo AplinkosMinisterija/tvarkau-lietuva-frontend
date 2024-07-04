@@ -52,9 +52,9 @@ class _LayerTypeButtonState extends State<LayerTypeButton> {
         }
       },
       child: Container(
-        width: widget.width,
-        height: widget.width * 0.1,
-        padding: EdgeInsets.symmetric(horizontal: widget.width * 0.05),
+        width: widget.width * 0.25625,
+        height: widget.width * 0.03593,
+        padding: EdgeInsets.symmetric(horizontal: widget.width * 0.0093),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
             color: activeColor,
@@ -67,7 +67,7 @@ class _LayerTypeButtonState extends State<LayerTypeButton> {
             Text(
               widget.title,
               style: GoogleFonts.roboto(
-                fontSize: widget.width * 0.03,
+                fontSize: widget.width * 0.009375,
                 fontWeight: FontWeight.w400,
                 color: Colors.black,
               ),
