@@ -49,6 +49,7 @@ class _MapWidgetState extends State<MapWidget> {
   late MapType _currentMapType;
   late CameraPosition _cameraPosition;
   late GoogleMapController mapController;
+  bool isLocationLoading = false;
 
   static const List<String> _dropdownList = [
     'Atliekos',
@@ -82,8 +83,14 @@ class _MapWidgetState extends State<MapWidget> {
   }
 
   Future<Position> getCurrentLocation() async {
+    setState(() {
+      isLocationLoading = true;
+    });
     Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
+    setState(() {
+      isLocationLoading = false;
+    });
     return position;
   }
 
@@ -154,9 +161,10 @@ class _MapWidgetState extends State<MapWidget> {
                                             CameraUpdate.newLatLngZoom(
                                                 LatLng(position.latitude,
                                                     position.longitude),
-                                                14));
+                                                16));
                                       });
                                     },
+                                    isLoading: isLocationLoading,
                                   )),
                             ),
                           ),

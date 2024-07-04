@@ -234,6 +234,7 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
                                                 _currentPosition!, 13));
                                       });
                                     },
+                                    isLoading: false,
                                   )),
                             )
                           : const SizedBox.shrink(),

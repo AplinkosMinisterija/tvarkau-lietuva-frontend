@@ -216,7 +216,7 @@ class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
                                             CameraUpdate.newLatLngZoom(
                                                 _currentPosition!, 13));
                                       });
-                                    },
+                                    }, isLoading: false,
                                   )),
                             )
                           : const SizedBox.shrink(),

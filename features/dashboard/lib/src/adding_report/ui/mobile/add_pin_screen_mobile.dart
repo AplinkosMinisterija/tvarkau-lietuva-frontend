@@ -237,7 +237,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                               mapController.animateCamera(
                                   CameraUpdate.newLatLngZoom(
                                       _currentPosition!, 13));
-                            },
+                            }, isLoading: false,
                           )),
                     )
                   : const SizedBox.shrink(),

@@ -238,6 +238,7 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                                                 _currentPosition!, 13));
                                       });
                                     },
+                                    isLoading: false,
                                   )),
                             )
                           : const SizedBox.shrink(),

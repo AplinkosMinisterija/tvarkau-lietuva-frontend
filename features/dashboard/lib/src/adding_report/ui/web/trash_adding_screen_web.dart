@@ -231,6 +231,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                                                 _currentPosition!, 13));
                                       });
                                     },
+                                    isLoading: false,
                                   )),
                             )
                           : const SizedBox.shrink(),
