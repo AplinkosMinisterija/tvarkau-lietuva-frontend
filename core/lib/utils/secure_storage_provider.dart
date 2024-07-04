@@ -13,6 +13,7 @@ class SecureStorageProvider {
   static const String _activeMapLat = 'active_map_lat';
   static const String _activeMapLong = 'active_map_long';
   static const String _activeMapZoom = 'active_map_zoom';
+  static const String _scrollOffset = 'scroll_offset';
 
   setJwtToken(String jwtToken) async {
     await storage.write(
@@ -134,8 +135,32 @@ class SecureStorageProvider {
     );
   }
 
+  setScrollOffset(double offset) async {
+    await storage.write(
+      key: _scrollOffset,
+      value: offset.toString(),
+    );
+  }
+
+  Future<double> getScrollOffset() async {
+    String? offsetString = await storage.read(key: _scrollOffset);
+
+    if (offsetString != null) {
+      return double.parse(offsetString);
+    } else {
+      return 0;
+    }
+  }
+
+  deleteScrollOffset() async {
+    await storage.delete(
+      key: _scrollOffset,
+    );
+  }
+
   resetUserCache() async {
     await deleteActiveCategory();
     await deleteCameraSetup();
+    await deleteScrollOffset();
   }
 }
