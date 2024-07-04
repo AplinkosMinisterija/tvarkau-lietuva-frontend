@@ -29,8 +29,8 @@ class Footer extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                LaunchUrl().launch(
-                    'https://aad.lrv.lt/lt/asmens-duomenu-apsauga/');
+                LaunchUrl()
+                    .launch('https://aad.lrv.lt/lt/asmens-duomenu-apsauga/');
               },
               child: Text(
                 'Departamento BDAR taisyklės',
@@ -47,8 +47,8 @@ class Footer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            FooterDescriptionMobile(width: width / 3.5),
-            FooterConsultMobile(width: width / 3.5)
+            FooterDescription(width: width),
+            FooterConsultationInformation(width: width)
           ],
         )
       ],

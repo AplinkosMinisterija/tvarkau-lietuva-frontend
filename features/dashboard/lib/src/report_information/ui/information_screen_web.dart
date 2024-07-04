@@ -318,11 +318,11 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                             )
                           : const SizedBox.shrink(),
                       SizedBox(height: widget.width * 0.1555),
-                      FooterDescriptionMobile(width: widget.width),
+                      FooterDescription(width: widget.width),
                       SizedBox(height: widget.width * 0.0654),
                       FooterContactsMobile(width: widget.width),
                       SizedBox(height: widget.width * 0.0444),
-                      FooterConsultMobile(width: widget.width),
+                      FooterConsultationInformation(width: widget.width),
                       SizedBox(height: widget.width * 0.04722),
                       FooterSupportMobile(width: widget.width),
                     ],

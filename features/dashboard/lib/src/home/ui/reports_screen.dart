@@ -318,7 +318,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                           SizedBox(
                             height: constraints.maxWidth * 0.0666,
                           ),
-                          FooterDescriptionMobile(width: constraints.maxWidth),
+                          FooterDescription(width: constraints.maxWidth),
                           SizedBox(height: constraints.maxWidth * 0.044),
                           Padding(
                             padding: EdgeInsets.only(
@@ -342,7 +342,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                             ),
                           ),
                           SizedBox(height: constraints.maxWidth * 0.044),
-                          FooterConsultMobile(width: constraints.maxWidth),
+                          FooterConsultationInformation(width: constraints.maxWidth),
                           SizedBox(height: constraints.maxWidth * 0.044),
                           FooterSupportMobile(width: constraints.maxWidth),
                           SizedBox(height: constraints.maxWidth * 0.041),
