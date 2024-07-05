@@ -481,7 +481,9 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                     imageUrls: FormatterUtils().formatImageUrls(
                         widget.report.officerImageUrls.toList()),
                     context: context,
-                    width: widget.width * 0.7)
+                    width: widget.width * 0.7,
+                    titlesEnabled: false,
+                  )
                 : const SizedBox.shrink(),
           ],
         )
@@ -572,7 +574,9 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                       imageUrls: FormatterUtils().formatImageUrls(
                           widget.report.officerImageUrls.toList()),
                       context: context,
-                      width: widget.width * 0.7)
+                      width: widget.width * 0.7,
+                      titlesEnabled: false,
+                    )
                   : const SizedBox.shrink(),
             ],
             SizedBox(height: widget.width * 0.1111),
@@ -761,7 +765,9 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                     imageUrls: FormatterUtils()
                         .formatImageUrls(widget.report.imageUrls.toList()),
                     context: context,
-                    width: widget.width * 0.7)
+                    width: widget.width * 0.7,
+                    titlesEnabled: false,
+                  )
                 : const SizedBox.shrink(),
           ],
         )
@@ -842,7 +848,8 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                             SizedBox(height: widget.width * 0.0654),
                             FooterContactsMobile(width: widget.width * 0.9),
                             SizedBox(height: widget.width * 0.0444),
-                            FooterConsultationInformation(width: widget.width * 0.85),
+                            FooterConsultationInformation(
+                                width: widget.width * 0.85),
                             SizedBox(height: widget.width * 0.04722),
                             FooterSupportMobile(width: widget.width * 0.9),
                           ],

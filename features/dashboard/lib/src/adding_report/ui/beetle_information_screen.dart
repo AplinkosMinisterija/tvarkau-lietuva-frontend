@@ -67,6 +67,7 @@ class BeetleInformationScreen extends StatelessWidget {
                 ],
                 context: context,
                 width: 300,
+                titlesEnabled: false,
               ),
               AddButton(width: 1600, onTap: onContinue),
               const SizedBox(height: 24),

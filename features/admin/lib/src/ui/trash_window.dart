@@ -213,6 +213,7 @@ class _TrashWindowState extends State<TrashWindow> {
                   imageUrls: imageUrls,
                   context: context,
                   width: 700,
+                  titlesEnabled: false,
                 ),
               ],
               24.heightBox,
@@ -238,6 +239,7 @@ class _TrashWindowState extends State<TrashWindow> {
                         imageUrls: officerImageUrls,
                         context: context,
                         width: 700,
+                        titlesEnabled: false,
                       )
                     : 10.heightBox,
                 10.heightBox,
@@ -381,6 +383,7 @@ class _TrashWindowState extends State<TrashWindow> {
                 imageUrls: imageUrls,
                 context: context,
                 width: 700,
+                titlesEnabled: false,
               ),
             ],
             15.heightBox,
@@ -406,6 +409,7 @@ class _TrashWindowState extends State<TrashWindow> {
                       imageUrls: officerImageUrls,
                       context: context,
                       width: 700,
+                      titlesEnabled: false,
                     )
                   : 10.heightBox,
               10.heightBox,

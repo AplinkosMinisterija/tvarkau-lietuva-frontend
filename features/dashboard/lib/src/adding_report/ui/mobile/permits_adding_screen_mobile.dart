@@ -117,7 +117,7 @@ class _PermitsAddingScreenMobileState extends State<PermitsAddingScreenMobile> {
   @override
   Widget build(BuildContext context) {
     return Title(
-      title: "Pranešti apie nelegalų kirtimą",
+      title: "Pranešti apie pažeidimą kirtimuose",
       color: Colors.green,
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(250, 242, 234, 1),

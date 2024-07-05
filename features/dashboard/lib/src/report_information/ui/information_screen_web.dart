@@ -488,7 +488,9 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                     imageUrls: FormatterUtils().formatImageUrls(
                         widget.report.officerImageUrls.toList()),
                     context: context,
-                    width: widget.width * 0.7)
+                    width: widget.width * 0.7,
+                    titlesEnabled: false,
+                  )
                 : const SizedBox.shrink(),
           ],
         )
@@ -579,7 +581,9 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                       imageUrls: FormatterUtils().formatImageUrls(
                           widget.report.officerImageUrls.toList()),
                       context: context,
-                      width: widget.width * 0.7)
+                      width: widget.width * 0.7,
+                      titlesEnabled: false,
+                    )
                   : const SizedBox.shrink(),
             ],
             SizedBox(height: widget.width * 0.1),
@@ -768,7 +772,9 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                     imageUrls: FormatterUtils()
                         .formatImageUrls(widget.report.imageUrls.toList()),
                     context: context,
-                    width: widget.width * 0.7)
+                    width: widget.width * 0.7,
+                    titlesEnabled: false,
+                  )
                 : const SizedBox.shrink(),
           ],
         )
