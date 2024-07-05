@@ -21,11 +21,11 @@ class FooterConsultationInformation extends StatelessWidget {
       ),
       padding: EdgeInsets.symmetric(
         horizontal: width * 0.01875,
-        vertical: width * 0.0164,
+        //vertical: width * 0.0164,
       ),
       child: SelectionArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Align(

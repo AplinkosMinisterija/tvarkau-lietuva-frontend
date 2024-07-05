@@ -5,7 +5,8 @@ import 'package:core_ui/src/widgets/main_screen/mobile/footer/footer_contacts_ri
 import 'package:flutter/material.dart';
 
 class FooterContactsMobile extends StatelessWidget {
-  const FooterContactsMobile({super.key, 
+  const FooterContactsMobile({
+    super.key,
     required this.width,
   });
 
@@ -13,35 +14,33 @@ class FooterContactsMobile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Align(
-          alignment: Alignment.topLeft,
-          child: InkWell(
+    return SizedBox(
+      width: width * 0.3015,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          InkWell(
             onTap: () {
               LaunchUrl().launch('https://aad.lrv.lt/');
             },
             child: SizedBox(
-              width: width * 0.4442,
-              height: width * 0.130,
+              width: width * 0.18,
+              height: width * 0.0523,
               child: Image.asset('assets/icons/aad-logo_black.png'),
             ),
           ),
-        ),
-        SizedBox(
-          height: width * 0.044,
-        ),
-        Padding(
-          padding: EdgeInsets.only(right: width * 0.03),
-          child: Row(
+          SizedBox(
+            height: width * 0.0247,
+          ),
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               FooterContactsLeft(width: width),
               FooterContactsRight(width: width),
             ],
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

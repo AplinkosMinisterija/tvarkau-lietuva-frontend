@@ -16,7 +16,7 @@ export 'src/widgets/main_screen/web/adding_screen/exit_header.dart';
 export 'src/widgets/route_error_screen.dart';
 
 //Footer
-export 'src/widgets/main_screen/footer/copyright.dart';
+export 'src/widgets/main_screen/footer/copyright_support_tag.dart';
 export 'src/widgets/main_screen/footer/footer.dart';
 export 'src/widgets/main_screen/footer/support_tag.dart';
 export 'src/widgets/main_screen/footer/left_side_footer.dart';

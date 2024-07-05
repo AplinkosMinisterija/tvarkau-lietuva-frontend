@@ -50,64 +50,57 @@ class _HomeLayoutWebState extends State<HomeLayoutWeb> {
         child: Stack(
           children: [
             BackgroundWidget(width: widget.width),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: widget.width * 0.078125,
-                vertical: widget.width * 0.03125,
-              ),
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            Column(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: widget.width * 0.078125,
+                    vertical: widget.width * 0.03125,
+                  ),
+                  child: Column(
                     children: [
-                      SvgPicture.asset(
-                        'assets/svg/TL_logo.svg',
-                        width: widget.width * 0.3615,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset(
+                            'assets/svg/TL_logo.svg',
+                            width: widget.width * 0.3615,
+                          ),
+                          TitleWidget(
+                            width: widget.width,
+                            onTap: () {
+                              context.goNamed('report_category');
+                            },
+                          ),
+                        ],
                       ),
-                      TitleWidget(
-                        width: widget.width,
-                        onTap: () {
-                          context.goNamed('report_category');
-                        },
-                      ),
+                      MapScreen(
+                          isMapHover: (isHover) {
+                            setState(() {
+                              isMapHover = isHover;
+                            });
+                          },
+                          width: widget.width),
                     ],
                   ),
-                  MapScreen(
-                      isMapHover: (isHover) {
-                        setState(() {
-                          isMapHover = isHover;
-                        });
-                      },
-                      width: widget.width),
-                  SizedBox(height: widget.width * 0.03125),
-                  const Divider(
-                    height: 1,
-                    color: Color.fromRGBO(10, 51, 40, 0.1),
-                  ),
-                  SizedBox(height: widget.width * 0.0343),
-                  Footer(
-                    width: widget.width,
-                  ),
-                  SizedBox(height: widget.width * 0.0166),
-                  const Divider(
-                    height: 1,
-                    color: Color.fromRGBO(10, 51, 40, 0.1),
-                  ),
-                  SizedBox(height: widget.width * 0.0166),
-                  Row(
-                    children: <Widget>[
-                      Copyright(
-                        width: widget.width,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: widget.width * 0.05,
+                      vertical: widget.width * 0.02),
+                  child: Column(
+                    children: [
+                      const Divider(
+                        height: 1,
+                        color: Color.fromRGBO(10, 51, 40, 0.1),
                       ),
-                      const Spacer(),
-                      SupportTag(
-                        width: widget.width,
-                      ),
+                      SizedBox(height: widget.width * 0.0343),
+                      Footer(width: widget.width),
                     ],
-                  )
-                ],
-              ),
+                  ),
+                )
+              ],
             ),
           ],
         ),

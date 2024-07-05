@@ -199,7 +199,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                           SizedBox(height: constraints.maxWidth * 0.0166),
                           Row(
                             children: <Widget>[
-                              Copyright(
+                              CopyrightSupportTag(
                                 width: constraints.maxWidth,
                               ),
                               const Spacer(),
