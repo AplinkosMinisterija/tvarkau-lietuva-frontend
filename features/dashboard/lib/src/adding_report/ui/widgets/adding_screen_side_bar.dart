@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:core/constants/global_constants.dart';
 import 'package:core/utils/image_display/image_display.dart';
 import 'package:core/utils/url_launcher.dart';
@@ -15,6 +14,7 @@ class AddingScreenSideBar extends StatelessWidget {
     required this.width,
     required this.height,
     required this.title,
+    required this.category,
     required this.onExitTap,
     required this.onImageAddTap,
     required this.onFinalTap,
@@ -30,6 +30,7 @@ class AddingScreenSideBar extends StatelessWidget {
   final double width;
   final double height;
   final String title;
+  final String category;
   final VoidCallback onFinalTap;
   final VoidCallback onExitTap;
   final VoidCallback onImageAddTap;
@@ -57,6 +58,11 @@ class AddingScreenSideBar extends StatelessWidget {
                   onTap: () {
                     onExitTap();
                   }),
+              AddingInformationHeader(
+                width: width/3.55,
+                isBeetleCategory: category=='beetle',
+                isPermitsCategory: category=='permits',
+              ),
               SizedBox(
                 height: width * 0.0125,
               ),

@@ -158,7 +158,7 @@ class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
                     children: <Widget>[
                       SizedBox(
                         height: constraints.maxHeight,
-                        width: constraints.maxWidth * 0.7,
+                        width: constraints.maxWidth * 0.68125,
                         child: _isLoading
                             ? Stack(
                                 children: [
@@ -241,7 +241,7 @@ class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
                                   context: context,
                                   builder: (BuildContext context) =>
                                       MapTypeChangeDialog(
-                                        width: widget.width / 2.4,
+                                        width: widget.width,
                                         currentMapType: currentMapType,
                                         onHover: (isHover) {
                                           setState(() {
@@ -254,67 +254,70 @@ class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
                                           });
                                         },
                                         isMobile: false,
+                                        onReportVisibilityChange: () {
+                                          setState(() {
+                                            isShowMarkers = !isShowMarkers;
+                                          });
+                                        },
+                                        isReportsActive: isShowMarkers,
                                       ));
                             },
                           ),
                         ),
                       ),
-                      InstructionsWidget(
-                        width: widget.width * 0.9,
-                        isBeetleCategory: true,
-                        isPermitsCategory: false,
-                      ),
                     ],
                   ),
                   AddingScreenSideBar(
-                      width: widget.width,
-                      height: widget.height,
-                      title: 'Pranešti apie žievėgraužį\ntipografą',
-                      onExitTap: () {
-                        context.goNamed("home");
-                      },
-                      onImageAddTap: () {
-                        getMultipleImageInfos();
-                      },
-                      onFinalTap: () async {
-                        if (_formKey.currentState!.validate() &&
-                            selectedLat != 0 &&
-                            selectedLong != 0 &&
-                            isTermsAccepted &&
-                            _selectedImages.isNotEmpty &&
-                            isImagesSizeValid) {
-                          if (_selectedImages.length >= 2) {
-                            widget.onAddTap(
-                              currentEmailValue,
-                              currentTextValue,
-                              selectedLat,
-                              selectedLong,
-                              _selectedImages,
-                            );
-                          }
+                    width: widget.width,
+                    height: widget.height,
+                    title: 'Pranešti apie žievėgraužį\ntipografą',
+                    onExitTap: () {
+                      context.goNamed("home");
+                    },
+                    onImageAddTap: () {
+                      getMultipleImageInfos();
+                    },
+                    onFinalTap: () async {
+                      if (_formKey.currentState!.validate() &&
+                          selectedLat != 0 &&
+                          selectedLong != 0 &&
+                          isTermsAccepted &&
+                          _selectedImages.isNotEmpty &&
+                          isImagesSizeValid) {
+                        if (_selectedImages.length >= 2) {
+                          widget.onAddTap(
+                            currentEmailValue,
+                            currentTextValue,
+                            selectedLat,
+                            selectedLong,
+                            _selectedImages,
+                          );
                         }
-                      },
-                      onImageRemoveTap: (index) {
-                        removeSelectedImage(index);
-                      },
-                      onTextChange: (textValue) {
-                        setState(() {
-                          currentTextValue = textValue;
-                        });
-                      },
-                      onEmailChange: (emailValue) {
-                        setState(() {
-                          currentEmailValue = emailValue;
-                        });
-                      },
-                      selectedImages: _selectedImages,
-                      onTermsChange: (termsValue) {
-                        setState(() {
-                          isTermsAccepted = termsValue;
-                        });
-                      },
-                      isImagesSizeValid: isImagesSizeValid,
-                      isTermsAccepted: isTermsAccepted)
+                      }
+                    },
+                    onImageRemoveTap: (index) {
+                      removeSelectedImage(index);
+                    },
+                    onTextChange: (textValue) {
+                      setState(() {
+                        currentTextValue = textValue;
+                      });
+                    },
+                    onEmailChange: (emailValue) {
+                      setState(() {
+                        currentEmailValue = emailValue;
+                      });
+                    },
+                    selectedImages: _selectedImages,
+                    onTermsChange: (termsValue) {
+                      setState(() {
+                        isTermsAccepted = termsValue;
+                      });
+                    },
+                    isImagesSizeValid: isImagesSizeValid,
+                    isTermsAccepted: isTermsAccepted,
+                    category: 'beetle',
+                  )
                 ],
               ),
             );

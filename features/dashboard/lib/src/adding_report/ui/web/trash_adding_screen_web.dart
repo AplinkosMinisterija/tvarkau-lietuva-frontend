@@ -172,7 +172,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                     children: <Widget>[
                       SizedBox(
                         height: constraints.maxHeight,
-                        width: constraints.maxWidth * 0.7,
+                        width: constraints.maxWidth * 0.68125,
                         child: _isLoading
                             ? Stack(
                                 children: [
@@ -238,25 +238,6 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                             )
                           : const SizedBox.shrink(),
                       Positioned(
-                        left: widget.width * 0.0111,
-                        bottom: widget.width * 0.0111,
-                        child: ChangeVisibilityButtonMobile(
-                          width: widget.width / 2.4,
-                          isActive: isShowMarkers,
-                          isPermits: false,
-                          onHover: (isHover) {
-                            setState(() {
-                              isMapDisabled = isHover;
-                            });
-                          },
-                          onTap: () {
-                            setState(() {
-                              isShowMarkers = !isShowMarkers;
-                            });
-                          },
-                        ),
-                      ),
-                      Positioned(
                         bottom: 110,
                         right: 10,
                         child: InkWell(
@@ -298,62 +279,59 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                           ),
                         ),
                       ),
-                      InstructionsWidget(
-                        width: widget.width,
-                        isBeetleCategory: false,
-                        isPermitsCategory: false,
-                      ),
                     ],
                   ),
                   AddingScreenSideBar(
-                      width: widget.width,
-                      height: widget.height,
-                      title: 'Pranešti apie atliekas gamtoje',
-                      onExitTap: () {
-                        context.goNamed("home");
-                      },
-                      onImageAddTap: () {
-                        getMultipleImageInfos();
-                      },
-                      onFinalTap: () async {
-                        if (_formKey.currentState!.validate() &&
-                            selectedLat != 0 &&
-                            selectedLong != 0 &&
-                            isTermsAccepted &&
-                            _selectedImages.isNotEmpty &&
-                            isImagesSizeValid) {
-                          if (_selectedImages.length >= 2) {
-                            widget.onAddTap(
-                              currentEmailValue,
-                              currentTextValue,
-                              selectedLat,
-                              selectedLong,
-                              _selectedImages,
-                            );
-                          }
+                    width: widget.width,
+                    height: widget.height,
+                    title: 'Pranešti apie atliekas gamtoje',
+                    onExitTap: () {
+                      context.goNamed("home");
+                    },
+                    onImageAddTap: () {
+                      getMultipleImageInfos();
+                    },
+                    onFinalTap: () async {
+                      if (_formKey.currentState!.validate() &&
+                          selectedLat != 0 &&
+                          selectedLong != 0 &&
+                          isTermsAccepted &&
+                          _selectedImages.isNotEmpty &&
+                          isImagesSizeValid) {
+                        if (_selectedImages.length >= 2) {
+                          widget.onAddTap(
+                            currentEmailValue,
+                            currentTextValue,
+                            selectedLat,
+                            selectedLong,
+                            _selectedImages,
+                          );
                         }
-                      },
-                      onImageRemoveTap: (index) {
-                        removeSelectedImage(index);
-                      },
-                      onTextChange: (textValue) {
-                        setState(() {
-                          currentTextValue = textValue;
-                        });
-                      },
-                      onEmailChange: (emailValue) {
-                        setState(() {
-                          currentEmailValue = emailValue;
-                        });
-                      },
-                      selectedImages: _selectedImages,
-                      onTermsChange: (termsValue) {
-                        setState(() {
-                          isTermsAccepted = termsValue;
-                        });
-                      },
-                      isImagesSizeValid: isImagesSizeValid,
-                      isTermsAccepted: isTermsAccepted)
+                      }
+                    },
+                    onImageRemoveTap: (index) {
+                      removeSelectedImage(index);
+                    },
+                    onTextChange: (textValue) {
+                      setState(() {
+                        currentTextValue = textValue;
+                      });
+                    },
+                    onEmailChange: (emailValue) {
+                      setState(() {
+                        currentEmailValue = emailValue;
+                      });
+                    },
+                    selectedImages: _selectedImages,
+                    onTermsChange: (termsValue) {
+                      setState(() {
+                        isTermsAccepted = termsValue;
+                      });
+                    },
+                    isImagesSizeValid: isImagesSizeValid,
+                    isTermsAccepted: isTermsAccepted,
+                    category: 'trash',
+                  )
                 ],
               ),
             );

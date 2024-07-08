@@ -175,7 +175,7 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
                     children: <Widget>[
                       SizedBox(
                         height: constraints.maxHeight,
-                        width: constraints.maxWidth * 0.7,
+                        width: constraints.maxWidth * 0.68125,
                         child: _isLoading
                             ? Stack(
                                 children: [
@@ -241,25 +241,6 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
                             )
                           : const SizedBox.shrink(),
                       Positioned(
-                        left: widget.width * 0.0111,
-                        bottom: widget.width * 0.0111,
-                        child: ChangeVisibilityButtonMobile(
-                          width: widget.width / 2.4,
-                          isActive: isShowMarkers,
-                          isPermits: false,
-                          onHover: (isHover) {
-                            setState(() {
-                              isMapDisabled = isHover;
-                            });
-                          },
-                          onTap: () {
-                            setState(() {
-                              isShowMarkers = !isShowMarkers;
-                            });
-                          },
-                        ),
-                      ),
-                      Positioned(
                         bottom: 110,
                         right: 10,
                         child: InkWell(
@@ -277,7 +258,7 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
                                   context: context,
                                   builder: (BuildContext context) =>
                                       MapTypeChangeDialog(
-                                        width: widget.width / 2.4,
+                                        width: widget.width,
                                         currentMapType: currentMapType,
                                         onHover: (isHover) {
                                           setState(() {
@@ -289,68 +270,71 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
                                             currentMapType = mapType;
                                           });
                                         },
+                                        onReportVisibilityChange: () {
+                                          setState(() {
+                                            isShowMarkers = !isShowMarkers;
+                                          });
+                                        },
+                                        isReportsActive: isShowMarkers,
                                         isMobile: false,
                                       ));
                             },
                           ),
                         ),
                       ),
-                      InstructionsWidget(
-                        width: widget.width,
-                        isBeetleCategory: false,
-                        isPermitsCategory: false,
-                      ),
                     ],
                   ),
                   AddingScreenSideBar(
-                      width: widget.width,
-                      height: widget.height,
-                      title: 'Pranešti apie sugadintą miško\npaklotę ar kelius',
-                      onExitTap: () {
-                        context.goNamed("home");
-                      },
-                      onImageAddTap: () {
-                        getMultipleImageInfos();
-                      },
-                      onFinalTap: () async {
-                        if (_formKey.currentState!.validate() &&
-                            selectedLat != 0 &&
-                            selectedLong != 0 &&
-                            isTermsAccepted &&
-                            _selectedImages.isNotEmpty &&
-                            isImagesSizeValid) {
-                          if (_selectedImages.length >= 2) {
-                            widget.onAddTap(
-                              currentEmailValue,
-                              currentTextValue,
-                              selectedLat,
-                              selectedLong,
-                              _selectedImages,
-                            );
-                          }
+                    width: widget.width,
+                    height: widget.height,
+                    title: 'Pranešti apie sugadintą miško\npaklotę ar kelius',
+                    onExitTap: () {
+                      context.goNamed("home");
+                    },
+                    onImageAddTap: () {
+                      getMultipleImageInfos();
+                    },
+                    onFinalTap: () async {
+                      if (_formKey.currentState!.validate() &&
+                          selectedLat != 0 &&
+                          selectedLong != 0 &&
+                          isTermsAccepted &&
+                          _selectedImages.isNotEmpty &&
+                          isImagesSizeValid) {
+                        if (_selectedImages.length >= 2) {
+                          widget.onAddTap(
+                            currentEmailValue,
+                            currentTextValue,
+                            selectedLat,
+                            selectedLong,
+                            _selectedImages,
+                          );
                         }
-                      },
-                      onImageRemoveTap: (index) {
-                        removeSelectedImage(index);
-                      },
-                      onTextChange: (textValue) {
-                        setState(() {
-                          currentTextValue = textValue;
-                        });
-                      },
-                      onEmailChange: (emailValue) {
-                        setState(() {
-                          currentEmailValue = emailValue;
-                        });
-                      },
-                      selectedImages: _selectedImages,
-                      onTermsChange: (termsValue) {
-                        setState(() {
-                          isTermsAccepted = termsValue;
-                        });
-                      },
-                      isImagesSizeValid: isImagesSizeValid,
-                      isTermsAccepted: isTermsAccepted)
+                      }
+                    },
+                    onImageRemoveTap: (index) {
+                      removeSelectedImage(index);
+                    },
+                    onTextChange: (textValue) {
+                      setState(() {
+                        currentTextValue = textValue;
+                      });
+                    },
+                    onEmailChange: (emailValue) {
+                      setState(() {
+                        currentEmailValue = emailValue;
+                      });
+                    },
+                    selectedImages: _selectedImages,
+                    onTermsChange: (termsValue) {
+                      setState(() {
+                        isTermsAccepted = termsValue;
+                      });
+                    },
+                    isImagesSizeValid: isImagesSizeValid,
+                    isTermsAccepted: isTermsAccepted,
+                    category: 'forest',
+                  )
                 ],
               ),
             );

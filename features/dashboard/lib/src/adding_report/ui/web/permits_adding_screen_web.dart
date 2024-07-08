@@ -278,62 +278,59 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                           ),
                         ),
                       ),
-                      InstructionsWidget(
-                        width: widget.width,
-                        isBeetleCategory: false,
-                        isPermitsCategory: true,
-                      ),
                     ],
                   ),
                   AddingScreenSideBar(
-                      width: widget.width,
-                      height: widget.height,
-                      title: 'Pranešti apie pažeidimą kirtimuose',
-                      onExitTap: () {
-                        context.goNamed("home");
-                      },
-                      onImageAddTap: () {
-                        getMultipleImageInfos();
-                      },
-                      onFinalTap: () async {
-                        if (_formKey.currentState!.validate() &&
-                            selectedLat != 0 &&
-                            selectedLong != 0 &&
-                            isTermsAccepted &&
-                            _selectedImages.isNotEmpty &&
-                            isImagesSizeValid) {
-                          if (_selectedImages.length >= 2) {
-                            widget.onAddTap(
-                              currentEmailValue,
-                              currentTextValue,
-                              selectedLat,
-                              selectedLong,
-                              _selectedImages,
-                            );
-                          }
+                    width: widget.width,
+                    height: widget.height,
+                    title: 'Pranešti apie pažeidimą kirtimuose',
+                    onExitTap: () {
+                      context.goNamed("home");
+                    },
+                    onImageAddTap: () {
+                      getMultipleImageInfos();
+                    },
+                    onFinalTap: () async {
+                      if (_formKey.currentState!.validate() &&
+                          selectedLat != 0 &&
+                          selectedLong != 0 &&
+                          isTermsAccepted &&
+                          _selectedImages.isNotEmpty &&
+                          isImagesSizeValid) {
+                        if (_selectedImages.length >= 2) {
+                          widget.onAddTap(
+                            currentEmailValue,
+                            currentTextValue,
+                            selectedLat,
+                            selectedLong,
+                            _selectedImages,
+                          );
                         }
-                      },
-                      onImageRemoveTap: (index) {
-                        removeSelectedImage(index);
-                      },
-                      onTextChange: (textValue) {
-                        setState(() {
-                          currentTextValue = textValue;
-                        });
-                      },
-                      onEmailChange: (emailValue) {
-                        setState(() {
-                          currentEmailValue = emailValue;
-                        });
-                      },
-                      selectedImages: _selectedImages,
-                      onTermsChange: (termsValue) {
-                        setState(() {
-                          isTermsAccepted = termsValue;
-                        });
-                      },
-                      isImagesSizeValid: isImagesSizeValid,
-                      isTermsAccepted: isTermsAccepted)
+                      }
+                    },
+                    onImageRemoveTap: (index) {
+                      removeSelectedImage(index);
+                    },
+                    onTextChange: (textValue) {
+                      setState(() {
+                        currentTextValue = textValue;
+                      });
+                    },
+                    onEmailChange: (emailValue) {
+                      setState(() {
+                        currentEmailValue = emailValue;
+                      });
+                    },
+                    selectedImages: _selectedImages,
+                    onTermsChange: (termsValue) {
+                      setState(() {
+                        isTermsAccepted = termsValue;
+                      });
+                    },
+                    isImagesSizeValid: isImagesSizeValid,
+                    isTermsAccepted: isTermsAccepted,
+                    category: 'permits',
+                  )
                 ],
               ),
             );
