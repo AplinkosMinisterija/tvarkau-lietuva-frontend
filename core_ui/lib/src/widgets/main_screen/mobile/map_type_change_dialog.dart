@@ -48,7 +48,7 @@ class _MapTypeChangeDialogState extends State<MapTypeChangeDialog> {
           height: widget.onPermitsVisibilityChange != null &&
                   widget.onReportVisibilityChange != null
               ? widget.isMobile
-                  ? widget.width * 0.7445
+                  ? widget.width * 0.7545
                   : widget.width * 0.215
               : widget.isMobile
                   ? widget.width * 0.32
@@ -56,8 +56,12 @@ class _MapTypeChangeDialogState extends State<MapTypeChangeDialog> {
           width: widget.isMobile ? widget.width : widget.width * 0.28125,
           child: Padding(
             padding: EdgeInsets.symmetric(
-                vertical: widget.width * 0.014,
-                horizontal: widget.width * 0.0125),
+                vertical: widget.isMobile
+                    ? widget.width * 0.0444
+                    : widget.width * 0.014,
+                horizontal: widget.isMobile
+                    ? widget.width * 0.0444
+                    : widget.width * 0.0125),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [

@@ -243,24 +243,26 @@ class _MapWidgetState extends State<MapWidget> {
                                 const EdgeInsets.only(bottom: 110, right: 10),
                             child: Align(
                                 alignment: Alignment.bottomRight,
-                                child: GoogleMapTypeButton(
-                                  height: 40,
-                                  width: 40,
-                                  onPressed: () {
-                                    showDialog<String>(
-                                        context: context,
-                                        builder: (BuildContext context) =>
-                                            MapTypeChangeDialog(
-                                              width: widget.width,
-                                              currentMapType: _currentMapType,
-                                              onChangeTap: (MapType mapType) {
-                                                setState(() {
-                                                  _currentMapType = mapType;
-                                                });
-                                              },
-                                              isMobile: widget.isMobile,
-                                            ));
-                                  },
+                                child: PointerInterceptor(
+                                  child: GoogleMapTypeButton(
+                                    height: 40,
+                                    width: 40,
+                                    onPressed: () {
+                                      showDialog<String>(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              MapTypeChangeDialog(
+                                                width: widget.width,
+                                                currentMapType: _currentMapType,
+                                                onChangeTap: (MapType mapType) {
+                                                  setState(() {
+                                                    _currentMapType = mapType;
+                                                  });
+                                                },
+                                                isMobile: widget.isMobile,
+                                              ));
+                                    },
+                                  ),
                                 )),
                           ),
                         ],
