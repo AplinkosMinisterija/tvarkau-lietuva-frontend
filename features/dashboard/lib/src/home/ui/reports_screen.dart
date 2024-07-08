@@ -68,7 +68,6 @@ class _ReportsScreenState extends State<ReportsScreen> {
                     isMapHover ? const NeverScrollableScrollPhysics() : null,
                 child: Stack(
                   children: <Widget>[
-                    BackgroundWidget(width: constraints.maxWidth),
                     Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: constraints.maxWidth * 0.078125,
@@ -84,15 +83,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                 'assets/svg/TL_logo.svg',
                                 width: constraints.maxWidth * 0.3615,
                               ),
-                              TitleWidget(
-                                width: constraints.maxWidth,
-                                onTap: () {
-                                  widget.onAddTap(
-                                    constraints.maxWidth,
-                                    constraints.maxHeight,
-                                  );
-                                },
-                              ),
+
                             ],
                           ),
                           SizedBox(height: constraints.maxWidth * 0.03125),
@@ -219,7 +210,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                     isMapHover ? const NeverScrollableScrollPhysics() : null,
                 child: Stack(
                   children: <Widget>[
-                    BackgroundWidget(width: constraints.maxWidth * 3.5),
+                    BackgroundWidget(width: constraints.maxWidth * 3.5, isMobile: false,),
                     Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: constraints.maxWidth * 0.0444),

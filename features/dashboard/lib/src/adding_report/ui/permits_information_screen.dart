@@ -85,7 +85,11 @@ class PermitsInformationScreen extends StatelessWidget {
                   'Plynas arba plynas sanitarinis kirtimas'
                 ],
               ),
-              AddButton(width: 1600, onTap: onContinue),
+              AddButton(
+                width: 1600,
+                onTap: onContinue,
+                isMobile: false,
+              ),
               const SizedBox(height: 24),
             ],
           ),

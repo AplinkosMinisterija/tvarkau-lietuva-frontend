@@ -9,18 +9,19 @@ class MapScreen extends StatefulWidget {
   const MapScreen({
     required this.isMapHover,
     required this.width,
+    required this.isMobile,
     super.key,
   });
 
   final Function(bool) isMapHover;
   final double width;
+  final bool isMobile;
 
   @override
   State<MapScreen> createState() => _MapScreenState();
 }
 
 class _MapScreenState extends State<MapScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -36,7 +37,10 @@ class _MapScreenState extends State<MapScreen> {
               builder: (BuildContext context, HomeState state) {
                 switch (state) {
                   case LoadingState():
-                    return LoaderWidget().mapLoader(widget.width);
+                    return LoaderWidget().mapLoader(
+                      widget.width,
+                      widget.isMobile,
+                    );
                   case TrashState():
                     return MapWidget(
                       width: widget.width,
@@ -59,6 +63,7 @@ class _MapScreenState extends State<MapScreen> {
                         });
                       },
                       cameraPosition: state.cameraPosition,
+                      isMobile: widget.isMobile,
                     );
                   case DumpsState():
                     return MapWidget(
@@ -74,6 +79,7 @@ class _MapScreenState extends State<MapScreen> {
                       dumps: state.dumpReports,
                       category: 'dumps',
                       cameraPosition: state.cameraPosition,
+                      isMobile: widget.isMobile,
                     );
                   case ForestState():
                     return MapWidget(
@@ -97,6 +103,7 @@ class _MapScreenState extends State<MapScreen> {
                         });
                       },
                       cameraPosition: state.cameraPosition,
+                      isMobile: widget.isMobile,
                     );
                   case PermitsState():
                     return MapWidget(
@@ -120,6 +127,7 @@ class _MapScreenState extends State<MapScreen> {
                         });
                       },
                       cameraPosition: state.cameraPosition,
+                      isMobile: widget.isMobile,
                     );
                   case ErrorState():
                     return SizedBox(

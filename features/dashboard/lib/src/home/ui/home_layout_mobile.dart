@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 
-class HomeLayoutWeb extends StatefulWidget {
-  const HomeLayoutWeb({
+class HomeLayoutMobile extends StatefulWidget {
+  const HomeLayoutMobile({
     required this.scrollOffset,
     required this.width,
     super.key,
@@ -16,10 +16,10 @@ class HomeLayoutWeb extends StatefulWidget {
   final double width;
 
   @override
-  State<HomeLayoutWeb> createState() => _HomeLayoutWebState();
+  State<HomeLayoutMobile> createState() => _HomeLayoutMobileState();
 }
 
-class _HomeLayoutWebState extends State<HomeLayoutWeb> {
+class _HomeLayoutMobileState extends State<HomeLayoutMobile> {
   late bool isMapHover;
   late ScrollController scrollController;
 
@@ -51,33 +51,28 @@ class _HomeLayoutWebState extends State<HomeLayoutWeb> {
           children: [
             BackgroundWidget(
               width: widget.width,
-              isMobile: false,
+              isMobile: true,
             ),
             Column(
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.symmetric(
-                    horizontal: widget.width * 0.078125,
-                    vertical: widget.width * 0.03125,
+                    horizontal: widget.width * 0.0445,
+                    vertical: widget.width * 0.112,
                   ),
                   child: Column(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SvgPicture.asset(
-                            'assets/svg/TL_logo.svg',
-                            width: widget.width * 0.3615,
-                          ),
-                          TitleWidget(
-                            width: widget.width,
-                            isMobile: false,
-                            onTap: () {
-                              context.goNamed('report_category');
-                            },
-                          ),
-                        ],
+                      SvgPicture.asset(
+                        'assets/svg/TL_logo.svg',
+                        width: widget.width * 0.91,
+                      ),
+                      SizedBox(height: widget.width * 0.1472),
+                      TitleWidget(
+                        width: widget.width,
+                        isMobile: true,
+                        onTap: () {
+                          context.goNamed('report_category');
+                        },
                       ),
                       MapScreen(
                         isMapHover: (isHover) {
@@ -86,26 +81,26 @@ class _HomeLayoutWebState extends State<HomeLayoutWeb> {
                           });
                         },
                         width: widget.width,
-                        isMobile: false,
+                        isMobile: true,
                       ),
                     ],
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: widget.width * 0.05,
-                      vertical: widget.width * 0.02),
-                  child: Column(
-                    children: [
-                      const Divider(
-                        height: 1,
-                        color: Color.fromRGBO(10, 51, 40, 0.1),
-                      ),
-                      SizedBox(height: widget.width * 0.0343),
-                      Footer(width: widget.width),
-                    ],
-                  ),
-                )
+                // Padding(
+                //   padding: EdgeInsets.symmetric(
+                //       horizontal: widget.width * 0.05,
+                //       vertical: widget.width * 0.02),
+                //   child: Column(
+                //     children: [
+                //       const Divider(
+                //         height: 1,
+                //         color: Color.fromRGBO(10, 51, 40, 0.1),
+                //       ),
+                //       SizedBox(height: widget.width * 0.0343),
+                //       Footer(width: widget.width),
+                //     ],
+                //   ),
+                // )
               ],
             ),
           ],

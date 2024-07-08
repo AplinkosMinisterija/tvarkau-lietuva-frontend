@@ -25,7 +25,10 @@ class _MaintenenceScreenState extends State<MaintenenceScreen> {
             builder: (BuildContext context, BoxConstraints constraints) {
               return Stack(
                 children: [
-                  BackgroundWidget(width: constraints.maxWidth),
+                  BackgroundWidget(
+                    width: constraints.maxWidth,
+                    isMobile: false,
+                  ),
                   Column(
                     children: <Widget>[
                       SizedBox(

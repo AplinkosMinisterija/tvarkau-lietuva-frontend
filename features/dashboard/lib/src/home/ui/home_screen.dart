@@ -1,5 +1,6 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
+import 'package:dashboard/src/home/ui/home_layout_mobile.dart';
 import 'package:dashboard/src/home/ui/home_layout_web.dart';
 import 'package:dashboard/src/home/ui/map_screen.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
               builder: (BuildContext context, BoxConstraints constraints) {
             return constraints.maxWidth > 900
                 ? HomeLayoutWeb(scrollOffset: snapshot.data!, width: constraints.maxWidth)
-                : Container();
+                : HomeLayoutMobile(scrollOffset: snapshot.data!, width: constraints.maxWidth);
           });
         } else {
           return LoaderWidget().loader();

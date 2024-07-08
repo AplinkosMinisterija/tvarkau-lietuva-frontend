@@ -159,23 +159,23 @@ class _MainTrashMapState extends State<MainTrashMap> {
               ),
             ],
           ),
-          widget.isTrash
-              ? Padding(
-                  padding: const EdgeInsets.only(
-                    top: 20,
-                    left: 20,
-                  ),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: ReportTypeSwitcher(
-                      isShowDumps: widget.isShowDumps,
-                      onReportTypeChange: (var value) {
-                        //widget.onReportTypeChange(value);
-                      },
-                    ),
-                  ),
-                )
-              : const SizedBox.shrink(),
+          // widget.isTrash
+          //     ? Padding(
+          //         padding: const EdgeInsets.only(
+          //           top: 20,
+          //           left: 20,
+          //         ),
+          //         child: Align(
+          //           alignment: Alignment.topLeft,
+          //           child: ReportTypeSwitcher(
+          //             isShowDumps: widget.isShowDumps,
+          //             onReportTypeChange: (var value) {
+          //               //widget.onReportTypeChange(value);
+          //             },
+          //           ),
+          //         ),
+          //       )
+          //     : const SizedBox.shrink(),
         ],
       ),
     );

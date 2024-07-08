@@ -13,20 +13,21 @@ class LoaderWidget {
     );
   }
 
-  Widget mapLoader(double width) {
+  Widget mapLoader(double width, bool isMobile) {
     return Padding(
       padding: EdgeInsets.only(top: width * 0.03125),
       child: Stack(
         alignment: Alignment.center,
         children: [
           SizedBox(
-            height: width * 0.4765,
-            width: width * 0.84375,
-            child: const Opacity(
+            height: isMobile ? width * 1.722 : width * 0.4765,
+            width: isMobile ? width * 0.9112 : width * 0.84375,
+            child: Opacity(
               opacity: 0.6,
               child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(32)),
-                child: GoogleMap(
+                borderRadius:
+                    BorderRadius.all(Radius.circular(isMobile ? 8 : 32)),
+                child: const GoogleMap(
                     initialCameraPosition: CameraPosition(
                         target: LatLng(55.1736, 23.8948), zoom: 7.0)),
               ),

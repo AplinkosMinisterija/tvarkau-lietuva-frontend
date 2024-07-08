@@ -19,6 +19,7 @@ class MapWidget extends StatefulWidget {
     required this.category,
     this.onInformationTap,
     required this.cameraPosition,
+    required this.isMobile,
     super.key,
   });
 
@@ -28,9 +29,10 @@ class MapWidget extends StatefulWidget {
   final ReportStatisticsDto? reportStatistics;
   final ValueChanged<bool> isHovering;
   final Function(String) onCategoryChange;
-  final String category;
   final Function(String)? onInformationTap;
   final CameraPosition cameraPosition;
+  final String category;
+  final bool isMobile;
 
   @override
   State<MapWidget> createState() => _MapWidgetState();
@@ -111,10 +113,15 @@ class _MapWidgetState extends State<MapWidget> {
               Column(
                 children: <Widget>[
                   SizedBox(
-                    height: widget.width * 0.4765,
-                    width: widget.width * 0.84375,
+                    height: widget.isMobile
+                        ? widget.width * 1.722
+                        : widget.width * 0.4765,
+                    width: widget.isMobile
+                        ? widget.width * 0.9112
+                        : widget.width * 0.84375,
                     child: ClipRRect(
-                      borderRadius: const BorderRadius.all(Radius.circular(32)),
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(widget.isMobile ? 8 : 32)),
                       child: Stack(
                         children: [
                           GoogleMap(
@@ -169,7 +176,7 @@ class _MapWidgetState extends State<MapWidget> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(top: 22, right: 20),
+                            padding: const EdgeInsets.only(top: 20, right: 20),
                             child: Align(
                               alignment: Alignment.topRight,
                               child: SizedBox(
@@ -229,17 +236,21 @@ class _MapWidgetState extends State<MapWidget> {
               ),
               widget.category == 'dumps' || widget.category == 'trash'
                   ? Padding(
-                      padding: const EdgeInsets.only(
-                        top: 20,
-                        left: 20,
+                      padding: EdgeInsets.only(
+                        top: widget.isMobile ? 8 : 20,
+                        left: widget.isMobile ? 0 : 20,
                       ),
                       child: Align(
-                        alignment: Alignment.topLeft,
+                        alignment: widget.isMobile
+                            ? Alignment.topCenter
+                            : Alignment.topLeft,
                         child: ReportTypeSwitcher(
                           isShowDumps: widget.category == 'dumps',
                           onReportTypeChange: (value) {
                             widget.onCategoryChange(value);
                           },
+                          isMobile: widget.isMobile,
+                          width: widget.width,
                         ),
                       ),
                     )

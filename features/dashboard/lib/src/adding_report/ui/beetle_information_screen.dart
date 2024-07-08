@@ -69,7 +69,11 @@ class BeetleInformationScreen extends StatelessWidget {
                 width: 300,
                 titlesEnabled: false,
               ),
-              AddButton(width: 1600, onTap: onContinue),
+              AddButton(
+                width: 1600,
+                onTap: onContinue,
+                isMobile: false,
+              ),
               const SizedBox(height: 24),
               Text(
                 'Žievėgraužis tipografas yra medžių liemenų kenkėjas — 4-5,5 mm ilgio vabalas. Šis vabalas veisdamasis po eglių žieve nulemia masinį jų žuvimą, todėl yra būtina jo kontrolė.',

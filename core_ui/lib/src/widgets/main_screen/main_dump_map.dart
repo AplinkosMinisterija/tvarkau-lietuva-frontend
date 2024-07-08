@@ -159,21 +159,21 @@ class _MainDumpMapState extends State<MainDumpMap> {
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 20,
-              left: 20,
-            ),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: ReportTypeSwitcher(
-                isShowDumps: widget.isShowDumps,
-                onReportTypeChange: (var value) {
-                  //widget.onReportTypeChange(value);
-                },
-              ),
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.only(
+          //     top: 20,
+          //     left: 20,
+          //   ),
+          //   child: Align(
+          //     alignment: Alignment.topLeft,
+          //     child: ReportTypeSwitcher(
+          //       isShowDumps: widget.isShowDumps,
+          //       onReportTypeChange: (var value) {
+          //         //widget.onReportTypeChange(value);
+          //       },
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
