@@ -6,6 +6,7 @@ class LayerTypeButton extends StatefulWidget {
     super.key,
     required this.width,
     required this.title,
+    required this.isMobile,
     required this.isActive,
     this.onHover,
     required this.onTap,
@@ -13,6 +14,7 @@ class LayerTypeButton extends StatefulWidget {
 
   final double width;
   final bool isActive;
+  final bool isMobile;
   final String title;
   final void Function() onTap;
   final Function(bool)? onHover;
@@ -52,9 +54,13 @@ class _LayerTypeButtonState extends State<LayerTypeButton> {
         }
       },
       child: Container(
-        width: widget.width * 0.25625,
-        height: widget.width * 0.03593,
-        padding: EdgeInsets.symmetric(horizontal: widget.width * 0.0093),
+        width: widget.isMobile ? widget.width * 0.911 : widget.width * 0.25625,
+        height:
+            widget.isMobile ? widget.width * 0.12778 : widget.width * 0.03593,
+        padding: EdgeInsets.symmetric(
+            horizontal: widget.isMobile
+                ? widget.width * 0.03333
+                : widget.width * 0.0093),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(4),
             color: activeColor,
@@ -67,7 +73,9 @@ class _LayerTypeButtonState extends State<LayerTypeButton> {
             Text(
               widget.title,
               style: GoogleFonts.roboto(
-                fontSize: widget.width * 0.009375,
+                fontSize: widget.isMobile
+                    ? widget.width * 0.03333
+                    : widget.width * 0.009375,
                 fontWeight: FontWeight.w400,
                 color: Colors.black,
               ),

@@ -237,7 +237,8 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                               mapController.animateCamera(
                                   CameraUpdate.newLatLngZoom(
                                       _currentPosition!, 13));
-                            }, isLoading: false,
+                            },
+                            isLoading: false,
                           )),
                     )
                   : const SizedBox.shrink(),
@@ -305,6 +306,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                                       },
                                       isReportsActive: isShowMarkers,
                                       isPermitsActive: isShowPolygons,
+                                      isMobile: true,
                                     )
                                   : MapTypeChangeDialog(
                                       width: widget.width,
@@ -318,7 +320,9 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                                         setState(() {
                                           currentMapType = mapType;
                                         });
-                                      }));
+                                      },
+                                      isMobile: true,
+                                    ));
                     },
                   ),
                 ),

@@ -7,6 +7,7 @@ import 'package:pointer_interceptor/pointer_interceptor.dart';
 class MapTypeChangeDialog extends StatefulWidget {
   const MapTypeChangeDialog({
     required this.width,
+    required this.isMobile,
     required this.currentMapType,
     required this.onChangeTap,
     this.onPermitsVisibilityChange,
@@ -18,6 +19,7 @@ class MapTypeChangeDialog extends StatefulWidget {
   });
 
   final double width;
+  final bool isMobile;
   final MapType currentMapType;
   final bool? isReportsActive;
   final bool? isPermitsActive;
@@ -36,6 +38,7 @@ class _MapTypeChangeDialogState extends State<MapTypeChangeDialog> {
     return PointerInterceptor(
       child: Dialog(
         backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
+        insetPadding: null,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(8),
@@ -44,9 +47,13 @@ class _MapTypeChangeDialogState extends State<MapTypeChangeDialog> {
         child: SizedBox(
           height: widget.onPermitsVisibilityChange != null &&
                   widget.onReportVisibilityChange != null
-              ? widget.width * 0.215
-              : widget.width * 0.09,
-          width: widget.width * 0.28125,
+              ? widget.isMobile
+                  ? widget.width * 0.7445
+                  : widget.width * 0.215
+              : widget.isMobile
+                  ? widget.width * 0.32
+                  : widget.width * 0.09,
+          width: widget.isMobile ? widget.width : widget.width * 0.28125,
           child: Padding(
             padding: EdgeInsets.symmetric(
                 vertical: widget.width * 0.014,
@@ -60,7 +67,9 @@ class _MapTypeChangeDialogState extends State<MapTypeChangeDialog> {
                   children: [
                     Text('Žemėlapio tipas',
                         style: GoogleFonts.roboto(
-                          fontSize: widget.width * 0.01093,
+                          fontSize: widget.isMobile
+                              ? widget.width * 0.03889
+                              : widget.width * 0.01093,
                           fontWeight: FontWeight.w700,
                           color: Colors.black,
                         )),
@@ -70,11 +79,16 @@ class _MapTypeChangeDialogState extends State<MapTypeChangeDialog> {
                         },
                         child: Icon(
                           Icons.close,
-                          size: widget.width * 0.0156,
+                          size: widget.isMobile
+                              ? widget.width * 0.0556
+                              : widget.width * 0.0156,
                         ))
                   ],
                 ),
-                SizedBox(height: widget.width * 0.0125),
+                SizedBox(
+                    height: widget.isMobile
+                        ? widget.width * 0.04445
+                        : widget.width * 0.0125),
                 MapTypeSwitcher(
                   width: widget.width,
                   onMapTypeChange: (MapType value) {
@@ -82,28 +96,41 @@ class _MapTypeChangeDialogState extends State<MapTypeChangeDialog> {
                     Navigator.of(context).pop();
                   },
                   currentMapType: widget.currentMapType,
+                  isMobile: widget.isMobile,
                 ),
                 if (widget.onPermitsVisibilityChange != null &&
                     widget.onReportVisibilityChange != null) ...[
-                  SizedBox(height: widget.width * 0.01875),
+                  SizedBox(
+                      height: widget.isMobile
+                          ? widget.width * 0.0667
+                          : widget.width * 0.01875),
                   const Divider(
                     height: 1,
                     color: Color.fromRGBO(222, 224, 224, 1),
                   ),
-                  SizedBox(height: widget.width * 0.01875),
+                  SizedBox(
+                      height: widget.isMobile
+                          ? widget.width * 0.0667
+                          : widget.width * 0.01875),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Sluoksnių duomenys',
                       style: GoogleFonts.roboto(
-                          fontSize: widget.width * 0.01093,
+                          fontSize: widget.isMobile
+                              ? widget.width * 0.03889
+                              : widget.width * 0.01093,
                           fontWeight: FontWeight.w600,
                           color: Colors.black),
                     ),
                   ),
-                  SizedBox(height: widget.width * 0.000625),
+                  SizedBox(
+                      height: widget.isMobile
+                          ? widget.width * 0.0222
+                          : widget.width * 0.000625),
                   LayerTypeButton(
                       width: widget.width,
+                      isMobile: widget.isMobile,
                       title: 'Išduoti kirtimų leidimai',
                       isActive: widget.isPermitsActive!,
                       onTap: () {
@@ -112,6 +139,7 @@ class _MapTypeChangeDialogState extends State<MapTypeChangeDialog> {
                   SizedBox(height: widget.width * 0.003125),
                   LayerTypeButton(
                       width: widget.width,
+                      isMobile: widget.isMobile,
                       title: 'Patvirtinti pranešimai',
                       isActive: widget.isReportsActive!,
                       onTap: () {

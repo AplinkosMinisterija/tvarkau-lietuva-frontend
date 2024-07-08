@@ -100,7 +100,36 @@ class _MapWidgetState extends State<MapWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(height: widget.width * 0.03125),
+        if (widget.isMobile) ...[
+          SizedBox(height: widget.width * 0.0278),
+          SizedBox(
+            width: widget.width * 0.911,
+            child: PointerInterceptor(
+              child: CustomDropdown<String>(
+                hintText: 'Pasirinkite kategoriją',
+                decoration: CustomDropdownDecoration(
+                  listItemStyle: GoogleFonts.roboto(
+                    fontSize: widget.width * 0.036,
+                  ),
+                  hintStyle: GoogleFonts.roboto(
+                    fontSize: widget.width * 0.036,
+                  ),
+                  headerStyle: GoogleFonts.roboto(
+                    fontSize: widget.width * 0.036,
+                  ),
+                ),
+                items: _dropdownList,
+                initialItem: initialItem,
+                onChanged: (value) {
+                  widget.onCategoryChange(getDropdownValueByString(value));
+                },
+              ),
+            ),
+          ),
+          SizedBox(height: widget.width * 0.0278),
+        ] else ...[
+          SizedBox(height: widget.width * 0.03125),
+        ],
         MouseRegion(
           onEnter: (event) {
             widget.isHovering(true);
@@ -175,36 +204,40 @@ class _MapWidgetState extends State<MapWidget> {
                                   )),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 20, right: 20),
-                            child: Align(
-                              alignment: Alignment.topRight,
-                              child: SizedBox(
-                                width: widget.width * 0.3,
-                                child: PointerInterceptor(
-                                  child: CustomDropdown<String>(
-                                    hintText: 'Pasirinkite kategoriją',
-                                    overlayHeight: 20,
-                                    decoration: CustomDropdownDecoration(
-                                      listItemStyle: GoogleFonts.roboto(
-                                        fontSize: 13,
+                          if (!widget.isMobile) ...[
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 20, right: 20),
+                              child: Align(
+                                alignment: Alignment.topRight,
+                                child: SizedBox(
+                                  width: widget.width * 0.3,
+                                  child: PointerInterceptor(
+                                    child: CustomDropdown<String>(
+                                      hintText: 'Pasirinkite kategoriją',
+                                      decoration: CustomDropdownDecoration(
+                                        listItemStyle: GoogleFonts.roboto(
+                                          fontSize: widget.width * 0.0102,
+                                        ),
+                                        hintStyle: GoogleFonts.roboto(
+                                          fontSize: widget.width * 0.0102,
+                                        ),
+                                        headerStyle: GoogleFonts.roboto(
+                                          fontSize: widget.width * 0.0102,
+                                        ),
                                       ),
-                                      hintStyle:
-                                          GoogleFonts.roboto(fontSize: 13),
-                                      headerStyle:
-                                          GoogleFonts.roboto(fontSize: 13),
+                                      items: _dropdownList,
+                                      initialItem: initialItem,
+                                      onChanged: (value) {
+                                        widget.onCategoryChange(
+                                            getDropdownValueByString(value));
+                                      },
                                     ),
-                                    items: _dropdownList,
-                                    initialItem: initialItem,
-                                    onChanged: (value) {
-                                      widget.onCategoryChange(
-                                          getDropdownValueByString(value));
-                                    },
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
+                            )
+                          ],
                           Padding(
                             padding:
                                 const EdgeInsets.only(bottom: 110, right: 10),
@@ -218,13 +251,15 @@ class _MapWidgetState extends State<MapWidget> {
                                         context: context,
                                         builder: (BuildContext context) =>
                                             MapTypeChangeDialog(
-                                                width: widget.width,
-                                                currentMapType: _currentMapType,
-                                                onChangeTap: (MapType mapType) {
-                                                  setState(() {
-                                                    _currentMapType = mapType;
-                                                  });
-                                                }));
+                                              width: widget.width,
+                                              currentMapType: _currentMapType,
+                                              onChangeTap: (MapType mapType) {
+                                                setState(() {
+                                                  _currentMapType = mapType;
+                                                });
+                                              },
+                                              isMobile: widget.isMobile,
+                                            ));
                                   },
                                 )),
                           ),
@@ -259,7 +294,7 @@ class _MapWidgetState extends State<MapWidget> {
           ),
         ),
         SizedBox(height: widget.width * 0.0135),
-        if (widget.category != 'dumps') ...[
+        if (widget.category != 'dumps' && !widget.isMobile) ...[
           ReportStatistics(
             reportStatistics: widget.reportStatistics!,
           ),

@@ -284,6 +284,7 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                                         },
                                         isReportsActive: isShowMarkers,
                                         isPermitsActive: isShowPolygons,
+                                        isMobile: false,
                                       ));
                             },
                           ),

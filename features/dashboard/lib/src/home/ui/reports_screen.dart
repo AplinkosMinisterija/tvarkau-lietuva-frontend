@@ -89,41 +89,41 @@ class _ReportsScreenState extends State<ReportsScreen> {
                           SizedBox(height: constraints.maxWidth * 0.03125),
                           Stack(
                             children: [
-                              isShowDumps
-                                  ? MainDumpMap(
-                                      width: constraints.maxWidth,
-                                      onReportTypeChange: (bool value) {
-                                        setState(() {
-                                          isShowDumps = value;
-                                        });
-                                      },
-                                      isShowDumps: isShowDumps,
-                                      dumpReports: widget.dumpReports ?? [],
-                                      isHovering: (bool value) {
-                                        setState(() {
-                                          isMapHover = value;
-                                        });
-                                      },
-                                    )
-                                  : MainTrashMap(
-                                      width: constraints.maxWidth,
-                                      onReportTypeChange: (bool value) {
-                                        setState(() {
-                                          isShowDumps = value;
-                                        });
-                                      },
-                                      isShowDumps: isShowDumps,
-                                      isTrash: isTrash,
-                                      trashReports: widget.reports,
-                                      isHovering: (bool value) {
-                                        setState(() {
-                                          isMapHover = value;
-                                        });
-                                      },
-                                      onInformationTap: (String refId) {
-                                        widget.onInformationTap(refId);
-                                      },
-                                    ),
+                              // isShowDumps
+                              //     ? MainDumpMap(
+                              //         width: constraints.maxWidth,
+                              //         onReportTypeChange: (bool value) {
+                              //           setState(() {
+                              //             isShowDumps = value;
+                              //           });
+                              //         },
+                              //         isShowDumps: isShowDumps,
+                              //         dumpReports: widget.dumpReports ?? [],
+                              //         isHovering: (bool value) {
+                              //           setState(() {
+                              //             isMapHover = value;
+                              //           });
+                              //         },
+                              //       )
+                              //     : MainTrashMap(
+                              //         width: constraints.maxWidth,
+                              //         onReportTypeChange: (bool value) {
+                              //           setState(() {
+                              //             isShowDumps = value;
+                              //           });
+                              //         },
+                              //         isShowDumps: isShowDumps,
+                              //         isTrash: isTrash,
+                              //         trashReports: widget.reports,
+                              //         isHovering: (bool value) {
+                              //           setState(() {
+                              //             isMapHover = value;
+                              //           });
+                              //         },
+                              //         onInformationTap: (String refId) {
+                              //           widget.onInformationTap(refId);
+                              //         },
+                              //       ),
                               Padding(
                                 padding:
                                     const EdgeInsets.only(top: 22, right: 20),
@@ -260,43 +260,43 @@ class _ReportsScreenState extends State<ReportsScreen> {
                             ),
                           ),
                           SizedBox(height: constraints.maxWidth * 0.01),
-                          isShowDumps
-                              ? MainDumpMapMobile(
-                                  width: constraints.maxWidth,
-                                  onReportTypeChange: (bool value) {
-                                    setState(() {
-                                      isShowDumps = value;
-                                    });
-                                  },
-                                  isShowDumps: isShowDumps,
-                                  dumpReports: widget.dumpReports ?? [],
-                                  isHovering: (bool value) {
-                                    setState(() {
-                                      isMapHover = value;
-                                    });
-                                  },
-                                )
-                              : MainTrashMapMobile(
-                                  width: constraints.maxWidth,
-                                  onReportTypeChange: (bool value) {
-                                    setState(() {
-                                      isShowDumps = value;
-                                    });
-                                  },
-                                  isShowDumps: isShowDumps,
-                                  isTrash: isTrash,
-                                  trashReports: widget.reports,
-                                  isHovering: (bool value) {
-                                    setState(() {
-                                      isMapHover = value;
-                                    });
-                                  },
-                                  onInformationTap: (refId) {
-                                    widget.onInformationTap(
-                                      refId,
-                                    );
-                                  },
-                                ),
+                          // isShowDumps
+                          //     ? MainDumpMapMobile(
+                          //         width: constraints.maxWidth,
+                          //         onReportTypeChange: (bool value) {
+                          //           setState(() {
+                          //             isShowDumps = value;
+                          //           });
+                          //         },
+                          //         isShowDumps: isShowDumps,
+                          //         dumpReports: widget.dumpReports ?? [],
+                          //         isHovering: (bool value) {
+                          //           setState(() {
+                          //             isMapHover = value;
+                          //           });
+                          //         },
+                          //       )
+                          //     : MainTrashMapMobile(
+                          //         width: constraints.maxWidth,
+                          //         onReportTypeChange: (bool value) {
+                          //           setState(() {
+                          //             isShowDumps = value;
+                          //           });
+                          //         },
+                          //         isShowDumps: isShowDumps,
+                          //         isTrash: isTrash,
+                          //         trashReports: widget.reports,
+                          //         isHovering: (bool value) {
+                          //           setState(() {
+                          //             isMapHover = value;
+                          //           });
+                          //         },
+                          //         onInformationTap: (refId) {
+                          //           widget.onInformationTap(
+                          //             refId,
+                          //           );
+                          //         },
+                          //       ),
                           ReportStatistics(
                             reportStatistics: widget.reportStatistics,
                           ),

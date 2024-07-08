@@ -249,7 +249,7 @@ class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
                                             setState(() {
                                               currentMapType = mapType;
                                             });
-                                          }));
+                                          }, isMobile: false,));
                             },
                           ),
                         ),

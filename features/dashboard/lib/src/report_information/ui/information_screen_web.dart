@@ -230,17 +230,18 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                                             context: context,
                                             builder: (BuildContext context) =>
                                                 MapTypeChangeDialog(
-                                                    width: widget.width,
-                                                    currentMapType:
-                                                        _currentMapType,
-                                                    onHover: (isHover) {},
-                                                    onChangeTap:
-                                                        (MapType mapType) {
-                                                      setState(() {
-                                                        _currentMapType =
-                                                            mapType;
-                                                      });
-                                                    }));
+                                                  width: widget.width,
+                                                  currentMapType:
+                                                      _currentMapType,
+                                                  onHover: (isHover) {},
+                                                  onChangeTap:
+                                                      (MapType mapType) {
+                                                    setState(() {
+                                                      _currentMapType = mapType;
+                                                    });
+                                                  },
+                                                  isMobile: false,
+                                                ));
                                       },
                                     )),
                               ),

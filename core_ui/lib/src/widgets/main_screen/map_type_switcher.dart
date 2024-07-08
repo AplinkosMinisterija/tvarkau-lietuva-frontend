@@ -6,11 +6,13 @@ class MapTypeSwitcher extends StatelessWidget {
   const MapTypeSwitcher({
     super.key,
     required this.width,
+    required this.isMobile,
     required this.onMapTypeChange,
     required this.currentMapType,
   });
 
   final double width;
+  final bool isMobile;
   final ValueChanged<MapType> onMapTypeChange;
   final MapType currentMapType;
 
@@ -21,7 +23,7 @@ class MapTypeSwitcher extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         MapTypeSwitcherButton(
-          width: width,
+          width: isMobile ? width * 3.5556 : width,
           title: 'Įprastas',
           isActive: currentMapType == MapType.normal,
           onTap: () {
@@ -29,7 +31,7 @@ class MapTypeSwitcher extends StatelessWidget {
           },
         ),
         MapTypeSwitcherButton(
-          width: width,
+          width: isMobile ? width * 3.5556 : width,
           title: 'Palydovinis',
           isActive: currentMapType == MapType.satellite,
           onTap: () {
@@ -37,7 +39,7 @@ class MapTypeSwitcher extends StatelessWidget {
           },
         ),
         MapTypeSwitcherButton(
-          width: width,
+          width: isMobile ? width * 3.5556 : width,
           title: 'Hibridinis',
           isActive: currentMapType == MapType.hybrid,
           onTap: () {
