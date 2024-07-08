@@ -26,6 +26,7 @@ class ImageGallery {
           mainAxisSpacing: 16,
           crossAxisSpacing: 16,
           shrinkWrap: true,
+          childAspectRatio: titlesEnabled ? 0.82 : 1,
           physics: const NeverScrollableScrollPhysics(),
           crossAxisCount: 2,
           children: [
@@ -42,6 +43,7 @@ class ImageGallery {
                 },
                 child: titlesEnabled
                     ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           ClipRRect(
                             borderRadius: BorderRadius.circular(8),
@@ -59,6 +61,10 @@ class ImageGallery {
                           Text(
                             titles?[i] ?? '',
                             textAlign: TextAlign.start,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(fontWeight: FontWeight.bold),
                           )
                         ],
                       )
