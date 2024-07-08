@@ -44,14 +44,23 @@ class _ReportTypeSwitcherButtonState extends State<ReportTypeSwitcherButton> {
               ? const Color.fromRGBO(255, 106, 61, 1)
               : inactiveBackgroundColor,
           borderRadius: BorderRadius.circular(4),
+          boxShadow: const [
+            BoxShadow(
+              color: Color.fromRGBO(0, 0, 0, 0.16),
+              spreadRadius: 0,
+              blurRadius: 3,
+              offset: Offset(0, 3), // changes position of shadow
+            ),
+          ],
         ),
         child: Center(
           child: Text(
             widget.buttonText,
             textAlign: TextAlign.center,
             style: GoogleFonts.roboto(
-              fontSize:
-                  widget.isMobile ? widget.width * 0.0306 : widget.width * 0.011,
+              fontSize: widget.isMobile
+                  ? widget.width * 0.0306
+                  : widget.width * 0.011,
               fontWeight: FontWeight.w400,
               color: widget.isActive ? Colors.white : Colors.black,
             ),

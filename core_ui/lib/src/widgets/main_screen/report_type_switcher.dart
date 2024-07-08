@@ -23,6 +23,14 @@ class ReportTypeSwitcher extends StatelessWidget {
       decoration: BoxDecoration(
         color: const Color.fromRGBO(255, 255, 255, 1),
         borderRadius: BorderRadius.circular(4),
+        boxShadow: const [
+          BoxShadow(
+            color: Color.fromRGBO(0, 0, 0, 0.16),
+            spreadRadius: 0,
+            blurRadius: 3,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -37,6 +45,7 @@ class ReportTypeSwitcher extends StatelessWidget {
               onReportTypeChange('trash');
             },
           ),
+          SizedBox(width: isMobile ? width * 0.0139 : width * 0.005),
           ReportTypeSwitcherButton(
             width: width,
             isMobile: isMobile,
