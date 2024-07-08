@@ -419,7 +419,7 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: widget.width * 0.011,
-                        vertical: widget.width * 0.138,
+                        vertical: widget.width * 0.011,
                       ),
                       child: Material(
                         shape: const RoundedRectangleBorder(

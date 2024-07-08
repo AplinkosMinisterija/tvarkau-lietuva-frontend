@@ -40,8 +40,8 @@ class InfoPermitWindowBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return PointerInterceptor(
       child: Container(
-        width: isMobile ? width : width * 0.228,
-        height: isMobile ? width * 0.7 : width * 0.3,
+        width: isMobile ? width : width * 0.25,
+        height: isMobile ? width * 0.7 : width * 0.32,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4),
           color: Colors.white,
@@ -121,13 +121,21 @@ class InfoPermitWindowBox extends StatelessWidget {
             child: Text(
               description,
               style: GoogleFonts.roboto(
-                fontWeight: FontWeight.w400,
-                fontSize: isMobile ? width * 0.0388 : width * 0.01,
-              ),
+                  fontWeight: FontWeight.w400,
+                  fontSize: isMobile ? width * 0.0388 : width * 0.01,
+                  color: title == 'Galioja iki'
+                      ? isDateAfterNow(description)
+                          ? Colors.green
+                          : Colors.red
+                      : Colors.black),
             ),
           )
         ],
       ),
     );
+  }
+
+  bool isDateAfterNow(String date) {
+    return DateTime.parse(date).isAfter(DateTime.now());
   }
 }
