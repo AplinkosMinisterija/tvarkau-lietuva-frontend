@@ -18,11 +18,7 @@ export 'src/widgets/route_error_screen.dart';
 //Footer
 export 'src/widgets/main_screen/footer/copyright_support_tag.dart';
 export 'src/widgets/main_screen/footer/footer.dart';
-export 'src/widgets/main_screen/footer/support_tag.dart';
-export 'src/widgets/main_screen/footer/left_side_footer.dart';
-export 'src/widgets/main_screen/footer/right_side_footer.dart';
 export 'src/widgets/main_screen/mobile/footer_mobile.dart';
-export 'src/widgets/main_screen/mobile/footer/footer_contacts_mobile_test.dart';
 
 //Main screen
 export 'src/widgets/main_screen/mobile/location_search_button.dart';
@@ -44,10 +40,9 @@ export 'src/widgets/main_screen/mobile/department_logo_mobile.dart';
 export 'src/widgets/main_screen/mobile/add_button_mobile.dart';
 export 'src/widgets/main_screen/mobile/report_type_switcher_mobile.dart';
 export 'src/widgets/main_screen/mobile/google_map_type_button.dart';
-export 'src/widgets/main_screen/mobile/footer/footer_contacts_mobile.dart';
-export 'src/widgets/main_screen/mobile/footer/footer_description.dart';
-export 'src/widgets/main_screen/mobile/footer/footer_consultation.dart';
-export 'src/widgets/main_screen/mobile/footer/footer_support_mobile.dart';
+export 'src/widgets/main_screen/footer/footer_contacts.dart';
+export 'src/widgets/main_screen/footer/footer_description.dart';
+export 'src/widgets/main_screen/footer/footer_consultation.dart';
 export 'src/widgets/main_screen/mobile/adding_screen/adding_information_header.dart';
 export 'src/widgets/main_screen/mobile/adding_screen/adding_map_redirect_window.dart';
 export 'src/widgets/main_screen/mobile/adding_screen/image_add_button.dart';

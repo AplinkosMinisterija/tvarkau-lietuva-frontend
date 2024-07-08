@@ -6,22 +6,23 @@ class FooterConsultationInformation extends StatelessWidget {
   const FooterConsultationInformation({
     super.key,
     required this.width,
+    required this.isMobile,
   });
 
   final double width;
+  final bool isMobile;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width * 0.5578,
-      height: width * 0.104,
+      width: isMobile ? width * 0.911 : width * 0.5578,
+      height: isMobile ? width * 0.4027 : width * 0.104,
       decoration: BoxDecoration(
         color: const Color.fromRGBO(57, 97, 84, 0.07),
         borderRadius: BorderRadius.circular(14),
       ),
       padding: EdgeInsets.symmetric(
-        horizontal: width * 0.01875,
-        //vertical: width * 0.0164,
+        horizontal: isMobile ? width * 0.05 : width * 0.01875,
       ),
       child: SelectionArea(
         child: Column(
@@ -34,23 +35,23 @@ class FooterConsultationInformation extends StatelessWidget {
                 'Apie aplinkosaugą galite pasikonsultuoti darbo dienomis',
                 textAlign: TextAlign.left,
                 style: GoogleFonts.roboto(
-                  fontSize: width * 0.01093,
+                  fontSize: isMobile ? width * 0.03889 : width * 0.01093,
                   fontWeight: FontWeight.w700,
                   color: const Color.fromRGBO(28, 63, 58, 1),
                 ),
               ),
             ),
-            SizedBox(height: width * 0.0125),
+            SizedBox(height: isMobile ? width * 0.03889 : width * 0.0125),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(
                   Icons.phone,
-                  size: width * 0.0156,
+                  size: isMobile ? width * 0.0556 : width * 0.0156,
                   color: const Color.fromRGBO(28, 63, 58, 1),
                 ),
-                SizedBox(width: width * 0.0094),
+                SizedBox(width: isMobile ? width * 0.03 : width * 0.0094),
                 InkWell(
                   onTap: () {
                     LaunchUrl().launch('tel:+37070002022');
@@ -58,7 +59,7 @@ class FooterConsultationInformation extends StatelessWidget {
                   child: Text(
                     '+370 700 02022',
                     style: GoogleFonts.roboto(
-                      fontSize: width * 0.01093,
+                      fontSize: isMobile ? width * 0.031 : width * 0.01093,
                       fontWeight: FontWeight.w400,
                       color: const Color.fromRGBO(0, 0, 0, 1),
                     ),
@@ -67,10 +68,10 @@ class FooterConsultationInformation extends StatelessWidget {
                 SizedBox(width: width * 0.0304),
                 Icon(
                   Icons.email,
-                  size: width * 0.0156,
+                  size: isMobile ? width * 0.0556 : width * 0.0156,
                   color: const Color.fromRGBO(28, 63, 58, 1),
                 ),
-                SizedBox(width: width * 0.0094),
+                SizedBox(width: isMobile ? width * 0.03 : width * 0.0094),
                 InkWell(
                   onTap: () {
                     LaunchUrl().launch(
@@ -79,7 +80,7 @@ class FooterConsultationInformation extends StatelessWidget {
                   child: Text(
                     'konsultacijos@aad.am.lt',
                     style: GoogleFonts.roboto(
-                      fontSize: width * 0.01093,
+                      fontSize: isMobile ? width * 0.031 : width * 0.01093,
                       fontWeight: FontWeight.w400,
                       color: const Color.fromRGBO(0, 0, 0, 1),
                     ),
@@ -87,25 +88,25 @@ class FooterConsultationInformation extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: width * 0.0125),
+            SizedBox(height: isMobile ? width * 0.0333 : width * 0.0125),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(
                   Icons.campaign,
-                  size: width * 0.0156,
+                  size: isMobile ? width * 0.0556 : width * 0.0156,
                   color: const Color.fromRGBO(255, 106, 61, 1),
                 ),
-                SizedBox(width: width * 0.0094),
+                SizedBox(width: isMobile ? width * 0.03 : width * 0.0094),
                 InkWell(
                   onTap: () {
                     LaunchUrl().launch('tel:+112');
                   },
                   child: Text(
-                    'Pastebėję galimą aplinkosauginį pažeidimą, praneškite tel. 112',
+                    'Pastebėję galimą aplinkosauginį pažeidimą,\npraneškite tel. 112',
                     style: GoogleFonts.roboto(
-                      fontSize: width * 0.01093,
+                      fontSize: isMobile ? width * 0.031 : width * 0.01093,
                       fontWeight: FontWeight.w400,
                       color: const Color.fromRGBO(0, 0, 0, 1),
                     ),

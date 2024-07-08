@@ -53,55 +53,43 @@ class _HomeLayoutMobileState extends State<HomeLayoutMobile> {
               width: widget.width,
               isMobile: true,
             ),
-            Column(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: widget.width * 0.0445,
-                    vertical: widget.width * 0.112,
+            Padding(
+              padding: EdgeInsets.only(
+                left: widget.width * 0.0445,
+                right: widget.width * 0.0445,
+                top: widget.width * 0.087,
+                bottom: widget.width * 0.0361,
+              ),
+              child: Column(
+                children: [
+                  SvgPicture.asset(
+                    'assets/svg/TL_logo.svg',
+                    width: widget.width * 0.91,
                   ),
-                  child: Column(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/svg/TL_logo.svg',
-                        width: widget.width * 0.91,
-                      ),
-                      SizedBox(height: widget.width * 0.1472),
-                      TitleWidget(
-                        width: widget.width,
-                        isMobile: true,
-                        onTap: () {
-                          context.goNamed('report_category');
-                        },
-                      ),
-                      MapScreen(
-                        isMapHover: (isHover) {
-                          setState(() {
-                            isMapHover = isHover;
-                          });
-                        },
-                        width: widget.width,
-                        isMobile: true,
-                      ),
-                    ],
+                  SizedBox(height: widget.width * 0.1472),
+                  TitleWidget(
+                    width: widget.width,
+                    isMobile: true,
+                    onTap: () {
+                      context.goNamed('report_category');
+                    },
                   ),
-                ),
-                // Padding(
-                //   padding: EdgeInsets.symmetric(
-                //       horizontal: widget.width * 0.05,
-                //       vertical: widget.width * 0.02),
-                //   child: Column(
-                //     children: [
-                //       const Divider(
-                //         height: 1,
-                //         color: Color.fromRGBO(10, 51, 40, 0.1),
-                //       ),
-                //       SizedBox(height: widget.width * 0.0343),
-                //       Footer(width: widget.width),
-                //     ],
-                //   ),
-                // )
-              ],
+                  MapScreen(
+                    isMapHover: (isHover) {
+                      setState(() {
+                        isMapHover = isHover;
+                      });
+                    },
+                    width: widget.width,
+                    isMobile: true,
+                  ),
+                  SizedBox(height: widget.width * 0.0343),
+                  Footer(
+                    width: widget.width,
+                    isMobile: true,
+                  ),
+                ],
+              ),
             ),
           ],
         ),

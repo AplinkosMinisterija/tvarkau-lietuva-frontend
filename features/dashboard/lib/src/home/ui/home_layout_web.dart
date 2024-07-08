@@ -102,7 +102,10 @@ class _HomeLayoutWebState extends State<HomeLayoutWeb> {
                         color: Color.fromRGBO(10, 51, 40, 0.1),
                       ),
                       SizedBox(height: widget.width * 0.0343),
-                      Footer(width: widget.width),
+                      Footer(
+                        width: widget.width,
+                        isMobile: false,
+                      ),
                     ],
                   ),
                 )

@@ -1,11 +1,11 @@
 import 'package:core/core.dart';
 import 'package:core/utils/url_launcher.dart';
-import 'package:core_ui/src/widgets/main_screen/mobile/footer/footer_contacts_left.dart';
-import 'package:core_ui/src/widgets/main_screen/mobile/footer/footer_contacts_right.dart';
+import 'package:core_ui/src/widgets/main_screen/footer/footer_contacts_left.dart';
+import 'package:core_ui/src/widgets/main_screen/footer/footer_contacts_right.dart';
 import 'package:flutter/material.dart';
 
-class FooterContactsMobile extends StatelessWidget {
-  const FooterContactsMobile({
+class FooterContacts extends StatelessWidget {
+  const FooterContacts({
     super.key,
     required this.width,
   });

@@ -844,14 +844,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                                   )),
                             ),
                             SizedBox(height: widget.width * 0.0555),
-                            FooterDescription(width: widget.width * 0.9),
-                            SizedBox(height: widget.width * 0.0654),
-                            FooterContactsMobile(width: widget.width * 0.9),
-                            SizedBox(height: widget.width * 0.0444),
-                            FooterConsultationInformation(
-                                width: widget.width * 0.85),
-                            SizedBox(height: widget.width * 0.04722),
-                            FooterSupportMobile(width: widget.width * 0.9),
+                            Footer(width: widget.width*0.9, isMobile: true)
                           ],
                         ),
                       ),

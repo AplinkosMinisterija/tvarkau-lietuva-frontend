@@ -29,13 +29,13 @@ class InformationScreen extends StatelessWidget {
                     return InformationScreenWeb(
                         width: size.width / 2.6,
                         height: size.height,
-                        report: state.trashReport); //WEB INFO
+                        report: state.trashReport);
                   } else {
                     return InformationScreenMobile(
                       width: size.width,
                       height: size.height,
                       report: state.trashReport,
-                    ); //MOBILE INFO
+                    );
                   }
                 } else if (state is LoadingState) {
                   return Scaffold(

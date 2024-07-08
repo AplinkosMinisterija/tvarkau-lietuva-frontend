@@ -6,9 +6,11 @@ class CopyrightSupportTag extends StatelessWidget {
   const CopyrightSupportTag({
     super.key,
     required this.width,
+    required this.isMobile,
   });
 
   final double width;
+  final bool isMobile;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class CopyrightSupportTag extends StatelessWidget {
         Text(
           '© 2024, Tvarkau Lietuvą',
           style: GoogleFonts.roboto(
-            fontSize: width * 0.01094,
+            fontSize: isMobile ? width * 0.033 : width * 0.01094,
             fontWeight: FontWeight.w400,
             color: Colors.black,
           ),
@@ -27,14 +29,13 @@ class CopyrightSupportTag extends StatelessWidget {
           children: <Widget>[
             SvgPicture.asset(
               'assets/svg/heart-flags.svg',
-              width: width * 0.014,
-              height: width * 0.014,
+              width: isMobile ? width * 0.037 : width * 0.014,
             ),
-            SizedBox(width: width * 0.0078),
+            SizedBox(width: isMobile ? width * 0.00667 : width * 0.0078),
             Text(
               'AAD remia Ukrainą iki pergalės',
               style: GoogleFonts.roboto(
-                fontSize: width * 0.01094,
+                fontSize: isMobile ? width * 0.033 : width * 0.01094,
                 fontWeight: FontWeight.w400,
                 color: Colors.black,
               ),
