@@ -45,14 +45,7 @@ class _MapTypeChangeDialogState extends State<MapTypeChangeDialog> {
           ),
         ),
         child: SizedBox(
-          height: widget.onPermitsVisibilityChange != null &&
-                  widget.onReportVisibilityChange != null
-              ? widget.isMobile
-                  ? widget.width * 0.7545
-                  : widget.width * 0.215
-              : widget.isMobile
-                  ? widget.width * 0.32
-                  : widget.width * 0.09,
+          height: getWidgetHeight(),
           width: widget.isMobile ? widget.width : widget.width * 0.28125,
           child: Padding(
             padding: EdgeInsets.symmetric(
@@ -102,7 +95,7 @@ class _MapTypeChangeDialogState extends State<MapTypeChangeDialog> {
                   currentMapType: widget.currentMapType,
                   isMobile: widget.isMobile,
                 ),
-                if (widget.onPermitsVisibilityChange != null &&
+                if (widget.onPermitsVisibilityChange != null ||
                     widget.onReportVisibilityChange != null) ...[
                   SizedBox(
                       height: widget.isMobile
@@ -132,23 +125,27 @@ class _MapTypeChangeDialogState extends State<MapTypeChangeDialog> {
                       height: widget.isMobile
                           ? widget.width * 0.0222
                           : widget.width * 0.000625),
-                  LayerTypeButton(
-                      width: widget.width,
-                      isMobile: widget.isMobile,
-                      title: 'Išduoti kirtimų leidimai',
-                      isActive: widget.isPermitsActive!,
-                      onTap: () {
-                        widget.onPermitsVisibilityChange!();
-                      }),
-                  SizedBox(height: widget.width * 0.003125),
-                  LayerTypeButton(
-                      width: widget.width,
-                      isMobile: widget.isMobile,
-                      title: 'Patvirtinti pranešimai',
-                      isActive: widget.isReportsActive!,
-                      onTap: () {
-                        widget.onReportVisibilityChange!();
-                      })
+                  if (widget.onPermitsVisibilityChange != null) ...[
+                    LayerTypeButton(
+                        width: widget.width,
+                        isMobile: widget.isMobile,
+                        title: 'Išduoti kirtimų leidimai',
+                        isActive: widget.isPermitsActive!,
+                        onTap: () {
+                          widget.onPermitsVisibilityChange!();
+                        }),
+                  ],
+                  if (widget.onReportVisibilityChange != null) ...[
+                    SizedBox(height: widget.width * 0.003125),
+                    LayerTypeButton(
+                        width: widget.width,
+                        isMobile: widget.isMobile,
+                        title: 'Patvirtinti pranešimai',
+                        isActive: widget.isReportsActive!,
+                        onTap: () {
+                          widget.onReportVisibilityChange!();
+                        }),
+                  ]
                 ]
               ],
             ),
@@ -156,5 +153,17 @@ class _MapTypeChangeDialogState extends State<MapTypeChangeDialog> {
         ),
       ),
     );
+  }
+
+  double getWidgetHeight() {
+    if (widget.onReportVisibilityChange != null &&
+        widget.onPermitsVisibilityChange != null) {
+      return widget.isMobile ? widget.width * 0.7545 : widget.width * 0.215;
+    } else if (widget.onReportVisibilityChange != null &&
+        widget.onPermitsVisibilityChange == null) {
+      return widget.isMobile ? widget.width * 0.6345 : widget.width * 0.18;
+    } else {
+      return widget.isMobile ? widget.width * 0.32 : widget.width * 0.09;
+    }
   }
 }

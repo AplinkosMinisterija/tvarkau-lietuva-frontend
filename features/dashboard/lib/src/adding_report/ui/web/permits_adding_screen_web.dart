@@ -23,7 +23,7 @@ class PermitsAddingScreenWeb extends StatefulWidget {
 
   final double width;
   final double height;
-  final Permit permits;
+  final Permit? permits;
   final List<PublicReportDto> reports;
   final Function(String, String, double, double, List<Uint8List>) onAddTap;
   final VoidCallback onDataSecurityTap;
@@ -91,22 +91,10 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       addCustomIcon();
     });
-    int index = 0;
-    for (var element in widget.reports) {
-      markers.add(
-        Marker(
-          markerId: MarkerId(
-            element.name + index.toString(),
-          ),
-          position: LatLng(
-            element.latitude.toDouble(),
-            element.longitude.toDouble(),
-          ),
-        ),
-      );
-      index++;
+    mapMarkers();
+    if (widget.permits != null) {
+      mapPolygons(widget.permits!);
     }
-    mapPolygons(widget.permits);
     getLocation();
     super.initState();
   }
@@ -346,310 +334,6 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                       },
                       isImagesSizeValid: isImagesSizeValid,
                       isTermsAccepted: isTermsAccepted)
-                  // SizedBox(
-                  //   height: constraints.maxHeight,
-                  //   width: constraints.maxWidth * 0.3,
-                  //   child: SingleChildScrollView(
-                  //     child: Padding(
-                  //       padding: EdgeInsets.all(widget.width * 0.025),
-                  //       child: Column(
-                  //         children: [
-                  //           ExitHeader(
-                  //               title: 'Pranešti apie nelegalų kirtimą',
-                  //               width: widget.width,
-                  //               onTap: () {
-                  //                 context.goNamed("home");
-                  //               }),
-                  //           SizedBox(
-                  //             height: widget.width * 0.0125,
-                  //           ),
-                  //           Align(
-                  //             alignment: Alignment.centerLeft,
-                  //             child: Text(
-                  //               'Pranešimo turinys',
-                  //               style: GoogleFonts.roboto(
-                  //                 fontSize: widget.width * 0.01145,
-                  //                 fontWeight: FontWeight.w600,
-                  //                 color: const Color(0x660a3328),
-                  //               ),
-                  //             ),
-                  //           ),
-                  //           SizedBox(
-                  //             height: widget.width * 0.004,
-                  //           ),
-                  //           Container(
-                  //             height: widget.width * 0.125,
-                  //             padding: EdgeInsets.all(
-                  //               widget.width * 0.01,
-                  //             ),
-                  //             decoration: BoxDecoration(
-                  //                 color: Colors.white,
-                  //                 borderRadius: BorderRadius.circular(4)),
-                  //             child: TextFormField(
-                  //               maxLines: 10,
-                  //               validator: (value) {
-                  //                 if (value == null || value.isEmpty) {
-                  //                   return 'Prašome įvesti pranešimo turinį';
-                  //                 }
-                  //                 return null;
-                  //               },
-                  //               onChanged: (textValue) {
-                  //                 setState(() {
-                  //                   currentTextValue = textValue;
-                  //                 });
-                  //               },
-                  //               style: GoogleFonts.roboto(
-                  //                   fontSize: widget.width * 0.0125,
-                  //                   fontWeight: FontWeight.w400,
-                  //                   color: Colors.black),
-                  //               decoration: const InputDecoration(
-                  //                 border: InputBorder.none,
-                  //               ),
-                  //             ),
-                  //           ),
-                  //           SizedBox(
-                  //             height: widget.width * 0.01,
-                  //           ),
-                  //           Align(
-                  //             alignment: Alignment.centerLeft,
-                  //             child: Text(
-                  //               'Jūsų el. pašto adresas',
-                  //               style: GoogleFonts.roboto(
-                  //                 fontSize: widget.width * 0.01145,
-                  //                 fontWeight: FontWeight.w600,
-                  //                 color: const Color(0x660a3328),
-                  //               ),
-                  //             ),
-                  //           ),
-                  //           SizedBox(
-                  //             height: widget.width * 0.004,
-                  //           ),
-                  //           Stack(
-                  //             alignment: Alignment.center,
-                  //             children: [
-                  //               Container(
-                  //                 height: widget.width * 0.045,
-                  //                 decoration: BoxDecoration(
-                  //                     color: Colors.white,
-                  //                     borderRadius: BorderRadius.circular(4)),
-                  //               ),
-                  //               Container(
-                  //                 height: widget.width * 0.045,
-                  //                 padding: EdgeInsets.symmetric(
-                  //                   horizontal: widget.width * 0.01,
-                  //                 ),
-                  //                 child: TextFormField(
-                  //                   maxLines: 1,
-                  //                   textAlignVertical: TextAlignVertical.top,
-                  //                   validator: (value) {
-                  //                     if (value == null || value.isEmpty) {
-                  //                       return 'Prašome įvesti el. pašto adresą';
-                  //                     } else if (RegExp(
-                  //                             r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-                  //                         .hasMatch(value)) {
-                  //                       return null;
-                  //                     } else {
-                  //                       return 'Prašome įvesti teisingą el. pašto adresą';
-                  //                     }
-                  //                   },
-                  //                   onChanged: (emailValue) {
-                  //                     setState(() {
-                  //                       currentEmailValue = emailValue;
-                  //                     });
-                  //                   },
-                  //                   style: GoogleFonts.roboto(
-                  //                       fontSize: widget.width * 0.0125,
-                  //                       fontWeight: FontWeight.w400,
-                  //                       color: Colors.black),
-                  //                   decoration: const InputDecoration(
-                  //                     border: InputBorder.none,
-                  //                   ),
-                  //                 ),
-                  //               ),
-                  //             ],
-                  //           ),
-                  //           SizedBox(
-                  //             height: widget.width * 0.01,
-                  //           ),
-                  //           Align(
-                  //             alignment: Alignment.centerLeft,
-                  //             child: Text(
-                  //               'Įkelkite bent 2 pažeidimo nuotraukas',
-                  //               style: GoogleFonts.roboto(
-                  //                 fontSize: widget.width * 0.01145,
-                  //                 fontWeight: FontWeight.w600,
-                  //                 color: const Color(0x660a3328),
-                  //               ),
-                  //             ),
-                  //           ),
-                  //           SizedBox(
-                  //             height: widget.width * 0.004,
-                  //           ),
-                  //           ImageAddButtonMobile(
-                  //               width: widget.width / 2.4,
-                  //               title: _selectedImages.isNotEmpty
-                  //                   ? 'Įkelti kitas nuotraukas'
-                  //                   : 'Įkelti nuotraukas',
-                  //               onTap: () {
-                  //                 getMultipleImageInfos();
-                  //               }),
-                  //           SizedBox(
-                  //             height: widget.width * 0.004,
-                  //           ),
-                  //           Align(
-                  //             alignment: Alignment.topCenter,
-                  //             child: Text(
-                  //               'Maksimalus nuotraukų kiekis: ${GlobalConstants.maxAllowedImageCount}',
-                  //               style: GoogleFonts.roboto(
-                  //                 fontSize: widget.width * 0.009375,
-                  //                 fontWeight: FontWeight.w600,
-                  //                 color: const Color(0x660a3328),
-                  //               ),
-                  //             ),
-                  //           ),
-                  //           SizedBox(
-                  //             height: widget.width * 0.02,
-                  //             child: TextFormField(
-                  //               enabled: true,
-                  //               maxLines: 1,
-                  //               readOnly: true,
-                  //               initialValue: " ",
-                  //               decoration: const InputDecoration(
-                  //                 border: InputBorder.none,
-                  //               ),
-                  //               textAlignVertical: TextAlignVertical.top,
-                  //               validator: (value) {
-                  //                 if (_selectedImages.isEmpty) {
-                  //                   return 'Prašome įkelti bent 2 nuotraukas';
-                  //                 } else {
-                  //                   if (_selectedImages.length < 2) {
-                  //                     return 'Prašome įkelti bent 2 nuotraukas';
-                  //                   } else {
-                  //                     return null;
-                  //                   }
-                  //                 }
-                  //               },
-                  //             ),
-                  //           ),
-                  //           SizedBox(
-                  //             height: widget.width * 0.005,
-                  //           ),
-                  //           _selectedImages.isNotEmpty
-                  //               ? SizedBox(
-                  //                   width: widget.width / 2.4 * 0.9111,
-                  //                   height: _selectedImages.length > 2
-                  //                       ? widget.width / 2.4 * 0.7111
-                  //                       : widget.width / 2.4 * 0.3555,
-                  //                   child: AlignedGridView.count(
-                  //                     crossAxisCount: 2,
-                  //                     mainAxisSpacing: 8,
-                  //                     crossAxisSpacing: 8,
-                  //                     physics:
-                  //                         const NeverScrollableScrollPhysics(),
-                  //                     itemBuilder: (context, index) {
-                  //                       return ImageGallery().buildPickerImage(
-                  //                           image: _selectedImages[index],
-                  //                           context: context,
-                  //                           width: widget.width,
-                  //                           onRemoveTap: () {
-                  //                             removeSelectedImage(index);
-                  //                           });
-                  //                     },
-                  //                     itemCount: _selectedImages.length,
-                  //                   ),
-                  //                 )
-                  //               : const SizedBox.shrink(),
-                  //           !isImagesSizeValid
-                  //               ? Text(
-                  //                   'Maksimalus nuotraukų dydis 20 MB',
-                  //                   style: TextStyle(
-                  //                     color: const Color(0xFFe53935),
-                  //                     fontSize: widget.width * 0.01,
-                  //                   ),
-                  //                 )
-                  //               : const SizedBox.shrink(),
-                  //           SizedBox(height: widget.width * 0.01),
-                  //           CheckboxListTile(
-                  //             activeColor: const Color.fromRGBO(57, 97, 84, 1),
-                  //             title: SizedBox(
-                  //                 width: widget.width * 0.2,
-                  //                 child: RichText(
-                  //                   text: TextSpan(
-                  //                       text: 'Sutinku su departamento ',
-                  //                       children: [
-                  //                         TextSpan(
-                  //                           text:
-                  //                               'asmens duomenų apsaugos tvarkymo taisyklėmis',
-                  //                           style: GoogleFonts.roboto(
-                  //                             fontWeight: FontWeight.w400,
-                  //                             fontSize: widget.width * 0.01,
-                  //                             decoration:
-                  //                                 TextDecoration.underline,
-                  //                           ),
-                  //                           recognizer: TapGestureRecognizer()
-                  //                             ..onTap = () => LaunchUrl().launch(
-                  //                                 'https://aad.lrv.lt/lt/asmens-duomenu-apsauga/'),
-                  //                         )
-                  //                       ]),
-                  //                 )),
-                  //             value: isTermsAccepted,
-                  //             onChanged: (value) {
-                  //               setState(() {
-                  //                 isTermsAccepted = value!;
-                  //               });
-                  //             },
-                  //             controlAffinity: ListTileControlAffinity.leading,
-                  //           ),
-                  //           SizedBox(
-                  //             height: widget.width * 0.02,
-                  //             child: TextFormField(
-                  //               enabled: true,
-                  //               maxLines: 1,
-                  //               readOnly: true,
-                  //               initialValue: " ",
-                  //               decoration: const InputDecoration(
-                  //                 border: InputBorder.none,
-                  //               ),
-                  //               textAlignVertical: TextAlignVertical.top,
-                  //               validator: (value) {
-                  //                 if (!isTermsAccepted) {
-                  //                   return 'Privaloma sutikti';
-                  //                 } else {
-                  //                   return null;
-                  //                 }
-                  //               },
-                  //             ),
-                  //           ),
-                  //           SizedBox(
-                  //             height: widget.width * 0.01,
-                  //           ),
-                  //           MarkButtonMobile(
-                  //             isActive: true,
-                  //             width: widget.width / 3.5,
-                  //             onTap: () async {
-                  //               if (_formKey.currentState!.validate() &&
-                  //                   selectedLat != 0 &&
-                  //                   selectedLong != 0 &&
-                  //                   isTermsAccepted &&
-                  //                   _selectedImages.isNotEmpty &&
-                  //                   isImagesSizeValid) {
-                  //                 if (_selectedImages.length >= 2) {
-                  //                   widget.onAddTap(
-                  //                     currentEmailValue,
-                  //                     currentTextValue,
-                  //                     selectedLat,
-                  //                     selectedLong,
-                  //                     _selectedImages,
-                  //                   );
-                  //                 }
-                  //               }
-                  //             },
-                  //           ),
-                  //         ],
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
                 ],
               ),
             );
@@ -690,6 +374,24 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
       selectedLat = tappedPoint.latitude;
       selectedLong = tappedPoint.longitude;
     });
+  }
+
+  Future<void> mapMarkers() async {
+    int index = 0;
+    for (var element in widget.reports) {
+      markers.add(
+        Marker(
+          markerId: MarkerId(
+            element.name + index.toString(),
+          ),
+          position: LatLng(
+            element.latitude.toDouble(),
+            element.longitude.toDouble(),
+          ),
+        ),
+      );
+      index++;
+    }
   }
 
   Future<void> mapPolygons(Permit permit) async {

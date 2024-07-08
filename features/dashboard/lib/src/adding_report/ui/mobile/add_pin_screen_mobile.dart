@@ -242,27 +242,6 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                           )),
                     )
                   : const SizedBox.shrink(),
-              widget.isLayerSwitchVisible && !widget.isPermitSwitchVisible
-                  ? Positioned(
-                      left: widget.width * 0.0333,
-                      bottom: widget.width * 0.0333,
-                      child: ChangeVisibilityButtonMobile(
-                        width: widget.width,
-                        isActive: isShowMarkers,
-                        isPermits: false,
-                        onHover: (isHover) {
-                          setState(() {
-                            isMapDisabled = isHover;
-                          });
-                        },
-                        onTap: () {
-                          setState(() {
-                            isShowMarkers = !isShowMarkers;
-                          });
-                        },
-                      ),
-                    )
-                  : const SizedBox.shrink(),
               Positioned(
                 bottom: 110,
                 right: 10,
@@ -322,6 +301,12 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                                         });
                                       },
                                       isMobile: true,
+                                      onReportVisibilityChange: () {
+                                        setState(() {
+                                          isShowMarkers = !isShowMarkers;
+                                        });
+                                      },
+                                      isReportsActive: isShowMarkers,
                                     ));
                     },
                   ),

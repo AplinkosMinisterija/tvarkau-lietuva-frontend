@@ -18,7 +18,6 @@ export 'src/widgets/route_error_screen.dart';
 //Footer
 export 'src/widgets/main_screen/footer/copyright_support_tag.dart';
 export 'src/widgets/main_screen/footer/footer.dart';
-export 'src/widgets/main_screen/mobile/footer_mobile.dart';
 
 //Main screen
 export 'src/widgets/main_screen/mobile/location_search_button.dart';
