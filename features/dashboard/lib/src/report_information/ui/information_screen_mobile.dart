@@ -123,7 +123,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
   Widget build(BuildContext context) {
     return Title(
       title: "Pranešimo informacija",
-      color: Colors.green,
+      color: const Color.fromRGBO(28, 63, 58, 1),
       child: Scaffold(
         body: SingleChildScrollView(
           child: Stack(
@@ -131,7 +131,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
               Container(
                 width: widget.width,
                 height: widget.width * 0.8666,
-                color: const Color.fromRGBO(57, 97, 84, 1),
+                color: const Color.fromRGBO(28, 63, 58, 1),
               ),
               Padding(
                 padding: EdgeInsets.all(widget.width * 0.0444),
@@ -844,7 +844,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                                   )),
                             ),
                             SizedBox(height: widget.width * 0.0555),
-                            Footer(width: widget.width*0.9, isMobile: true)
+                            Footer(width: widget.width * 0.9, isMobile: true)
                           ],
                         ),
                       ),

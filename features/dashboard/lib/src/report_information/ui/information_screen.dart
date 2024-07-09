@@ -24,7 +24,6 @@ class InformationScreen extends StatelessWidget {
               builder: (BuildContext context, InformationState state) {
                 if (state is ContentState) {
                   Size size = MediaQuery.of(context).size;
-
                   if (size.width > 900) {
                     return InformationScreenWeb(
                         width: size.width / 2.6,

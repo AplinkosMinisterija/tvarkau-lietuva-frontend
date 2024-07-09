@@ -124,7 +124,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
   Widget build(BuildContext context) {
     return Title(
       title: "Pranešimo informacija",
-      color: Colors.green,
+      color: const Color.fromRGBO(28, 63, 58, 1),
       child: Scaffold(
         body: SingleChildScrollView(
           child: Stack(
@@ -133,7 +133,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
               Container(
                 width: widget.width * 2.8,
                 height: widget.width * 0.8666,
-                color: const Color.fromRGBO(57, 97, 84, 1),
+                color: const Color.fromRGBO(28, 63, 58, 1),
               ),
               Column(
                 children: [
