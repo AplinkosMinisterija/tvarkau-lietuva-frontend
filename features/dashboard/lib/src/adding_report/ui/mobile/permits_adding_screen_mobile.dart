@@ -157,81 +157,39 @@ class _PermitsAddingScreenMobileState extends State<PermitsAddingScreenMobile> {
                         isPermitsCategory: true,
                       ),
                       SizedBox(height: widget.width * 0.0444),
-                      Stack(
-                        alignment: Alignment.bottomCenter,
-                        children: [
-                          AddingMapRedirectWindow(
-                            width: widget.width,
-                            marker: newMarker,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                if (newMarker.isNotEmpty) {
-                                  newMarker.removeWhere((element) =>
-                                      element.markerId ==
-                                      const MarkerId('99899'));
-                                  markers.removeWhere((element) =>
-                                      element.markerId ==
-                                      const MarkerId('99899'));
-                                }
-                              });
+                      AddingMapRedirectWindow(
+                        width: widget.width,
+                        marker: newMarker,
+                        onTap: () {
+                          setState(() {
+                            if (newMarker.isNotEmpty) {
+                              newMarker.removeWhere((element) =>
+                                  element.markerId == const MarkerId('99899'));
+                              markers.removeWhere((element) =>
+                                  element.markerId == const MarkerId('99899'));
+                            }
+                          });
 
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => AddPinScreenMobile(
-                                          width: widget.width,
-                                          markers: markers,
-                                          permits: widget.permits,
-                                          isLayerSwitchVisible: true,
-                                          isPermitSwitchVisible: true,
-                                          onTap: (lat, long, marker) {
-                                            setState(() {
-                                              newMarker.clear();
-                                              selectedLat = lat;
-                                              selectedLong = long;
-                                              newMarker.add(marker);
-                                            });
-                                          },
-                                        )),
-                              );
-                            },
-                            onHover: (isHover) {},
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    bottom: widget.width * 0.0278),
-                                child: Container(
-                                  height: widget.width * 0.111,
-                                  width: widget.width * 0.866,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(8)),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(
-                                        Icons.add_location_sharp,
-                                        size: widget.width * 0.0566,
-                                        color: const Color.fromRGBO(
-                                            255, 106, 61, 1),
-                                      ),
-                                      SizedBox(width: widget.width * 0.0277),
-                                      Text(
-                                        'Pažymėkite vietą, kur pastebėjote pažeidimą',
-                                        style: GoogleFonts.roboto(
-                                            fontSize: widget.width * 0.028888,
-                                            fontWeight: FontWeight.w400),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AddPinScreenMobile(
+                                      width: widget.width,
+                                      markers: markers,
+                                      permits: widget.permits,
+                                      isLayerSwitchVisible: true,
+                                      isPermitSwitchVisible: true,
+                                      onTap: (lat, long, marker) {
+                                        setState(() {
+                                          newMarker.clear();
+                                          selectedLat = lat;
+                                          selectedLong = long;
+                                          newMarker.add(marker);
+                                        });
+                                      },
+                                    )),
+                          );
+                        },
                       ),
                       SizedBox(height: widget.width * 0.05),
                       Align(
