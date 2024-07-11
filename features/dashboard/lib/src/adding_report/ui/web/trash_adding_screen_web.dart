@@ -353,6 +353,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
       ),
       draggable: true,
       onDrag: _handleDrag,
+      onDragEnd: _handleDragEnd,
     );
 
     setState(() {
@@ -360,6 +361,12 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
       addedMarker.add(newMarker);
       selectedLat = tappedPoint.latitude;
       selectedLong = tappedPoint.longitude;
+    });
+  }
+
+  _handleDragEnd(LatLng tappedPoint) {
+    setState(() {
+      mapController.moveCamera(CameraUpdate.newLatLng(tappedPoint));
     });
   }
 
