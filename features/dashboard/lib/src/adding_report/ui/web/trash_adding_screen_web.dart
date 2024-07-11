@@ -7,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:core_ui/core_ui.dart';
 import 'dart:typed_data';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:pointer_interceptor/pointer_interceptor.dart';
 import '../widgets/adding_screen_side_bar.dart';
 
 class TrashAddingScreenWeb extends StatefulWidget {
@@ -129,7 +130,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
         _isLoading = false;
         _handleTap(location);
         _lithuaniaCameraPosition =
-            CameraPosition(target: _currentPosition!, zoom: 13);
+            CameraPosition(target: _currentPosition!, zoom: 15);
       });
     }
   }
@@ -200,9 +201,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                                 buildingsEnabled: true,
                                 initialCameraPosition: _lithuaniaCameraPosition,
                                 mapType: currentMapType,
-                                onTap: _currentPosition == null
-                                    ? _handleTap
-                                    : null,
+                                onTap: _handleTap,
                                 markers: isShowMarkers
                                     ? markers
                                     : addedMarker.map((e) => e).toSet(),
@@ -219,17 +218,17 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                                       isMapDisabled = isHover;
                                     });
                                   },
-                                  child: LocationSearchButton(
-                                    width: 40,
-                                    height: 40,
-                                    onPressed: () {
-                                      setState(() {
-                                        mapController.animateCamera(
-                                            CameraUpdate.newLatLngZoom(
-                                                _currentPosition!, 13));
-                                      });
-                                    },
-                                    isLoading: false,
+                                  child: PointerInterceptor(
+                                    child: LocationSearchButton(
+                                      width: 40,
+                                      height: 40,
+                                      onPressed: () {
+                                        setState(() async {
+                                          await getLocation();
+                                        });
+                                      },
+                                      isLoading: _isLoading,
+                                    ),
                                   )),
                             )
                           : const SizedBox.shrink(),
@@ -243,35 +242,37 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                               isMapDisabled = isHover;
                             });
                           },
-                          child: GoogleMapTypeButton(
-                            height: 40,
-                            width: 40,
-                            onPressed: () {
-                              showDialog<String>(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      MapTypeChangeDialog(
-                                        width: widget.width,
-                                        currentMapType: currentMapType,
-                                        onHover: (isHover) {
-                                          setState(() {
-                                            isMapDisabled = isHover;
-                                          });
-                                        },
-                                        onChangeTap: (MapType mapType) {
-                                          setState(() {
-                                            currentMapType = mapType;
-                                          });
-                                        },
-                                        onReportVisibilityChange: () {
-                                          setState(() {
-                                            isShowMarkers = !isShowMarkers;
-                                          });
-                                        },
-                                        isReportsActive: isShowMarkers,
-                                        isMobile: false,
-                                      ));
-                            },
+                          child: PointerInterceptor(
+                            child: GoogleMapTypeButton(
+                              height: 40,
+                              width: 40,
+                              onPressed: () {
+                                showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        MapTypeChangeDialog(
+                                          width: widget.width,
+                                          currentMapType: currentMapType,
+                                          onHover: (isHover) {
+                                            setState(() {
+                                              isMapDisabled = isHover;
+                                            });
+                                          },
+                                          onChangeTap: (MapType mapType) {
+                                            setState(() {
+                                              currentMapType = mapType;
+                                            });
+                                          },
+                                          onReportVisibilityChange: () {
+                                            setState(() {
+                                              isShowMarkers = !isShowMarkers;
+                                            });
+                                          },
+                                          isReportsActive: isShowMarkers,
+                                          isMobile: false,
+                                        ));
+                              },
+                            ),
                           ),
                         ),
                       ),
@@ -361,11 +362,14 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
       addedMarker.add(newMarker);
       selectedLat = tappedPoint.latitude;
       selectedLong = tappedPoint.longitude;
+      mapController.moveCamera(CameraUpdate.newLatLng(tappedPoint));
     });
   }
 
   _handleDragEnd(LatLng tappedPoint) {
     setState(() {
+      selectedLat = tappedPoint.latitude;
+      selectedLong = tappedPoint.longitude;
       mapController.moveCamera(CameraUpdate.newLatLng(tappedPoint));
     });
   }
@@ -374,6 +378,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
     setState(() {
       selectedLat = tappedPoint.latitude;
       selectedLong = tappedPoint.longitude;
+      mapController.moveCamera(CameraUpdate.newLatLng(tappedPoint));
     });
   }
 }
