@@ -142,11 +142,9 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        DepartmentLogoMobile(
-                          width: widget.width,
-                          onTap: () {
-                            context.goNamed("home");
-                          },
+                        SvgPicture.asset(
+                          'assets/svg/TL_logo.svg',
+                          width: widget.width * 0.4615,
                         ),
                         IconButton(
                             onPressed: () => _showDialog(),

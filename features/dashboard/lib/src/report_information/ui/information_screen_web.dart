@@ -147,13 +147,12 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                           SizedBox(height: widget.width * 0.05),
                           Align(
                             alignment: Alignment.topLeft,
-                            child: DepartmentLogoMobile(
-                              width: widget.width,
-                              onTap: () {
-                                context.goNamed("home");
-                              },
+                            child: SvgPicture.asset(
+                              'assets/svg/TL_logo.svg',
+                              width: widget.width * 0.4615,
                             ),
                           ),
+
                           SizedBox(height: widget.width * 0.1333),
                           InkWell(
                             onTap: () {
@@ -245,7 +244,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                                                               mapType;
                                                         });
                                                       },
-                                                      isMobile: false,
+                                                      isMobile: true,
                                                     ));
                                           },
                                         )),
