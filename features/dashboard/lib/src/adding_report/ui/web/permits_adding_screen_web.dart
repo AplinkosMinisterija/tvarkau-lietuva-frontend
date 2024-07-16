@@ -433,6 +433,9 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
           strokeWidth: 1,
           strokeColor: const Color.fromRGBO(255, 106, 61, 1),
           onTap: () {
+            _handleTap(LatLng(
+                permit.features![i].geometry!.coordinates![0][0][0][1],
+                permit.features![i].geometry!.coordinates![0][0][0][0]));
             showDialog(
                 context: context,
                 barrierColor: Colors.white.withOpacity(0),
