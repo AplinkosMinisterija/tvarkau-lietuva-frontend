@@ -9,6 +9,7 @@ import 'dart:typed_data';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import '../widgets/adding_screen_side_bar.dart';
+import '../widgets/explanation_dialog_widget.dart';
 
 class ForestAddingScreenWeb extends StatefulWidget {
   const ForestAddingScreenWeb({
@@ -331,6 +332,18 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
                     isImagesSizeValid: isImagesSizeValid,
                     isTermsAccepted: isTermsAccepted,
                     category: 'forest',
+                    onExplanationTap: () {
+                      showDialog(
+                          context: context,
+                          barrierColor: Colors.white.withOpacity(0),
+                          builder: (context) {
+                            return ExplanationDialogWidget(
+                              width: widget.width,
+                              category: 'forest',
+                              isMobile: false,
+                            );
+                          });
+                    },
                   )
                 ],
               ),

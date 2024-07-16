@@ -6,6 +6,7 @@ import 'package:core_ui/core_ui.dart';
 import 'dart:typed_data';
 import 'package:core/core.dart';
 import '../widgets/data_security_terms_widget.dart';
+import '../widgets/explanation_dialog_widget.dart';
 import 'add_pin_screen_mobile.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -126,11 +127,33 @@ class _BeetleAddingScreenMobileState extends State<BeetleAddingScreenMobile> {
                           )
                         ],
                       ),
-                      SizedBox(height: widget.width * 0.0611),
-                      AddingInformationHeader(
-                        width: widget.width,
-                        isBeetleCategory: true,
-                        isPermitsCategory: false,
+                      SizedBox(height: widget.width * 0.0111),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: InkWell(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                barrierColor: Colors.white.withOpacity(0),
+                                builder: (context) {
+                                  return ExplanationDialogWidget(
+                                    width: widget.width,
+                                    category: 'beetle',
+                                    isMobile: true,
+                                  );
+                                });
+                          },
+                          onHover: (isHover) {},
+                          child: Text(
+                            'Kaip naudotis?',
+                            style: GoogleFonts.roboto(
+                              decoration: TextDecoration.underline,
+                              fontSize: widget.width * 0.03888,
+                              fontWeight: FontWeight.w400,
+                              color: const Color.fromRGBO(0, 0, 199, 1.0),
+                            ),
+                          ),
+                        ),
                       ),
                       SizedBox(height: widget.width * 0.0444),
                       AddingMapRedirectWindow(

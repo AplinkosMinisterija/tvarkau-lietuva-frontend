@@ -11,6 +11,8 @@ import 'dart:typed_data';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
+import '../widgets/explanation_dialog_widget.dart';
+
 class PermitsAddingScreenWeb extends StatefulWidget {
   const PermitsAddingScreenWeb({
     required this.width,
@@ -329,6 +331,18 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                     isImagesSizeValid: isImagesSizeValid,
                     isTermsAccepted: isTermsAccepted,
                     category: 'permits',
+                    onExplanationTap: () {
+                      showDialog(
+                          context: context,
+                          barrierColor: Colors.white.withOpacity(0),
+                          builder: (context) {
+                            return ExplanationDialogWidget(
+                              width: widget.width,
+                              category: 'permits',
+                              isMobile: false,
+                            );
+                          });
+                    },
                   )
                 ],
               ),

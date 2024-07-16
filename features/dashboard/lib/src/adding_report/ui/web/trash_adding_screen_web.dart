@@ -1,5 +1,6 @@
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
+import 'package:dashboard/src/adding_report/ui/widgets/explanation_dialog_widget.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
@@ -328,6 +329,18 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                     isImagesSizeValid: isImagesSizeValid,
                     isTermsAccepted: isTermsAccepted,
                     category: 'trash',
+                    onExplanationTap: () {
+                      showDialog(
+                          context: context,
+                          barrierColor: Colors.white.withOpacity(0),
+                          builder: (context) {
+                            return ExplanationDialogWidget(
+                              width: widget.width,
+                              category: 'trash',
+                              isMobile: false,
+                            );
+                          });
+                    },
                   )
                 ],
               ),

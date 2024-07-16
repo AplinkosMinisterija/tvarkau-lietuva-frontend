@@ -19,6 +19,7 @@ class AddingScreenSideBar extends StatelessWidget {
     required this.onImageAddTap,
     required this.onFinalTap,
     required this.onImageRemoveTap,
+    required this.onExplanationTap,
     required this.onTextChange,
     required this.onEmailChange,
     required this.selectedImages,
@@ -34,6 +35,7 @@ class AddingScreenSideBar extends StatelessWidget {
   final VoidCallback onFinalTap;
   final VoidCallback onExitTap;
   final VoidCallback onImageAddTap;
+  final VoidCallback onExplanationTap;
   final Function(int) onImageRemoveTap;
   final Function(String) onTextChange;
   final Function(String) onEmailChange;
@@ -58,10 +60,21 @@ class AddingScreenSideBar extends StatelessWidget {
                   onTap: () {
                     onExitTap();
                   }),
-              AddingInformationHeader(
-                width: width/3.55,
-                isBeetleCategory: category=='beetle',
-                isPermitsCategory: category=='permits',
+              Align(
+                alignment: Alignment.centerLeft,
+                child: InkWell(
+                  onTap: onExplanationTap,
+                  onHover: (isHover) {},
+                  child: Text(
+                    'Kaip naudotis?',
+                    style: GoogleFonts.roboto(
+                      decoration: TextDecoration.underline,
+                      fontSize: width * 0.01093,
+                      fontWeight: FontWeight.w400,
+                      color: const Color.fromRGBO(0, 0, 199, 1.0),
+                    ),
+                  ),
+                ),
               ),
               SizedBox(
                 height: width * 0.0125,
@@ -96,9 +109,6 @@ class AddingScreenSideBar extends StatelessWidget {
                   },
                   onChanged: (textValue) {
                     onTextChange(textValue);
-                    // setState(() {
-                    //   currentTextValue = textValue;
-                    // });
                   },
                   style: GoogleFonts.roboto(
                       fontSize: width * 0.0125,
@@ -154,9 +164,6 @@ class AddingScreenSideBar extends StatelessWidget {
                       },
                       onChanged: (emailValue) {
                         onEmailChange(emailValue);
-                        // setState(() {
-                        //   currentEmailValue = emailValue;
-                        // });
                       },
                       style: GoogleFonts.roboto(
                           fontSize: width * 0.0125,
@@ -185,13 +192,15 @@ class AddingScreenSideBar extends StatelessWidget {
                 height: width * 0.007,
               ),
               ImageAddButton(
-                  width: width,
-                  title: selectedImages.isNotEmpty
-                      ? 'Įkelti kitas nuotraukas'
-                      : 'Įkelti nuotraukas',
-                  onTap: () {
-                    onImageAddTap();
-                  }, isMobile: false,),
+                width: width,
+                title: selectedImages.isNotEmpty
+                    ? 'Įkelti kitas nuotraukas'
+                    : 'Įkelti nuotraukas',
+                onTap: () {
+                  onImageAddTap();
+                },
+                isMobile: false,
+              ),
               SizedBox(
                 height: width * 0.007,
               ),
@@ -278,8 +287,7 @@ class AddingScreenSideBar extends StatelessWidget {
                       ),
                       children: [
                         TextSpan(
-                          text:
-                              'asmens duomenų apsaugos tvarkymo taisyklėmis',
+                          text: 'asmens duomenų apsaugos tvarkymo taisyklėmis',
                           style: GoogleFonts.roboto(
                             fontWeight: FontWeight.w400,
                             fontSize: width * 0.0104,
@@ -325,22 +333,6 @@ class AddingScreenSideBar extends StatelessWidget {
                 width: width / 3.5,
                 onTap: () {
                   onFinalTap();
-                  // if (_formKey.currentState!.validate() &&
-                  //     selectedLat != 0 &&
-                  //     selectedLong != 0 &&
-                  //     isTermsAccepted &&
-                  //     _selectedImages.isNotEmpty &&
-                  //     isImagesSizeValid) {
-                  //   if (_selectedImages.length >= 2) {
-                  //     widget.onAddTap(
-                  //       currentEmailValue,
-                  //       currentTextValue,
-                  //       selectedLat,
-                  //       selectedLong,
-                  //       _selectedImages,
-                  //     );
-                  //   }
-                  // }
                 },
               ),
             ],
