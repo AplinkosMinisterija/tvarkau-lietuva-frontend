@@ -25,15 +25,7 @@ class BeetleInformationScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 shrinkWrap: true,
                 children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: IconButton(
-                      onPressed: () {
-                        context.goNamed("report_category");
-                      },
-                      icon: const Icon(Icons.arrow_back_rounded),
-                    ),
-                  ),
+                  const SizedBox(height: 55),
                   Text(
                     'Pasitikrinkite ar aptikote žievėgraužio tipografo apniktas arba šviežiai nuvirtusias egles',
                     style: Theme.of(context)
@@ -102,6 +94,18 @@ class BeetleInformationScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 50),
                 ],
+              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 5, top: 15),
+                  child: IconButton(
+                    onPressed: () {
+                      context.goNamed("report_category");
+                    },
+                    icon: const Icon(Icons.arrow_back_rounded),
+                  ),
+                ),
               ),
               Align(
                 alignment: Alignment.bottomCenter,
