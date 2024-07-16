@@ -66,8 +66,7 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
   bool _isLoading = false;
 
   void addCustomIcon() {
-    BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(size: Size(45, 45)),
+    BitmapDescriptor.asset(const ImageConfiguration(size: Size(45, 45)),
             'assets/svg/forest_pin_icon.svg')
         .then((icon) {
       setState(() {

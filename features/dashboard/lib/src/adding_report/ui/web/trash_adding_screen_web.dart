@@ -65,8 +65,11 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
   bool _isLoading = false;
 
   void addCustomIcon() {
-    BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(), 'assets/svg/pin_icon.svg')
+    BitmapDescriptor.asset(
+            const ImageConfiguration(
+              size: Size(45, 45),
+            ),
+            'assets/svg/forest_pin_icon.svg')
         .then((icon) {
       setState(() {
         markerIcon = icon;

@@ -371,9 +371,12 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
   }
 
   void addCustomIcon() {
-    BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(), 'assets/svg/pin_icon.svg')
-        .then((icon) {
+    BitmapDescriptor.asset(
+      const ImageConfiguration(
+        size: Size(45, 45),
+      ),
+      'assets/svg/forest_pin_icon.svg',
+    ).then((icon) {
       setState(() {
         markerIcon = icon;
       });
