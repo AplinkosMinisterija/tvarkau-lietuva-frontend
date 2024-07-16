@@ -33,12 +33,6 @@
             crossorigin="anonymous"></script>
     <script src="assets/packages/aad_oauth/assets/msalv2.js"></script>
     <link rel="manifest" href="manifest.json">
-    <script>
-    // The value below is injected by flutter build, do not touch.
-    var serviceWorkerVersion = null;
-    </script>
-
-    <!-- This script adds the flutter initialization JS code -->
     <script src="flutter.js" defer=""></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVqVE8vHmW8aDrxv5JFtVDDscudq4wDOM"></script>
     <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-ZNCF3S3TMN"></script>
@@ -122,7 +116,6 @@
     }
     </script>
 </head>
-
 <body>
 <picture id="splash">
     <source
@@ -133,21 +126,6 @@
             media="(prefers-color-scheme: dark)">
     <img class="center" aria-hidden="true" src="splash/img/light-1x.png" alt="">
 </picture>
-
-<script>
-    window.addEventListener('load', function (ev) {
-      // Download main.dart.js
-      _flutter.loader.loadEntrypoint({
-        serviceWorker: {
-          serviceWorkerVersion: serviceWorkerVersion,
-        },
-        onEntrypointLoaded: function (engineInitializer) {
-          engineInitializer.initializeEngine().then(function (appRunner) {
-            appRunner.runApp();
-          });
-        }
-      });
-    });
-</script>
+<script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
