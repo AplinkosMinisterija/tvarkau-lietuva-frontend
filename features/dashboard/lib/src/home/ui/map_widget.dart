@@ -121,7 +121,7 @@ class _MapWidgetState extends State<MapWidget> {
                 items: _dropdownList,
                 initialItem: initialItem,
                 onChanged: (value) {
-                  widget.onCategoryChange(getDropdownValueByString(value));
+                  widget.onCategoryChange(getDropdownValueByString(value!));
                 },
               ),
             ),
@@ -230,7 +230,7 @@ class _MapWidgetState extends State<MapWidget> {
                                       initialItem: initialItem,
                                       onChanged: (value) {
                                         widget.onCategoryChange(
-                                            getDropdownValueByString(value));
+                                            getDropdownValueByString(value!));
                                       },
                                     ),
                                   ),
@@ -344,7 +344,7 @@ class _MapWidgetState extends State<MapWidget> {
                 element.latitude.toDouble(),
                 element.longitude.toDouble(),
               ),
-              icon: await BitmapDescriptor.fromAssetImage(
+              icon: await BitmapDescriptor.asset(
                   const ImageConfiguration(size: Size(25, 30)),
                   getTrashIconPath(element.status)),
               onTap: () {
