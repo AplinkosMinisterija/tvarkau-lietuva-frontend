@@ -145,18 +145,16 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           SizedBox(height: widget.width * 0.05),
-                          Align(
-                            alignment: Alignment.topLeft,
-                            child: SvgPicture.asset(
-                              'assets/svg/TL_logo.svg',
+                          LogoButton(
+                              alignment: Alignment.topLeft,
                               width: widget.width * 0.4615,
-                            ),
-                          ),
-
+                              onTap: () {
+                                context.goNamed('home');
+                              }),
                           SizedBox(height: widget.width * 0.1333),
                           InkWell(
                             onTap: () {
-                              context.goNamed("home");
+                              context.goNamed('home');
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,

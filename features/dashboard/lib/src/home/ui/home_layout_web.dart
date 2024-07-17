@@ -66,10 +66,11 @@ class _HomeLayoutWebState extends State<HomeLayoutWeb> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SvgPicture.asset(
-                            'assets/svg/TL_logo.svg',
-                            width: widget.width * 0.3615,
-                          ),
+                          LogoButton(
+                              width: widget.width * 0.3615,
+                              onTap: () {
+                                context.goNamed('home');
+                              }),
                           TitleWidget(
                             width: widget.width,
                             isMobile: false,

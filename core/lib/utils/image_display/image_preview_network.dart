@@ -7,7 +7,6 @@ class ImagePreviewNetwork extends StatefulWidget {
     required this.activeImageIndex,
   });
 
-  //final String imageUrl;
   final List<String> imageUrls;
   final int activeImageIndex;
 
@@ -38,66 +37,110 @@ class _ImagePreviewNetworkState extends State<ImagePreviewNetwork> {
           child: Stack(
             alignment: Alignment.bottomCenter,
             children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  SizedBox(
-                      width: isMobile ? size.width * 0.95 : size.width * 0.9,
-                      height: size.height * 0.8,
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: Image.network(widget.imageUrls[activeIndex]))),
-                  SizedBox(height: size.height * 0.022),
-                  SizedBox(
-                    width: isMobile
-                        ? (widget.imageUrls.length * size.width * 0.1778)
-                        : (widget.imageUrls.length * size.width * 0.06),
-                    height: isMobile ? size.height * 0.12 : size.height * 0.1,
-                    child: GridView.count(
-                      crossAxisCount: widget.imageUrls.length,
-                      mainAxisSpacing: 16,
-                      crossAxisSpacing: 16,
-                      shrinkWrap: true,
-                      childAspectRatio: 1,
-                      physics: const NeverScrollableScrollPhysics(),
-                      children: [
-                        for (var i = 0; i < widget.imageUrls.length; i++) ...[
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                activeIndex = i;
-                              });
-                            },
-                            child: Container(
-                              decoration: activeIndex == i
-                                  ? BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      border: Border.all(
-                                        color: Colors.white,
-                                        width: 1,
+              SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SizedBox(
+                        height: size.height * 0.75,
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child:
+                                Image.network(widget.imageUrls[activeIndex]))),
+                    SizedBox(height: size.height * 0.022),
+                    SizedBox(
+                        width: isMobile
+                            ? (widget.imageUrls.length * size.width * 0.1778)
+                            : (widget.imageUrls.length * size.width * 0.06),
+                        height: 64,
+                        child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            physics: const NeverScrollableScrollPhysics(),
+                            children: [
+                              for (var i = 0;
+                                  i < widget.imageUrls.length;
+                                  i++) ...[
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      activeIndex = i;
+                                    });
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8),
+                                    child: Container(
+                                      height: 64,
+                                      width: 64,
+                                      decoration: activeIndex == i
+                                          ? BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              border: Border.all(
+                                                color: Colors.white,
+                                                width: 1,
+                                              ),
+                                            )
+                                          : null,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(12),
+                                        child: MouseRegion(
+                                          cursor: SystemMouseCursors.zoomIn,
+                                          child: Image.network(
+                                            widget.imageUrls[i],
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
                                       ),
-                                    )
-                                  : null,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(12),
-                                child: AspectRatio(
-                                  aspectRatio: 1,
-                                  child: MouseRegion(
-                                    cursor: SystemMouseCursors.zoomIn,
-                                    child: Image.network(
-                                      widget.imageUrls[i],
-                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                 ),
-                              ),
-                            ),
-                          ),
-                        ]
-                      ],
-                    ),
-                  )
-                ],
+                              ],
+                            ])
+
+                        // GridView.count(
+                        //   crossAxisCount: widget.imageUrls.length,
+                        //   mainAxisSpacing: 16,
+                        //   crossAxisSpacing: 16,
+                        //   shrinkWrap: true,
+                        //   childAspectRatio: 1,
+                        //   physics: const NeverScrollableScrollPhysics(),
+                        //   children: [
+                        //     for (var i = 0; i < widget.imageUrls.length; i++) ...[
+                        //       GestureDetector(
+                        //         onTap: () {
+                        //           setState(() {
+                        //             activeIndex = i;
+                        //           });
+                        //         },
+                        //         child: Container(
+                        //           decoration: activeIndex == i
+                        //               ? BoxDecoration(
+                        //                   borderRadius: BorderRadius.circular(12),
+                        //                   border: Border.all(
+                        //                     color: Colors.white,
+                        //                     width: 1,
+                        //                   ),
+                        //                 )
+                        //               : null,
+                        //           child: ClipRRect(
+                        //             borderRadius: BorderRadius.circular(12),
+                        //             child: MouseRegion(
+                        //               cursor: SystemMouseCursors.zoomIn,
+                        //               child: Image.network(
+                        //                 widget.imageUrls[i],
+                        //                 fit: BoxFit.cover,
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ]
+                        //   ],
+                        // ),
+                        )
+                  ],
+                ),
               ),
               Align(
                 alignment: Alignment.centerLeft,

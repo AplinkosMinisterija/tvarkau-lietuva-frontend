@@ -62,10 +62,11 @@ class _HomeLayoutMobileState extends State<HomeLayoutMobile> {
               ),
               child: Column(
                 children: [
-                  SvgPicture.asset(
-                    'assets/svg/TL_logo.svg',
-                    width: widget.width * 0.91,
-                  ),
+                  LogoButton(
+                      width: widget.width * 0.91,
+                      onTap: () {
+                        context.goNamed('home');
+                      }),
                   SizedBox(height: widget.width * 0.1472),
                   TitleWidget(
                     width: widget.width,

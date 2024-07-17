@@ -25,6 +25,7 @@ export 'src/widgets/main_screen/background_widget.dart';
 export 'src/widgets/main_screen/information_window/custom_info_window.dart';
 export 'src/widgets/main_screen/department_logo.dart';
 export 'src/widgets/main_screen/layer_type_button.dart';
+export 'src/widgets/main_screen/logo_button.dart';
 export 'src/widgets/main_screen/information_window/info_trash_window_box.dart';
 export 'src/widgets/main_screen/information_window/info_dump_window_box.dart';
 export 'src/widgets/main_screen/information_window/info_permit_window_box.dart';

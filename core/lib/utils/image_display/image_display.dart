@@ -33,17 +33,12 @@ class ImageGallery {
             for (var i = 0; i < imageUrls.length; i++) ...[
               GestureDetector(
                 onTap: () {
-                  showDialog(context: context, builder: (BuildContext context) {
-                    return ImagePreviewNetwork(imageUrls: imageUrls, activeImageIndex: i);
-                    //return Dialog.fullscreen(backgroundColor: Colors.transparent,);
-                  });
-                  // Navigator.of(context).push(
-                  //   PageRouteBuilder(
-                  //     opaque: false,
-                  //     pageBuilder: (_, __, ___) =>
-                  //         ImagePreviewNetwork(imageUrl: imageUrls[i]),
-                  //   ),
-                  // );
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ImagePreviewNetwork(
+                            imageUrls: imageUrls, activeImageIndex: i);
+                      });
                 },
                 child: titlesEnabled
                     ? Column(
