@@ -52,7 +52,7 @@ class _TrashWindowState extends State<TrashWindow> {
           widget.trash.latitude,
           widget.trash.longitude,
         ),
-        icon: await BitmapDescriptor.fromAssetImage(
+        icon: await BitmapDescriptor.asset(
             const ImageConfiguration(size: Size(50, 50)),
             'assets/svg/pin_icon.svg'));
     setState(() {
@@ -475,7 +475,6 @@ class _BuildMap extends StatelessWidget {
   final double height;
   final Set<Marker> markers;
   final LatLng initialTarget;
-
 
   @override
   Widget build(BuildContext context) {

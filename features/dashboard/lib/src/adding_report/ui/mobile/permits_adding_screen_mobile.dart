@@ -63,7 +63,7 @@ class _PermitsAddingScreenMobileState extends State<PermitsAddingScreenMobile> {
   double selectedLong = 0;
 
   void addCustomIcon() {
-    BitmapDescriptor.fromAssetImage(
+    BitmapDescriptor.asset(
             const ImageConfiguration(), 'assets/svg/forest_pin_icon.svg')
         .then((icon) {
       setState(() {

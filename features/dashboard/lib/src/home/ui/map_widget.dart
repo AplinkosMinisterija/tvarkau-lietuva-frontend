@@ -378,7 +378,7 @@ class _MapWidgetState extends State<MapWidget> {
                 element.reportLat.toDouble(),
                 element.reportLong.toDouble(),
               ),
-              icon: await BitmapDescriptor.fromAssetImage(
+              icon: await BitmapDescriptor.asset(
                   const ImageConfiguration(size: Size(50, 50)),
                   'assets/svg/dump_icon.svg'),
               onTap: () {

@@ -60,7 +60,7 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
   double selectedLong = 0;
 
   void addCustomIcon() {
-    BitmapDescriptor.fromAssetImage(
+    BitmapDescriptor.asset(
             const ImageConfiguration(), 'assets/svg/pin_icon.svg')
         .then((icon) {
       setState(() {

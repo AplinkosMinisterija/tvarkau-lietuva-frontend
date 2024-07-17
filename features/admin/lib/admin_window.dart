@@ -90,24 +90,24 @@ class _AdminWindowState extends State<AdminWindow> {
 
   Future<void> setupIcons(bool isDump) async {
     if (isDump) {
-      final icon = await BitmapDescriptor.fromAssetImage(
+      final icon = await BitmapDescriptor.asset(
           const ImageConfiguration(size: Size(25, 40)),
           'assets/svg/pin_icon.svg');
       dumpIcon = icon;
     } else {
-      final redMarker = await BitmapDescriptor.fromAssetImage(
+      final redMarker = await BitmapDescriptor.asset(
           const ImageConfiguration(size: Size(25, 40)),
           'assets/icons/marker_pins/red_marker.png');
-      final blueMarker = await BitmapDescriptor.fromAssetImage(
+      final blueMarker = await BitmapDescriptor.asset(
           const ImageConfiguration(size: Size(25, 40)),
           'assets/icons/marker_pins/blue_marker.png');
-      final grayMarker = await BitmapDescriptor.fromAssetImage(
+      final grayMarker = await BitmapDescriptor.asset(
           const ImageConfiguration(size: Size(25, 40)),
           'assets/icons/marker_pins/gray_marker.png');
-      final greenMarker = await BitmapDescriptor.fromAssetImage(
+      final greenMarker = await BitmapDescriptor.asset(
           const ImageConfiguration(size: Size(25, 40)),
           'assets/icons/marker_pins/green_marker.png');
-      final orangeMarker = await BitmapDescriptor.fromAssetImage(
+      final orangeMarker = await BitmapDescriptor.asset(
           const ImageConfiguration(size: Size(25, 40)),
           'assets/icons/marker_pins/orange_marker.png');
       redIcon = redMarker;

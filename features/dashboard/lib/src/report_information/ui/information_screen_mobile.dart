@@ -783,7 +783,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
   }
 
   void addCustomIcon() {
-    BitmapDescriptor.fromAssetImage(
+    BitmapDescriptor.asset(
             const ImageConfiguration(), 'assets/svg/pin_icon.svg')
         .then((icon) {
       setState(() {
