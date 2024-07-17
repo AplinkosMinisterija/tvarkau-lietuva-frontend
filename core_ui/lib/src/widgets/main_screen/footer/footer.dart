@@ -30,7 +30,7 @@ class Footer extends StatelessWidget {
             children: <Widget>[
               FooterContacts(width: width),
               Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   FooterDescription(
