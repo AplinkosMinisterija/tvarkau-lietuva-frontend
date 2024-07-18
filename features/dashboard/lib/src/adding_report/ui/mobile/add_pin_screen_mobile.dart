@@ -1,6 +1,4 @@
 import 'dart:async';
-
-import 'package:core/utils/loader_widget.dart';
 import 'package:core/utils/permit.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -347,11 +345,6 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
   }
 
   _handleDrag(LatLng tappedPoint) {
-    setState(() {
-      selectedLat = tappedPoint.latitude;
-      selectedLong = tappedPoint.longitude;
-      isSaveButtonActive = true;
-    });
   }
 
   _handleDragEnd(LatLng tappedPoint) {
