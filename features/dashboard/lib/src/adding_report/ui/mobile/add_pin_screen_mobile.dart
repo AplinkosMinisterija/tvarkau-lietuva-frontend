@@ -181,132 +181,132 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                         onMapCreated: _onMapCreated,
                       ),
               ),
-              Align(
-                alignment: Alignment.topCenter,
-                child: _isLoading
-                    ? LoadingAnimationWidget.staggeredDotsWave(
-                        color: const Color.fromRGBO(28, 63, 58, 1), size: 150)
-                    : Padding(
-                        padding: EdgeInsets.only(top: widget.width * 0.0666),
-                        child: PointerInterceptor(
-                          child: SavePinButtonMobile(
-                            width: widget.width,
-                            isActive: isSaveButtonActive,
-                            onHover: (isHover) {
-                              setState(() {
-                                isMapDisabled = isHover;
-                              });
-                            },
-                            onTap: () {
-                              widget.onTap(
-                                  selectedLat,
-                                  selectedLong,
-                                  Marker(
-                                    markerId: const MarkerId('99899'),
-                                    position: LatLng(selectedLat, selectedLong),
-                                    icon: markerIcon,
-                                  ));
-                              Navigator.of(context).pop();
-                            },
-                          ),
-                        ),
-                      ),
-              ),
-              _currentPosition != null
-                  ? Positioned(
-                      bottom: 155,
-                      right: 10,
-                      child: InkWell(
-                          onTap: () {},
-                          onHover: (isHover) {
-                            setState(() {
-                              isMapDisabled = isHover;
-                            });
-                          },
-                          child: PointerInterceptor(
-                            child: LocationSearchButton(
-                              width: 40,
-                              height: 40,
-                              onPressed: () async {
-                                await getLocation();
-                              },
-                              isLoading: _isLoading,
-                            ),
-                          )),
-                    )
-                  : const SizedBox.shrink(),
-              Positioned(
-                bottom: 110,
-                right: 10,
-                child: InkWell(
-                  onTap: () {},
-                  onHover: (isHover) {
-                    setState(() {
-                      isMapDisabled = isHover;
-                    });
-                  },
-                  child: PointerInterceptor(
-                    child: GoogleMapTypeButton(
-                      height: 40,
-                      width: 40,
-                      onPressed: () {
-                        showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                widget.isPermitSwitchVisible
-                                    ? MapTypeChangeDialog(
-                                        width: widget.width,
-                                        currentMapType: currentMapType,
-                                        onHover: (isHover) {
-                                          setState(() {
-                                            isMapDisabled = isHover;
-                                          });
-                                        },
-                                        onChangeTap: (MapType mapType) {
-                                          setState(() {
-                                            currentMapType = mapType;
-                                          });
-                                        },
-                                        onPermitsVisibilityChange: () {
-                                          setState(() {
-                                            isShowPolygons = !isShowPolygons;
-                                          });
-                                        },
-                                        onReportVisibilityChange: () {
-                                          setState(() {
-                                            isShowMarkers = !isShowMarkers;
-                                          });
-                                        },
-                                        isReportsActive: isShowMarkers,
-                                        isPermitsActive: isShowPolygons,
-                                        isMobile: true,
-                                      )
-                                    : MapTypeChangeDialog(
-                                        width: widget.width,
-                                        currentMapType: currentMapType,
-                                        onHover: (isHover) {
-                                          setState(() {
-                                            isMapDisabled = isHover;
-                                          });
-                                        },
-                                        onChangeTap: (MapType mapType) {
-                                          setState(() {
-                                            currentMapType = mapType;
-                                          });
-                                        },
-                                        isMobile: true,
-                                        onReportVisibilityChange: () {
-                                          setState(() {
-                                            isShowMarkers = !isShowMarkers;
-                                          });
-                                        },
-                                        isReportsActive: isShowMarkers,
-                                      ));
-                      },
-                    ),
-                  ),
-                ),
-              ),
+              // Align(
+              //   alignment: Alignment.topCenter,
+              //   child: _isLoading
+              //       ? LoadingAnimationWidget.staggeredDotsWave(
+              //           color: const Color.fromRGBO(28, 63, 58, 1), size: 150)
+              //       : Padding(
+              //           padding: EdgeInsets.only(top: widget.width * 0.0666),
+              //           child: PointerInterceptor(
+              //             child: SavePinButtonMobile(
+              //               width: widget.width,
+              //               isActive: isSaveButtonActive,
+              //               onHover: (isHover) {
+              //                 setState(() {
+              //                   isMapDisabled = isHover;
+              //                 });
+              //               },
+              //               onTap: () {
+              //                 widget.onTap(
+              //                     selectedLat,
+              //                     selectedLong,
+              //                     Marker(
+              //                       markerId: const MarkerId('99899'),
+              //                       position: LatLng(selectedLat, selectedLong),
+              //                       icon: markerIcon,
+              //                     ));
+              //                 Navigator.of(context).pop();
+              //               },
+              //             ),
+              //           ),
+              //         ),
+              // ),
+              // _currentPosition != null
+              //     ? Positioned(
+              //         bottom: 155,
+              //         right: 10,
+              //         child: InkWell(
+              //             onTap: () {},
+              //             onHover: (isHover) {
+              //               setState(() {
+              //                 isMapDisabled = isHover;
+              //               });
+              //             },
+              //             child: PointerInterceptor(
+              //               child: LocationSearchButton(
+              //                 width: 40,
+              //                 height: 40,
+              //                 onPressed: () async {
+              //                   await getLocation();
+              //                 },
+              //                 isLoading: _isLoading,
+              //               ),
+              //             )),
+              //       )
+              //     : const SizedBox.shrink(),
+              // Positioned(
+              //   bottom: 110,
+              //   right: 10,
+              //   child: InkWell(
+              //     onTap: () {},
+              //     onHover: (isHover) {
+              //       setState(() {
+              //         isMapDisabled = isHover;
+              //       });
+              //     },
+              //     child: PointerInterceptor(
+              //       child: GoogleMapTypeButton(
+              //         height: 40,
+              //         width: 40,
+              //         onPressed: () {
+              //           showDialog<String>(
+              //               context: context,
+              //               builder: (BuildContext context) =>
+              //                   widget.isPermitSwitchVisible
+              //                       ? MapTypeChangeDialog(
+              //                           width: widget.width,
+              //                           currentMapType: currentMapType,
+              //                           onHover: (isHover) {
+              //                             setState(() {
+              //                               isMapDisabled = isHover;
+              //                             });
+              //                           },
+              //                           onChangeTap: (MapType mapType) {
+              //                             setState(() {
+              //                               currentMapType = mapType;
+              //                             });
+              //                           },
+              //                           onPermitsVisibilityChange: () {
+              //                             setState(() {
+              //                               isShowPolygons = !isShowPolygons;
+              //                             });
+              //                           },
+              //                           onReportVisibilityChange: () {
+              //                             setState(() {
+              //                               isShowMarkers = !isShowMarkers;
+              //                             });
+              //                           },
+              //                           isReportsActive: isShowMarkers,
+              //                           isPermitsActive: isShowPolygons,
+              //                           isMobile: true,
+              //                         )
+              //                       : MapTypeChangeDialog(
+              //                           width: widget.width,
+              //                           currentMapType: currentMapType,
+              //                           onHover: (isHover) {
+              //                             setState(() {
+              //                               isMapDisabled = isHover;
+              //                             });
+              //                           },
+              //                           onChangeTap: (MapType mapType) {
+              //                             setState(() {
+              //                               currentMapType = mapType;
+              //                             });
+              //                           },
+              //                           isMobile: true,
+              //                           onReportVisibilityChange: () {
+              //                             setState(() {
+              //                               isShowMarkers = !isShowMarkers;
+              //                             });
+              //                           },
+              //                           isReportsActive: isShowMarkers,
+              //                         ));
+              //         },
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           )
         ],
