@@ -176,7 +176,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                             onMapCreated: _onMapCreated,
                             initialCameraPosition: _lithuaniaCameraPosition,
                             mapType: currentMapType,
-                            onTap: _handleTap,
+                            //onTap: _handleTap,
                             markers: isShowMarkers
                                 ? markers
                                 : addedMarker.map((e) => e).toSet(),
@@ -188,7 +188,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                                 : addedMarker.map((e) => e).toSet(),
                             webGestureHandling: WebGestureHandling.cooperative,
                             mapType: currentMapType,
-                            onTap: _handleTap,
+                            //onTap: _handleTap,
                             buildingsEnabled: true,
                             initialCameraPosition: _lithuaniaCameraPosition,
                             onMapCreated: _onMapCreated,
@@ -222,29 +222,29 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                   ),
                 ),
               ),
-              _currentPosition != null
-                  ? Positioned(
-                      bottom: 155,
-                      right: 10,
-                      child: InkWell(
-                          onTap: () {},
-                          onHover: (isHover) {
-                            setState(() {
-                              isMapDisabled = isHover;
-                            });
-                          },
-                          child: PointerInterceptor(
-                            child: LocationSearchButton(
-                              width: 40,
-                              height: 40,
-                              onPressed: () async {
-                                await getLocation();
-                              },
-                              isLoading: _isLoading,
-                            ),
-                          )),
-                    )
-                  : const SizedBox.shrink(),
+              // _currentPosition != null
+              //     ? Positioned(
+              //         bottom: 155,
+              //         right: 10,
+              //         child: InkWell(
+              //             onTap: () {},
+              //             onHover: (isHover) {
+              //               setState(() {
+              //                 isMapDisabled = isHover;
+              //               });
+              //             },
+              //             child: PointerInterceptor(
+              //               child: LocationSearchButton(
+              //                 width: 40,
+              //                 height: 40,
+              //                 onPressed: () async {
+              //                   await getLocation();
+              //                 },
+              //                 isLoading: _isLoading,
+              //               ),
+              //             )),
+              //       )
+              //     : const SizedBox.shrink(),
               Positioned(
                 bottom: 110,
                 right: 10,
@@ -349,7 +349,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
       selectedLat = tappedPoint.latitude;
       selectedLong = tappedPoint.longitude;
       isSaveButtonActive = true;
-      mapController.moveCamera(CameraUpdate.newLatLng(tappedPoint));
+      //mapController.moveCamera(CameraUpdate.newLatLng(tappedPoint));
     });
   }
 
@@ -362,12 +362,12 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
   }
 
   _handleDragEnd(LatLng tappedPoint) {
-    setState(() {
-      mapController.moveCamera(CameraUpdate.newLatLng(tappedPoint));
-      selectedLat = tappedPoint.latitude;
-      selectedLong = tappedPoint.longitude;
-      isSaveButtonActive = true;
-    });
+    // setState(() {
+    //   mapController.moveCamera(CameraUpdate.newLatLng(tappedPoint));
+    //   selectedLat = tappedPoint.latitude;
+    //   selectedLong = tappedPoint.longitude;
+    //   isSaveButtonActive = true;
+    // });
   }
 
   void addCustomIcon() {
