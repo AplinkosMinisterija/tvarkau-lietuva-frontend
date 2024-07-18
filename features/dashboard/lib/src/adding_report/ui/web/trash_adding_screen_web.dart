@@ -394,7 +394,6 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
     setState(() {
       selectedLat = tappedPoint.latitude;
       selectedLong = tappedPoint.longitude;
-      mapController.moveCamera(CameraUpdate.newLatLng(tappedPoint));
     });
   }
 }

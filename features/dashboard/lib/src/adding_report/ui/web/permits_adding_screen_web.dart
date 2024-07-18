@@ -384,7 +384,6 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
     setState(() {
       selectedLat = tappedPoint.latitude;
       selectedLong = tappedPoint.longitude;
-      mapController.moveCamera(CameraUpdate.newLatLng(tappedPoint));
     });
   }
 
