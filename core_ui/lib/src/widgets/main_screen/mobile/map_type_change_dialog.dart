@@ -9,14 +9,14 @@ class MapTypeChangeDialog extends StatefulWidget {
     required this.width,
     required this.currentMapType,
     required this.onChangeTap,
-    this.onHover,
+    required this.onHover,
     super.key,
   });
 
   final double width;
   final MapType currentMapType;
   final Function(MapType) onChangeTap;
-  final Function(bool)? onHover;
+  final Function(bool) onHover;
 
   @override
   State<MapTypeChangeDialog> createState() => _MapTypeChangeDialogState();
@@ -33,7 +33,7 @@ class _MapTypeChangeDialogState extends State<MapTypeChangeDialog> {
             return InkWell(
               onTap: () {},
               onHover: (isHover) {
-                widget.onHover!(isHover);
+                widget.onHover(isHover);
               },
               child: SizedBox(
                 height: widget.width * 0.305,

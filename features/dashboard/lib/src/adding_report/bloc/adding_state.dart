@@ -20,16 +20,6 @@ class ForestContentState implements AddingState {
   });
 }
 
-class PermitsContentState implements AddingState {
-  final Permit permits;
-  final List<PublicReportDto> permitReports;
-
-  PermitsContentState({
-    required this.permits,
-    required this.permitReports,
-  });
-}
-
 class BeetleInformationState implements AddingState {}
 
 class BeetleContentState implements AddingState {}

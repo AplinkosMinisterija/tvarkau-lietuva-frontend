@@ -25,9 +25,9 @@ class AdminScreen extends StatelessWidget {
                     double width = MediaQuery.of(context).size.width;
                     return LoginWidget(
                         width: width,
-                        onLogIn: () {
+                        onLogIn: (tenant) {
                           context.read<AdminBloc>().add(
-                                LogIn(),
+                                LogIn(tenant: tenant),
                               );
                         });
                   case ReportState():

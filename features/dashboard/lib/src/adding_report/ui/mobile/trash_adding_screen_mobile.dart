@@ -178,7 +178,6 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                                           width: widget.width,
                                           markers: markers,
                                           isLayerSwitchVisible: true,
-                                          isPermitSwitchVisible: false,
                                           onTap: (lat, long, marker) {
                                             setState(() {
                                               newMarker.clear();

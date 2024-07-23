@@ -7,15 +7,13 @@ class ChangeVisibilityButtonMobile extends StatefulWidget {
     required this.width,
     required this.isActive,
     required this.onTap,
-    this.onHover,
-    required this.isPermits,
+    required this.onHover,
   });
 
   final double width;
   final bool isActive;
   final void Function()? onTap;
-  final Function(bool)? onHover;
-  final bool isPermits;
+  final Function(bool) onHover;
 
   @override
   State<ChangeVisibilityButtonMobile> createState() =>
@@ -29,7 +27,7 @@ class _ChangeVisibilityButtonMobileState
     return InkWell(
       onTap: widget.onTap,
       onHover: (isHover) {
-        widget.onHover!(isHover);
+        widget.onHover(isHover);
       },
       child: Container(
         width: widget.width * 0.6388,
@@ -59,13 +57,9 @@ class _ChangeVisibilityButtonMobileState
               child: FittedBox(
                 fit: BoxFit.fitWidth,
                 child: Text(
-                  widget.isPermits
-                      ? widget.isActive
-                          ? "Slėpti išduotus leidimus"
-                          : "Rodyti išduotus leidimus"
-                      : widget.isActive
-                          ? "Slėpti patvirtintus pranešimus"
-                          : "Rodyti patvirtintus pranešimus",
+                  widget.isActive
+                      ? "Slėpti patvirtintus pranešimus"
+                      : "Rodyti patvirtintus pranešimus",
                   style: GoogleFonts.roboto(
                     fontWeight: FontWeight.w400,
                     color: Colors.black,

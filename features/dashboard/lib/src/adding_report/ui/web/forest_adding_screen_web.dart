@@ -60,6 +60,7 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
   MapType currentMapType = MapType.normal;
   CameraPosition _lithuaniaCameraPosition =
       const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 7.0);
+
   late GoogleMapController mapController;
   LatLng? _currentPosition;
   bool _isLoading = false;
@@ -242,7 +243,6 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
                         child: ChangeVisibilityButtonMobile(
                           width: widget.width / 2.4,
                           isActive: isShowMarkers,
-                          isPermits: false,
                           onHover: (isHover) {
                             setState(() {
                               isMapDisabled = isHover;
