@@ -124,7 +124,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
   Widget build(BuildContext context) {
     return Title(
       title: "Pranešimo informacija",
-      color: Colors.green,
+      color: const Color.fromRGBO(28, 63, 58, 1),
       child: Scaffold(
         body: SingleChildScrollView(
           child: Stack(
@@ -133,201 +133,213 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
               Container(
                 width: widget.width * 2.8,
                 height: widget.width * 0.8666,
-                color: const Color.fromRGBO(57, 97, 84, 1),
+                color: const Color.fromRGBO(28, 63, 58, 1),
               ),
-              SizedBox(
-                width: widget.width,
-                child: Padding(
-                  padding: EdgeInsets.all(widget.width * 0.0444),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(height: widget.width * 0.05),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: DepartmentLogoMobile(
-                          width: widget.width,
-                          onTap: () {
-                            context.goNamed("home");
-                          },
-                        ),
-                      ),
-                      SizedBox(height: widget.width * 0.1333),
-                      InkWell(
-                        onTap: () {
-                          context.goNamed("home");
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.arrow_back_outlined,
-                              size: widget.width * 0.0416,
-                              color: Colors.white,
+              Column(
+                children: [
+                  SizedBox(
+                    width: widget.width,
+                    child: Padding(
+                      padding: EdgeInsets.all(widget.width * 0.0444),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SizedBox(height: widget.width * 0.05),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: SvgPicture.asset(
+                              'assets/svg/TL_logo.svg',
+                              width: widget.width * 0.4615,
                             ),
-                            SizedBox(width: widget.width * 0.0416),
-                            SizedBox(
-                              width: widget.width * 0.2111,
-                              child: FittedBox(
-                                fit: BoxFit.fitWidth,
-                                child: Text(
-                                  'Grįžti atgal',
-                                  style: GoogleFonts.roboto(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.white),
+                          ),
+
+                          SizedBox(height: widget.width * 0.1333),
+                          InkWell(
+                            onTap: () {
+                              context.goNamed("home");
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.arrow_back_outlined,
+                                  size: widget.width * 0.0416,
+                                  color: Colors.white,
                                 ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: widget.width * 0.0472),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            width: widget.width * 0.5666,
-                            child: FittedBox(
-                              fit: BoxFit.fitWidth,
-                              child: Text(
-                                '#TLP-A$str${widget.report.refId.toUpperCase()}',
-                                style: GoogleFonts.roboto(
-                                    fontSize: 32,
-                                    fontWeight: FontWeight.w600,
-                                    color: Colors.white),
-                              ),
-                            ),
-                          ),
-                          statusWidget,
-                        ],
-                      ),
-                      SizedBox(height: widget.width * 0.0333),
-                      SizedBox(
-                        height: widget.width * 0.7777,
-                        width: widget.width * 0.911,
-                        child: ClipRRect(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(8)),
-                          child: Stack(
-                            children: [
-                              GoogleMap(
-                                mapType: _currentMapType,
-                                initialCameraPosition: _initialCameraPosition,
-                                markers: markers,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    bottom: 110, right: 10),
-                                child: Align(
-                                    alignment: Alignment.bottomRight,
-                                    child: GoogleMapTypeButton(
-                                      height: 40,
-                                      width: 40,
-                                      onPressed: () {
-                                        showDialog<String>(
-                                            context: context,
-                                            builder: (BuildContext context) =>
-                                                MapTypeChangeDialog(
-                                                    width: widget.width,
-                                                    currentMapType:
-                                                        _currentMapType,
-                                                    onHover: (isHover) {},
-                                                    onChangeTap:
-                                                        (MapType mapType) {
-                                                      setState(() {
-                                                        _currentMapType =
-                                                            mapType;
-                                                      });
-                                                    }));
-                                      },
-                                    )),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: widget.width * 0.075),
-                      Stack(
-                        children: [
-                          Padding(
-                              padding: EdgeInsets.only(
-                                  left: widget.width * 0.054166,
-                                  top: widget.width * 0.1111),
-                              child: DottedLine(
-                                dashLength: widget.width * 0.01111,
-                                dashGapLength: widget.width * 0.01111,
-                                lineThickness: widget.width * 0.002777,
-                                dashColor:
-                                    const Color.fromRGBO(222, 224, 224, 1),
-                                direction: Axis.vertical,
-                                lineLength: firstStageLineHeight,
-                              )),
-                          firstStageWidget,
-                        ],
-                      ),
-                      widget.report.status == 'nepasitvirtino'
-                          ? falseReportWidget
-                          : const SizedBox.shrink(),
-                      widget.report.status == 'tiriamas'
-                          ? Stack(
-                              children: [
-                                Padding(
-                                    padding: EdgeInsets.only(
-                                        left: widget.width * 0.054166,
-                                        top: widget.width * 0.1111),
-                                    child: DottedLine(
-                                      dashLength: widget.width * 0.01111,
-                                      dashGapLength: widget.width * 0.01111,
-                                      lineThickness: widget.width * 0.002777,
-                                      dashColor: const Color.fromRGBO(
-                                          222, 224, 224, 1),
-                                      direction: Axis.vertical,
-                                      lineLength: widget.width * 0.125,
-                                    )),
-                                secondStageWidget,
-                              ],
-                            )
-                          : const SizedBox.shrink(),
-                      widget.report.status == 'išspręsta'
-                          ? Stack(
-                              children: [
-                                Padding(
-                                    padding: EdgeInsets.only(
-                                        left: widget.width * 0.054166,
-                                        top: widget.width * 0.1111),
-                                    child: DottedLine(
-                                      dashLength: widget.width * 0.01111,
-                                      dashGapLength: widget.width * 0.01111,
-                                      lineThickness: widget.width * 0.002777,
-                                      dashColor: const Color.fromRGBO(
-                                          222, 224, 224, 1),
-                                      direction: Axis.vertical,
-                                      lineLength: widget.width * 0.125 +
-                                          thirdStageLineHeight,
-                                    )),
-                                Column(
-                                  children: [
-                                    secondStageWidget,
-                                    thirdStageWidgetTrue,
-                                    finalStageWidget,
-                                  ],
+                                SizedBox(width: widget.width * 0.0416),
+                                SizedBox(
+                                  width: widget.width * 0.2111,
+                                  child: FittedBox(
+                                    fit: BoxFit.fitWidth,
+                                    child: Text(
+                                      'Grįžti atgal',
+                                      style: GoogleFonts.roboto(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.white),
+                                    ),
+                                  ),
                                 )
                               ],
-                            )
-                          : const SizedBox.shrink(),
-                      SizedBox(height: widget.width * 0.1555),
-                      FooterDescriptionMobile(width: widget.width),
-                      SizedBox(height: widget.width * 0.0654),
-                      FooterContactsMobile(width: widget.width),
-                      SizedBox(height: widget.width * 0.0444),
-                      FooterConsultMobile(width: widget.width),
-                      SizedBox(height: widget.width * 0.04722),
-                      FooterSupportMobile(width: widget.width),
-                    ],
+                            ),
+                          ),
+                          SizedBox(height: widget.width * 0.0472),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: widget.width * 0.5666,
+                                child: FittedBox(
+                                  fit: BoxFit.fitWidth,
+                                  child: Text(
+                                    '#TLP-A$str${widget.report.refId.toUpperCase()}',
+                                    style: GoogleFonts.roboto(
+                                        fontSize: 32,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                              statusWidget,
+                            ],
+                          ),
+                          SizedBox(height: widget.width * 0.0333),
+                          SizedBox(
+                            height: widget.width * 0.7777,
+                            width: widget.width * 0.911,
+                            child: ClipRRect(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(8)),
+                              child: Stack(
+                                children: [
+                                  GoogleMap(
+                                    mapType: _currentMapType,
+                                    initialCameraPosition:
+                                        _initialCameraPosition,
+                                    markers: markers,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        bottom: 110, right: 10),
+                                    child: Align(
+                                        alignment: Alignment.bottomRight,
+                                        child: GoogleMapTypeButton(
+                                          height: 40,
+                                          width: 40,
+                                          onPressed: () {
+                                            showDialog<String>(
+                                                context: context,
+                                                builder: (BuildContext
+                                                        context) =>
+                                                    MapTypeChangeDialog(
+                                                      width: widget.width,
+                                                      currentMapType:
+                                                          _currentMapType,
+                                                      onHover: (isHover) {},
+                                                      onChangeTap:
+                                                          (MapType mapType) {
+                                                        setState(() {
+                                                          _currentMapType =
+                                                              mapType;
+                                                        });
+                                                      },
+                                                      isMobile: true,
+                                                    ));
+                                          },
+                                        )),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: widget.width * 0.075),
+                          Stack(
+                            children: [
+                              Padding(
+                                  padding: EdgeInsets.only(
+                                      left: widget.width * 0.054166,
+                                      top: widget.width * 0.1111),
+                                  child: DottedLine(
+                                    dashLength: widget.width * 0.01111,
+                                    dashGapLength: widget.width * 0.01111,
+                                    lineThickness: widget.width * 0.002777,
+                                    dashColor:
+                                        const Color.fromRGBO(222, 224, 224, 1),
+                                    direction: Axis.vertical,
+                                    lineLength: firstStageLineHeight,
+                                  )),
+                              firstStageWidget,
+                            ],
+                          ),
+                          widget.report.status == 'nepasitvirtino'
+                              ? falseReportWidget
+                              : const SizedBox.shrink(),
+                          widget.report.status == 'tiriamas'
+                              ? Stack(
+                                  children: [
+                                    Padding(
+                                        padding: EdgeInsets.only(
+                                            left: widget.width * 0.054166,
+                                            top: widget.width * 0.1111),
+                                        child: DottedLine(
+                                          dashLength: widget.width * 0.01111,
+                                          dashGapLength: widget.width * 0.01111,
+                                          lineThickness:
+                                              widget.width * 0.002777,
+                                          dashColor: const Color.fromRGBO(
+                                              222, 224, 224, 1),
+                                          direction: Axis.vertical,
+                                          lineLength: widget.width * 0.125,
+                                        )),
+                                    secondStageWidget,
+                                  ],
+                                )
+                              : const SizedBox.shrink(),
+                          widget.report.status == 'išspręsta'
+                              ? Stack(
+                                  children: [
+                                    Padding(
+                                        padding: EdgeInsets.only(
+                                            left: widget.width * 0.054166,
+                                            top: widget.width * 0.1111),
+                                        child: DottedLine(
+                                          dashLength: widget.width * 0.01111,
+                                          dashGapLength: widget.width * 0.01111,
+                                          lineThickness:
+                                              widget.width * 0.002777,
+                                          dashColor: const Color.fromRGBO(
+                                              222, 224, 224, 1),
+                                          direction: Axis.vertical,
+                                          lineLength: widget.width * 0.125 +
+                                              thirdStageLineHeight,
+                                        )),
+                                    Column(
+                                      children: [
+                                        secondStageWidget,
+                                        thirdStageWidgetTrue,
+                                        finalStageWidget,
+                                      ],
+                                    )
+                                  ],
+                                )
+                              : const SizedBox.shrink(),
+                          SizedBox(height: widget.width * 0.1555),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: widget.width * 0.1484,
+                      vertical: widget.width * 0.0078,
+                    ),
+                    child: Footer(
+                      width: widget.width * 2.6,
+                      isMobile: false,
+                    ),
+                  )
+                ],
               )
             ],
           ),
@@ -488,7 +500,9 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                     imageUrls: FormatterUtils().formatImageUrls(
                         widget.report.officerImageUrls.toList()),
                     context: context,
-                    width: widget.width * 0.7)
+                    width: widget.width * 0.7,
+                    titlesEnabled: false,
+                  )
                 : const SizedBox.shrink(),
           ],
         )
@@ -579,7 +593,9 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                       imageUrls: FormatterUtils().formatImageUrls(
                           widget.report.officerImageUrls.toList()),
                       context: context,
-                      width: widget.width * 0.7)
+                      width: widget.width * 0.7,
+                      titlesEnabled: false,
+                    )
                   : const SizedBox.shrink(),
             ],
             SizedBox(height: widget.width * 0.1),
@@ -768,7 +784,9 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                     imageUrls: FormatterUtils()
                         .formatImageUrls(widget.report.imageUrls.toList()),
                     context: context,
-                    width: widget.width * 0.7)
+                    width: widget.width * 0.7,
+                    titlesEnabled: false,
+                  )
                 : const SizedBox.shrink(),
           ],
         )

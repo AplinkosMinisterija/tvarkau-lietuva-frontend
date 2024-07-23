@@ -14,7 +14,7 @@ class FooterContactsLeft extends StatelessWidget {
   Widget build(BuildContext context) {
     return SelectionArea(
       child: SizedBox(
-        height: width * 0.2416,
+        height: width * 0.0852,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -26,23 +26,24 @@ class FooterContactsLeft extends StatelessWidget {
               },
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Icon(
                     Icons.location_on_sharp,
-                    color: const Color.fromRGBO(57, 97, 84, 1),
-                    size: width * 0.06,
+                    color: const Color.fromRGBO(28, 63, 58, 1),
+                    size: width * 0.01563,
                   ),
-                  SizedBox(width: width * 0.033),
+                  SizedBox(width: width * 0.009375),
                   Text(
                     'Biudžetinė įstaiga,\nSmolensko g. 15, 03201\nVilnius',
                     style: GoogleFonts.roboto(
-                        fontSize: width * 0.03333, fontWeight: FontWeight.w400),
+                      fontSize: width * 0.01094,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                    ),
                   )
                 ],
               ),
-            ),
-            SizedBox(
-              height: width * 0.0316,
             ),
             GestureDetector(
               onTap: () {
@@ -51,18 +52,21 @@ class FooterContactsLeft extends StatelessWidget {
               },
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(width: width * 0.008),
                   Icon(
                     Icons.facebook,
-                    size: width * 0.06,
-                    color: const Color.fromRGBO(57, 97, 84, 1),
+                    size: width * 0.014,
+                    color: const Color.fromRGBO(28, 63, 58, 1),
                   ),
-                  SizedBox(width: width * 0.033),
+                  SizedBox(width: width * 0.009375),
                   Text(
                     'Facebook',
                     style: GoogleFonts.roboto(
-                        fontSize: width * 0.03333, fontWeight: FontWeight.w400),
+                      fontSize: width * 0.01094,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                    ),
                   ),
                 ],
               ),
