@@ -173,7 +173,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                                         items: _dropdownList,
                                         initialItem: initialItem,
                                         onChanged: (value) {
-                                          widget.onCategoryChange(value);
+                                          widget.onCategoryChange(value!);
                                         },
                                       ),
                                     ),
@@ -272,7 +272,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                               items: _dropdownList,
                               initialItem: initialItem,
                               onChanged: (value) {
-                                widget.onCategoryChange(value);
+                                widget.onCategoryChange(value!);
                               },
                             ),
                           ),
