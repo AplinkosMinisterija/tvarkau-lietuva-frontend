@@ -9,7 +9,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(LoadingState()) {
     on<LoadData>(_onLoadData);
     on<LoadTrashData>(_onLoadTrashData);
-    on<LoadPermitsData>(_onLoadPermitsData);
     on<LoadForestData>(_onLoadForestData);
     on<ReloadPage>(_onReloadEvent);
   }
@@ -85,33 +84,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       emit(
         ForestState(
-          reports: responses[0] as List<PublicReportDto>,
-          reportStatistics: responses[1] as ReportStatisticsDto,
-        ),
-      );
-    } catch (e) {
-      emit(
-        ErrorState(errorMessage: 'Netikėta klaida', type: 'forest'),
-      );
-    }
-  }
-
-  Future<void> _onLoadPermitsData(
-    LoadPermitsData _,
-    Emitter<HomeState> emit,
-  ) async {
-    try {
-      emit(LoadingState());
-      final responses = await Future.wait(
-        [
-          ApiProvider().getAllVisibleReports('permits'),
-          ApiProvider().getReportStatistics('permits'),
-        ],
-        eagerError: true,
-      );
-
-      emit(
-        PermitsState(
           reports: responses[0] as List<PublicReportDto>,
           reportStatistics: responses[1] as ReportStatisticsDto,
         ),
