@@ -17,7 +17,6 @@ paths:
               - trash
               - forest
               - beetle
-              - permits
             type: string
       responses:
         '200':
@@ -198,7 +197,6 @@ paths:
               - trash
               - forest
               - beetle
-              - permits
             type: string
       responses:
         '200':
@@ -222,7 +220,6 @@ paths:
               - trash
               - forest
               - beetle
-              - permits
             type: string
       responses:
         '200':
@@ -341,7 +338,6 @@ components:
             - trash
             - forest
             - beetle
-            - permits
           type: string
         refId:
           type: string
@@ -575,7 +571,6 @@ components:
             - trash
             - forest
             - beetle
-            - permits
         email:
           type: string
       required:
@@ -595,7 +590,6 @@ components:
             - trash
             - forest
             - beetle
-            - permits
           type: string
         refId:
           type: string
