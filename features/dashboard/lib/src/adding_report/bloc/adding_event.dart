@@ -8,8 +8,6 @@ class LoadForestData implements AddingEvent {}
 
 class LoadPermitsData implements AddingEvent {}
 
-class LoadPermitsInformation implements AddingEvent {}
-
 class LoadBeetleData implements AddingEvent {}
 
 class LoadBeetleInformation implements AddingEvent {}

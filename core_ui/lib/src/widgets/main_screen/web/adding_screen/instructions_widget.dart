@@ -6,22 +6,20 @@ class InstructionsWidget extends StatelessWidget {
     super.key,
     required this.width,
     required this.isBeetleCategory,
-    required this.isPermitsCategory,
   });
 
   final double width;
   final bool isBeetleCategory;
-  final bool isPermitsCategory;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(width * 0.0043),
       margin: EdgeInsets.only(
-        top: width * 0.01,
+        top: width * 0.0167,
       ),
-      height: isPermitsCategory ? width * 0.115 : width * 0.0838,
-      width: isBeetleCategory ? width * 0.75 : width * 0.68,
+      height: width * 0.0838,
+      width: isBeetleCategory ? width * 0.75 : width * 0.6,
       decoration: BoxDecoration(
           color: const Color.fromRGBO(255, 253, 251, 1),
           borderRadius: BorderRadius.circular(8),
@@ -42,35 +40,22 @@ class InstructionsWidget extends StatelessWidget {
             ),
             SizedBox(height: width * 0.00833),
             Text(
-              isPermitsCategory
-                  ? '2. Įvertinkite ar netoliese Jūsų pažymėtos vietos nėra kirtimų leidimų, kurie pažymėti poligonais.'
-                  : isBeetleCategory
-                      ? '2. Nurodykite pažeistų medžių skaičių, jei reikia, aprašykite informaciją susijusią su aptiktu židiniu ir pridėkite nuotraukas.'
-                      : '2. Aprašykite informaciją susijusią su pastebėtu pažeidimu, pridėkite nuotraukas.',
+              isBeetleCategory
+                  ? '2. Nurodykite pažeistų medžių skaičių, jei reikia, aprašykite informaciją susijusią su aptiktu židiniu ir pridėkite nuotraukas.'
+                  : '2. Aprašykite informaciją susijusią su pastebėtu pažeidimu, pridėkite nuotraukas.',
               textAlign: TextAlign.center,
               style: GoogleFonts.roboto(
                   fontSize: width * 0.0125, fontWeight: FontWeight.w400),
             ),
             SizedBox(height: width * 0.00833),
             Text(
-              isPermitsCategory
-                  ? '3. Aprašykite informaciją susijusią su pastebėtu pažeidimu, pridėkite nuotraukas.'
-                  : isBeetleCategory
-                      ? '3. Spauskite mygtuką “Pranešti” ir miškininkai pasirūpins jūsų pranešimu.'
-                      : '3. Spauskite mygtuką „Pranešti“, o kilus klausimams su Jumis susisieks departamento pareigūnai.',
+              isBeetleCategory
+                  ? '3. Spauskite mygtuką “Pranešti” ir miškininkai pasirūpins jūsų pranešimu.'
+                  : '3. Spauskite mygtuką „Pranešti“, o kilus klausimams su Jumis susisieks departamento pareigūnai.',
               textAlign: TextAlign.center,
               style: GoogleFonts.roboto(
                   fontSize: width * 0.0125, fontWeight: FontWeight.w400),
-            ),
-            if (isPermitsCategory) ...[
-              SizedBox(height: width * 0.00833),
-              Text(
-                '4. Spauskite mygtuką „Pranešti”, o kilus klausimams su Jumis susisieks departamento pareigūnai.',
-                textAlign: TextAlign.center,
-                style: GoogleFonts.roboto(
-                    fontSize: width * 0.0125, fontWeight: FontWeight.w400),
-              ),
-            ]
+            )
           ],
         ),
       ),

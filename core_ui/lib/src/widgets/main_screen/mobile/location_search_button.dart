@@ -6,13 +6,11 @@ class LocationSearchButton extends StatefulWidget {
     required this.width,
     required this.height,
     required this.onPressed,
-    required this.isLoading,
   });
 
   final double width;
   final double height;
   final VoidCallback onPressed;
-  final bool isLoading;
 
   @override
   State<LocationSearchButton> createState() => _LocationSearchButtonState();
@@ -39,23 +37,10 @@ class _LocationSearchButtonState extends State<LocationSearchButton> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(4),
         ),
-        child: widget.isLoading
-            ? Stack(
-                alignment: Alignment.center,
-                children: [
-                  const CircularProgressIndicator(
-                    color: Color.fromRGBO(28, 63, 58, 1),
-                  ),
-                  Icon(
-                    Icons.my_location_outlined,
-                    color: iconColor,
-                  )
-                ],
-              )
-            : Icon(
-                Icons.my_location_outlined,
-                color: iconColor,
-              ),
+        child: Icon(
+          Icons.my_location_outlined,
+          color: iconColor,
+        ),
       ),
     );
   }

@@ -4,13 +4,7 @@ abstract class AdminEvent {}
 
 class LoadData implements AdminEvent {}
 
-class LogIn implements AdminEvent {
-  final String tenant;
-
-  LogIn({
-    required this.tenant,
-  });
-}
+class LogIn implements AdminEvent {}
 
 class LogOut implements AdminEvent {}
 

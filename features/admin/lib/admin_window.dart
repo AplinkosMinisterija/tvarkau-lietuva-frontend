@@ -137,7 +137,7 @@ class _AdminWindowState extends State<AdminWindow> {
     super.initState();
     isShowDeleted = widget.isShowDeleted;
     isShowDumps = widget.isShowDumps;
-    if (isEmailBoundToBeetle(widget.email) &&
+    if (widget.email == GlobalConstants.adminBeetleAccount &&
         widget.activeCategory != 'beetle') {
       widget.onCategoryChange('beetle');
     }
@@ -146,7 +146,6 @@ class _AdminWindowState extends State<AdminWindow> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: LayoutBuilder(builder: (context, constraints) {
         const minHeight = 300;
@@ -183,18 +182,17 @@ class _AdminWindowState extends State<AdminWindow> {
                               onReportCategoryChange: (String value) {
                                 widget.onCategoryChange(value);
                               },
-                              width: width,
-                              isEmailBoundToBeetle:
-                                  isEmailBoundToBeetle(widget.email),
+                              isEmailBoundToBeetle: widget.email ==
+                                  GlobalConstants.adminBeetleAccount,
                             )
                           : Opacity(
                               opacity: 0.3,
                               child: AdminReportTypeSwitch(
-                                  activeCategory: widget.activeCategory,
-                                  onReportCategoryChange: (String value) {},
-                                  width: width,
-                                  isEmailBoundToBeetle:
-                                      isEmailBoundToBeetle(widget.email)),
+                                activeCategory: widget.activeCategory,
+                                onReportCategoryChange: (String value) {},
+                                isEmailBoundToBeetle: widget.email ==
+                                    GlobalConstants.adminBeetleAccount,
+                              ),
                             ),
                       20.widthBox,
                       if (widget.activeCategory != 'dump') ...[
@@ -261,11 +259,6 @@ class _AdminWindowState extends State<AdminWindow> {
       }),
     );
   }
-}
-
-bool isEmailBoundToBeetle(String email) {
-  return email.endsWith(GlobalConstants.adminAmvmtAccountEnding) ||
-      email == GlobalConstants.adminBeetleAccount;
 }
 
 class _BuildMap extends StatelessWidget {

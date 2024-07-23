@@ -24,17 +24,18 @@ class InformationScreen extends StatelessWidget {
               builder: (BuildContext context, InformationState state) {
                 if (state is ContentState) {
                   Size size = MediaQuery.of(context).size;
+
                   if (size.width > 900) {
                     return InformationScreenWeb(
                         width: size.width / 2.6,
                         height: size.height,
-                        report: state.trashReport);
+                        report: state.trashReport); //WEB INFO
                   } else {
                     return InformationScreenMobile(
                       width: size.width,
                       height: size.height,
                       report: state.trashReport,
-                    );
+                    ); //MOBILE INFO
                   }
                 } else if (state is LoadingState) {
                   return Scaffold(

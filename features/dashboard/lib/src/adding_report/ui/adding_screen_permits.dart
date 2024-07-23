@@ -1,6 +1,5 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
-import 'package:dashboard/src/adding_report/ui/permits_information_screen.dart';
 import 'package:dashboard/src/adding_report/ui/web/confirmation_screen.dart';
 import 'package:dashboard/src/adding_report/ui/web/permits_adding_screen_web.dart';
 import 'package:flutter/material.dart';
@@ -20,18 +19,12 @@ class AddingScreenPermits extends StatelessWidget {
     double height = size.height;
     return BlocProvider(
       create: (BuildContext context) =>
-          AddingBloc('permits')..add(LoadPermitsInformation()),
+          AddingBloc('permits')..add(LoadPermitsData()),
       child: BlocBuilder<AddingBloc, AddingState>(
         builder: (BuildContext context, AddingState state) {
           return BlocBuilder<AddingBloc, AddingState>(
             builder: (BuildContext context, AddingState state) {
-              if (state is PermitsInformationState) {
-                return PermitsInformationScreen(
-                  onContinue: () {
-                    context.read<AddingBloc>().add(LoadPermitsData());
-                  },
-                );
-              } else if (state is PermitsContentState) {
+              if (state is PermitsContentState) {
                 if (width > 900) {
                   return PermitsAddingScreenWeb(
                     width: width,

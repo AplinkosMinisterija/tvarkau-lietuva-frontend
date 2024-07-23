@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:core/core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
@@ -10,7 +9,6 @@ import 'package:admin/admin.dart';
 
 Future<void> mainCommon(Flavor flavor) async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SecureStorageProvider().resetUserCache();
   usePathUrlStrategy();
 
   if (Uri.base.toString().contains("access_token=")) {
@@ -23,6 +21,7 @@ Future<void> mainCommon(Flavor flavor) async {
   }
 
   if (kReleaseMode) {
+    // Only enable Sentry in release builds.
     await SentryFlutter.init(
       (options) {
         options.dsn =

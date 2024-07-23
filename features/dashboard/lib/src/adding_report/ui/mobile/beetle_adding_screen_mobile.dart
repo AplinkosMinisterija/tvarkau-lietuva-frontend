@@ -5,7 +5,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:core_ui/core_ui.dart';
 import 'dart:typed_data';
 import 'package:core/core.dart';
-import '../widgets/data_security_terms_widget.dart';
 import 'add_pin_screen_mobile.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
@@ -94,7 +93,7 @@ class _BeetleAddingScreenMobileState extends State<BeetleAddingScreenMobile> {
   Widget build(BuildContext context) {
     return Title(
       title: "Pranešti apie žievėgraužį",
-      color: const Color.fromRGBO(28, 63, 58, 1),
+      color: Colors.green,
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(250, 242, 234, 1),
         body: LayoutBuilder(
@@ -130,40 +129,82 @@ class _BeetleAddingScreenMobileState extends State<BeetleAddingScreenMobile> {
                       AddingInformationHeader(
                         width: widget.width,
                         isBeetleCategory: true,
-                        isPermitsCategory: false,
                       ),
                       SizedBox(height: widget.width * 0.0444),
-                      AddingMapRedirectWindow(
-                        width: widget.width,
-                        marker: newMarker,
-                        onTap: () {
-                          setState(() {
-                            if (newMarker.isNotEmpty) {
-                              newMarker.removeWhere((element) =>
-                                  element.markerId == const MarkerId('99899'));
-                              markers.removeWhere((element) =>
-                                  element.markerId == const MarkerId('99899'));
-                            }
-                          });
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AddPinScreenMobile(
-                                      width: widget.width,
-                                      markers: markers,
-                                      isLayerSwitchVisible: false,
-                                      isPermitSwitchVisible: false,
-                                      onTap: (lat, long, marker) {
-                                        setState(() {
-                                          newMarker.clear();
-                                          selectedLat = lat;
-                                          selectedLong = long;
-                                          newMarker.add(marker);
-                                        });
-                                      },
-                                    )),
-                          );
-                        },
+                      Stack(
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          AddingMapRedirectWindow(
+                            width: widget.width,
+                            marker: newMarker,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                if (newMarker.isNotEmpty) {
+                                  newMarker.removeWhere((element) =>
+                                      element.markerId ==
+                                      const MarkerId('99899'));
+                                  markers.removeWhere((element) =>
+                                      element.markerId ==
+                                      const MarkerId('99899'));
+                                }
+                              });
+
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AddPinScreenMobile(
+                                          width: widget.width,
+                                          markers: markers,
+                                          isLayerSwitchVisible: false,
+                                          isPermitSwitchVisible: false,
+                                          onTap: (lat, long, marker) {
+                                            setState(() {
+                                              newMarker.clear();
+                                              selectedLat = lat;
+                                              selectedLong = long;
+                                              newMarker.add(marker);
+                                            });
+                                          },
+                                        )),
+                              );
+                            },
+                            onHover: (isHover) {},
+                            child: Align(
+                              alignment: Alignment.bottomCenter,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                    bottom: widget.width * 0.0278),
+                                child: Container(
+                                  height: widget.width * 0.111,
+                                  width: widget.width * 0.866,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(8)),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.add_location_sharp,
+                                        size: widget.width * 0.0566,
+                                        color: const Color.fromRGBO(
+                                            255, 106, 61, 1),
+                                      ),
+                                      SizedBox(width: widget.width * 0.0277),
+                                      Text(
+                                        'Pažymėkite vietą, kur pastebėjote žievėgraužį',
+                                        style: GoogleFonts.roboto(
+                                            fontSize: widget.width * 0.028888,
+                                            fontWeight: FontWeight.w400),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(height: widget.width * 0.05),
                       Align(
@@ -274,16 +315,14 @@ class _BeetleAddingScreenMobileState extends State<BeetleAddingScreenMobile> {
                         ),
                       ),
                       SizedBox(height: widget.width * 0.0111),
-                      ImageAddButton(
-                        width: widget.width,
-                        title: _selectedImages.isNotEmpty
-                            ? 'Įkelti kitas nuotraukas'
-                            : 'Įkelti nuotraukas',
-                        onTap: () {
-                          getMultipleImageInfos();
-                        },
-                        isMobile: true,
-                      ),
+                      ImageAddButtonMobile(
+                          width: widget.width,
+                          title: _selectedImages.isNotEmpty
+                              ? 'Įkelti kitas nuotraukas'
+                              : 'Įkelti nuotraukas',
+                          onTap: () {
+                            getMultipleImageInfos();
+                          }),
                       SizedBox(height: widget.width * 0.0133),
                       Align(
                         alignment: Alignment.centerLeft,
@@ -352,33 +391,54 @@ class _BeetleAddingScreenMobileState extends State<BeetleAddingScreenMobile> {
                             )
                           : const SizedBox.shrink(),
                       SizedBox(height: widget.width * 0.03333),
-                      DataSecurityTermsButton(
-                        onTap: (value) {
-                          setState(() {
-                            isTermsAccepted = value!;
-                          });
-                        },
-                        width: widget.width,
-                        isTermsAccepted: isTermsAccepted,
-                      ),
                       SizedBox(
-                        height: widget.width * 0.03,
-                        child: TextFormField(
-                          enabled: true,
-                          maxLines: 1,
-                          readOnly: true,
-                          initialValue: " ",
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
+                        width: widget.width,
+                        child: CheckboxListTile(
+                          activeColor: const Color.fromRGBO(57, 97, 84, 1),
+                          title: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Sutinku su  ',
+                                style: GoogleFonts.roboto(
+                                  fontSize: widget.width * 0.033,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  LaunchUrl().launch(
+                                      'https://aad.lrv.lt/lt/asmens-duomenu-apsauga/');
+                                },
+                                //widget.onDataSecurityTap,
+                                child: Text(
+                                  'Asmens duomenų apsaugos\ntvarkymo taisyklėmis',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.roboto(
+                                    fontSize: widget.width * 0.033,
+                                    color: Colors.blue,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          textAlignVertical: TextAlignVertical.top,
-                          validator: (value) {
-                            if (!isTermsAccepted) {
-                              return 'Privaloma sutikti';
-                            } else {
-                              return null;
-                            }
+                          value: isTermsAccepted,
+                          onChanged: (value) {
+                            setState(() {
+                              isTermsAccepted = value!;
+                            });
                           },
+                          controlAffinity: ListTileControlAffinity.leading,
+                          subtitle: !isTermsAccepted
+                              ? Text(
+                                  'Privaloma',
+                                  style: TextStyle(
+                                    color: const Color(0xFFe53935),
+                                    fontSize: widget.width * 0.03,
+                                  ),
+                                )
+                              : null,
                         ),
                       ),
                       SizedBox(height: widget.width * 0.0488),

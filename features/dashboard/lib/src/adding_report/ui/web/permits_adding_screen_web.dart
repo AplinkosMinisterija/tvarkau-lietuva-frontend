@@ -1,15 +1,15 @@
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:core/utils/permit.dart';
-import 'package:dashboard/src/adding_report/ui/widgets/adding_screen_side_bar.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:core_ui/core_ui.dart';
 import 'dart:typed_data';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:pointer_interceptor/pointer_interceptor.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class PermitsAddingScreenWeb extends StatefulWidget {
   const PermitsAddingScreenWeb({
@@ -24,7 +24,7 @@ class PermitsAddingScreenWeb extends StatefulWidget {
 
   final double width;
   final double height;
-  final Permit? permits;
+  final Permit permits;
   final List<PublicReportDto> reports;
   final Function(String, String, double, double, List<Uint8List>) onAddTap;
   final VoidCallback onDataSecurityTap;
@@ -92,10 +92,22 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       addCustomIcon();
     });
-    mapMarkers();
-    if (widget.permits != null) {
-      mapPolygons(widget.permits!);
+    int index = 0;
+    for (var element in widget.reports) {
+      markers.add(
+        Marker(
+          markerId: MarkerId(
+            element.name + index.toString(),
+          ),
+          position: LatLng(
+            element.latitude.toDouble(),
+            element.longitude.toDouble(),
+          ),
+        ),
+      );
+      index++;
     }
+    mapPolygons(widget.permits);
     getLocation();
     super.initState();
   }
@@ -126,7 +138,7 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
         _isLoading = false;
         _handleTap(location);
         _lithuaniaCameraPosition =
-            CameraPosition(target: _currentPosition!, zoom: 15);
+            CameraPosition(target: _currentPosition!, zoom: 13);
       });
     }
   }
@@ -150,8 +162,8 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
   @override
   Widget build(BuildContext context) {
     return Title(
-      title: "Pranešti apie pažeidimą kirtimuose",
-      color: const Color.fromRGBO(28, 63, 58, 1),
+      title: "Pranešti apie nelegalų kirtimą",
+      color: Colors.green,
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(250, 242, 234, 1),
         body: LayoutBuilder(
@@ -165,7 +177,7 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                     children: <Widget>[
                       SizedBox(
                         height: constraints.maxHeight,
-                        width: constraints.maxWidth * 0.68125,
+                        width: constraints.maxWidth * 0.7,
                         child: _isLoading
                             ? Stack(
                                 children: [
@@ -197,7 +209,9 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                                 buildingsEnabled: true,
                                 initialCameraPosition: _lithuaniaCameraPosition,
                                 mapType: currentMapType,
-                                onTap: _handleTap,
+                                onTap: _currentPosition == null
+                                    ? _handleTap
+                                    : null,
                                 polygons: isShowPolygons ? polygons : {},
                                 markers: isShowMarkers
                                     ? markers
@@ -215,18 +229,57 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                                       isMapDisabled = isHover;
                                     });
                                   },
-                                  child: PointerInterceptor(
-                                    child: LocationSearchButton(
-                                      width: 40,
-                                      height: 40,
-                                      onPressed: () async {
-                                        await getLocation();
-                                      },
-                                      isLoading: _isLoading,
-                                    ),
+                                  child: LocationSearchButton(
+                                    width: 40,
+                                    height: 40,
+                                    onPressed: () {
+                                      setState(() {
+                                        mapController.animateCamera(
+                                            CameraUpdate.newLatLngZoom(
+                                                _currentPosition!, 13));
+                                      });
+                                    },
                                   )),
                             )
                           : const SizedBox.shrink(),
+                      Positioned(
+                        left: widget.width * 0.0111,
+                        bottom: widget.width * 0.0511,
+                        child: ChangeVisibilityButtonMobile(
+                          width: widget.width / 2.4,
+                          isActive: isShowPolygons,
+                          isPermits: true,
+                          onHover: (isHover) {
+                            setState(() {
+                              isMapDisabled = isHover;
+                            });
+                          },
+                          onTap: () {
+                            setState(() {
+                              isShowPolygons = !isShowPolygons;
+                            });
+                          },
+                        ),
+                      ),
+                      Positioned(
+                        left: widget.width * 0.0111,
+                        bottom: widget.width * 0.0111,
+                        child: ChangeVisibilityButtonMobile(
+                          width: widget.width / 2.4,
+                          isActive: isShowMarkers,
+                          isPermits: false,
+                          onHover: (isHover) {
+                            setState(() {
+                              isMapDisabled = isHover;
+                            });
+                          },
+                          onTap: () {
+                            setState(() {
+                              isShowMarkers = !isShowMarkers;
+                            });
+                          },
+                        ),
+                      ),
                       Positioned(
                         bottom: 110,
                         right: 10,
@@ -237,16 +290,15 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                               isMapDisabled = isHover;
                             });
                           },
-                          child: PointerInterceptor(
-                            child: GoogleMapTypeButton(
-                              height: 40,
-                              width: 40,
-                              onPressed: () {
-                                showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        MapTypeChangeDialog(
-                                          width: widget.width,
+                          child: GoogleMapTypeButton(
+                            height: 40,
+                            width: 40,
+                            onPressed: () {
+                              showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      MapTypeChangeDialog(
+                                          width: widget.width / 2.4,
                                           currentMapType: currentMapType,
                                           onHover: (isHover) {
                                             setState(() {
@@ -257,79 +309,324 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                                             setState(() {
                                               currentMapType = mapType;
                                             });
-                                          },
-                                          onPermitsVisibilityChange: () {
-                                            setState(() {
-                                              isShowPolygons = !isShowPolygons;
-                                            });
-                                          },
-                                          onReportVisibilityChange: () {
-                                            setState(() {
-                                              isShowMarkers = !isShowMarkers;
-                                            });
-                                          },
-                                          isReportsActive: isShowMarkers,
-                                          isPermitsActive: isShowPolygons,
-                                          isMobile: false,
-                                        ));
-                              },
-                            ),
+                                          }));
+                            },
                           ),
                         ),
                       ),
+                      InstructionsWidget(
+                        width: widget.width,
+                        isBeetleCategory: false,
+                      ),
                     ],
                   ),
-                  AddingScreenSideBar(
-                    width: widget.width,
-                    height: widget.height,
-                    title: 'Pranešti apie pažeidimą kirtimuose',
-                    onExitTap: () {
-                      context.goNamed("home");
-                    },
-                    onImageAddTap: () {
-                      getMultipleImageInfos();
-                    },
-                    onFinalTap: () async {
-                      if (_formKey.currentState!.validate() &&
-                          selectedLat != 0 &&
-                          selectedLong != 0 &&
-                          isTermsAccepted &&
-                          _selectedImages.isNotEmpty &&
-                          isImagesSizeValid) {
-                        if (_selectedImages.length >= 2) {
-                          widget.onAddTap(
-                            currentEmailValue,
-                            currentTextValue,
-                            selectedLat,
-                            selectedLong,
-                            _selectedImages,
-                          );
-                        }
-                      }
-                    },
-                    onImageRemoveTap: (index) {
-                      removeSelectedImage(index);
-                    },
-                    onTextChange: (textValue) {
-                      setState(() {
-                        currentTextValue = textValue;
-                      });
-                    },
-                    onEmailChange: (emailValue) {
-                      setState(() {
-                        currentEmailValue = emailValue;
-                      });
-                    },
-                    selectedImages: _selectedImages,
-                    onTermsChange: (termsValue) {
-                      setState(() {
-                        isTermsAccepted = termsValue;
-                      });
-                    },
-                    isImagesSizeValid: isImagesSizeValid,
-                    isTermsAccepted: isTermsAccepted,
-                    category: 'permits',
-                  )
+                  SizedBox(
+                    height: constraints.maxHeight,
+                    width: constraints.maxWidth * 0.3,
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: EdgeInsets.all(widget.width * 0.025),
+                        child: Column(
+                          children: [
+                            ExitHeader(
+                                title: 'Pranešti apie nelegalų kirtimą',
+                                width: widget.width,
+                                onTap: () {
+                                  context.goNamed("home");
+                                }),
+                            SizedBox(
+                              height: widget.width * 0.0125,
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Pranešimo turinys',
+                                style: GoogleFonts.roboto(
+                                  fontSize: widget.width * 0.01145,
+                                  fontWeight: FontWeight.w600,
+                                  color: const Color(0x660a3328),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: widget.width * 0.004,
+                            ),
+                            Container(
+                              height: widget.width * 0.125,
+                              padding: EdgeInsets.all(
+                                widget.width * 0.01,
+                              ),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(4)),
+                              child: TextFormField(
+                                maxLines: 10,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Prašome įvesti pranešimo turinį';
+                                  }
+                                  return null;
+                                },
+                                onChanged: (textValue) {
+                                  setState(() {
+                                    currentTextValue = textValue;
+                                  });
+                                },
+                                style: GoogleFonts.roboto(
+                                    fontSize: widget.width * 0.0125,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.black),
+                                decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: widget.width * 0.01,
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Jūsų el. pašto adresas',
+                                style: GoogleFonts.roboto(
+                                  fontSize: widget.width * 0.01145,
+                                  fontWeight: FontWeight.w600,
+                                  color: const Color(0x660a3328),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: widget.width * 0.004,
+                            ),
+                            Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Container(
+                                  height: widget.width * 0.045,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(4)),
+                                ),
+                                Container(
+                                  height: widget.width * 0.045,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: widget.width * 0.01,
+                                  ),
+                                  child: TextFormField(
+                                    maxLines: 1,
+                                    textAlignVertical: TextAlignVertical.top,
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Prašome įvesti el. pašto adresą';
+                                      } else if (RegExp(
+                                              r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+                                          .hasMatch(value)) {
+                                        return null;
+                                      } else {
+                                        return 'Prašome įvesti teisingą el. pašto adresą';
+                                      }
+                                    },
+                                    onChanged: (emailValue) {
+                                      setState(() {
+                                        currentEmailValue = emailValue;
+                                      });
+                                    },
+                                    style: GoogleFonts.roboto(
+                                        fontSize: widget.width * 0.0125,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black),
+                                    decoration: const InputDecoration(
+                                      border: InputBorder.none,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: widget.width * 0.01,
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'Įkelkite bent 2 pažeidimo nuotraukas',
+                                style: GoogleFonts.roboto(
+                                  fontSize: widget.width * 0.01145,
+                                  fontWeight: FontWeight.w600,
+                                  color: const Color(0x660a3328),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: widget.width * 0.004,
+                            ),
+                            ImageAddButtonMobile(
+                                width: widget.width / 2.4,
+                                title: _selectedImages.isNotEmpty
+                                    ? 'Įkelti kitas nuotraukas'
+                                    : 'Įkelti nuotraukas',
+                                onTap: () {
+                                  getMultipleImageInfos();
+                                }),
+                            SizedBox(
+                              height: widget.width * 0.004,
+                            ),
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: Text(
+                                'Maksimalus nuotraukų kiekis: ${GlobalConstants.maxAllowedImageCount}',
+                                style: GoogleFonts.roboto(
+                                  fontSize: widget.width * 0.009375,
+                                  fontWeight: FontWeight.w600,
+                                  color: const Color(0x660a3328),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: widget.width * 0.02,
+                              child: TextFormField(
+                                enabled: true,
+                                maxLines: 1,
+                                readOnly: true,
+                                initialValue: " ",
+                                decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                ),
+                                textAlignVertical: TextAlignVertical.top,
+                                validator: (value) {
+                                  if (_selectedImages.isEmpty) {
+                                    return 'Prašome įkelti bent 2 nuotraukas';
+                                  } else {
+                                    if (_selectedImages.length < 2) {
+                                      return 'Prašome įkelti bent 2 nuotraukas';
+                                    } else {
+                                      return null;
+                                    }
+                                  }
+                                },
+                              ),
+                            ),
+                            SizedBox(
+                              height: widget.width * 0.005,
+                            ),
+                            _selectedImages.isNotEmpty
+                                ? SizedBox(
+                                    width: widget.width / 2.4 * 0.9111,
+                                    height: _selectedImages.length > 2
+                                        ? widget.width / 2.4 * 0.7111
+                                        : widget.width / 2.4 * 0.3555,
+                                    child: AlignedGridView.count(
+                                      crossAxisCount: 2,
+                                      mainAxisSpacing: 8,
+                                      crossAxisSpacing: 8,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      itemBuilder: (context, index) {
+                                        return ImageGallery().buildPickerImage(
+                                            image: _selectedImages[index],
+                                            context: context,
+                                            width: widget.width,
+                                            onRemoveTap: () {
+                                              removeSelectedImage(index);
+                                            });
+                                      },
+                                      itemCount: _selectedImages.length,
+                                    ),
+                                  )
+                                : const SizedBox.shrink(),
+                            !isImagesSizeValid
+                                ? Text(
+                                    'Maksimalus nuotraukų dydis 20 MB',
+                                    style: TextStyle(
+                                      color: const Color(0xFFe53935),
+                                      fontSize: widget.width * 0.01,
+                                    ),
+                                  )
+                                : const SizedBox.shrink(),
+                            SizedBox(height: widget.width * 0.01),
+                            CheckboxListTile(
+                              activeColor: const Color.fromRGBO(57, 97, 84, 1),
+                              title: SizedBox(
+                                width: widget.width * 0.2,
+                                child: FittedBox(
+                                  fit: BoxFit.fitWidth,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Sutinku su departamento  ',
+                                        style: GoogleFonts.roboto(
+                                          fontSize: widget.width * 0.01,
+                                          color: Colors.black,
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          LaunchUrl().launch(
+                                              'https://aad.lrv.lt/lt/asmens-duomenu-apsauga/');
+                                        },
+                                        child: Text(
+                                          'Asmens duomenų apsaugos\n tvarkymo taisyklėmis',
+                                          textAlign: TextAlign.center,
+                                          style: GoogleFonts.roboto(
+                                            fontSize: widget.width * 0.01,
+                                            color: Colors.blue,
+                                            decoration:
+                                                TextDecoration.underline,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              value: isTermsAccepted,
+                              onChanged: (value) {
+                                setState(() {
+                                  isTermsAccepted = value!;
+                                });
+                              },
+                              controlAffinity: ListTileControlAffinity.trailing,
+                              subtitle: !isTermsAccepted
+                                  ? Text(
+                                      'Privaloma',
+                                      style: TextStyle(
+                                        color: const Color(0xFFe53935),
+                                        fontSize: widget.width * 0.01,
+                                      ),
+                                    )
+                                  : null,
+                            ),
+                            SizedBox(
+                              height: widget.width * 0.01,
+                            ),
+                            MarkButtonMobile(
+                              isActive: true,
+                              width: widget.width / 3.5,
+                              onTap: () async {
+                                if (_formKey.currentState!.validate() &&
+                                    selectedLat != 0 &&
+                                    selectedLong != 0 &&
+                                    isTermsAccepted &&
+                                    _selectedImages.isNotEmpty &&
+                                    isImagesSizeValid) {
+                                  if (_selectedImages.length >= 2) {
+                                    widget.onAddTap(
+                                      currentEmailValue,
+                                      currentTextValue,
+                                      selectedLat,
+                                      selectedLong,
+                                      _selectedImages,
+                                    );
+                                  }
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             );
@@ -355,7 +652,6 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
       ),
       draggable: true,
       onDrag: _handleDrag,
-      onDragEnd: _handleDragEnd,
     );
 
     setState(() {
@@ -363,7 +659,6 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
       addedMarker.add(newMarker);
       selectedLat = tappedPoint.latitude;
       selectedLong = tappedPoint.longitude;
-      mapController.moveCamera(CameraUpdate.newLatLng(tappedPoint));
     });
   }
 
@@ -371,34 +666,7 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
     setState(() {
       selectedLat = tappedPoint.latitude;
       selectedLong = tappedPoint.longitude;
-      mapController.moveCamera(CameraUpdate.newLatLng(tappedPoint));
     });
-  }
-
-  _handleDragEnd(LatLng tappedPoint) {
-    setState(() {
-      selectedLat = tappedPoint.latitude;
-      selectedLong = tappedPoint.longitude;
-      mapController.moveCamera(CameraUpdate.newLatLng(tappedPoint));
-    });
-  }
-
-  Future<void> mapMarkers() async {
-    int index = 0;
-    for (var element in widget.reports) {
-      markers.add(
-        Marker(
-          markerId: MarkerId(
-            element.name + index.toString(),
-          ),
-          position: LatLng(
-            element.latitude.toDouble(),
-            element.longitude.toDouble(),
-          ),
-        ),
-      );
-      index++;
-    }
   }
 
   Future<void> mapPolygons(Permit permit) async {
@@ -416,59 +684,37 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
         Polygon(
           polygonId: PolygonId("P-$i"),
           points: coordinates,
-          fillColor: const Color.fromRGBO(255, 106, 61, 0.3),
+          fillColor: Colors.red,
           strokeWidth: 1,
-          strokeColor: const Color.fromRGBO(255, 106, 61, 1),
           onTap: () {
             showDialog(
                 context: context,
-                barrierColor: Colors.white.withOpacity(0),
-                builder: (context) {
-                  return Align(
-                    alignment: Alignment.topLeft,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: widget.width * 0.011,
-                        vertical: widget.width * 0.011,
+                builder: (_) => Dialog(
+                      child: InfoPermitWindowBox(
+                        type: permit.features![i].properties!.tipas ?? '',
+                        issuedFrom:
+                            permit.features![i].properties!.galiojaNuo ?? '',
+                        issuedTo:
+                            permit.features![i].properties!.galiojaIki ?? '',
+                        cadastralNumber:
+                            permit.features![i].properties!.kadastrinisNr ?? '',
+                        subdivision:
+                            permit.features![i].properties!.vmuPadalinys ?? '',
+                        forestryDistrict:
+                            permit.features![i].properties!.girininkija ?? '',
+                        block: permit.features![i].properties!.kvartalas,
+                        plot: permit.features![i].properties!.sklypas ?? '',
+                        cuttableArea:
+                            permit.features![i].properties!.kertamasPlotas,
+                        dominantTree: permit
+                                .features![i].properties!.vyraujantysMedziai ??
+                            '',
+                        cuttingType:
+                            permit.features![i].properties!.kirtimoRusis ?? '',
+                        reinstatementType:
+                            permit.features![i].properties!.atkurimoBudas ?? '',
                       ),
-                      child: Material(
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
-                        ),
-                        child: InfoPermitWindowBox(
-                          width: widget.width,
-                          isMobile: false,
-                          type: permit.features![i].properties!.tipas ?? '',
-                          issuedFrom:
-                              permit.features![i].properties!.galiojaNuo ?? '',
-                          issuedTo:
-                              permit.features![i].properties!.galiojaIki ?? '',
-                          cadastralNumber:
-                              permit.features![i].properties!.kadastrinisNr ??
-                                  '',
-                          subdivision:
-                              permit.features![i].properties!.vmuPadalinys ??
-                                  '',
-                          forestryDistrict:
-                              permit.features![i].properties!.girininkija ?? '',
-                          block: permit.features![i].properties!.kvartalas,
-                          plot: permit.features![i].properties!.sklypas ?? '',
-                          cuttableArea:
-                              permit.features![i].properties!.kertamasPlotas,
-                          dominantTree: permit.features![i].properties!
-                                  .vyraujantysMedziai ??
-                              '',
-                          cuttingType:
-                              permit.features![i].properties!.kirtimoRusis ??
-                                  '',
-                          reinstatementType:
-                              permit.features![i].properties!.atkurimoBudas ??
-                                  '',
-                        ),
-                      ),
-                    ),
-                  );
-                });
+                    ));
           },
         ),
       );

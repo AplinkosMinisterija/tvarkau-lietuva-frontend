@@ -2,21 +2,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
 class AddingInformationHeader extends StatelessWidget {
-  const AddingInformationHeader({
-    super.key,
-    required this.width,
-    required this.isBeetleCategory,
-    required this.isPermitsCategory,
-  });
+  const AddingInformationHeader(
+      {super.key, required this.width, required this.isBeetleCategory});
 
   final double width;
   final bool isBeetleCategory;
-  final bool isPermitsCategory;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: isPermitsCategory ? width * 0.915 : width * 0.815,
+      height: width * 0.815,
       width: width * 0.911,
       padding: EdgeInsets.all(width * 0.028),
       decoration: BoxDecoration(
@@ -50,44 +45,21 @@ class AddingInformationHeader extends StatelessWidget {
                   fontSize: width * 0.03333, fontWeight: FontWeight.w400),
             ),
             SizedBox(height: width * 0.02),
-            if (isPermitsCategory) ...[
-              Text(
-                '4. Įvertinkite ar netoliese Jūsų pažymėtos vietos nėra kirtimų leidimų, kurie pažymėti poligonais.',
-                textAlign: TextAlign.left,
-                style: GoogleFonts.roboto(
-                    fontSize: width * 0.03333, fontWeight: FontWeight.w400),
-              ),
-              SizedBox(height: width * 0.02),
-              Text(
-                '5. Aprašykite informaciją susijusią su pastebėtu pažeidimu, pridėkite nuotraukas.',
-                textAlign: TextAlign.left,
-                style: GoogleFonts.roboto(
-                    fontSize: width * 0.03333, fontWeight: FontWeight.w400),
-              ),
-              SizedBox(height: width * 0.02),
-              Text(
-                '6. Spauskite mygtuką „Pranešti“, o kilus klausimams su Jumis susisieks departamento pareigūnai.',
-                textAlign: TextAlign.left,
-                style: GoogleFonts.roboto(
-                    fontSize: width * 0.03333, fontWeight: FontWeight.w400),
-              ),
-            ] else ...[
-              Text(
-                isBeetleCategory
-                    ? '4. Jeigu pastebite žievėgraužio tipografo apniktas egles arba tikėtiną jo veisimosi vietą, pridėkite nuotraukas.'
-                    : '4. Aprašykite informaciją susijusią su pastebėtu pažeidimu, pridėkite nuotraukas.',
-                textAlign: TextAlign.left,
-                style: GoogleFonts.roboto(
-                    fontSize: width * 0.03333, fontWeight: FontWeight.w400),
-              ),
-              SizedBox(height: width * 0.02),
-              Text(
-                '5. Spauskite mygtuką „Pranešti“, o kilus klausimams su Jumis susisieks departamento pareigūnai.',
-                textAlign: TextAlign.left,
-                style: GoogleFonts.roboto(
-                    fontSize: width * 0.03333, fontWeight: FontWeight.w400),
-              ),
-            ]
+            Text(
+              isBeetleCategory
+                  ? '4. Jeigu pastebite žievėgraužio tipografo apniktas egles arba tikėtiną jo veisimosi vietą, pridėkite nuotraukas.'
+                  : '4. Aprašykite informaciją susijusią su pastebėtu pažeidimu, pridėkite nuotraukas.',
+              textAlign: TextAlign.left,
+              style: GoogleFonts.roboto(
+                  fontSize: width * 0.03333, fontWeight: FontWeight.w400),
+            ),
+            SizedBox(height: width * 0.02),
+            Text(
+              '5. Spauskite mygtuką „Pranešti“, o kilus klausimams su Jumis susisieks departamento pareigūnai.',
+              textAlign: TextAlign.left,
+              style: GoogleFonts.roboto(
+                  fontSize: width * 0.03333, fontWeight: FontWeight.w400),
+            ),
           ],
         ),
       ),

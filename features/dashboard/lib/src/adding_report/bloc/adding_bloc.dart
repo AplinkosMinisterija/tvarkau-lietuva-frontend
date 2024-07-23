@@ -13,7 +13,6 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
     on<LoadTrashData>(_onLoadTrashData);
     on<LoadForestData>(_onLoadForestData);
     on<LoadPermitsData>(_onLoadPermitsData);
-    on<LoadPermitsInformation>(_onLoadPermitsInformation);
     on<LoadBeetleData>(_onLoadBeetleData);
     on<LoadBeetleInformation>(_onLoadBeetleInformation);
     on<AddReport>(_onAddReport);
@@ -71,8 +70,6 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
     try {
       emit(LoadingState());
       final Permit permits = await ApiProvider().getAllPermits();
-      //TODO: final source = GeoJSONFeatures.http(location: Uri.parse('...'));
-
       final List<PublicReportDto> permitReports =
           await ApiProvider().getAllVisibleReports('permits');
 
@@ -81,23 +78,6 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
           permits: permits,
           permitReports: permitReports,
         ),
-      );
-    } catch (e) {
-      emit(
-        ErrorState(errorMessage: 'Netikėta klaida'),
-      );
-    }
-  }
-
-  Future<void> _onLoadPermitsInformation(
-      LoadPermitsInformation _,
-      Emitter<AddingState> emit,
-      ) async {
-    try {
-      emit(LoadingState());
-
-      emit(
-        PermitsInformationState(),
       );
     } catch (e) {
       emit(

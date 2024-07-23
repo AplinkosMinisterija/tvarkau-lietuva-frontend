@@ -5,16 +5,16 @@ class ReportTypeSwitcherButton extends StatefulWidget {
   const ReportTypeSwitcherButton({
     super.key,
     required this.width,
+    required this.height,
     required this.buttonText,
     required this.isActive,
-    required this.isMobile,
     required this.onPressed,
   });
 
   final double width;
+  final double height;
   final String buttonText;
   final bool isActive;
-  final bool isMobile;
   final VoidCallback onPressed;
 
   @override
@@ -23,7 +23,7 @@ class ReportTypeSwitcherButton extends StatefulWidget {
 }
 
 class _ReportTypeSwitcherButtonState extends State<ReportTypeSwitcherButton> {
-  Color inactiveBackgroundColor = const Color.fromRGBO(255, 255, 255, 1);
+  Color inactiveBackgroundColor = const Color(0xffe3e3e3);
 
   @override
   Widget build(BuildContext context) {
@@ -31,39 +31,27 @@ class _ReportTypeSwitcherButtonState extends State<ReportTypeSwitcherButton> {
       onTap: widget.onPressed,
       onHover: (bool isHover) {
         setState(() {
-          inactiveBackgroundColor = isHover
-              ? const Color.fromRGBO(220, 220, 220, 1)
-              : const Color.fromRGBO(255, 255, 255, 1);
+          inactiveBackgroundColor =
+              isHover ? const Color(0xffb7b7b7) : const Color(0xffe3e3e3);
         });
       },
       child: Container(
-        width: widget.isMobile ? widget.width * 0.4167 : widget.width * 0.15,
-        height: widget.isMobile ? widget.width * 0.0889 : widget.width * 0.032,
+        width: widget.width,
+        height: widget.height,
         decoration: BoxDecoration(
           color: widget.isActive
-              ? const Color.fromRGBO(255, 106, 61, 1)
+              ? const Color(0xffff6a3d)
               : inactiveBackgroundColor,
-          borderRadius: BorderRadius.circular(4),
-          boxShadow: const [
-            BoxShadow(
-              color: Color.fromRGBO(0, 0, 0, 0.16),
-              spreadRadius: 0,
-              blurRadius: 3,
-              offset: Offset(0, 3), // changes position of shadow
-            ),
-          ],
+          borderRadius: BorderRadius.circular(10),
         ),
-        child: Center(
-          child: Text(
-            widget.buttonText,
-            textAlign: TextAlign.center,
-            style: GoogleFonts.roboto(
-              fontSize: widget.isMobile
-                  ? widget.width * 0.0306
-                  : widget.width * 0.011,
-              fontWeight: FontWeight.w400,
-              color: widget.isActive ? Colors.white : Colors.black,
-            ),
+        padding: const EdgeInsets.all(2),
+        child: Text(
+          widget.buttonText,
+          textAlign: TextAlign.center,
+          style: GoogleFonts.roboto(
+            fontSize: 13,
+            fontWeight: FontWeight.w400,
+            color: Colors.black,
           ),
         ),
       ),

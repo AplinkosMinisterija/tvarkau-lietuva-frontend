@@ -19,7 +19,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Title(
       title: "Tvarkau Lietuvą",
-      color: const Color.fromRGBO(28, 63, 58, 1),
+      color: Colors.green,
       child: const Scaffold(
         body: CupertinoPageScaffold(
           child: HomeScreen(),

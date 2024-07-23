@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 class AddPinScreenMobile extends StatefulWidget {
   const AddPinScreenMobile(
@@ -86,7 +85,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
         _isLoading = false;
         _handleTap(location);
         _lithuaniaCameraPosition =
-            CameraPosition(target: _currentPosition!, zoom: 15);
+            CameraPosition(target: _currentPosition!, zoom: 13);
       });
     }
   }
@@ -176,7 +175,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                             onMapCreated: _onMapCreated,
                             initialCameraPosition: _lithuaniaCameraPosition,
                             mapType: currentMapType,
-                            onTap: _handleTap,
+                            onTap: _currentPosition == null ? _handleTap : null,
                             markers: isShowMarkers
                                 ? markers
                                 : addedMarker.map((e) => e).toSet(),
@@ -188,7 +187,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                                 : addedMarker.map((e) => e).toSet(),
                             webGestureHandling: WebGestureHandling.cooperative,
                             mapType: currentMapType,
-                            onTap: _handleTap,
+                            onTap: _currentPosition == null ? _handleTap : null,
                             buildingsEnabled: true,
                             initialCameraPosition: _lithuaniaCameraPosition,
                             onMapCreated: _onMapCreated,
@@ -198,27 +197,25 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                 alignment: Alignment.topCenter,
                 child: Padding(
                   padding: EdgeInsets.only(top: widget.width * 0.0666),
-                  child: PointerInterceptor(
-                    child: SavePinButtonMobile(
-                      width: widget.width,
-                      isActive: isSaveButtonActive,
-                      onHover: (isHover) {
-                        setState(() {
-                          isMapDisabled = isHover;
-                        });
-                      },
-                      onTap: () {
-                        widget.onTap(
-                            selectedLat,
-                            selectedLong,
-                            Marker(
-                              markerId: const MarkerId('99899'),
-                              position: LatLng(selectedLat, selectedLong),
-                              icon: markerIcon,
-                            ));
-                        Navigator.of(context).pop();
-                      },
-                    ),
+                  child: SavePinButtonMobile(
+                    width: widget.width,
+                    isActive: isSaveButtonActive,
+                    onHover: (isHover) {
+                      setState(() {
+                        isMapDisabled = isHover;
+                      });
+                    },
+                    onTap: () {
+                      widget.onTap(
+                          selectedLat,
+                          selectedLong,
+                          Marker(
+                            markerId: const MarkerId('99899'),
+                            position: LatLng(selectedLat, selectedLong),
+                            icon: markerIcon,
+                          ));
+                      Navigator.of(context).pop();
+                    },
                   ),
                 ),
               ),
@@ -233,16 +230,57 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                               isMapDisabled = isHover;
                             });
                           },
-                          child: PointerInterceptor(
-                            child: LocationSearchButton(
-                              width: 40,
-                              height: 40,
-                              onPressed: () async {
-                                await getLocation();
-                              },
-                              isLoading: _isLoading,
-                            ),
+                          child: LocationSearchButton(
+                            width: 40,
+                            height: 40,
+                            onPressed: () {
+                              mapController.animateCamera(
+                                  CameraUpdate.newLatLngZoom(
+                                      _currentPosition!, 13));
+                            },
                           )),
+                    )
+                  : const SizedBox.shrink(),
+              widget.isPermitSwitchVisible
+                  ? Positioned(
+                      left: widget.width * 0.0333,
+                      bottom: widget.width * 0.1333,
+                      child: ChangeVisibilityButtonMobile(
+                        width: widget.width,
+                        isActive: isShowPolygons,
+                        isPermits: true,
+                        onHover: (isHover) {
+                          setState(() {
+                            isMapDisabled = isHover;
+                          });
+                        },
+                        onTap: () {
+                          setState(() {
+                            isShowPolygons = !isShowPolygons;
+                          });
+                        },
+                      ),
+                    )
+                  : const SizedBox.shrink(),
+              widget.isLayerSwitchVisible
+                  ? Positioned(
+                      left: widget.width * 0.0333,
+                      bottom: widget.width * 0.0333,
+                      child: ChangeVisibilityButtonMobile(
+                        width: widget.width,
+                        isActive: isShowMarkers,
+                        isPermits: false,
+                        onHover: (isHover) {
+                          setState(() {
+                            isMapDisabled = isHover;
+                          });
+                        },
+                        onTap: () {
+                          setState(() {
+                            isShowMarkers = !isShowMarkers;
+                          });
+                        },
+                      ),
                     )
                   : const SizedBox.shrink(),
               Positioned(
@@ -255,65 +293,27 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                       isMapDisabled = isHover;
                     });
                   },
-                  child: PointerInterceptor(
-                    child: GoogleMapTypeButton(
-                      height: 40,
-                      width: 40,
-                      onPressed: () {
-                        showDialog<String>(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                widget.isPermitSwitchVisible
-                                    ? MapTypeChangeDialog(
-                                        width: widget.width,
-                                        currentMapType: currentMapType,
-                                        onHover: (isHover) {
-                                          setState(() {
-                                            isMapDisabled = isHover;
-                                          });
-                                        },
-                                        onChangeTap: (MapType mapType) {
-                                          setState(() {
-                                            currentMapType = mapType;
-                                          });
-                                        },
-                                        onPermitsVisibilityChange: () {
-                                          setState(() {
-                                            isShowPolygons = !isShowPolygons;
-                                          });
-                                        },
-                                        onReportVisibilityChange: () {
-                                          setState(() {
-                                            isShowMarkers = !isShowMarkers;
-                                          });
-                                        },
-                                        isReportsActive: isShowMarkers,
-                                        isPermitsActive: isShowPolygons,
-                                        isMobile: true,
-                                      )
-                                    : MapTypeChangeDialog(
-                                        width: widget.width,
-                                        currentMapType: currentMapType,
-                                        onHover: (isHover) {
-                                          setState(() {
-                                            isMapDisabled = isHover;
-                                          });
-                                        },
-                                        onChangeTap: (MapType mapType) {
-                                          setState(() {
-                                            currentMapType = mapType;
-                                          });
-                                        },
-                                        isMobile: true,
-                                        onReportVisibilityChange: () {
-                                          setState(() {
-                                            isShowMarkers = !isShowMarkers;
-                                          });
-                                        },
-                                        isReportsActive: isShowMarkers,
-                                      ));
-                      },
-                    ),
+                  child: GoogleMapTypeButton(
+                    height: 40,
+                    width: 40,
+                    onPressed: () {
+                      showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) =>
+                              MapTypeChangeDialog(
+                                  width: widget.width,
+                                  currentMapType: currentMapType,
+                                  onHover: (isHover) {
+                                    setState(() {
+                                      isMapDisabled = isHover;
+                                    });
+                                  },
+                                  onChangeTap: (MapType mapType) {
+                                    setState(() {
+                                      currentMapType = mapType;
+                                    });
+                                  }));
+                    },
                   ),
                 ),
               ),
@@ -340,7 +340,6 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
       ),
       draggable: true,
       onDrag: _handleDrag,
-      onDragEnd: _handleDragEnd,
     );
 
     setState(() {
@@ -349,21 +348,11 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
       selectedLat = tappedPoint.latitude;
       selectedLong = tappedPoint.longitude;
       isSaveButtonActive = true;
-      mapController.moveCamera(CameraUpdate.newLatLng(tappedPoint));
     });
   }
 
   _handleDrag(LatLng tappedPoint) {
     setState(() {
-      selectedLat = tappedPoint.latitude;
-      selectedLong = tappedPoint.longitude;
-      isSaveButtonActive = true;
-    });
-  }
-
-  _handleDragEnd(LatLng tappedPoint) {
-    setState(() {
-      mapController.moveCamera(CameraUpdate.newLatLng(tappedPoint));
       selectedLat = tappedPoint.latitude;
       selectedLong = tappedPoint.longitude;
       isSaveButtonActive = true;
@@ -395,25 +384,13 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
         Polygon(
           polygonId: PolygonId("P-$i"),
           points: coordinates,
-          fillColor: const Color.fromRGBO(255, 106, 61, 0.3),
+          fillColor: Colors.red,
           strokeWidth: 1,
-          strokeColor: const Color.fromRGBO(255, 106, 61, 1),
           onTap: () {
             showDialog(
                 context: context,
-                barrierColor: Colors.white.withOpacity(0),
-                builder: (context) {
-                  return Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Material(
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(8),
-                            topRight: Radius.circular(8)),
-                      ),
+                builder: (_) => Dialog(
                       child: InfoPermitWindowBox(
-                        width: widget.width,
-                        isMobile: true,
                         type: permit.features![i].properties!.tipas ?? '',
                         issuedFrom:
                             permit.features![i].properties!.galiojaNuo ?? '',
@@ -427,8 +404,8 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                             permit.features![i].properties!.girininkija ?? '',
                         block: permit.features![i].properties!.kvartalas,
                         plot: permit.features![i].properties!.sklypas ?? '',
-                        cuttableArea:
-                            permit.features![i].properties!.kertamasPlotas,
+                        cuttableArea: permit
+                                .features![i].properties!.kertamasPlotas,
                         dominantTree: permit
                                 .features![i].properties!.vyraujantysMedziai ??
                             '',
@@ -437,9 +414,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                         reinstatementType:
                             permit.features![i].properties!.atkurimoBudas ?? '',
                       ),
-                    ),
-                  );
-                });
+                    ));
           },
         ),
       );

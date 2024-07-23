@@ -1,6 +1,5 @@
 import 'package:aad_oauth/aad_oauth.dart';
 import 'package:aad_oauth/model/config.dart';
-import 'package:admin/src/auth/helpers/globals.dart';
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
@@ -24,42 +23,43 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
   }
 
   Future<void> _onLoadData(
-    LoadData event,
+    LoadData _,
     Emitter<AdminState> emit,
   ) async {
     try {
       emit(LoadingState());
-      String? tenant = await SecureStorageProvider().getTenant();
+      GlobalKey<NavigatorState> navKey = GlobalKey();
+      var config = Config(
+        tenant: '74edcdf9-ca2e-4601-9982-4e2df1ba3a54',
+        clientId: '0408503a-ada6-4a72-8823-c52ca0fe5b43',
+        scope: 'openid profile offline_access user.read',
+        navigatorKey: navKey,
+        loader: LoadingAnimationWidget.staggeredDotsWave(
+            color: AppTheme.mainThemeColor, size: 150),
+      );
+      var oauth = AadOAuth(config);
 
-      if (tenant != null && tenant != '') {
-        final Config config = getConfigByTenant(tenant);
-        var oauth = AadOAuth(config);
+      var hasCachedAccountInformation = await oauth.hasCachedAccountInformation;
+      if (hasCachedAccountInformation) {
+        var accessToken = await oauth.getAccessToken();
+        if (accessToken != null && accessToken != '') {
+          try {
+            LogInDto userInfo = await ApiProvider().getUserInfo(accessToken);
+            await SecureStorageProvider().setUserInfo(userInfo);
+            await SecureStorageProvider().setJwtToken(userInfo.accessKey);
 
-        var hasCachedAccountInformation =
-            await oauth.hasCachedAccountInformation;
-        if (hasCachedAccountInformation) {
-          var accessToken = await oauth.getAccessToken();
-          if (accessToken != null && accessToken != '') {
-            try {
-              LogInDto userInfo = await ApiProvider().getUserInfo(accessToken);
-              await SecureStorageProvider().setUserInfo(userInfo);
-              await SecureStorageProvider().setJwtToken(userInfo.accessKey);
+            List<FullReportDto> reports =
+                await ApiProvider().getAllTrashReports('trash');
 
-              List<FullReportDto> reports =
-                  await ApiProvider().getAllTrashReports('trash');
-
-              emit(ReportState(
-                  reports: reports, userInfo: userInfo, category: 'trash'));
-            } catch (e) {
-              emit(
-                ErrorState(
-                  errorMessage: 'Something went wrong',
-                  errorDescription: e.toString(),
-                ),
-              );
-            }
-          } else {
-            emit(LogingState());
+            emit(ReportState(
+                reports: reports, userInfo: userInfo, category: 'trash'));
+          } catch (e) {
+            emit(
+              ErrorState(
+                errorMessage: 'Something went wrong',
+                errorDescription: e.toString(),
+              ),
+            );
           }
         } else {
           emit(LogingState());
@@ -135,20 +135,23 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
   }
 
   Future<void> _onLogOutEvent(
-    LogOut event,
+    LogOut _,
     Emitter<AdminState> emit,
   ) async {
     try {
       emit(LoadingState());
-      String? tenant = await SecureStorageProvider().getTenant();
-      if (tenant == null || tenant == '') {
-        emit(LogingState());
-      }
-      final Config config = getConfigByTenant(tenant!);
+      GlobalKey<NavigatorState> navKey = GlobalKey();
+      var config = Config(
+        tenant: '74edcdf9-ca2e-4601-9982-4e2df1ba3a54',
+        clientId: '0408503a-ada6-4a72-8823-c52ca0fe5b43',
+        scope: 'openid profile offline_access user.read',
+        navigatorKey: navKey,
+        loader: LoadingAnimationWidget.staggeredDotsWave(
+            color: AppTheme.mainThemeColor, size: 150),
+      );
       config.webUseRedirect = false;
       var oauth = AadOAuth(config);
       SecureStorageProvider().deleteJwtToken();
-      SecureStorageProvider().deleteTenant();
       await oauth.logout();
       var accessToken = await oauth.getAccessToken();
       if (accessToken != null) {
@@ -170,13 +173,20 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
   }
 
   Future<void> _onLogInEvent(
-    LogIn event,
+    LogIn _,
     Emitter<AdminState> emit,
   ) async {
     try {
       emit(LoadingState());
-      await SecureStorageProvider().setTenant(event.tenant);
-      final Config config = getConfigByTenant(event.tenant);
+      GlobalKey<NavigatorState> navKey = GlobalKey();
+      var config = Config(
+        tenant: '74edcdf9-ca2e-4601-9982-4e2df1ba3a54',
+        clientId: '0408503a-ada6-4a72-8823-c52ca0fe5b43',
+        scope: 'openid profile offline_access user.read',
+        navigatorKey: navKey,
+        loader: LoadingAnimationWidget.staggeredDotsWave(
+            color: AppTheme.mainThemeColor, size: 150),
+      );
       config.webUseRedirect = false;
       var oauth = AadOAuth(config);
 
@@ -206,37 +216,5 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
     Emitter<AdminState> emit,
   ) async {
     add(LoadData());
-  }
-
-  Config getConfigByTenant(String tenant) {
-    GlobalKey<NavigatorState> navKey = GlobalKey();
-    Widget loader = LoadingAnimationWidget.staggeredDotsWave(
-        color: AppTheme.mainThemeColor, size: 150);
-    switch (tenant) {
-      case 'aad':
-        return Config(
-          tenant: Globals.aadTenantId,
-          clientId: Globals.aadClientId,
-          scope: Globals.aadScope,
-          navigatorKey: navKey,
-          loader: loader,
-        );
-      case 'amvmt':
-        return Config(
-          tenant: Globals.amvmtTenantId,
-          clientId: Globals.amvmtClientId,
-          scope: Globals.amvmtScope,
-          navigatorKey: navKey,
-          loader: loader,
-        );
-      default:
-        return Config(
-          tenant: '',
-          clientId: '',
-          scope: '',
-          navigatorKey: navKey,
-          loader: loader,
-        );
-    }
   }
 }

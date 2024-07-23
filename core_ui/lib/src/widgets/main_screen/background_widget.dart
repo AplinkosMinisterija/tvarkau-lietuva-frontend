@@ -4,11 +4,9 @@ class BackgroundWidget extends StatelessWidget {
   const BackgroundWidget({
     super.key,
     required this.width,
-    required this.isMobile,
   });
 
   final double width;
-  final bool isMobile;
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +14,8 @@ class BackgroundWidget extends StatelessWidget {
       children: <Widget>[
         Container(
           width: width,
-          height: isMobile ? width * 1.533 : width * 0.430,
-          color: const Color.fromRGBO(28, 63, 58, 1),
+          height: width * 0.430,
+          color: const Color(0xff2a6354),
         ),
       ],
     );

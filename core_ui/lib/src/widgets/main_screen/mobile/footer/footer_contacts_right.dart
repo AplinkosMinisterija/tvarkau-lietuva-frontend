@@ -15,8 +15,8 @@ class FooterContactsRight extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: width * 0.0852,
-      width: width * 0.114,
+      height: width * 0.2416,
+      width: width * 0.3711,
       child: SelectionArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -28,10 +28,10 @@ class FooterContactsRight extends StatelessWidget {
               children: [
                 Icon(
                   Icons.phone,
-                  color: const Color.fromRGBO(28, 63, 58, 1),
-                  size: width * 0.01563,
+                  color: const Color.fromRGBO(57, 97, 84, 1),
+                  size: width * 0.05,
                 ),
-                SizedBox(width: width * 0.009375),
+                SizedBox(width: width * 0.023),
                 InkWell(
                   onTap: () {
                     LaunchUrl().launch('tel:+37052163385');
@@ -39,10 +39,7 @@ class FooterContactsRight extends StatelessWidget {
                   child: Text(
                     '+370 5 216 3385',
                     style: GoogleFonts.roboto(
-                      fontSize: width * 0.01094,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black,
-                    ),
+                        fontSize: width * 0.03333, fontWeight: FontWeight.w400),
                   ),
                 )
               ],
@@ -55,19 +52,17 @@ class FooterContactsRight extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  SizedBox(width: width * 0.008),
                   Icon(
                     Icons.email,
-                    color: const Color.fromRGBO(28, 63, 58, 1),
-                    size: width * 0.01563,
+                    size: width * 0.05,
+                    color: const Color.fromRGBO(57, 97, 84, 1),
                   ),
-                  SizedBox(width: width * 0.009375),
+                  SizedBox(width: width * 0.043),
                   Text(
                     'info@aad.am.lt',
                     style: GoogleFonts.roboto(
-                      fontSize: width * 0.01094,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black,
-                    ),
+                        fontSize: width * 0.03333, fontWeight: FontWeight.w400),
                   ),
                 ],
               ),
@@ -80,23 +75,21 @@ class FooterContactsRight extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  SizedBox(width: width * 0.008),
                   SvgPicture.asset(
                     'assets/svg/linkedin.svg',
-                    width: width * 0.014,
-                    height: width * 0.014,
+                    height: width * 0.05,
+                    width: width * 0.05,
                     colorFilter: const ui.ColorFilter.mode(
-                      Color.fromRGBO(28, 63, 58, 1),
+                      Color.fromRGBO(57, 97, 84, 1),
                       ui.BlendMode.srcIn,
                     ),
                   ),
-                  SizedBox(width: width * 0.009375),
+                  SizedBox(width: width * 0.043),
                   Text(
                     'LinkedIn',
                     style: GoogleFonts.roboto(
-                      fontSize: width * 0.01094,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black,
-                    ),
+                        fontSize: width * 0.03333, fontWeight: FontWeight.w400),
                   ),
                 ],
               ),

@@ -32,8 +32,6 @@ class PermitsContentState implements AddingState {
 
 class BeetleInformationState implements AddingState {}
 
-class PermitsInformationState implements AddingState {}
-
 class BeetleContentState implements AddingState {}
 
 class ConfirmationState implements AddingState {}

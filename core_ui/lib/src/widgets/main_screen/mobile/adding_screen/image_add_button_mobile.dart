@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ImageAddButton extends StatefulWidget {
-  const ImageAddButton({
+class ImageAddButtonMobile extends StatefulWidget {
+  const ImageAddButtonMobile({
     super.key,
     required this.width,
     required this.title,
     required this.onTap,
-    required this.isMobile,
   });
 
   final double width;
   final String title;
   final void Function()? onTap;
-  final bool isMobile;
 
   @override
-  State<ImageAddButton> createState() => _ImageAddButtonState();
+  State<ImageAddButtonMobile> createState() => _ImageAddButtonMobileState();
 }
 
-class _ImageAddButtonState extends State<ImageAddButton> {
+class _ImageAddButtonMobileState extends State<ImageAddButtonMobile> {
   Color activeColor = Colors.transparent;
 
   @override
@@ -38,8 +36,8 @@ class _ImageAddButtonState extends State<ImageAddButton> {
         }
       },
       child: Container(
-        width: widget.isMobile ? widget.width * 0.911 : widget.width * 0.25625,
-        height: widget.isMobile ? widget.width * 0.111 : widget.width * 0.02968,
+        width: widget.width * 0.911,
+        height: widget.width * 0.111,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4),
           border:
@@ -52,24 +50,23 @@ class _ImageAddButtonState extends State<ImageAddButton> {
             children: <Widget>[
               Icon(
                 Icons.file_download_outlined,
-                size: widget.isMobile
-                    ? widget.width * 0.0461
-                    : widget.width * 0.014,
+                size: widget.width * 0.0461,
                 color: const Color.fromRGBO(57, 97, 84, 1),
               ),
               SizedBox(
-                width: widget.isMobile
-                    ? widget.width * 0.0305
-                    : widget.width * 0.0078,
+                width: widget.width * 0.0305,
               ),
-              Text(
-                widget.title,
-                style: GoogleFonts.roboto(
-                  fontWeight: FontWeight.w500,
-                  fontSize: widget.isMobile
-                      ? widget.width * 0.0388
-                      : widget.width * 0.0109,
-                  color: const Color.fromRGBO(57, 97, 84, 1),
+              SizedBox(
+                width: widget.width * 0.333,
+                child: FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Text(
+                    widget.title,
+                    style: GoogleFonts.raleway(
+                      fontWeight: FontWeight.w600,
+                      color: const Color.fromRGBO(57, 97, 84, 1),
+                    ),
+                  ),
                 ),
               ),
             ]),

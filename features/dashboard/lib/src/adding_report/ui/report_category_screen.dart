@@ -50,29 +50,13 @@ class _ReportCategoryScreenBody extends StatelessWidget {
                     ),
                   ),
                   ReportCategorySelector(
-                    title: 'Atliekos',
-                    description: 'Jeigu pastebite gamtoje paliktas atliekas',
-                    onTap: () {
-                      context.goNamed('newReportTrash');
-                    },
-                    iconName: 'recycle_icon',
-                  ),
-                  ReportCategorySelector(
-                    title: 'Pažeidimai kirtimuose ir leidimai',
-                    description: 'Jeigu matote pažeidimą kirtimuose',
+                    title: 'Nelegalūs kirtimai ir leidimai',
+                    description:
+                    'Jeigu matote nelegalų kirtimą',
                     onTap: () {
                       context.goNamed('newReportPermits');
                     },
-                    iconName: 'permit_icon',
-                  ),
-                  ReportCategorySelector(
-                    title: 'Kenkėjų apniktos ar nuvirtusios eglės',
-                    description:
-                        'Jeigu pastebite žievėgraužį tipografą ar tikėtiną jo veisimosi vietą',
-                    onTap: () {
-                      context.goNamed('newReportBeetle');
-                    },
-                    iconName: 'bug_icon',
+                    iconName: 'forest_icon',
                   ),
                   ReportCategorySelector(
                     title: 'Sugadinta miško paklotė ir keliai',
@@ -82,6 +66,23 @@ class _ReportCategoryScreenBody extends StatelessWidget {
                       context.goNamed('newReportForest');
                     },
                     iconName: 'forest_icon',
+                  ),
+                  ReportCategorySelector(
+                    title: 'Atliekos',
+                    description: 'Jeigu pastebite gamtoje paliktas atliekas',
+                    onTap: () {
+                      context.goNamed('newReportTrash');
+                    },
+                    iconName: 'recycle_icon',
+                  ),
+                  ReportCategorySelector(
+                    title: 'Kenkėjų apniktos ar nuvirtusios eglės',
+                    description:
+                        'Jeigu pastebite žievėgraužį tipografą ar tikėtiną jo veisimosi vietą',
+                    onTap: () {
+                      context.goNamed('newReportBeetle');
+                    },
+                    iconName: 'bug_icon',
                   ),
                 ],
               ),
