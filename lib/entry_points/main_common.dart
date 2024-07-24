@@ -28,7 +28,12 @@ Future<void> mainCommon(Flavor flavor) async {
         options.dsn =
             'https://a5fa926d775d54e54d0be1403ede3953@sentry.biip.lt/49';
         options.tracesSampleRate = 1.0;
+        options.diagnosticLevel = SentryLevel.debug;
+        options.enableNativeCrashHandling = true;
+        options.reportSilentFlutterErrors = true;
+        options.enableAutoNativeBreadcrumbs = true;
       },
+
       appRunner: () => runApp(
         DefaultAssetBundle(
           bundle: SentryAssetBundle(),
