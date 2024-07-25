@@ -5,42 +5,54 @@ class ReportTypeSwitcher extends StatelessWidget {
   const ReportTypeSwitcher({
     super.key,
     required this.isShowDumps,
+    required this.isMobile,
+    required this.width,
     required this.onReportTypeChange,
   });
 
   final bool isShowDumps;
-  final ValueChanged<bool> onReportTypeChange;
+  final bool isMobile;
+  final double width;
+  final ValueChanged<String> onReportTypeChange;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 318,
-      height: 52,
+      width: isMobile ? width * 0.8667 : width * 0.312,
+      height: isMobile ? width * 0.111 : width * 0.04,
       decoration: BoxDecoration(
-        color: const Color(0xffeceaea),
-        borderRadius: BorderRadius.circular(12),
+        color: const Color.fromRGBO(255, 255, 255, 1),
+        borderRadius: BorderRadius.circular(4),
+        boxShadow: const [
+          BoxShadow(
+            color: Color.fromRGBO(0, 0, 0, 0.16),
+            spreadRadius: 0,
+            blurRadius: 3,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
       ),
-      padding: const EdgeInsets.all(4),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ReportTypeSwitcherButton(
-            width: 153,
-            height: 42,
-            buttonText: 'Peržiūrėti pranešimus\napie atliekas',
+            width: width,
+            isMobile: isMobile,
+            buttonText: 'Pranešimai apie atliekas',
             isActive: isShowDumps ? false : true,
             onPressed: () {
-              onReportTypeChange(false);
+              onReportTypeChange('trash');
             },
           ),
+          SizedBox(width: isMobile ? width * 0.0139 : width * 0.005),
           ReportTypeSwitcherButton(
-            width: 153,
-            height: 42,
-            buttonText: 'Peržiūrėti atliekų\nsurinkimo aikšteles',
+            width: width,
+            isMobile: isMobile,
+            buttonText: 'Atliekų surinkimo aikštelės',
             isActive: isShowDumps ? true : false,
             onPressed: () {
-              onReportTypeChange(true);
+              onReportTypeChange('dumps');
             },
           ),
         ],

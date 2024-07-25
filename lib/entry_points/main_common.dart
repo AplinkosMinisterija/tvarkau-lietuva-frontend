@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:core/core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
@@ -9,6 +10,7 @@ import 'package:admin/admin.dart';
 
 Future<void> mainCommon(Flavor flavor) async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SecureStorageProvider().resetUserCache();
   usePathUrlStrategy();
 
   if (Uri.base.toString().contains("access_token=")) {
@@ -21,12 +23,17 @@ Future<void> mainCommon(Flavor flavor) async {
   }
 
   if (kReleaseMode) {
-    // Only enable Sentry in release builds.
     await SentryFlutter.init(
       (options) {
         options.dsn =
             'https://a5fa926d775d54e54d0be1403ede3953@sentry.biip.lt/49';
         options.tracesSampleRate = 1.0;
+        options.diagnosticLevel = SentryLevel.debug;
+        options.enableNativeCrashHandling = true;
+        options.reportSilentFlutterErrors = true;
+        options.enableAutoNativeBreadcrumbs = true;
+        options.markAutomaticallyCollectedErrorsAsFatal = true;
+        options.attachStacktrace = true;
       },
       appRunner: () => runApp(
         DefaultAssetBundle(

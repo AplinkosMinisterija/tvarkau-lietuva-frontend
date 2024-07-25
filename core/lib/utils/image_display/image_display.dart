@@ -15,6 +15,8 @@ class ImageGallery {
     required List<String> imageUrls,
     required BuildContext context,
     required double width,
+    required bool titlesEnabled,
+    List<String>? titles,
   }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -24,34 +26,62 @@ class ImageGallery {
           mainAxisSpacing: 16,
           crossAxisSpacing: 16,
           shrinkWrap: true,
+          childAspectRatio: titlesEnabled ? 0.82 : 1,
           physics: const NeverScrollableScrollPhysics(),
           crossAxisCount: 2,
           children: [
-            for (final image in imageUrls)
+            for (var i = 0; i < imageUrls.length; i++) ...[
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(
-                    PageRouteBuilder(
-                      opaque: false,
-                      pageBuilder: (_, __, ___) =>
-                          ImagePreviewNetwork(imageUrl: image),
-                    ),
-                  );
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return ImagePreviewNetwork(
+                            imageUrls: imageUrls, activeImageIndex: i);
+                      });
                 },
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: AspectRatio(
-                    aspectRatio: 1,
-                    child: MouseRegion(
-                      cursor: SystemMouseCursors.zoomIn,
-                      child: Image.network(
-                        image,
-                        fit: BoxFit.cover,
+                child: titlesEnabled
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: AspectRatio(
+                              aspectRatio: 1,
+                              child: MouseRegion(
+                                cursor: SystemMouseCursors.zoomIn,
+                                child: Image.network(
+                                  imageUrls[i],
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            titles?[i] ?? '',
+                            textAlign: TextAlign.start,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      )
+                    : ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: AspectRatio(
+                          aspectRatio: 1,
+                          child: MouseRegion(
+                            cursor: SystemMouseCursors.zoomIn,
+                            child: Image.network(
+                              imageUrls[i],
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
               ),
+            ]
           ],
         ),
       ),
