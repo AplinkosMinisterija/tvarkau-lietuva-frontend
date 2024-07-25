@@ -70,6 +70,10 @@ class AadApp extends StatelessWidget {
           path: '/pranesti-atliekos',
           builder: (context, state) => const AddingScreenTrash()),
       GoRoute(
+          name: 'newReportPermits',
+          path: '/pranesti-pazeidimai-kirtimuose',
+          builder: (context, state) => const AddingScreenPermits()),
+      GoRoute(
           name: 'newReportForest',
           path: '/pranesti-sugadinta-misko-paklote-ir-keliai',
           builder: (context, state) => const AddingScreenForest()),

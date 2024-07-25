@@ -123,7 +123,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
   Widget build(BuildContext context) {
     return Title(
       title: "Pranešimo informacija",
-      color: Colors.green,
+      color: const Color.fromRGBO(28, 63, 58, 1),
       child: Scaffold(
         body: SingleChildScrollView(
           child: Stack(
@@ -131,7 +131,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
               Container(
                 width: widget.width,
                 height: widget.width * 0.8666,
-                color: const Color.fromRGBO(57, 97, 84, 1),
+                color: const Color.fromRGBO(28, 63, 58, 1),
               ),
               Padding(
                 padding: EdgeInsets.all(widget.width * 0.0444),
@@ -142,12 +142,11 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        DepartmentLogoMobile(
-                          width: widget.width,
-                          onTap: () {
-                            context.goNamed("home");
-                          },
-                        ),
+                        LogoButton(
+                            width: widget.width * 0.4615,
+                            onTap: () {
+                              context.goNamed('home');
+                            }),
                         IconButton(
                             onPressed: () => _showDialog(),
                             icon: Icon(
@@ -235,16 +234,16 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                                           context: context,
                                           builder: (BuildContext context) =>
                                               MapTypeChangeDialog(
-                                                  width: widget.width,
-                                                  currentMapType:
-                                                      _currentMapType,
-                                                  onHover: (isHover) {},
-                                                  onChangeTap:
-                                                      (MapType mapType) {
-                                                    setState(() {
-                                                      _currentMapType = mapType;
-                                                    });
-                                                  }));
+                                                width: widget.width,
+                                                currentMapType: _currentMapType,
+                                                onHover: (isHover) {},
+                                                onChangeTap: (MapType mapType) {
+                                                  setState(() {
+                                                    _currentMapType = mapType;
+                                                  });
+                                                },
+                                                isMobile: true,
+                                              ));
                                     },
                                   )),
                             ),
@@ -481,7 +480,9 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                     imageUrls: FormatterUtils().formatImageUrls(
                         widget.report.officerImageUrls.toList()),
                     context: context,
-                    width: widget.width * 0.7)
+                    width: widget.width * 0.7,
+                    titlesEnabled: false,
+                  )
                 : const SizedBox.shrink(),
           ],
         )
@@ -572,7 +573,9 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                       imageUrls: FormatterUtils().formatImageUrls(
                           widget.report.officerImageUrls.toList()),
                       context: context,
-                      width: widget.width * 0.7)
+                      width: widget.width * 0.7,
+                      titlesEnabled: false,
+                    )
                   : const SizedBox.shrink(),
             ],
             SizedBox(height: widget.width * 0.1111),
@@ -761,7 +764,9 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                     imageUrls: FormatterUtils()
                         .formatImageUrls(widget.report.imageUrls.toList()),
                     context: context,
-                    width: widget.width * 0.7)
+                    width: widget.width * 0.7,
+                    titlesEnabled: false,
+                  )
                 : const SizedBox.shrink(),
           ],
         )
@@ -778,7 +783,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
   }
 
   void addCustomIcon() {
-    BitmapDescriptor.fromAssetImage(
+    BitmapDescriptor.asset(
             const ImageConfiguration(), 'assets/svg/pin_icon.svg')
         .then((icon) {
       setState(() {
@@ -838,13 +843,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                                   )),
                             ),
                             SizedBox(height: widget.width * 0.0555),
-                            FooterDescriptionMobile(width: widget.width * 0.9),
-                            SizedBox(height: widget.width * 0.0654),
-                            FooterContactsMobile(width: widget.width * 0.9),
-                            SizedBox(height: widget.width * 0.0444),
-                            FooterConsultMobile(width: widget.width * 0.85),
-                            SizedBox(height: widget.width * 0.04722),
-                            FooterSupportMobile(width: widget.width * 0.9),
+                            Footer(width: widget.width * 0.9, isMobile: true)
                           ],
                         ),
                       ),

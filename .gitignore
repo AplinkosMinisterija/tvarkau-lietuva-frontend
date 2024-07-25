@@ -32,6 +32,9 @@ migrate_working_dir/
 .pub/
 /build/
 
+# Ignore Flutter DevTools preferences
+devtools_options.yaml
+
 # Symbolication related
 app.*.symbols
 

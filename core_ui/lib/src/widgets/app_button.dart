@@ -42,18 +42,18 @@ class AppButton extends StatelessWidget {
       height: height ?? 45,
       child: ElevatedButton(
         style: ButtonStyle(
-          shape: MaterialStateProperty.all(
+          shape: WidgetStateProperty.all(
             RoundedRectangleBorder(
               side: borderSide ?? BorderSide.none,
               borderRadius: BorderRadius.circular(12),
             ),
           ),
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          shadowColor: MaterialStateProperty.all(Colors.transparent),
-          overlayColor: MaterialStateProperty.all(Colors.transparent),
-          backgroundColor: MaterialStateProperty.resolveWith(
-            (Set<MaterialState> states) {
-              if (states.contains(MaterialState.pressed)) {
+          shadowColor: WidgetStateProperty.all(Colors.transparent),
+          overlayColor: WidgetStateProperty.all(Colors.transparent),
+          backgroundColor: WidgetStateProperty.resolveWith(
+            (Set<WidgetState> states) {
+              if (states.contains(WidgetState.pressed)) {
                 return isEnabled
                     ? onPressedBackgroundColor ?? backgroundColor
                     : disabledBackgroundColor ?? backgroundColor;

@@ -34,17 +34,17 @@ class CustomSwitch extends StatelessWidget {
         child: Theme(
           data: ThemeData(useMaterial3: true),
           child: Switch(
-            trackOutlineWidth: MaterialStateProperty.all(0),
-            trackOutlineColor: MaterialStateProperty.all(Colors.transparent),
-            trackColor: MaterialStateProperty.resolveWith((states) {
-              if (states.contains(MaterialState.selected)) {
+            trackOutlineWidth: WidgetStateProperty.all(0),
+            trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
+            trackColor: WidgetStateProperty.resolveWith((states) {
+              if (states.contains(WidgetState.selected)) {
                 return activeTrackColor;
               } else {
                 return inactiveTrackColor;
               }
             }),
-            thumbColor: MaterialStateProperty.resolveWith((states) {
-              if (states.contains(MaterialState.selected)) {
+            thumbColor: WidgetStateProperty.resolveWith((states) {
+              if (states.contains(WidgetState.selected)) {
                 return activeThumbColor;
               } else {
                 return inactiveThumbColor;

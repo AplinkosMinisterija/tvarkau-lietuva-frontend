@@ -18,14 +18,17 @@ class _MaintenenceScreenState extends State<MaintenenceScreen> {
   Widget build(BuildContext context) {
     return Title(
       title: "Tvarkau Lietuvą",
-      color: Colors.green,
+      color: const Color.fromRGBO(28, 63, 58, 1),
       child: Scaffold(
         body: CupertinoPageScaffold(
           child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
               return Stack(
                 children: [
-                  BackgroundWidget(width: constraints.maxWidth),
+                  BackgroundWidget(
+                    width: constraints.maxWidth,
+                    isMobile: false,
+                  ),
                   Column(
                     children: <Widget>[
                       SizedBox(

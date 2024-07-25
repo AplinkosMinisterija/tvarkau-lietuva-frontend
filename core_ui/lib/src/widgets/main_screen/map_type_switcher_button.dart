@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -39,29 +38,26 @@ class _MapTypeSwitcherButtonState extends State<MapTypeSwitcherButton> {
         }
       },
       child: Container(
-        height: widget.width * 0.0291,
-        width: widget.width * 0.093,
+        height: widget.width * 0.025,
+        width: widget.width * 0.077,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(4),
           border: Border.all(
             width: 1,
-            color: const Color(0xffff6a3d),
+            color: const Color.fromRGBO(255, 106, 61, 1),
           ),
-          color: widget.isActive ? const Color(0xffff6a3d) : activeColor,
+          color: widget.isActive
+              ? const Color.fromRGBO(255, 106, 61, 1)
+              : activeColor,
         ),
         child: Center(
-          child: SizedBox(
-            width: widget.width * 0.07,
-            child: AutoSizeText(
-              widget.title,
-              maxLines: 1,
-              wrapWords: false,
-              textAlign: TextAlign.center,
-              style: GoogleFonts.raleway(
-                fontWeight: FontWeight.w600,
-                fontSize: 14,
-                color: widget.isActive ? Colors.white : Colors.black,
-              ),
+          child: Text(
+            widget.title,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.roboto(
+              fontWeight: FontWeight.w400,
+              fontSize: widget.width * 0.009375,
+              color: widget.isActive ? Colors.white : Colors.black,
             ),
           ),
         ),
