@@ -22,6 +22,12 @@ Future<void> mainCommon(Flavor flavor) async {
     Globals.instance.azureAccessToken = accessToken;
   }
 
+  PlatformDispatcher.instance.onError = (error, stack) {
+    print(error);
+    print(stack);
+    return true;
+  };
+
   if (kReleaseMode) {
     await SentryFlutter.init(
       (options) {
@@ -32,6 +38,8 @@ Future<void> mainCommon(Flavor flavor) async {
         options.enableNativeCrashHandling = true;
         options.reportSilentFlutterErrors = true;
         options.enableAutoNativeBreadcrumbs = true;
+        options.markAutomaticallyCollectedErrorsAsFatal = true;
+        options.attachStacktrace = true;
       },
 
       appRunner: () => runApp(
