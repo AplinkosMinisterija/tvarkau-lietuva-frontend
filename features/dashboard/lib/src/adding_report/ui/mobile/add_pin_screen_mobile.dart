@@ -49,15 +49,15 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      addCustomIcon();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   addCustomIcon();
+    // });
     // markers = widget.markers;
     // if (widget.permits != null) {
     //   isShowPolygons = true;
     //   mapPolygons(widget.permits!);
     // }
-    getLocation();
+    // getLocation();
     super.initState();
   }
 
@@ -159,27 +159,33 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                 width: widget.width,
                 child: widget.permits == null
                     ? GoogleMap(
-                        onMapCreated: _onMapCreated,
                         initialCameraPosition: _lithuaniaCameraPosition,
-                        webGestureHandling: WebGestureHandling.cooperative,
-                        mapType: currentMapType,
-                        onTap: _handleTap,
-                        markers: isShowMarkers
-                            ? markers
-                            : addedMarker.map((e) => e).toSet(),
                       )
+                    // GoogleMap(
+                    //         onMapCreated: _onMapCreated,
+                    //         initialCameraPosition: _lithuaniaCameraPosition,
+                    //         webGestureHandling: WebGestureHandling.cooperative,
+                    //         mapType: currentMapType,
+                    //         onTap: _handleTap,
+                    //         markers: isShowMarkers
+                    //             ? markers
+                    //             : addedMarker.map((e) => e).toSet(),
+                    //       )
                     : GoogleMap(
-                        polygons: isShowPolygons ? polygons : {},
-                        markers: isShowMarkers
-                            ? markers
-                            : addedMarker.map((e) => e).toSet(),
-                        webGestureHandling: WebGestureHandling.cooperative,
-                        mapType: currentMapType,
-                        onTap: _handleTap,
-                        buildingsEnabled: true,
                         initialCameraPosition: _lithuaniaCameraPosition,
-                        onMapCreated: _onMapCreated,
                       ),
+                // GoogleMap(
+                //         polygons: isShowPolygons ? polygons : {},
+                //         markers: isShowMarkers
+                //             ? markers
+                //             : addedMarker.map((e) => e).toSet(),
+                //         webGestureHandling: WebGestureHandling.cooperative,
+                //         mapType: currentMapType,
+                //         onTap: _handleTap,
+                //         buildingsEnabled: true,
+                //         initialCameraPosition: _lithuaniaCameraPosition,
+                //         onMapCreated: _onMapCreated,
+                //       ),
               ),
               Align(
                 alignment: Alignment.topCenter,
@@ -329,7 +335,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
         tappedPoint.longitude,
       ),
       draggable: true,
-      //onDrag: _handleDrag,
+      onDrag: _handleDrag,
       onDragEnd: _handleDragEnd,
     );
 
@@ -344,6 +350,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
     });
   }
 
+  _handleDrag(LatLng tappedPoint) {}
 
   _handleDragEnd(LatLng tappedPoint) {
     setState(() {
@@ -370,8 +377,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
 
   Future<void> mapPolygons(Permit permit) async {
     Set<Polygon> tempPolygons = {};
-    //for (var i = 0; i < permit.features!.length; i++) {
-    for (var i = 0; i < 200; i++) {
+    for (var i = 0; i < permit.features!.length; i++) {
       List<LatLng> coordinates = [];
       for (var j = 0;
           j < permit.features![i].geometry!.coordinates![0][0].length;
@@ -438,7 +444,6 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
     }
     setState(() {
       polygons = tempPolygons;
-      tempPolygons.clear();
     });
   }
 }

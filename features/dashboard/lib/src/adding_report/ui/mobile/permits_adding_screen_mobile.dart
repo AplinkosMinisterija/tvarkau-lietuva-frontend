@@ -74,9 +74,9 @@ class _PermitsAddingScreenMobileState extends State<PermitsAddingScreenMobile> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      addCustomIcon();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   addCustomIcon();
+    // });
     // int index = 0;
     // for (var element in widget.reports) {
     //   markers.add(

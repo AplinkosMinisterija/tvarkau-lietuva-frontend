@@ -25,7 +25,7 @@ class LoaderWidget {
             child: ClipRRect(
               borderRadius:
                   BorderRadius.all(Radius.circular(isMobile ? 8 : 32)),
-              child: const SizedBox(height: 200,width: 200,)
+              child: const SizedBox(width: 200,height: 200,)
               // const GoogleMap(
               //     initialCameraPosition: CameraPosition(
               //         target: LatLng(55.1736, 23.8948), zoom: 7.0)),

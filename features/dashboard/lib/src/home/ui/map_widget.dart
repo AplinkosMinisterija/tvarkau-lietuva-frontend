@@ -365,11 +365,7 @@ class _MapWidgetState extends State<MapWidget> {
                 );
               }),
         );
-        if(index> 1200){
-          break;
-        }
         index++;
-
       }
     } else if (widget.dumps != null) {
       for (var element in widget.dumps!) {
