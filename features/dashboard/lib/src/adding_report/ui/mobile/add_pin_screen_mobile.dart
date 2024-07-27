@@ -157,10 +157,10 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
               SizedBox(
                 height: size.height - widget.width * 0.133,
                 width: widget.width,
-                child: widget.permits == null
-                    ? GoogleMap(
-                        initialCameraPosition: _lithuaniaCameraPosition,
-                      )
+                //child: widget.permits == null
+                    // ? GoogleMap(
+                    //     initialCameraPosition: _lithuaniaCameraPosition,
+                    //   )
                     // GoogleMap(
                     //         onMapCreated: _onMapCreated,
                     //         initialCameraPosition: _lithuaniaCameraPosition,
@@ -171,9 +171,9 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile> {
                     //             ? markers
                     //             : addedMarker.map((e) => e).toSet(),
                     //       )
-                    : GoogleMap(
-                        initialCameraPosition: _lithuaniaCameraPosition,
-                      ),
+                    // : GoogleMap(
+                    //     initialCameraPosition: _lithuaniaCameraPosition,
+                    //   ),
                 // GoogleMap(
                 //         polygons: isShowPolygons ? polygons : {},
                 //         markers: isShowMarkers

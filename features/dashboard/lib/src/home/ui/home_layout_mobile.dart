@@ -44,7 +44,7 @@ class _HomeLayoutMobileState extends State<HomeLayoutMobile> {
         return true;
       },
       child: SingleChildScrollView(
-        physics: isMapHover ? const NeverScrollableScrollPhysics() : null,
+        //physics: isMapHover ? const NeverScrollableScrollPhysics() : null,
         controller: scrollController,
         child: Stack(
           children: [
@@ -74,15 +74,15 @@ class _HomeLayoutMobileState extends State<HomeLayoutMobile> {
                       context.goNamed('report_category');
                     },
                   ),
-                  MapScreen(
-                    isMapHover: (isHover) {
-                      setState(() {
-                        isMapHover = isHover;
-                      });
-                    },
-                    width: widget.width,
-                    isMobile: true,
-                  ),
+                  // MapScreen(
+                  //   isMapHover: (isHover) {
+                  //     setState(() {
+                  //       isMapHover = isHover;
+                  //     });
+                  //   },
+                  //   width: widget.width,
+                  //   isMobile: true,
+                  // ),
                   SizedBox(height: widget.width * 0.0343),
                   Footer(
                     width: widget.width,

@@ -71,27 +71,27 @@ class _AddingMapRedirectWindowState extends State<AddingMapRedirectWindow> {
               width: widget.width * 0.911,
               child: Stack(
                 children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(8)),
-                    child: GoogleMap(
-                      initialCameraPosition: viewPosition,
-                      markers: marker.isNotEmpty ? marker : {},
-                      onMapCreated: (GoogleMapController controller) {
-                        _googleMapController = controller;
-                        _googleMapController.animateCamera(
-                          CameraUpdate.newLatLngZoom(
-                              LatLng(viewPosition.target.latitude,
-                                  viewPosition.target.longitude),
-                              viewPosition.zoom),
-                        );
-                      },
-                      webGestureHandling: WebGestureHandling.none,
-                      mapToolbarEnabled: false,
-                      scrollGesturesEnabled: false,
-                      zoomControlsEnabled: false,
-                      zoomGesturesEnabled: false,
-                    ),
-                  ),
+                  // ClipRRect(
+                  //   borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  //   child: GoogleMap(
+                  //     initialCameraPosition: viewPosition,
+                  //     markers: marker.isNotEmpty ? marker : {},
+                  //     onMapCreated: (GoogleMapController controller) {
+                  //       _googleMapController = controller;
+                  //       _googleMapController.animateCamera(
+                  //         CameraUpdate.newLatLngZoom(
+                  //             LatLng(viewPosition.target.latitude,
+                  //                 viewPosition.target.longitude),
+                  //             viewPosition.zoom),
+                  //       );
+                  //     },
+                  //     webGestureHandling: WebGestureHandling.none,
+                  //     mapToolbarEnabled: false,
+                  //     scrollGesturesEnabled: false,
+                  //     zoomControlsEnabled: false,
+                  //     zoomGesturesEnabled: false,
+                  //   ),
+                  // ),
                 ],
               ),
             ),
