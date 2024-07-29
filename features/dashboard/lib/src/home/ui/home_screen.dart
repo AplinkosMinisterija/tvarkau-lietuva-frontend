@@ -13,36 +13,24 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Future<double> getScrollOffset() async {
-    double offset = await SecureStorageProvider().getScrollOffset();
-    return offset;
-  }
+  // Future<double> getScrollOffset() async {
+  //   double offset = await SecureStorageProvider().getScrollOffset();
+  //   return offset;
+  // }
 
   @override
   void initState() {
-    getScrollOffset();
+    // getScrollOffset();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: getScrollOffset(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done &&
-            snapshot.hasData) {
-          return LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) {
-            return constraints.maxWidth > 900
-                ? HomeLayoutWeb(
-                    scrollOffset: snapshot.data!, width: constraints.maxWidth)
-                : HomeLayoutMobile(
-                    scrollOffset: snapshot.data!, width: constraints.maxWidth);
-          });
-        } else {
-          return LoaderWidget().loader();
-        }
-      },
-    );
+    return LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+      return constraints.maxWidth > 900
+          ? HomeLayoutWeb(scrollOffset: 0, width: constraints.maxWidth)
+          : HomeLayoutMobile(scrollOffset: 0, width: constraints.maxWidth);
+    });
   }
 }

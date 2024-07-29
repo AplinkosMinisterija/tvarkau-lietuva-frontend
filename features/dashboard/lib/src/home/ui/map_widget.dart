@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 class MapWidget extends StatefulWidget {
@@ -18,7 +17,7 @@ class MapWidget extends StatefulWidget {
     required this.onCategoryChange,
     required this.category,
     this.onInformationTap,
-    required this.cameraPosition,
+    //required this.cameraPosition,
     required this.isMobile,
     super.key,
   });
@@ -30,7 +29,7 @@ class MapWidget extends StatefulWidget {
   final ValueChanged<bool> isHovering;
   final Function(String) onCategoryChange;
   final Function(String)? onInformationTap;
-  final CameraPosition cameraPosition;
+  // final CameraPosition cameraPosition;
   final String category;
   final bool isMobile;
 
@@ -41,16 +40,16 @@ class MapWidget extends StatefulWidget {
 class _MapWidgetState extends State<MapWidget> {
   final CustomInfoWindowController _customReportInfoWindowController =
       CustomInfoWindowController();
-  BitmapDescriptor trashMarkerIcon = BitmapDescriptor.defaultMarker;
+  //BitmapDescriptor trashMarkerIcon = BitmapDescriptor.defaultMarker;
   bool isShowMarkers = false;
   bool isShowDumps = false;
-  Set<Marker> _markers = {};
+  //Set<Marker> _markers = {};
   late bool isMapHover;
   bool isTrash = false;
   String? initialItem;
-  late MapType _currentMapType;
-  late CameraPosition _cameraPosition;
-  late GoogleMapController mapController;
+  // late MapType _currentMapType;
+  // late CameraPosition _cameraPosition;
+  // late GoogleMapController mapController;
   bool isLocationLoading = false;
 
   static const List<String> _dropdownList = [
@@ -62,8 +61,8 @@ class _MapWidgetState extends State<MapWidget> {
   @override
   void initState() {
     WidgetsFlutterBinding.ensureInitialized();
-    _cameraPosition = widget.cameraPosition;
-    mapMarkers();
+    //_cameraPosition = widget.cameraPosition;
+    //mapMarkers();
     if (widget.category == 'trash' || widget.category == 'dumps') {
       initialItem = 'Atliekos';
     } else if (widget.category == 'forest') {
@@ -76,13 +75,13 @@ class _MapWidgetState extends State<MapWidget> {
       isShowDumps = true;
     }
 
-    _currentMapType = MapType.normal;
+    //_currentMapType = MapType.normal;
     super.initState();
   }
 
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-  }
+  // void _onMapCreated(GoogleMapController controller) {
+  //   mapController = controller;
+  // }
 
   Future<Position> getCurrentLocation() async {
     setState(() {
@@ -153,27 +152,27 @@ class _MapWidgetState extends State<MapWidget> {
                           Radius.circular(widget.isMobile ? 8 : 32)),
                       child: Stack(
                         children: [
-                          GoogleMap(
-                            mapType: _currentMapType,
-                            initialCameraPosition: _cameraPosition,
-                            markers: _markers,
-                            myLocationButtonEnabled: true,
-                            myLocationEnabled: true,
-                            onMapCreated:
-                                (GoogleMapController controller) async {
-                              _onMapCreated(controller);
-                              _customReportInfoWindowController
-                                  .googleMapController = controller;
-                            },
-                            onCameraMove: (position) {
-                              _customReportInfoWindowController.onCameraMove!();
-                              updateCamera(position);
-                            },
-                            onTap: (position) {
-                              _customReportInfoWindowController
-                                  .hideInfoWindow!();
-                            },
-                          ),
+                          // GoogleMap(
+                          //   mapType: _currentMapType,
+                          //   initialCameraPosition: _cameraPosition,
+                          //   markers: _markers,
+                          //   myLocationButtonEnabled: true,
+                          //   myLocationEnabled: true,
+                          //   onMapCreated:
+                          //       (GoogleMapController controller) async {
+                          //     _onMapCreated(controller);
+                          //     _customReportInfoWindowController
+                          //         .googleMapController = controller;
+                          //   },
+                          //   onCameraMove: (position) {
+                          //     _customReportInfoWindowController.onCameraMove!();
+                          //     //updateCamera(position);
+                          //   },
+                          //   onTap: (position) {
+                          //     _customReportInfoWindowController
+                          //         .hideInfoWindow!();
+                          //   },
+                          // ),
                           CustomInfoWindow(
                             (top, left, width, height) => {},
                             leftMargin: 200,
@@ -192,13 +191,13 @@ class _MapWidgetState extends State<MapWidget> {
                                     onPressed: () async {
                                       Position position =
                                           await getCurrentLocation();
-                                      setState(() {
-                                        mapController.animateCamera(
-                                            CameraUpdate.newLatLngZoom(
-                                                LatLng(position.latitude,
-                                                    position.longitude),
-                                                16));
-                                      });
+                                      // setState(() {
+                                      //   mapController.animateCamera(
+                                      //       CameraUpdate.newLatLngZoom(
+                                      //           LatLng(position.latitude,
+                                      //               position.longitude),
+                                      //           16));
+                                      // });
                                     },
                                     isLoading: isLocationLoading,
                                   )),
@@ -248,19 +247,19 @@ class _MapWidgetState extends State<MapWidget> {
                                     height: 40,
                                     width: 40,
                                     onPressed: () {
-                                      showDialog<String>(
-                                          context: context,
-                                          builder: (BuildContext context) =>
-                                              MapTypeChangeDialog(
-                                                width: widget.width,
-                                                currentMapType: _currentMapType,
-                                                onChangeTap: (MapType mapType) {
-                                                  setState(() {
-                                                    _currentMapType = mapType;
-                                                  });
-                                                },
-                                                isMobile: widget.isMobile,
-                                              ));
+                                      // showDialog<String>(
+                                      //     context: context,
+                                      //     builder: (BuildContext context) =>
+                                      //         MapTypeChangeDialog(
+                                      //           width: widget.width,
+                                      //           currentMapType: _currentMapType,
+                                      //           onChangeTap: (MapType mapType) {
+                                      //             setState(() {
+                                      //               _currentMapType = mapType;
+                                      //             });
+                                      //           },
+                                      //           isMobile: widget.isMobile,
+                                      //         ));
                                     },
                                   ),
                                 )),
@@ -315,9 +314,9 @@ class _MapWidgetState extends State<MapWidget> {
     );
   }
 
-  Future<void> updateCamera(CameraPosition cameraPosition) async {
-    await SecureStorageProvider().setCameraSetup(cameraPosition);
-  }
+  // Future<void> updateCamera(CameraPosition cameraPosition) async {
+  //   await SecureStorageProvider().setCameraSetup(cameraPosition);
+  // }
 
   getDropdownValueByString(String value) {
     switch (value) {
@@ -329,87 +328,87 @@ class _MapWidgetState extends State<MapWidget> {
         return 'permits';
     }
   }
-
-  Future<void> mapMarkers() async {
-    int index = 1000;
-    Set<Marker> tempMarkers = {};
-    if (widget.reports != null) {
-      for (var element in widget.reports!) {
-        tempMarkers.add(
-          Marker(
-              markerId: MarkerId(
-                element.name.toString() + index.toString(),
-              ),
-              position: LatLng(
-                element.latitude.toDouble(),
-                element.longitude.toDouble(),
-              ),
-              icon: await BitmapDescriptor.asset(
-                  const ImageConfiguration(size: Size(25, 30)),
-                  getTrashIconPath(element.status)),
-              onTap: () {
-                _customReportInfoWindowController.addInfoWindow!(
-                  InfoTrashWindowBox(
-                      title: element.name,
-                      imageUrls: element.imageUrls.toList(),
-                      status: element.status,
-                      date: element.reportDate.toString(),
-                      reportId: element.refId,
-                      onTap: () {
-                        widget.onInformationTap!(element.refId);
-                      }),
-                  LatLng(
-                    element.latitude.toDouble(),
-                    element.longitude.toDouble(),
-                  ),
-                );
-              }),
-        );
-        index++;
-      }
-    } else if (widget.dumps != null) {
-      for (var element in widget.dumps!) {
-        tempMarkers.add(
-          Marker(
-              markerId: MarkerId(
-                element.name.toString() + index.toString(),
-              ),
-              position: LatLng(
-                element.reportLat.toDouble(),
-                element.reportLong.toDouble(),
-              ),
-              icon: await BitmapDescriptor.asset(
-                  const ImageConfiguration(size: Size(50, 50)),
-                  'assets/svg/dump_icon.svg'),
-              onTap: () {
-                _customReportInfoWindowController.addInfoWindow!(
-                  InfoDumpWindowBox(
-                    title: element.name,
-                    address: element.address ?? '',
-                    phone: element.phone ?? '',
-                    workingHours: element.workingHours,
-                    moreInformation: element.moreInformation,
-                    isHovering: (bool value) {
-                      setState(() {
-                        isMapHover = value;
-                      });
-                    },
-                  ),
-                  LatLng(
-                    element.reportLat.toDouble(),
-                    element.reportLong.toDouble(),
-                  ),
-                );
-              }),
-        );
-        index++;
-      }
-    }
-
-    setState(() {
-      _markers = tempMarkers;
-    });
-  }
+  //
+  // Future<void> mapMarkers() async {
+  //   int index = 1000;
+  //   Set<Marker> tempMarkers = {};
+  //   if (widget.reports != null) {
+  //     for (var element in widget.reports!) {
+  //       tempMarkers.add(
+  //         Marker(
+  //             markerId: MarkerId(
+  //               element.name.toString() + index.toString(),
+  //             ),
+  //             position: LatLng(
+  //               element.latitude.toDouble(),
+  //               element.longitude.toDouble(),
+  //             ),
+  //             icon: await BitmapDescriptor.asset(
+  //                 const ImageConfiguration(size: Size(25, 30)),
+  //                 getTrashIconPath(element.status)),
+  //             onTap: () {
+  //               _customReportInfoWindowController.addInfoWindow!(
+  //                 InfoTrashWindowBox(
+  //                     title: element.name,
+  //                     imageUrls: element.imageUrls.toList(),
+  //                     status: element.status,
+  //                     date: element.reportDate.toString(),
+  //                     reportId: element.refId,
+  //                     onTap: () {
+  //                       widget.onInformationTap!(element.refId);
+  //                     }),
+  //                 LatLng(
+  //                   element.latitude.toDouble(),
+  //                   element.longitude.toDouble(),
+  //                 ),
+  //               );
+  //             }),
+  //       );
+  //       index++;
+  //     }
+  //   } else if (widget.dumps != null) {
+  //     for (var element in widget.dumps!) {
+  //       tempMarkers.add(
+  //         Marker(
+  //             markerId: MarkerId(
+  //               element.name.toString() + index.toString(),
+  //             ),
+  //             position: LatLng(
+  //               element.reportLat.toDouble(),
+  //               element.reportLong.toDouble(),
+  //             ),
+  //             icon: await BitmapDescriptor.asset(
+  //                 const ImageConfiguration(size: Size(50, 50)),
+  //                 'assets/svg/dump_icon.svg'),
+  //             onTap: () {
+  //               _customReportInfoWindowController.addInfoWindow!(
+  //                 InfoDumpWindowBox(
+  //                   title: element.name,
+  //                   address: element.address ?? '',
+  //                   phone: element.phone ?? '',
+  //                   workingHours: element.workingHours,
+  //                   moreInformation: element.moreInformation,
+  //                   isHovering: (bool value) {
+  //                     setState(() {
+  //                       isMapHover = value;
+  //                     });
+  //                   },
+  //                 ),
+  //                 LatLng(
+  //                   element.reportLat.toDouble(),
+  //                   element.reportLong.toDouble(),
+  //                 ),
+  //               );
+  //             }),
+  //       );
+  //       index++;
+  //     }
+  //   }
+  //
+  //   setState(() {
+  //     _markers = tempMarkers;
+  //   });
+  // }
 
   String getTrashIconPath(String status) {
     if (status == "gautas") {

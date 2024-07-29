@@ -22,9 +22,9 @@ class _HomeLayoutMobileState extends State<HomeLayoutMobile> {
   late bool isMapHover;
   late ScrollController scrollController;
 
-  Future<void> updateScrollControllerOffset(double offset) async {
-    await SecureStorageProvider().setScrollOffset(offset);
-  }
+  // Future<void> updateScrollControllerOffset(double offset) async {
+  //   await SecureStorageProvider().setScrollOffset(offset);
+  // }
 
   @override
   void initState() {
@@ -36,63 +36,55 @@ class _HomeLayoutMobileState extends State<HomeLayoutMobile> {
 
   @override
   Widget build(BuildContext context) {
-    return NotificationListener<ScrollNotification>(
-      onNotification: (scrollNotification) {
-        if (scrollNotification is ScrollEndNotification) {
-          updateScrollControllerOffset(scrollNotification.metrics.pixels);
-        }
-        return true;
-      },
-      child: SingleChildScrollView(
-        //physics: isMapHover ? const NeverScrollableScrollPhysics() : null,
-        controller: scrollController,
-        child: Stack(
-          children: [
-            BackgroundWidget(
-              width: widget.width,
-              isMobile: true,
+    return SingleChildScrollView(
+      //physics: isMapHover ? const NeverScrollableScrollPhysics() : null,
+      controller: scrollController,
+      child: Stack(
+        children: [
+          BackgroundWidget(
+            width: widget.width,
+            isMobile: true,
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              left: widget.width * 0.0445,
+              right: widget.width * 0.0445,
+              top: widget.width * 0.087,
+              bottom: widget.width * 0.0361,
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                left: widget.width * 0.0445,
-                right: widget.width * 0.0445,
-                top: widget.width * 0.087,
-                bottom: widget.width * 0.0361,
-              ),
-              child: Column(
-                children: [
-                  LogoButton(
-                      width: widget.width * 0.91,
-                      onTap: () {
-                        context.goNamed('home');
-                      }),
-                  SizedBox(height: widget.width * 0.1472),
-                  TitleWidget(
-                    width: widget.width,
-                    isMobile: true,
+            child: Column(
+              children: [
+                LogoButton(
+                    width: widget.width * 0.91,
                     onTap: () {
-                      context.goNamed('report_category');
-                    },
-                  ),
-                  // MapScreen(
-                  //   isMapHover: (isHover) {
-                  //     setState(() {
-                  //       isMapHover = isHover;
-                  //     });
-                  //   },
-                  //   width: widget.width,
-                  //   isMobile: true,
-                  // ),
-                  SizedBox(height: widget.width * 0.0343),
-                  Footer(
-                    width: widget.width,
-                    isMobile: true,
-                  ),
-                ],
-              ),
+                      context.goNamed('home');
+                    }),
+                SizedBox(height: widget.width * 0.1472),
+                TitleWidget(
+                  width: widget.width,
+                  isMobile: true,
+                  onTap: () {
+                    context.goNamed('report_category');
+                  },
+                ),
+                // MapScreen(
+                //   isMapHover: (isHover) {
+                //     setState(() {
+                //       isMapHover = isHover;
+                //     });
+                //   },
+                //   width: widget.width,
+                //   isMobile: true,
+                // ),
+                SizedBox(height: widget.width * 0.0343),
+                Footer(
+                  width: widget.width,
+                  isMobile: true,
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

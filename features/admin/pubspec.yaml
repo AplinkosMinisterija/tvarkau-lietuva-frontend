@@ -21,7 +21,6 @@ dependencies:
   loading_animation_widget: ^1.2.0+4
   cupertino_icons: ^1.0.2
   google_fonts: ^6.1.0
-  google_maps_flutter: ^2.7.0
   auto_size_text: ^3.0.0
   aad_oauth: ^1.0.1
   dropdown_button2: ^2.3.9
@@ -29,6 +28,7 @@ dependencies:
   syncfusion_flutter_core: 24.1.41
   syncfusion_flutter_datagrid: 24.1.41
   collection: ^1.17.2
+  google_maps_flutter: ^2.7.0
 
 dev_dependencies:
   flutter_test:

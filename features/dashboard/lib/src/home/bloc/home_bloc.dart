@@ -1,6 +1,5 @@
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 part 'home_event.dart';
 
@@ -58,8 +57,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ) async {
     try {
       emit(LoadingState());
-      final CameraPosition? cameraPosition =
-          await SecureStorageProvider().getCameraSetup();
+      // final CameraPosition? cameraPosition =
+      //     await SecureStorageProvider().getCameraSetup();
       final responses = await Future.wait(
         [
           ApiProvider().getAllVisibleReports('trash'),
@@ -70,11 +69,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       emit(
         TrashState(
-          reports: responses[0] as List<PublicReportDto>,
-          reportStatistics: responses[1] as ReportStatisticsDto,
-          cameraPosition: cameraPosition ??
-              const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 7.0),
-        ),
+            reports: responses[0] as List<PublicReportDto>,
+            reportStatistics: responses[1] as ReportStatisticsDto,
+
+            // cameraPosition ??
+            //     const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 7.0),
+            ),
       );
     } catch (e) {
       emit(
@@ -89,15 +89,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ) async {
     try {
       emit(LoadingState());
-      final CameraPosition? cameraPosition =
-          await SecureStorageProvider().getCameraSetup();
+      // final CameraPosition? cameraPosition =
+      //     await SecureStorageProvider().getCameraSetup();
       final dumps = await ApiProvider().getAllVisibleDumpReports();
 
       emit(
         DumpsState(
           dumpReports: dumps,
-          cameraPosition: cameraPosition ??
-              const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 7.0),
+
         ),
       );
     } catch (e) {
@@ -113,8 +112,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ) async {
     try {
       emit(LoadingState());
-      final CameraPosition? cameraPosition =
-          await SecureStorageProvider().getCameraSetup();
+      // final CameraPosition? cameraPosition =
+      //     await SecureStorageProvider().getCameraSetup();
       final responses = await Future.wait(
         [
           ApiProvider().getAllVisibleReports('forest'),
@@ -127,8 +126,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         ForestState(
           reports: responses[0] as List<PublicReportDto>,
           reportStatistics: responses[1] as ReportStatisticsDto,
-          cameraPosition: cameraPosition ??
-              const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 7.0),
+
         ),
       );
     } catch (e) {
@@ -144,8 +142,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ) async {
     try {
       emit(LoadingState());
-      final CameraPosition? cameraPosition =
-          await SecureStorageProvider().getCameraSetup();
+
       final responses = await Future.wait(
         [
           ApiProvider().getAllVisibleReports('permits'),
@@ -158,8 +155,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         PermitsState(
           reports: responses[0] as List<PublicReportDto>,
           reportStatistics: responses[1] as ReportStatisticsDto,
-          cameraPosition: cameraPosition ??
-              const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 7.0),
+
         ),
       );
     } catch (e) {

@@ -12,7 +12,7 @@ import 'package:admin/admin.dart';
 
 Future<void> mainCommon(Flavor flavor) async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SecureStorageProvider().resetUserCache();
+  //await SecureStorageProvider().resetUserCache();
   usePathUrlStrategy();
 
   if (Uri.base.toString().contains("access_token=")) {

@@ -62,7 +62,7 @@ class _MapScreenState extends State<MapScreen> {
                           'id': 'TLP-A$str${refId.toUpperCase()}'
                         });
                       },
-                      cameraPosition: state.cameraPosition,
+                      //cameraPosition: state.cameraPosition,
                       isMobile: widget.isMobile,
                     );
                   case DumpsState():
@@ -78,7 +78,7 @@ class _MapScreenState extends State<MapScreen> {
                       },
                       dumps: state.dumpReports,
                       category: 'dumps',
-                      cameraPosition: state.cameraPosition,
+                      //cameraPosition: state.cameraPosition,
                       isMobile: widget.isMobile,
                     );
                   case ForestState():
@@ -102,7 +102,7 @@ class _MapScreenState extends State<MapScreen> {
                           'id': 'TLP-A$str${refId.toUpperCase()}'
                         });
                       },
-                      cameraPosition: state.cameraPosition,
+                      //cameraPosition: state.cameraPosition,
                       isMobile: widget.isMobile,
                     );
                   case PermitsState():
@@ -126,7 +126,7 @@ class _MapScreenState extends State<MapScreen> {
                           'id': 'TLP-A$str${refId.toUpperCase()}'
                         });
                       },
-                      cameraPosition: state.cameraPosition,
+                      //cameraPosition: state.cameraPosition,
                       isMobile: widget.isMobile,
                     );
                   case ErrorState():

@@ -3,7 +3,6 @@ import 'package:dashboard/src/report_information/ui/information_screen_widget_ut
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:core/core.dart';
 import 'package:dotted_line/dotted_line.dart';
@@ -27,15 +26,12 @@ class InformationScreenWeb extends StatefulWidget {
 }
 
 class _InformationScreenWebState extends State<InformationScreenWeb> {
-  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
-  Set<Marker> markers = {};
+
   int textLinesCount = 0;
   int departmentAnswerTextLinesCount = 0;
 
   int imageLineCount = 0;
-  late MapType _currentMapType;
-  CameraPosition _initialCameraPosition =
-      const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 7.0);
+
 
   late Widget statusWidget;
   late Widget firstStageWidget;
@@ -58,9 +54,9 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      addCustomIcon();
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   addCustomIcon();
+    // });
 
     span = TextSpan(
         text: widget.report.name,
@@ -92,22 +88,22 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
     strLength = 8 - widget.report.refId.length;
     str = '0' * strLength;
 
-    _initialCameraPosition = CameraPosition(
-        target: LatLng(widget.report.latitude, widget.report.longitude),
-        zoom: 9.0);
-    _currentMapType = MapType.normal;
-    markers.add(
-      Marker(
-        markerId: MarkerId(
-          '${widget.report.name}99899',
-        ),
-        position: LatLng(
-          widget.report.latitude,
-          widget.report.longitude,
-        ),
-        icon: markerIcon,
-      ),
-    );
+    // _initialCameraPosition = CameraPosition(
+    //     target: LatLng(widget.report.latitude, widget.report.longitude),
+    //     zoom: 9.0);
+    // _currentMapType = MapType.normal;
+    // markers.add(
+    //   Marker(
+    //     markerId: MarkerId(
+    //       '${widget.report.name}99899',
+    //     ),
+    //     position: LatLng(
+    //       widget.report.latitude,
+    //       widget.report.longitude,
+    //     ),
+    //     icon: markerIcon,
+    //   ),
+    // );
     statusWidget = InformationScreenWidgetUtils()
         .getStatusWidget(widget.report.status, widget.width);
     firstStageWidget = getFirstStageWidget();
@@ -211,12 +207,12 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                                   const BorderRadius.all(Radius.circular(8)),
                               child: Stack(
                                 children: [
-                                  GoogleMap(
-                                    mapType: _currentMapType,
-                                    initialCameraPosition:
-                                        _initialCameraPosition,
-                                    markers: markers,
-                                  ),
+                                  // GoogleMap(
+                                  //   mapType: _currentMapType,
+                                  //   initialCameraPosition:
+                                  //       _initialCameraPosition,
+                                  //   markers: markers,
+                                  // ),
                                   Padding(
                                     padding: const EdgeInsets.only(
                                         bottom: 110, right: 10),
@@ -226,24 +222,24 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                                           height: 40,
                                           width: 40,
                                           onPressed: () {
-                                            showDialog<String>(
-                                                context: context,
-                                                builder: (BuildContext
-                                                        context) =>
-                                                    MapTypeChangeDialog(
-                                                      width: widget.width,
-                                                      currentMapType:
-                                                          _currentMapType,
-                                                      onHover: (isHover) {},
-                                                      onChangeTap:
-                                                          (MapType mapType) {
-                                                        setState(() {
-                                                          _currentMapType =
-                                                              mapType;
-                                                        });
-                                                      },
-                                                      isMobile: true,
-                                                    ));
+                                            // showDialog<String>(
+                                            //     context: context,
+                                            //     builder: (BuildContext
+                                            //             context) =>
+                                            //         MapTypeChangeDialog(
+                                            //           width: widget.width,
+                                            //           currentMapType:
+                                            //               _currentMapType,
+                                            //           onHover: (isHover) {},
+                                            //           onChangeTap:
+                                            //               (MapType mapType) {
+                                            //             setState(() {
+                                            //               _currentMapType =
+                                            //                   mapType;
+                                            //             });
+                                            //           },
+                                            //           isMobile: true,
+                                            //         ));
                                           },
                                         )),
                                   ),
@@ -800,13 +796,13 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
         .formatDate(statusRecord?.date ?? widget.report.reportDate);
   }
 
-  void addCustomIcon() {
-    BitmapDescriptor.asset(
-            const ImageConfiguration(), 'assets/svg/pin_icon.svg')
-        .then((icon) {
-      setState(() {
-        markerIcon = icon;
-      });
-    });
-  }
+  // void addCustomIcon() {
+  //   BitmapDescriptor.asset(
+  //           const ImageConfiguration(), 'assets/svg/pin_icon.svg')
+  //       .then((icon) {
+  //     setState(() {
+  //       markerIcon = icon;
+  //     });
+  //   });
+  // }
 }

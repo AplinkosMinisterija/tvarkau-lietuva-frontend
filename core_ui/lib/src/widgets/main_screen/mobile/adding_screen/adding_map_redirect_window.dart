@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class AddingMapRedirectWindow extends StatefulWidget {
   const AddingMapRedirectWindow({
     super.key,
     required this.width,
-    required this.marker,
     required this.onTap,
   });
 
   final double width;
-  final Set<Marker> marker;
   final VoidCallback onTap;
 
   @override
@@ -20,46 +17,17 @@ class AddingMapRedirectWindow extends StatefulWidget {
 }
 
 class _AddingMapRedirectWindowState extends State<AddingMapRedirectWindow> {
-  Set<Marker> marker = {};
-  late CameraPosition viewPosition;
-  late GoogleMapController _googleMapController;
 
   @override
   void initState() {
-    marker.clear();
     super.initState();
   }
 
-  void animate() {
-    _googleMapController.animateCamera(
-      CameraUpdate.newLatLngZoom(
-          LatLng(
-            viewPosition.target.latitude,
-            viewPosition.target.longitude,
-          ),
-          viewPosition.zoom),
-    );
-  }
+
 
   @override
   Widget build(BuildContext context) {
-    if (widget.marker.isNotEmpty) {
-      marker.add(widget.marker.first);
-      viewPosition = CameraPosition(
-          target: LatLng(
-            marker.first.position.latitude,
-            marker.first.position.longitude,
-          ),
-          zoom: 9);
-      animate();
-    } else {
-      viewPosition =
-          const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 6.2);
-      if (marker.isNotEmpty) {
-        animate();
-      }
-      marker.clear();
-    }
+
     return GestureDetector(
       onTap: widget.onTap,
       child: Stack(
