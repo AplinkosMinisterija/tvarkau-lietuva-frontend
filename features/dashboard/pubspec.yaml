@@ -30,6 +30,9 @@ dependencies:
   flutter_svg: 2.0.5
   animated_custom_dropdown: ^3.0.0
   readmore: ^3.0.0
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
+  flutter_map_cancellable_tile_provider: ^3.0.0
 
 dev_dependencies:
   flutter_test:
