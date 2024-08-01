@@ -4,8 +4,8 @@ version: 0.0.1
 publish_to: "none"
 
 environment:
-  sdk: ">=3.2.0 <3.22.3"
-  flutter: ">=3.22.2"
+  sdk: ">=3.2.0 <3.13.0"
+  flutter: ">=3.16.0"
 
 dependencies:
   flutter:
@@ -21,14 +21,14 @@ dependencies:
   loading_animation_widget: ^1.2.0+4
   cupertino_icons: ^1.0.2
   google_fonts: ^6.1.0
+  google_maps_flutter: ^2.7.0
   auto_size_text: ^3.0.0
   aad_oauth: ^1.0.1
   dropdown_button2: ^2.3.9
-  go_router: ^14.2.1
+  go_router: ^13.2.0
   syncfusion_flutter_core: 24.1.41
   syncfusion_flutter_datagrid: 24.1.41
   collection: ^1.17.2
-  google_maps_flutter: ^2.7.0
 
 dev_dependencies:
   flutter_test:

@@ -17,46 +17,46 @@ class InitState implements HomeState {
 class TrashState implements HomeState {
   final List<PublicReportDto> reports;
   final ReportStatisticsDto reportStatistics;
-  //final CameraPosition cameraPosition;
+  final CameraPosition cameraPosition;
 
   TrashState({
     required this.reports,
     required this.reportStatistics,
-    //required this.cameraPosition,
+    required this.cameraPosition,
   });
 }
 
 class DumpsState implements HomeState {
   final List<DumpDto> dumpReports;
-  //final CameraPosition cameraPosition;
+  final CameraPosition cameraPosition;
 
   DumpsState({
     required this.dumpReports,
-   // required this.cameraPosition,
+    required this.cameraPosition,
   });
 }
 
 class ForestState implements HomeState {
   final List<PublicReportDto> reports;
   final ReportStatisticsDto reportStatistics;
-  //final CameraPosition cameraPosition;
+  final CameraPosition cameraPosition;
 
   ForestState({
     required this.reports,
     required this.reportStatistics,
-    //required this.cameraPosition,
+    required this.cameraPosition,
   });
 }
 
 class PermitsState implements HomeState {
   final List<PublicReportDto> reports;
   final ReportStatisticsDto reportStatistics;
-  //final CameraPosition cameraPosition;
+  final CameraPosition cameraPosition;
 
   PermitsState({
     required this.reports,
     required this.reportStatistics,
-    //required this.cameraPosition,
+    required this.cameraPosition,
   });
 }
 

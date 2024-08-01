@@ -44,7 +44,24 @@ class AddingScreenTrash extends StatelessWidget {
                     },
                   );
                 } else {
-                  return SizedBox();
+                  return TrashAddingScreenMobile(
+                    width: width,
+                    height: height,
+                    reports: state.trashReports,
+                    onAddTap: (email, text, lat, long, files) {
+                      context.read<AddingBloc>().add(
+                            AddReport(
+                              emailValue: email,
+                              textValue: text,
+                              selectedLat: lat,
+                              selectedLong: long,
+                              images: files,
+                              category: 'trash',
+                            ),
+                          );
+                    },
+                    onDataSecurityTap: () {},
+                  );
                 }
               } else if (state is LoadingState) {
                 return Dialog.fullscreen(

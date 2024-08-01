@@ -2,6 +2,7 @@ import 'package:core/core.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:core_ui/core_ui.dart';
 import 'dart:typed_data';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -43,26 +44,34 @@ class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
 
   bool isTermsAccepted = false;
   final _formKey = GlobalKey<FormState>();
+  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
   bool isShowMarkers = true;
   bool isMapDisabled = false;
   bool isImagesSizeValid = true;
 
   String currentTextValue = '';
   String currentEmailValue = '';
+  Set<Marker> markers = {};
+  List<Marker> addedMarker = [];
   double selectedLat = 0;
   double selectedLong = 0;
+  MapType currentMapType = MapType.normal;
+  CameraPosition _lithuaniaCameraPosition =
+      const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 7.0);
 
+  late GoogleMapController mapController;
+  LatLng? _currentPosition;
   bool _isLoading = false;
 
-  // void addCustomIcon() {
-  //   BitmapDescriptor.asset(const ImageConfiguration(size: Size(45, 45)),
-  //           'assets/svg/forest_pin_icon.svg')
-  //       .then((icon) {
-  //     setState(() {
-  //       markerIcon = icon;
-  //     });
-  //   });
-  // }
+  void addCustomIcon() {
+    BitmapDescriptor.asset(const ImageConfiguration(size: Size(45, 45)),
+            'assets/svg/forest_pin_icon.svg')
+        .then((icon) {
+      setState(() {
+        markerIcon = icon;
+      });
+    });
+  }
 
   void removeSelectedImage(int imageIndex) {
     setState(() {
@@ -73,6 +82,10 @@ class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      addCustomIcon();
+    });
+
     getLocation();
     super.initState();
   }
@@ -82,30 +95,30 @@ class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
       _isLoading = true;
     });
 
-    // LocationPermission permission;
-    // permission = await Geolocator.requestPermission();
-    //
-    // if (permission == LocationPermission.denied ||
-    //     permission == LocationPermission.deniedForever) {
-    //   setState(() {
-    //     _isLoading = false;
-    //   });
-    // } else {
-    //   Position position = await Geolocator.getCurrentPosition(
-    //       desiredAccuracy: LocationAccuracy.high);
-    //
-    //   LatLng location = LatLng(position.latitude, position.longitude);
-    //
-    //   setState(() {
-    //     selectedLat = position.latitude;
-    //     selectedLong = position.longitude;
-    //     _currentPosition = location;
-    //     _isLoading = false;
-    //     _handleTap(location);
-    //     _lithuaniaCameraPosition =
-    //         CameraPosition(target: _currentPosition!, zoom: 15);
-    //   });
-    // }
+    LocationPermission permission;
+    permission = await Geolocator.requestPermission();
+
+    if (permission == LocationPermission.denied ||
+        permission == LocationPermission.deniedForever) {
+      setState(() {
+        _isLoading = false;
+      });
+    } else {
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+
+      LatLng location = LatLng(position.latitude, position.longitude);
+
+      setState(() {
+        selectedLat = position.latitude;
+        selectedLong = position.longitude;
+        _currentPosition = location;
+        _isLoading = false;
+        _handleTap(location);
+        _lithuaniaCameraPosition =
+            CameraPosition(target: _currentPosition!, zoom: 15);
+      });
+    }
   }
 
   void calculateImagesSize() {
@@ -120,9 +133,9 @@ class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
     }
   }
 
-  // void _onMapCreated(GoogleMapController controller) {
-  //   mapController = controller;
-  // }
+  void _onMapCreated(GoogleMapController controller) {
+    mapController = controller;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -143,44 +156,44 @@ class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
                       SizedBox(
                         height: constraints.maxHeight,
                         width: constraints.maxWidth * 0.68125,
-                        // child: _isLoading
-                        //     ? Stack(
-                        //         children: [
-                        //           Opacity(
-                        //             opacity: 0.5,
-                        //             child: GoogleMap(
-                        //               onMapCreated: _onMapCreated,
-                        //               buildingsEnabled: true,
-                        //               initialCameraPosition:
-                        //                   _lithuaniaCameraPosition,
-                        //               mapType: currentMapType,
-                        //               onTap: null,
-                        //               markers: isShowMarkers
-                        //                   ? markers
-                        //                   : addedMarker.map((e) => e).toSet(),
-                        //             ),
-                        //           ),
-                        //           Center(
-                        //             child: LoadingAnimationWidget
-                        //                 .staggeredDotsWave(
-                        //               color: AppTheme.mainThemeColor,
-                        //               size: 150,
-                        //             ),
-                        //           ),
-                        //         ],
-                        //       )
-                        //     : GoogleMap(
-                        //         onMapCreated: _onMapCreated,
-                        //         buildingsEnabled: true,
-                        //         initialCameraPosition: _lithuaniaCameraPosition,
-                        //         mapType: currentMapType,
-                        //         onTap: _handleTap,
-                        //         markers: isShowMarkers
-                        //             ? markers
-                        //             : addedMarker.map((e) => e).toSet(),
-                        //       ),
+                        child: _isLoading
+                            ? Stack(
+                                children: [
+                                  Opacity(
+                                    opacity: 0.5,
+                                    child: GoogleMap(
+                                      onMapCreated: _onMapCreated,
+                                      buildingsEnabled: true,
+                                      initialCameraPosition:
+                                          _lithuaniaCameraPosition,
+                                      mapType: currentMapType,
+                                      onTap: null,
+                                      markers: isShowMarkers
+                                          ? markers
+                                          : addedMarker.map((e) => e).toSet(),
+                                    ),
+                                  ),
+                                  Center(
+                                    child: LoadingAnimationWidget
+                                        .staggeredDotsWave(
+                                      color: AppTheme.mainThemeColor,
+                                      size: 150,
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : GoogleMap(
+                                onMapCreated: _onMapCreated,
+                                buildingsEnabled: true,
+                                initialCameraPosition: _lithuaniaCameraPosition,
+                                mapType: currentMapType,
+                                onTap: _handleTap,
+                                markers: isShowMarkers
+                                    ? markers
+                                    : addedMarker.map((e) => e).toSet(),
+                              ),
                       ),
-                      true
+                      _currentPosition != null
                           ? Positioned(
                               bottom: 155,
                               right: 10,
@@ -220,30 +233,30 @@ class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
                               height: 40,
                               width: 40,
                               onPressed: () {
-                                // showDialog<String>(
-                                //     context: context,
-                                //     builder: (BuildContext context) =>
-                                //         MapTypeChangeDialog(
-                                //           width: widget.width,
-                                //           currentMapType: currentMapType,
-                                //           onHover: (isHover) {
-                                //             setState(() {
-                                //               isMapDisabled = isHover;
-                                //             });
-                                //           },
-                                //           // onChangeTap: (MapType mapType) {
-                                //           //   setState(() {
-                                //           //     currentMapType = mapType;
-                                //           //   });
-                                //           // },
-                                //           isMobile: false,
-                                //           onReportVisibilityChange: () {
-                                //             setState(() {
-                                //               isShowMarkers = !isShowMarkers;
-                                //             });
-                                //           },
-                                //           isReportsActive: isShowMarkers,
-                                //         ));
+                                showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        MapTypeChangeDialog(
+                                          width: widget.width,
+                                          currentMapType: currentMapType,
+                                          onHover: (isHover) {
+                                            setState(() {
+                                              isMapDisabled = isHover;
+                                            });
+                                          },
+                                          onChangeTap: (MapType mapType) {
+                                            setState(() {
+                                              currentMapType = mapType;
+                                            });
+                                          },
+                                          isMobile: false,
+                                          onReportVisibilityChange: () {
+                                            setState(() {
+                                              isShowMarkers = !isShowMarkers;
+                                            });
+                                          },
+                                          isReportsActive: isShowMarkers,
+                                        ));
                               },
                             ),
                           ),
@@ -323,46 +336,46 @@ class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
     );
   }
 
-// _handleTap(LatLng tappedPoint) {
-//   markers.removeWhere(
-//       (element) => element.markerId == const MarkerId('9998999'));
-//   addedMarker.removeWhere(
-//       (element) => element.markerId == const MarkerId('9998999'));
-//   Marker newMarker = Marker(
-//     markerId: const MarkerId(
-//       '9998999',
-//     ),
-//     icon: markerIcon,
-//     position: LatLng(
-//       tappedPoint.latitude,
-//       tappedPoint.longitude,
-//     ),
-//     draggable: true,
-//     onDrag: _handleDrag,
-//     onDragEnd: _handleDragEnd,
-//   );
-//
-//   setState(() {
-//     markers.add(newMarker);
-//     addedMarker.add(newMarker);
-//     selectedLat = tappedPoint.latitude;
-//     selectedLong = tappedPoint.longitude;
-//     mapController.moveCamera(CameraUpdate.newLatLng(tappedPoint));
-//   });
-// }
-//
-// _handleDrag(LatLng tappedPoint) {
-//   setState(() {
-//     selectedLat = tappedPoint.latitude;
-//     selectedLong = tappedPoint.longitude;
-//   });
-// }
-//
-// _handleDragEnd(LatLng tappedPoint) {
-//   setState(() {
-//     selectedLat = tappedPoint.latitude;
-//     selectedLong = tappedPoint.longitude;
-//     mapController.moveCamera(CameraUpdate.newLatLng(tappedPoint));
-//   });
-// }
+  _handleTap(LatLng tappedPoint) {
+    markers.removeWhere(
+        (element) => element.markerId == const MarkerId('9998999'));
+    addedMarker.removeWhere(
+        (element) => element.markerId == const MarkerId('9998999'));
+    Marker newMarker = Marker(
+      markerId: const MarkerId(
+        '9998999',
+      ),
+      icon: markerIcon,
+      position: LatLng(
+        tappedPoint.latitude,
+        tappedPoint.longitude,
+      ),
+      draggable: true,
+      onDrag: _handleDrag,
+      onDragEnd: _handleDragEnd,
+    );
+
+    setState(() {
+      markers.add(newMarker);
+      addedMarker.add(newMarker);
+      selectedLat = tappedPoint.latitude;
+      selectedLong = tappedPoint.longitude;
+      mapController.moveCamera(CameraUpdate.newLatLng(tappedPoint));
+    });
+  }
+
+  _handleDrag(LatLng tappedPoint) {
+    setState(() {
+      selectedLat = tappedPoint.latitude;
+      selectedLong = tappedPoint.longitude;
+    });
+  }
+
+  _handleDragEnd(LatLng tappedPoint) {
+    setState(() {
+      selectedLat = tappedPoint.latitude;
+      selectedLong = tappedPoint.longitude;
+      mapController.moveCamera(CameraUpdate.newLatLng(tappedPoint));
+    });
+  }
 }

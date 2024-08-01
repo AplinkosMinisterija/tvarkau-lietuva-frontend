@@ -44,7 +44,22 @@ class AddingScreenForest extends StatelessWidget {
                     onDataSecurityTap: () {},
                   );
                 } else {
-                  return SizedBox();
+                  return ForestAddingScreenMobile(
+                    width: width,
+                    height: height,
+                    reports: state.forestReports,
+                    onAddTap: (email, text, lat, long, files) {
+                      context.read<AddingBloc>().add(
+                            AddReport(
+                                emailValue: email,
+                                textValue: text,
+                                selectedLat: lat,
+                                selectedLong: long,
+                                images: files,
+                                category: 'forest'),
+                          );
+                    },
+                  );
                 }
               } else if (state is LoadingState) {
                 return Dialog.fullscreen(

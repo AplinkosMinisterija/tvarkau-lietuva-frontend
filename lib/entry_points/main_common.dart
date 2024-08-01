@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math';
 import 'package:core/core.dart';
 import 'package:flutter/foundation.dart';
@@ -9,10 +8,9 @@ import '../app/app_config.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:admin/admin.dart';
 
-
 Future<void> mainCommon(Flavor flavor) async {
   WidgetsFlutterBinding.ensureInitialized();
-  //await SecureStorageProvider().resetUserCache();
+  await SecureStorageProvider().resetUserCache();
   usePathUrlStrategy();
 
   if (Uri.base.toString().contains("access_token=")) {
@@ -48,5 +46,3 @@ Future<void> mainCommon(Flavor flavor) async {
     runApp(AadApp());
   }
 }
-
-

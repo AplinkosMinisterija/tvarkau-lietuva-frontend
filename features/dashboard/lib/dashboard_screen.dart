@@ -5,11 +5,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 export 'package:dashboard/dashboard_screen.dart';
 
-class DashboardScreen extends StatelessWidget {
+class DashboardScreen extends StatefulWidget {
   const DashboardScreen({
     super.key,
   });
 
+  @override
+  State<DashboardScreen> createState() => _DashboardScreenState();
+}
+
+class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Title(
