@@ -163,7 +163,7 @@ class _MapWidgetState extends State<MapWidget> {
                         children: [
                           FlutterMap(
                               options: MapOptions(
-                                  
+
                                   initialCenter: latlong.LatLng(55, 24),
                                   initialZoom: 7),
                               children: [
