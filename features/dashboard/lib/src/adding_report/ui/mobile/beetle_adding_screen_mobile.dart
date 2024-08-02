@@ -1,7 +1,7 @@
+import 'package:flutter_map/flutter_map.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:core_ui/core_ui.dart';
 import 'dart:typed_data';
 import 'package:core/core.dart';
@@ -44,31 +44,15 @@ class _BeetleAddingScreenMobileState extends State<BeetleAddingScreenMobile> {
   bool isTermsAccepted = false;
   bool isImagesSizeValid = true;
 
-  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
   final _formKey = GlobalKey<FormState>();
   String currentTextValue = '';
   String currentEmailValue = '';
-  Set<Marker> markers = {};
-  List<Marker> newMarkers = [];
-  Set<Marker> newMarker = {};
+  List<Marker> markers = [];
   double selectedLat = 0;
   double selectedLong = 0;
 
-  void addCustomIcon() {
-    BitmapDescriptor.asset(
-            const ImageConfiguration(), 'assets/svg/forest_pin_icon.svg')
-        .then((icon) {
-      setState(() {
-        markerIcon = icon;
-      });
-    });
-  }
-
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      addCustomIcon();
-    });
     super.initState();
   }
 
@@ -158,32 +142,22 @@ class _BeetleAddingScreenMobileState extends State<BeetleAddingScreenMobile> {
                       SizedBox(height: widget.width * 0.0444),
                       AddingMapRedirectWindow(
                         width: widget.width,
-                        marker: newMarker,
                         onTap: () {
-                          setState(() {
-                            if (newMarker.isNotEmpty) {
-                              newMarker.removeWhere((element) =>
-                                  element.markerId == const MarkerId('99899'));
-                              markers.removeWhere((element) =>
-                                  element.markerId == const MarkerId('99899'));
-                            }
-                          });
+                          setState(() {});
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => AddPinScreenMobile(
                                       width: widget.width,
-                                      markers: markers,
+                                      markers: [],
                                       isLayerSwitchVisible: false,
                                       isPermitSwitchVisible: false,
-                                      onTap: (lat, long, marker) {
+                                      onTap: (lat, long) {
                                         setState(() {
-                                          newMarker.clear();
                                           selectedLat = lat;
                                           selectedLong = long;
-                                          newMarker.add(marker);
                                         });
-                                      },
+                                      }, reports: [],
                                     )),
                           );
                         },

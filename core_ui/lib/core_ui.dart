@@ -50,6 +50,7 @@ export 'src/widgets/main_screen/mobile/adding_screen/mark_button_mobile.dart';
 export 'src/widgets/main_screen/mobile/adding_screen/save_pin_button_mobile.dart';
 export 'src/widgets/main_screen/mobile/adding_screen/change_visibility_button_mobile.dart';
 export 'src/widgets/main_screen/mobile/map_type_change_dialog.dart';
+export 'src/widgets/main_screen/mobile/map_type_change_dialog_osm.dart';
 export 'src/widgets/main_screen/mobile/adding_screen/image_collage_mobile.dart';
 export 'src/widgets/main_screen/mobile/adding_screen/image_add_button_admin.dart';
 export 'src/widgets/main_screen/mobile/report_statistics.dart';

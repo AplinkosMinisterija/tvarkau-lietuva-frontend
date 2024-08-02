@@ -1,11 +1,12 @@
 import 'package:api_client/api_client.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:core_ui/core_ui.dart';
 import 'dart:typed_data';
 import 'package:core/core.dart';
+import 'package:latlong2/latlong.dart';
 import '../widgets/data_security_terms_widget.dart';
 import '../widgets/explanation_dialog_widget.dart';
 import 'add_pin_screen_mobile.dart';
@@ -49,45 +50,23 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
   bool isTermsAccepted = false;
   bool isImagesSizeValid = true;
 
-  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
   final _formKey = GlobalKey<FormState>();
   String currentTextValue = '';
   String currentEmailValue = '';
-  Set<Marker> markers = {};
-  List<Marker> newMarkers = [];
-  Set<Marker> newMarker = {};
+  List<Marker> markers = [];
   double selectedLat = 0;
   double selectedLong = 0;
 
-  void addCustomIcon() {
-    BitmapDescriptor.asset(
-            const ImageConfiguration(), 'assets/svg/pin_icon.svg')
-        .then((icon) {
-      setState(() {
-        markerIcon = icon;
-      });
-    });
-  }
-
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      addCustomIcon();
-    });
-    int index = 0;
     for (var element in widget.reports) {
-      markers.add(
-        Marker(
-          markerId: MarkerId(
-            element.name + index.toString(),
-          ),
-          position: LatLng(
-            element.latitude.toDouble(),
-            element.longitude.toDouble(),
-          ),
-        ),
-      );
-      index++;
+      markers.add(Marker(
+          point: LatLng(element.latitude, element.longitude),
+          child: Container(
+            height: 20,
+            width: 20,
+            color: Colors.red,
+          )));
     }
     super.initState();
   }
@@ -178,33 +157,21 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                       SizedBox(height: widget.width * 0.0444),
                       AddingMapRedirectWindow(
                         width: widget.width,
-                        marker: newMarker,
                         onTap: () {
-                          setState(() {
-                            if (newMarker.isNotEmpty) {
-                              newMarker.removeWhere((element) =>
-                                  element.markerId == const MarkerId('99899'));
-                              markers.removeWhere((element) =>
-                                  element.markerId == const MarkerId('99899'));
-                            }
-                          });
-
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => AddPinScreenMobile(
                                       width: widget.width,
-                                      markers: markers,
+                                      markers: [],
                                       isLayerSwitchVisible: true,
                                       isPermitSwitchVisible: false,
-                                      onTap: (lat, long, marker) {
+                                      onTap: (lat, long) {
                                         setState(() {
-                                          newMarker.clear();
                                           selectedLat = lat;
                                           selectedLong = long;
-                                          newMarker.add(marker);
                                         });
-                                      },
+                                      }, reports: widget.reports,
                                     )),
                           );
                         },

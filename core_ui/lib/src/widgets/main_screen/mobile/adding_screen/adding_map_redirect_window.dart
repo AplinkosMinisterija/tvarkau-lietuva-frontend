@@ -6,12 +6,12 @@ class AddingMapRedirectWindow extends StatefulWidget {
   const AddingMapRedirectWindow({
     super.key,
     required this.width,
-    required this.marker,
+    //required this.marker,
     required this.onTap,
   });
 
   final double width;
-  final Set<Marker> marker;
+  //final Set<Marker> marker;
   final VoidCallback onTap;
 
   @override
@@ -43,23 +43,23 @@ class _AddingMapRedirectWindowState extends State<AddingMapRedirectWindow> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.marker.isNotEmpty) {
-      marker.add(widget.marker.first);
-      viewPosition = CameraPosition(
-          target: LatLng(
-            marker.first.position.latitude,
-            marker.first.position.longitude,
-          ),
-          zoom: 9);
-      animate();
-    } else {
-      viewPosition =
-          const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 6.2);
-      if (marker.isNotEmpty) {
-        animate();
-      }
-      marker.clear();
-    }
+    // if (widget.marker.isNotEmpty) {
+    //   marker.add(widget.marker.first);
+    //   viewPosition = CameraPosition(
+    //       target: LatLng(
+    //         marker.first.position.latitude,
+    //         marker.first.position.longitude,
+    //       ),
+    //       zoom: 9);
+    //   animate();
+    // } else {
+    //   viewPosition =
+    //       const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 6.2);
+    //   if (marker.isNotEmpty) {
+    //     animate();
+    //   }
+    //   marker.clear();
+    // }
     return GestureDetector(
       onTap: widget.onTap,
       child: Stack(
@@ -73,24 +73,7 @@ class _AddingMapRedirectWindowState extends State<AddingMapRedirectWindow> {
                 children: [
                   ClipRRect(
                     borderRadius: const BorderRadius.all(Radius.circular(8)),
-                    child: GoogleMap(
-                      initialCameraPosition: viewPosition,
-                      markers: marker.isNotEmpty ? marker : {},
-                      onMapCreated: (GoogleMapController controller) {
-                        _googleMapController = controller;
-                        _googleMapController.animateCamera(
-                          CameraUpdate.newLatLngZoom(
-                              LatLng(viewPosition.target.latitude,
-                                  viewPosition.target.longitude),
-                              viewPosition.zoom),
-                        );
-                      },
-                      webGestureHandling: WebGestureHandling.none,
-                      mapToolbarEnabled: false,
-                      scrollGesturesEnabled: false,
-                      zoomControlsEnabled: false,
-                      zoomGesturesEnabled: false,
-                    ),
+                    child: Container(color: Colors.white,)
                   ),
                 ],
               ),
