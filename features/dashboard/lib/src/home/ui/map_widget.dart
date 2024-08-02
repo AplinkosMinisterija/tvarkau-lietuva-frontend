@@ -8,6 +8,7 @@ import 'package:flutter_map_marker_cluster_2/flutter_map_marker_cluster.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart' as latlong;
@@ -22,7 +23,7 @@ class MapWidget extends StatefulWidget {
     required this.onCategoryChange,
     required this.category,
     this.onInformationTap,
-    //required this.cameraPosition,
+    this.onError,
     required this.isMobile,
     super.key,
   });
@@ -34,8 +35,7 @@ class MapWidget extends StatefulWidget {
   final ValueChanged<bool> isHovering;
   final Function(String) onCategoryChange;
   final Function(String)? onInformationTap;
-
-  //final CameraPosition cameraPosition;
+  final void Function(Exception e)? onError;
   final String category;
   final bool isMobile;
 
@@ -43,22 +43,25 @@ class MapWidget extends StatefulWidget {
   State<MapWidget> createState() => _MapWidgetState();
 }
 
-class _MapWidgetState extends State<MapWidget> {
+class _MapWidgetState extends State<MapWidget> with TickerProviderStateMixin {
   final CustomInfoWindowController _customReportInfoWindowController =
       CustomInfoWindowController();
 
-  //BitmapDescriptor trashMarkerIcon = BitmapDescriptor.defaultMarker;
   bool isShowMarkers = false;
   bool isShowDumps = false;
   List<Marker> _markers = [];
   late bool isMapHover;
   bool isTrash = false;
   String? initialItem;
+  LatLng initPosition = const LatLng(55, 24);
+  late void Function(Exception e) onError;
+  MapController mapController = MapController();
 
   //late MapType _currentMapType;
   // late CameraPosition _cameraPosition;
   // late GoogleMapController mapController;
   bool isLocationLoading = false;
+  late AnimationController _animationController;
 
   static const List<String> _dropdownList = [
     'Atliekos',
@@ -66,10 +69,69 @@ class _MapWidgetState extends State<MapWidget> {
     'Pažeidimai kirtimuose',
   ];
 
+  Future<Position> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      const error = PermissionDeniedException("Vietos aptikimas uždraustas");
+      onError(error);
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        return Future.error(error);
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      const error =
+          PermissionDeniedException("Vietos aptikimas uždraustas amžinai");
+      onError(error);
+      return Future.error(error);
+    }
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      await Geolocator.openLocationSettings();
+      while (!await Geolocator.isLocationServiceEnabled()) {}
+    }
+    return await Geolocator.getCurrentPosition();
+  }
+
+  void _animatedMapMove(LatLng destLocation, double destZoom) {
+    final latTween = Tween<double>(
+        begin: mapController.camera.center.latitude,
+        end: destLocation.latitude);
+    final lngTween = Tween<double>(
+        begin: mapController.camera.center.longitude,
+        end: destLocation.longitude);
+    final zoomTween =
+        Tween<double>(begin: mapController.camera.zoom, end: destZoom);
+    if (mounted) {
+      _animationController = AnimationController(
+        duration: const Duration(seconds: 2),
+        vsync: this,
+      );
+    }
+    final Animation<double> animation = CurvedAnimation(
+        parent: _animationController, curve: Curves.fastOutSlowIn);
+
+    _animationController.addListener(() {
+      mapController.move(
+          LatLng(latTween.evaluate(animation), lngTween.evaluate(animation)),
+          zoomTween.evaluate(animation));
+    });
+
+    if (mounted) {
+      _animationController.forward();
+    }
+  }
+
   @override
   void initState() {
-    //_cameraPosition = widget.cameraPosition;
+    onError = widget.onError ?? (e) => debugPrint(e.toString());
     mapMarkers();
+    mapController = MapController();
+
     if (widget.category == 'trash' || widget.category == 'dumps') {
       initialItem = 'Atliekos';
     } else if (widget.category == 'forest') {
@@ -161,12 +223,12 @@ class _MapWidgetState extends State<MapWidget> {
                       child: Stack(
                         children: [
                           FlutterMap(
-                              options: MapOptions(
+                              options: const MapOptions(
                                   initialCenter: latlong.LatLng(55, 24),
                                   initialZoom: 7),
+                              mapController: mapController,
                               children: [
                                 openStreetMapTileLayer,
-                                //MarkerLayer(markers: _markers)
                                 MarkerClusterLayerWidget(
                                   options: MarkerClusterLayerOptions(
                                     maxClusterRadius: 80,
@@ -230,15 +292,23 @@ class _MapWidgetState extends State<MapWidget> {
                                     width: 40,
                                     height: 40,
                                     onPressed: () async {
-                                      Position position =
-                                          await getCurrentLocation();
-                                      // setState(() {
-                                      //   mapController.animateCamera(
-                                      //       CameraUpdate.newLatLngZoom(
-                                      //           LatLng(position.latitude,
-                                      //               position.longitude),
-                                      //           16));
-                                      // });
+                                      isLocationLoading = true;
+                                      _determinePosition().then(
+                                          (currentPosition) {
+                                        initPosition = LatLng(
+                                            currentPosition.latitude,
+                                            currentPosition.longitude);
+                                        isLocationLoading = false;
+                                        _animatedMapMove(initPosition, 18.0);
+                                      },
+                                          onError: (e) =>
+                                              onError(e)).whenComplete(
+                                        () => setState(
+                                          () {
+                                            isLocationLoading = false;
+                                          },
+                                        ),
+                                      );
                                     },
                                     isLoading: isLocationLoading,
                                   )),

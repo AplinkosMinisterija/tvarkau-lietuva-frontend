@@ -40,9 +40,7 @@ class AddPinScreenMobile extends StatefulWidget {
 
 class _AddPinScreenMobileState extends State<AddPinScreenMobile>
     with TickerProviderStateMixin {
-  // MapType currentMapType = MapType.normal;
-  // CameraPosition _lithuaniaCameraPosition =
-  //     const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 7.0);
+
   double? selectedLat;
   double? selectedLong;
   List<Marker> markers = [];
@@ -60,7 +58,6 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
   bool isLoading = false;
 
   late AnimationController _animationController;
-  late AnimationController animationController;
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   LatLng initPosition = const LatLng(55, 24);
@@ -132,8 +129,20 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
     if (widget.permits != null) {
       mapPolygons(widget.permits!);
     }
-    // getLocation();
-
+    isLoading = true;
+    _determinePosition().then((currentPosition) {
+      initPosition = LatLng(
+          currentPosition.latitude,
+          currentPosition.longitude);
+      isLoading = false;
+      _animatedMapMove(initPosition, 18.0);
+    }, onError: (e) => onError(e)).whenComplete(
+          () => setState(
+            () {
+          isLoading = false;
+        },
+      ),
+    );
     super.initState();
   }
 
@@ -242,28 +251,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
                     ],
                   )
 
-                  // ? GoogleMap(
-                  //     onMapCreated: _onMapCreated,
-                  //     initialCameraPosition: _lithuaniaCameraPosition,
-                  //     webGestureHandling: WebGestureHandling.cooperative,
-                  //     mapType: currentMapType,
-                  //     onTap: _handleTap,
-                  //     markers: isShowMarkers
-                  //         ? markers
-                  //         : addedMarker.map((e) => e).toSet(),
-                  //   )
-                  // : GoogleMap(
-                  //     polygons: isShowPolygons ? polygons : {},
-                  //     markers: isShowMarkers
-                  //         ? markers
-                  //         : addedMarker.map((e) => e).toSet(),
-                  //     webGestureHandling: WebGestureHandling.cooperative,
-                  //     mapType: currentMapType,
-                  //     onTap: _handleTap,
-                  //     buildingsEnabled: true,
-                  //     initialCameraPosition: _lithuaniaCameraPosition,
-                  //     onMapCreated: _onMapCreated,
-                  //   ),
+
                   ),
               Positioned(
                 bottom: size.height / 2,
@@ -324,7 +312,6 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
                                       currentPosition.latitude,
                                       currentPosition.longitude);
                                   isLoading = false;
-                                  //onLocationChanged(initPosition);
                                   _animatedMapMove(initPosition, 18.0);
                                 }, onError: (e) => onError(e)).whenComplete(
                                   () => setState(
@@ -333,7 +320,6 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
                                     },
                                   ),
                                 );
-                                //await getLocation();
                               },
                               isLoading: isLoading,
                             ),
