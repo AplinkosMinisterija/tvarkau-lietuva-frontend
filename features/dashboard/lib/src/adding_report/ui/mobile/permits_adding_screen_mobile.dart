@@ -3,12 +3,13 @@ import 'package:core/constants/global_constants.dart';
 import 'package:core/utils/image_display/image_display.dart';
 import 'package:core/utils/image_picker.dart';
 import 'package:core/utils/permit.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:core_ui/core_ui.dart';
+import 'package:latlong2/latlong.dart';
 import 'dart:typed_data';
 import '../widgets/data_security_terms_widget.dart';
 import '../widgets/explanation_dialog_widget.dart';
@@ -56,14 +57,12 @@ class _PermitsAddingScreenMobileState extends State<PermitsAddingScreenMobile> {
   String currentTextValue = '';
   String currentEmailValue = '';
   List<Marker> markers = [];
-  double selectedLat = 0;
-  double selectedLong = 0;
-
+  double? selectedLat;
+  double? selectedLong;
+  Marker? selectedMarker;
 
   @override
   void initState() {
-
-
     super.initState();
   }
 
@@ -153,9 +152,8 @@ class _PermitsAddingScreenMobileState extends State<PermitsAddingScreenMobile> {
                       SizedBox(height: widget.width * 0.0444),
                       AddingMapRedirectWindow(
                         width: widget.width,
+                        marker: selectedMarker,
                         onTap: () {
-                          
-
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -169,11 +167,43 @@ class _PermitsAddingScreenMobileState extends State<PermitsAddingScreenMobile> {
                                         setState(() {
                                           selectedLat = lat;
                                           selectedLong = long;
+                                          selectedMarker = Marker(
+                                            point: LatLng(selectedLat ?? 55,
+                                                selectedLong ?? 24),
+                                            width: 40,
+                                            height: 40,
+                                            child: Image.asset(
+                                              'assets/icons/marker_pins/red_marker.png',
+                                              height: 20,
+                                              width: 20,
+                                            ),
+                                          );
                                         });
-                                      }, markers: [],
+                                      },
+                                      markers: const [],
                                     )),
                           );
                         },
+                      ),
+                      SizedBox(
+                        height: widget.width * 0.03,
+                        child: TextFormField(
+                          enabled: true,
+                          maxLines: 1,
+                          readOnly: true,
+                          initialValue: " ",
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                          ),
+                          textAlignVertical: TextAlignVertical.top,
+                          validator: (value) {
+                            if (selectedLat == null && selectedLong == null) {
+                              return 'Privaloma pasirinkti';
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
                       ),
                       SizedBox(height: widget.width * 0.05),
                       Align(
@@ -397,8 +427,8 @@ class _PermitsAddingScreenMobileState extends State<PermitsAddingScreenMobile> {
                         width: widget.width,
                         onTap: () async {
                           if (_formKey.currentState!.validate() &&
-                              selectedLat != 0 &&
-                              selectedLong != 0 &&
+                              selectedLat != null &&
+                              selectedLong != null &&
                               isTermsAccepted &&
                               _selectedImages.isNotEmpty &&
                               isImagesSizeValid) {
@@ -406,8 +436,8 @@ class _PermitsAddingScreenMobileState extends State<PermitsAddingScreenMobile> {
                               widget.onAddTap(
                                 currentEmailValue,
                                 currentTextValue,
-                                selectedLat,
-                                selectedLong,
+                                selectedLat!,
+                                selectedLong!,
                                 _selectedImages,
                               );
                             }

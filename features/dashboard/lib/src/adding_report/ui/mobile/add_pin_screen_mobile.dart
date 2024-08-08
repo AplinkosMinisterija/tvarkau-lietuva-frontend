@@ -13,6 +13,21 @@ import 'package:latlong2/latlong.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
+typedef HitValue = ({
+  String type,
+  String issuedFrom,
+  String issuedTo,
+  String cadastralNumber,
+  String subdivision,
+  String forestryDistrict,
+  int? block,
+  String plot,
+  double? cuttableArea,
+  String dominantTree,
+  String cuttingType,
+  String reinstatementType,
+});
+
 class AddPinScreenMobile extends StatefulWidget {
   const AddPinScreenMobile(
       {required this.width,
@@ -40,26 +55,24 @@ class AddPinScreenMobile extends StatefulWidget {
 
 class _AddPinScreenMobileState extends State<AddPinScreenMobile>
     with TickerProviderStateMixin {
-
   double? selectedLat;
   double? selectedLong;
+  double selectedZoom = 7;
   List<Marker> markers = [];
-  List<Polygon> polygons = [];
+  List<Polygon<HitValue>> polygons = [];
   bool isShowMarkers = true;
   bool isShowPolygons = false;
   bool isSaveButtonActive = false;
   bool isMapDisabled = false;
   late void Function(Exception e) onError;
 
-  // BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
+  final LayerHitNotifier<HitValue> _hitNotifier = ValueNotifier(null);
+
   MapController mapController = MapController();
-  LatLng? _currentPosition;
-  bool _isLoading = false;
+  final bool _isLoading = false;
   bool isLoading = false;
 
   late AnimationController _animationController;
-  final TextEditingController _searchController = TextEditingController();
-  final FocusNode _focusNode = FocusNode();
   LatLng initPosition = const LatLng(55, 24);
   late List<Marker> markers2 = [];
 
@@ -102,7 +115,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
         Tween<double>(begin: mapController.camera.zoom, end: destZoom);
     if (mounted) {
       _animationController = AnimationController(
-        duration: const Duration(seconds: 2),
+        duration: const Duration(seconds: 1),
         vsync: this,
       );
     }
@@ -131,14 +144,13 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
     }
     isLoading = true;
     _determinePosition().then((currentPosition) {
-      initPosition = LatLng(
-          currentPosition.latitude,
-          currentPosition.longitude);
+      initPosition =
+          LatLng(currentPosition.latitude, currentPosition.longitude);
       isLoading = false;
       _animatedMapMove(initPosition, 18.0);
     }, onError: (e) => onError(e)).whenComplete(
-          () => setState(
-            () {
+      () => setState(
+        () {
           isLoading = false;
         },
       ),
@@ -149,8 +161,6 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
   @override
   void dispose() {
     mapController.dispose();
-    List<Marker> markers = [];
-    List<Polygon> polygons = [];
     super.dispose();
   }
 
@@ -217,6 +227,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
                         setState(() {
                           selectedLat = position.center.latitude;
                           selectedLong = position.center.longitude;
+                          selectedZoom = position.zoom;
                         });
                       },
                     ),
@@ -246,13 +257,69 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
                             },
                           ),
                         ),
-                      if (isShowPolygons) PolygonLayer(polygons: polygons)
+                      if (isShowPolygons)
+                        MouseRegion(
+                          hitTestBehavior: HitTestBehavior.deferToChild,
+                          cursor: SystemMouseCursors.click,
+                          child: GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  barrierColor: Colors.white.withOpacity(0),
+                                  builder: (context) {
+                                    return Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: Material(
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(8),
+                                              topRight: Radius.circular(8)),
+                                        ),
+                                        child: InfoPermitWindowBox(
+                                          width: widget.width,
+                                          isMobile: true,
+                                          type: _hitNotifier
+                                              .value!.hitValues.first.type,
+                                          issuedFrom: _hitNotifier.value!
+                                              .hitValues.first.issuedFrom,
+                                          issuedTo: _hitNotifier
+                                              .value!.hitValues.first.issuedTo,
+                                          cadastralNumber: _hitNotifier.value!
+                                              .hitValues.first.cadastralNumber,
+                                          subdivision: _hitNotifier.value!
+                                              .hitValues.first.subdivision,
+                                          forestryDistrict: _hitNotifier.value!
+                                              .hitValues.first.forestryDistrict,
+                                          block: _hitNotifier
+                                              .value!.hitValues.first.block,
+                                          plot: _hitNotifier
+                                              .value!.hitValues.first.plot,
+                                          cuttableArea: _hitNotifier.value!
+                                              .hitValues.first.cuttableArea,
+                                          dominantTree: _hitNotifier.value!
+                                              .hitValues.first.dominantTree,
+                                          cuttingType: _hitNotifier.value!
+                                              .hitValues.first.cuttingType,
+                                          reinstatementType: _hitNotifier
+                                              .value!
+                                              .hitValues
+                                              .first
+                                              .reinstatementType,
+                                        ),
+                                      ),
+                                    );
+                                  });
+                            },
+                            child: PolygonLayer(
+                              hitNotifier: _hitNotifier,
+                              simplificationTolerance: 0,
+                              polygons: polygons,
+                            ),
+                          ),
+                        )
                       //PolygonLayer(polygons: polygons)
                     ],
-                  )
-
-
-                  ),
+                  )),
               Positioned(
                 bottom: size.height / 2,
                 left: size.width / 2,
@@ -290,42 +357,39 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
                         ),
                       ),
               ),
-              true
-                  ? Positioned(
-                      bottom: 155,
-                      right: 10,
-                      child: InkWell(
-                          onTap: () {},
-                          onHover: (isHover) {
-                            setState(() {
-                              isMapDisabled = isHover;
-                            });
-                          },
-                          child: PointerInterceptor(
-                            child: LocationSearchButton(
-                              width: 40,
-                              height: 40,
-                              onPressed: () async {
-                                isLoading = true;
-                                _determinePosition().then((currentPosition) {
-                                  initPosition = LatLng(
-                                      currentPosition.latitude,
-                                      currentPosition.longitude);
-                                  isLoading = false;
-                                  _animatedMapMove(initPosition, 18.0);
-                                }, onError: (e) => onError(e)).whenComplete(
-                                  () => setState(
-                                    () {
-                                      isLoading = false;
-                                    },
-                                  ),
-                                );
+              Positioned(
+                bottom: 155,
+                right: 10,
+                child: InkWell(
+                    onTap: () {},
+                    onHover: (isHover) {
+                      setState(() {
+                        isMapDisabled = isHover;
+                      });
+                    },
+                    child: PointerInterceptor(
+                      child: LocationSearchButton(
+                        width: 40,
+                        height: 40,
+                        onPressed: () async {
+                          isLoading = true;
+                          _determinePosition().then((currentPosition) {
+                            initPosition = LatLng(currentPosition.latitude,
+                                currentPosition.longitude);
+                            isLoading = false;
+                            _animatedMapMove(initPosition, 18.0);
+                          }, onError: (e) => onError(e)).whenComplete(
+                            () => setState(
+                              () {
+                                isLoading = false;
                               },
-                              isLoading: isLoading,
                             ),
-                          )),
-                    )
-                  : const SizedBox.shrink(),
+                          );
+                        },
+                        isLoading: isLoading,
+                      ),
+                    )),
+              ),
               Positioned(
                 bottom: 110,
                 right: 10,
@@ -386,6 +450,65 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
                   ),
                 ),
               ),
+              Positioned(
+                bottom: 65,
+                right: 10,
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      selectedZoom = selectedZoom + 1;
+                      mapController.move(
+                          LatLng(selectedLat ?? 55, selectedLong ?? 24),
+                          selectedZoom);
+                    });
+                  },
+                  child: PointerInterceptor(
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: const Icon(
+                        Icons.zoom_in,
+                        color: Color(0xff707070),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 20,
+                right: 10,
+                child: InkWell(
+                  onTap: () {
+                    setState(() {
+                      if (selectedZoom > 1) {
+                        selectedZoom = selectedZoom - 1;
+                      }
+
+                      mapController.move(
+                          LatLng(selectedLat ?? 55, selectedLong ?? 24),
+                          selectedZoom);
+                    });
+                  },
+                  child: PointerInterceptor(
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: const Icon(
+                        Icons.zoom_out,
+                        color: Color(0xff707070),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
             ],
           )
         ],
@@ -393,64 +516,8 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
     );
   }
 
-//
-// _handleTap(LatLng tappedPoint) {
-//   markers
-//       .removeWhere((element) => element.markerId == const MarkerId('99899'));
-//   addedMarker
-//       .removeWhere((element) => element.markerId == const MarkerId('99899'));
-//   Marker newMarker = Marker(
-//     markerId: const MarkerId(
-//       '99899',
-//     ),
-//     icon: markerIcon,
-//     position: LatLng(
-//       tappedPoint.latitude,
-//       tappedPoint.longitude,
-//     ),
-//     draggable: true,
-//     onDrag: _handleDrag,
-//     onDragEnd: _handleDragEnd,
-//   );
-//
-//   setState(() {
-//     markers.add(newMarker);
-//     addedMarker.add(newMarker);
-//     selectedLat = tappedPoint.latitude;
-//     selectedLong = tappedPoint.longitude;
-//     isSaveButtonActive = true;
-//     mapController.future.then((value) =>
-//         value.moveCamera(CameraUpdate.newLatLngZoom(tappedPoint, 15)));
-//   });
-// }
-//
-// _handleDrag(LatLng tappedPoint) {}
-//
-// _handleDragEnd(LatLng tappedPoint) {
-//   setState(() {
-//     mapController.future.then(
-//         (value) => value.moveCamera(CameraUpdate.newLatLng(tappedPoint)));
-//     selectedLat = tappedPoint.latitude;
-//     selectedLong = tappedPoint.longitude;
-//     isSaveButtonActive = true;
-//   });
-// }
-//
-// void addCustomIcon() {
-//   BitmapDescriptor.asset(
-//     const ImageConfiguration(
-//       size: Size(45, 45),
-//     ),
-//     'assets/svg/forest_pin_icon.svg',
-//   ).then((icon) {
-//     setState(() {
-//       markerIcon = icon;
-//     });
-//   });
-// }
-//
   Future<void> mapPolygons(Permit permit) async {
-    List<Polygon> tempPolygons = [];
+    List<Polygon<HitValue>> tempPolygons = [];
     for (var i = 0; i < permit.features!.length; i++) {
       List<LatLng> coordinates = [];
       for (var j = 0;
@@ -464,53 +531,25 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
         Polygon(
           points: coordinates,
           color: const Color.fromRGBO(255, 106, 61, 0.3),
-
           borderStrokeWidth: 1,
           borderColor: const Color.fromRGBO(255, 106, 61, 1),
-          // onTap: () {
-          //
-          //   showDialog(
-          //       context: context,
-          //       barrierColor: Colors.white.withOpacity(0),
-          //       builder: (context) {
-          //         return Align(
-          //           alignment: Alignment.bottomCenter,
-          //           child: Material(
-          //             shape: const RoundedRectangleBorder(
-          //               borderRadius: BorderRadius.only(
-          //                   topLeft: Radius.circular(8),
-          //                   topRight: Radius.circular(8)),
-          //             ),
-          //             child: InfoPermitWindowBox(
-          //               width: widget.width,
-          //               isMobile: true,
-          //               type: permit.features![i].properties!.tipas ?? '',
-          //               issuedFrom:
-          //                   permit.features![i].properties!.galiojaNuo ?? '',
-          //               issuedTo:
-          //                   permit.features![i].properties!.galiojaIki ?? '',
-          //               cadastralNumber:
-          //                   permit.features![i].properties!.kadastrinisNr ?? '',
-          //               subdivision:
-          //                   permit.features![i].properties!.vmuPadalinys ?? '',
-          //               forestryDistrict:
-          //                   permit.features![i].properties!.girininkija ?? '',
-          //               block: permit.features![i].properties!.kvartalas,
-          //               plot: permit.features![i].properties!.sklypas ?? '',
-          //               cuttableArea:
-          //                   permit.features![i].properties!.kertamasPlotas,
-          //               dominantTree: permit
-          //                       .features![i].properties!.vyraujantysMedziai ??
-          //                   '',
-          //               cuttingType:
-          //                   permit.features![i].properties!.kirtimoRusis ?? '',
-          //               reinstatementType:
-          //                   permit.features![i].properties!.atkurimoBudas ?? '',
-          //             ),
-          //           ),
-          //         );
-          //       });
-          // },
+          hitValue: (
+            type: permit.features![i].properties!.tipas ?? '',
+            issuedFrom: permit.features![i].properties!.galiojaNuo ?? '',
+            issuedTo: permit.features![i].properties!.galiojaIki ?? '',
+            cadastralNumber:
+                permit.features![i].properties!.kadastrinisNr ?? '',
+            subdivision: permit.features![i].properties!.vmuPadalinys ?? '',
+            forestryDistrict: permit.features![i].properties!.girininkija ?? '',
+            block: permit.features![i].properties!.kvartalas,
+            plot: permit.features![i].properties!.sklypas ?? '',
+            cuttableArea: permit.features![i].properties!.kertamasPlotas,
+            dominantTree:
+                permit.features![i].properties!.vyraujantysMedziai ?? '',
+            cuttingType: permit.features![i].properties!.kirtimoRusis ?? '',
+            reinstatementType:
+                permit.features![i].properties!.atkurimoBudas ?? '',
+          ),
         ),
       );
     }
@@ -540,17 +579,6 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
       markers2 = tempMarkers;
       tempMarkers = [];
     });
-  }
-
-  Marker _reportToMarker(FullReportDto report) {
-    return Marker(
-      key: ObjectKey(report),
-      point: LatLng(report.latitude, report.longitude),
-      alignment: Alignment.topCenter,
-      width: 50,
-      height: 50,
-      child: Image.asset(getTrashIconPath(report.status)),
-    );
   }
 
   String getTrashIconPath(String status) {

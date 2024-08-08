@@ -54,8 +54,9 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
   String currentTextValue = '';
   String currentEmailValue = '';
   List<Marker> markers = [];
-  double selectedLat = 0;
-  double selectedLong = 0;
+  double? selectedLat;
+  double? selectedLong;
+  Marker? selectedMarker;
 
   @override
   void initState() {
@@ -157,24 +158,57 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                       SizedBox(height: widget.width * 0.0444),
                       AddingMapRedirectWindow(
                         width: widget.width,
+                        marker: selectedMarker,
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => AddPinScreenMobile(
                                       width: widget.width,
-                                      markers: [],
+                                      markers: const [],
                                       isLayerSwitchVisible: true,
                                       isPermitSwitchVisible: false,
                                       onTap: (lat, long) {
                                         setState(() {
                                           selectedLat = lat;
                                           selectedLong = long;
+                                          selectedMarker = Marker(
+                                            point: LatLng(selectedLat ?? 55,
+                                                selectedLong ?? 24),
+                                            width: 40,
+                                            height: 40,
+                                            child: Image.asset(
+                                              'assets/icons/marker_pins/red_marker.png',
+                                              height: 20,
+                                              width: 20,
+                                            ),
+                                          );
                                         });
-                                      }, reports: widget.reports,
+                                      },
+                                      reports: widget.reports,
                                     )),
                           );
                         },
+                      ),
+                      SizedBox(
+                        height: widget.width * 0.03,
+                        child: TextFormField(
+                          enabled: true,
+                          maxLines: 1,
+                          readOnly: true,
+                          initialValue: " ",
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                          ),
+                          textAlignVertical: TextAlignVertical.top,
+                          validator: (value) {
+                            if (selectedLat == null && selectedLong == null) {
+                              return 'Privaloma pasirinkti';
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
                       ),
                       SizedBox(height: widget.width * 0.05),
                       Align(
@@ -398,8 +432,8 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                         width: widget.width,
                         onTap: () async {
                           if (_formKey.currentState!.validate() &&
-                              selectedLat != 0 &&
-                              selectedLong != 0 &&
+                              selectedLat != null &&
+                              selectedLong != null &&
                               isTermsAccepted &&
                               _selectedImages.isNotEmpty &&
                               isImagesSizeValid) {
@@ -407,8 +441,8 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                               widget.onAddTap(
                                 currentEmailValue,
                                 currentTextValue,
-                                selectedLat,
-                                selectedLong,
+                                selectedLat!,
+                                selectedLong!,
                                 _selectedImages,
                               );
                             }

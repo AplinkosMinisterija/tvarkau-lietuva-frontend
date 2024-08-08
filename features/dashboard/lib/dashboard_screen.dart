@@ -1,7 +1,6 @@
 library dashboard;
 
 import 'package:dashboard/src/home/ui/home_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 export 'package:dashboard/dashboard_screen.dart';
 

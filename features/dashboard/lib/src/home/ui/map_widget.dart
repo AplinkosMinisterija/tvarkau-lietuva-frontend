@@ -1,6 +1,5 @@
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:api_client/api_client.dart';
-import 'package:core/core.dart';
 import 'package:dashboard/src/home/ui/tile_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:core_ui/core_ui.dart';
@@ -44,8 +43,9 @@ class MapWidget extends StatefulWidget {
 }
 
 class _MapWidgetState extends State<MapWidget> with TickerProviderStateMixin {
-  final CustomInfoWindowController _customReportInfoWindowController =
-      CustomInfoWindowController();
+  double? selectedLat;
+  double? selectedLong;
+  double selectedZoom = 7;
 
   bool isShowMarkers = false;
   bool isShowDumps = false;
@@ -57,9 +57,6 @@ class _MapWidgetState extends State<MapWidget> with TickerProviderStateMixin {
   late void Function(Exception e) onError;
   MapController mapController = MapController();
 
-  //late MapType _currentMapType;
-  // late CameraPosition _cameraPosition;
-  // late GoogleMapController mapController;
   bool isLocationLoading = false;
   late AnimationController _animationController;
 
@@ -144,14 +141,8 @@ class _MapWidgetState extends State<MapWidget> with TickerProviderStateMixin {
       isShowDumps = true;
     }
 
-    //_currentMapType = MapType.normal;
     super.initState();
   }
-
-  //
-  // void _onMapCreated(GoogleMapController controller) {
-  //   mapController = controller;
-  // }
 
   Future<Position> getCurrentLocation() async {
     setState(() {
@@ -223,9 +214,17 @@ class _MapWidgetState extends State<MapWidget> with TickerProviderStateMixin {
                       child: Stack(
                         children: [
                           FlutterMap(
-                              options: const MapOptions(
-                                  initialCenter: latlong.LatLng(55, 24),
-                                  initialZoom: 7),
+                              options: MapOptions(
+                                initialCenter: const latlong.LatLng(55, 24),
+                                initialZoom: 7,
+                                onPositionChanged: (position, isFinished) {
+                                  setState(() {
+                                    selectedLat = position.center.latitude;
+                                    selectedLong = position.center.longitude;
+                                    selectedZoom = position.zoom;
+                                  });
+                                },
+                              ),
                               mapController: mapController,
                               children: [
                                 openStreetMapTileLayer,
@@ -255,35 +254,8 @@ class _MapWidgetState extends State<MapWidget> with TickerProviderStateMixin {
                                   ),
                                 ),
                               ]),
-                          // GoogleMap(
-                          //   mapType: _currentMapType,
-                          //   initialCameraPosition: _cameraPosition,
-                          //   markers: _markers,
-                          //   myLocationButtonEnabled: true,
-                          //   myLocationEnabled: true,
-                          //   onMapCreated:
-                          //       (GoogleMapController controller) async {
-                          //     _onMapCreated(controller);
-                          //     _customReportInfoWindowController
-                          //         .googleMapController = controller;
-                          //   },
-                          //   onCameraMove: (position) {
-                          //     _customReportInfoWindowController.onCameraMove!();
-                          //     updateCamera(position);
-                          //   },
-                          //   onTap: (position) {
-                          //     _customReportInfoWindowController
-                          //         .hideInfoWindow!();
-                          //   },
-                          // ),
-                          // CustomInfoWindow(
-                          //   (top, left, width, height) => {},
-                          //   leftMargin: 200,
-                          //   controller: _customReportInfoWindowController,
-                          //   isDump: isShowDumps,
-                          // ),
                           Positioned(
-                            bottom: 155,
+                            bottom: 110,
                             right: 10,
                             child: PointerInterceptor(
                               child: InkWell(
@@ -312,6 +284,67 @@ class _MapWidgetState extends State<MapWidget> with TickerProviderStateMixin {
                                     },
                                     isLoading: isLocationLoading,
                                   )),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 65,
+                            right: 10,
+                            child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  selectedZoom = selectedZoom + 1;
+                                  mapController.move(
+                                      LatLng(selectedLat ?? 55,
+                                          selectedLong ?? 24),
+                                      selectedZoom);
+                                });
+                              },
+                              child: PointerInterceptor(
+                                child: Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: const Icon(
+                                    Icons.zoom_in,
+                                    color: Color(0xff707070),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 20,
+                            right: 10,
+                            child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  if (selectedZoom > 1) {
+                                    selectedZoom = selectedZoom - 1;
+                                  }
+
+                                  mapController.move(
+                                      LatLng(selectedLat ?? 55,
+                                          selectedLong ?? 24),
+                                      selectedZoom);
+                                });
+                              },
+                              child: PointerInterceptor(
+                                child: Container(
+                                  width: 40,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: const Icon(
+                                    Icons.zoom_out,
+                                    color: Color(0xff707070),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                           if (!widget.isMobile) ...[
@@ -348,33 +381,6 @@ class _MapWidgetState extends State<MapWidget> with TickerProviderStateMixin {
                               ),
                             )
                           ],
-                          // Padding(
-                          //   padding:
-                          //       const EdgeInsets.only(bottom: 110, right: 10),
-                          //   child: Align(
-                          //       alignment: Alignment.bottomRight,
-                          //       child: PointerInterceptor(
-                          //         child: GoogleMapTypeButton(
-                          //           height: 40,
-                          //           width: 40,
-                          //           onPressed: () {
-                          //             showDialog<String>(
-                          //                 context: context,
-                          //                 builder: (BuildContext context) =>
-                          //                     MapTypeChangeDialog(
-                          //                       width: widget.width,
-                          //                       currentMapType: _currentMapType,
-                          //                       onChangeTap: (MapType mapType) {
-                          //                         setState(() {
-                          //                           _currentMapType = mapType;
-                          //                         });
-                          //                       },
-                          //                       isMobile: widget.isMobile,
-                          //                     ));
-                          //           },
-                          //         ),
-                          //       )),
-                          // ),
                         ],
                       ),
                     ),
@@ -425,10 +431,6 @@ class _MapWidgetState extends State<MapWidget> with TickerProviderStateMixin {
     );
   }
 
-  // Future<void> updateCamera(CameraPosition cameraPosition) async {
-  //   await SecureStorageProvider().setCameraSetup(cameraPosition);
-  // }
-
   getDropdownValueByString(String value) {
     switch (value) {
       case 'Atliekos':
@@ -441,7 +443,6 @@ class _MapWidgetState extends State<MapWidget> with TickerProviderStateMixin {
   }
 
   Future<void> mapMarkers() async {
-    int index = 1000;
     List<Marker> tempMarkers = [];
     if (widget.reports != null) {
       for (var element in widget.reports!) {
@@ -475,36 +476,7 @@ class _MapWidgetState extends State<MapWidget> with TickerProviderStateMixin {
               ),
             ),
           ),
-          // Marker(
-          //     markerId: MarkerId(
-          //       element.name.toString() + index.toString(),
-          //     ),
-          //     position: LatLng(
-          //       element.latitude.toDouble(),
-          //       element.longitude.toDouble(),
-          //     ),
-          //     icon: await BitmapDescriptor.asset(
-          //         const ImageConfiguration(size: Size(25, 30)),
-          //         getTrashIconPath(element.status)),
-          //     onTap: () {
-          //       _customReportInfoWindowController.addInfoWindow!(
-          //         InfoTrashWindowBox(
-          //             title: element.name,
-          //             imageUrls: element.imageUrls.toList(),
-          //             status: element.status,
-          //             date: element.reportDate.toString(),
-          //             reportId: element.refId,
-          //             onTap: () {
-          //               widget.onInformationTap!(element.refId);
-          //             }),
-          //         LatLng(
-          //           element.latitude.toDouble(),
-          //           element.longitude.toDouble(),
-          //         ),
-          //       );
-          //     }),
         );
-        index++;
       }
     } else if (widget.dumps != null) {
       for (var element in widget.dumps!) {
@@ -541,39 +513,7 @@ class _MapWidgetState extends State<MapWidget> with TickerProviderStateMixin {
               ),
             ),
           ),
-          // Marker(
-          //     markerId: MarkerId(
-          //       element.name.toString() + index.toString(),
-          //     ),
-          //     position: LatLng(
-          //       element.reportLat.toDouble(),
-          //       element.reportLong.toDouble(),
-          //     ),
-          //     icon: await BitmapDescriptor.asset(
-          //         const ImageConfiguration(size: Size(50, 50)),
-          //         'assets/svg/dump_icon.svg'),
-          //     onTap: () {
-          //       _customReportInfoWindowController.addInfoWindow!(
-          //         InfoDumpWindowBox(
-          //           title: element.name,
-          //           address: element.address ?? '',
-          //           phone: element.phone ?? '',
-          //           workingHours: element.workingHours,
-          //           moreInformation: element.moreInformation,
-          //           isHovering: (bool value) {
-          //             setState(() {
-          //               isMapHover = value;
-          //             });
-          //           },
-          //         ),
-          //         LatLng(
-          //           element.reportLat.toDouble(),
-          //           element.reportLong.toDouble(),
-          //         ),
-          //       );
-          //     }),
         );
-        index++;
       }
     }
 

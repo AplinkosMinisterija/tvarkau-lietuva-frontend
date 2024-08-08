@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map_cancellable_tile_provider/flutter_map_cancellable_tile_provider.dart';
+import 'package:latlong2/latlong.dart';
 
 class AddingMapRedirectWindow extends StatefulWidget {
   const AddingMapRedirectWindow({
     super.key,
     required this.width,
-    //required this.marker,
+    this.marker,
     required this.onTap,
+    this.lat,
+    this.long,
   });
 
   final double width;
-  //final Set<Marker> marker;
+
+  final Marker? marker;
+  final double? lat;
+  final double? long;
   final VoidCallback onTap;
 
   @override
@@ -20,46 +27,25 @@ class AddingMapRedirectWindow extends StatefulWidget {
 }
 
 class _AddingMapRedirectWindowState extends State<AddingMapRedirectWindow> {
-  Set<Marker> marker = {};
-  late CameraPosition viewPosition;
-  late GoogleMapController _googleMapController;
+
+  late Marker marker;
+  MapController mapController = MapController();
 
   @override
   void initState() {
-    marker.clear();
     super.initState();
   }
 
-  void animate() {
-    _googleMapController.animateCamera(
-      CameraUpdate.newLatLngZoom(
-          LatLng(
-            viewPosition.target.latitude,
-            viewPosition.target.longitude,
-          ),
-          viewPosition.zoom),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
-    // if (widget.marker.isNotEmpty) {
-    //   marker.add(widget.marker.first);
-    //   viewPosition = CameraPosition(
-    //       target: LatLng(
-    //         marker.first.position.latitude,
-    //         marker.first.position.longitude,
-    //       ),
-    //       zoom: 9);
-    //   animate();
-    // } else {
-    //   viewPosition =
-    //       const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 6.2);
-    //   if (marker.isNotEmpty) {
-    //     animate();
-    //   }
-    //   marker.clear();
-    // }
+
+    if (widget.marker != null) {
+      marker = widget.marker!;
+      mapController.move(LatLng(marker.point.latitude, marker.point.longitude), 15);
+      setState(() {});
+    }
+
     return GestureDetector(
       onTap: widget.onTap,
       child: Stack(
@@ -72,9 +58,22 @@ class _AddingMapRedirectWindowState extends State<AddingMapRedirectWindow> {
               child: Stack(
                 children: [
                   ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(8)),
-                    child: Container(color: Colors.white,)
-                  ),
+                      borderRadius: const BorderRadius.all(Radius.circular(8)),
+                      child: FlutterMap(
+                        mapController: mapController,
+                        options: MapOptions(
+                          initialCenter: LatLng(
+                              widget.marker?.point.latitude ?? 55,
+                              widget.marker?.point.longitude ?? 24),
+                          initialZoom: widget.marker == null ? 6 : 13,
+                        ),
+                        children: [
+                          openStreetMapTileLayerRed,
+                          if (widget.marker != null) ...[
+                            MarkerLayer(markers: [marker])
+                          ]
+                        ],
+                      )),
                 ],
               ),
             ),
@@ -96,7 +95,7 @@ class _AddingMapRedirectWindowState extends State<AddingMapRedirectWindow> {
                   ),
                   SizedBox(width: widget.width * 0.0277),
                   Text(
-                    'Pažymėkite vietą, kur pastebėjote žievėgraužį',
+                    'Pažymėkite vietą, kur pastebėjote pažeidimą',
                     style: GoogleFonts.roboto(
                         fontSize: widget.width * 0.028888,
                         fontWeight: FontWeight.w400),
@@ -110,3 +109,9 @@ class _AddingMapRedirectWindowState extends State<AddingMapRedirectWindow> {
     );
   }
 }
+
+TileLayer get openStreetMapTileLayerRed => TileLayer(
+      urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+      userAgentPackageName: 'tvarkaulietuva.dev',
+      tileProvider: CancellableNetworkTileProvider(),
+    );
