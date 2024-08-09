@@ -148,6 +148,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
           LatLng(currentPosition.latitude, currentPosition.longitude);
       isLoading = false;
       _animatedMapMove(initPosition, 18.0);
+      isShowPolygons = true;
     }, onError: (e) => onError(e)).whenComplete(
       () => setState(
         () {
