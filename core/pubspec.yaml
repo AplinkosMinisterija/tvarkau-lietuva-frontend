@@ -12,6 +12,8 @@ dependencies:
     sdk: flutter
   api_client:
     path: ../api_client
+  core_ui:
+    path: ../core_ui
 
   cupertino_icons: ^1.0.2
   flutter_bloc: ^8.1.4

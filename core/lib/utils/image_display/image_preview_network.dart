@@ -1,3 +1,4 @@
+import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 
 class ImagePreviewNetwork extends StatefulWidget {
@@ -45,8 +46,9 @@ class _ImagePreviewNetworkState extends State<ImagePreviewNetwork> {
                         height: size.height * 0.75,
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(12),
-                            child:
-                                Image.network(widget.imageUrls[activeIndex]))),
+                            child: AppNetworkImage(
+                              url: widget.imageUrls[activeIndex],
+                            ))),
                     SizedBox(height: size.height * 0.022),
                     SizedBox(
                         width: isMobile
@@ -86,10 +88,11 @@ class _ImagePreviewNetworkState extends State<ImagePreviewNetwork> {
                                         borderRadius: BorderRadius.circular(12),
                                         child: MouseRegion(
                                           cursor: SystemMouseCursors.zoomIn,
-                                          child: Image.network(
-                                            widget.imageUrls[i],
+                                          child: AppNetworkImage(
+                                            url: widget.imageUrls[i],
                                             fit: BoxFit.cover,
                                           ),
+
                                         ),
                                       ),
                                     ),
@@ -98,46 +101,6 @@ class _ImagePreviewNetworkState extends State<ImagePreviewNetwork> {
                               ],
                             ])
 
-                        // GridView.count(
-                        //   crossAxisCount: widget.imageUrls.length,
-                        //   mainAxisSpacing: 16,
-                        //   crossAxisSpacing: 16,
-                        //   shrinkWrap: true,
-                        //   childAspectRatio: 1,
-                        //   physics: const NeverScrollableScrollPhysics(),
-                        //   children: [
-                        //     for (var i = 0; i < widget.imageUrls.length; i++) ...[
-                        //       GestureDetector(
-                        //         onTap: () {
-                        //           setState(() {
-                        //             activeIndex = i;
-                        //           });
-                        //         },
-                        //         child: Container(
-                        //           decoration: activeIndex == i
-                        //               ? BoxDecoration(
-                        //                   borderRadius: BorderRadius.circular(12),
-                        //                   border: Border.all(
-                        //                     color: Colors.white,
-                        //                     width: 1,
-                        //                   ),
-                        //                 )
-                        //               : null,
-                        //           child: ClipRRect(
-                        //             borderRadius: BorderRadius.circular(12),
-                        //             child: MouseRegion(
-                        //               cursor: SystemMouseCursors.zoomIn,
-                        //               child: Image.network(
-                        //                 widget.imageUrls[i],
-                        //                 fit: BoxFit.cover,
-                        //               ),
-                        //             ),
-                        //           ),
-                        //         ),
-                        //       ),
-                        //     ]
-                        //   ],
-                        // ),
                         )
                   ],
                 ),

@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-
+import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'image_preview_memory.dart';
 import 'image_preview_network.dart';
@@ -50,8 +50,8 @@ class ImageGallery {
                               aspectRatio: 1,
                               child: MouseRegion(
                                 cursor: SystemMouseCursors.zoomIn,
-                                child: Image.network(
-                                  imageUrls[i],
+                                child: AppNetworkImage(
+                                  url: imageUrls[i],
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -73,8 +73,8 @@ class ImageGallery {
                           aspectRatio: 1,
                           child: MouseRegion(
                             cursor: SystemMouseCursors.zoomIn,
-                            child: Image.network(
-                              imageUrls[i],
+                            child: AppNetworkImage(
+                              url: imageUrls[i],
                               fit: BoxFit.cover,
                             ),
                           ),
