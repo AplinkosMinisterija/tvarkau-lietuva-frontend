@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import 'map_type_switcher_button.dart';
 
-class MapTypeSwitcher extends StatefulWidget {
+class MapTypeSwitcher extends StatelessWidget {
   const MapTypeSwitcher({
     super.key,
     required this.width,
+    required this.isMobile,
     required this.onMapTypeChange,
     required this.currentMapType,
   });
 
   final double width;
+  final bool isMobile;
   final ValueChanged<MapType> onMapTypeChange;
   final MapType currentMapType;
 
-  @override
-  State<MapTypeSwitcher> createState() => _MapTypeSwitcherState();
-}
-
-class _MapTypeSwitcherState extends State<MapTypeSwitcher> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -27,35 +23,27 @@ class _MapTypeSwitcherState extends State<MapTypeSwitcher> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         MapTypeSwitcherButton(
-          width: widget.width,
+          width: isMobile ? width * 3 : width,
           title: 'Įprastas',
-          isActive: widget.currentMapType == MapType.normal,
+          isActive: currentMapType == MapType.normal,
           onTap: () {
-            setState(() {
-              widget.onMapTypeChange(MapType.normal);
-            });
+            onMapTypeChange(MapType.normal);
           },
         ),
-        SizedBox(width: widget.width * 0.0083),
         MapTypeSwitcherButton(
-          width: widget.width,
+          width: isMobile ? width * 3 : width,
           title: 'Palydovinis',
-          isActive: widget.currentMapType == MapType.satellite,
+          isActive: currentMapType == MapType.satellite,
           onTap: () {
-            setState(() {
-              widget.onMapTypeChange(MapType.satellite);
-            });
+            onMapTypeChange(MapType.satellite);
           },
         ),
-        SizedBox(width: widget.width * 0.0083),
         MapTypeSwitcherButton(
-          width: widget.width,
+          width: isMobile ? width * 3 : width,
           title: 'Hibridinis',
-          isActive: widget.currentMapType == MapType.hybrid,
+          isActive: currentMapType == MapType.hybrid,
           onTap: () {
-            setState(() {
-              widget.onMapTypeChange(MapType.hybrid);
-            });
+            onMapTypeChange(MapType.hybrid);
           },
         ),
       ],

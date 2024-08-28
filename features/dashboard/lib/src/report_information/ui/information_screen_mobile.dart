@@ -1,14 +1,16 @@
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
+import 'package:dashboard/src/home/ui/tile_providers.dart';
 import 'package:dashboard/src/report_information/ui/information_screen_widget_utils.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
+import 'package:latlong2/latlong.dart';
 import 'dart:ui' as ui;
 
 class InformationScreenMobile extends StatefulWidget {
@@ -29,14 +31,14 @@ class InformationScreenMobile extends StatefulWidget {
 }
 
 class _InformationScreenMobileState extends State<InformationScreenMobile> {
-  BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
+  //BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
   Set<Marker> markers = {};
   int textLinesCount = 0;
   int departmentAnswerTextLinesCount = 0;
   int imageLineCount = 0;
-  late MapType _currentMapType;
-  CameraPosition _initialCameraPosition =
-      const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 7.0);
+  //late MapType _currentMapType;
+  // CameraPosition _initialCameraPosition =
+  //     const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 7.0);
   late Widget statusWidget;
   late Widget firstStageWidget;
   late Widget falseReportWidget;
@@ -56,10 +58,10 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
 
   @override
   void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      addCustomIcon();
-    });
+
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   addCustomIcon();
+    // });
 
     span = TextSpan(
         text: widget.report.name,
@@ -91,22 +93,22 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
     strLength = 8 - widget.report.refId.length;
     str = '0' * strLength;
 
-    _initialCameraPosition = CameraPosition(
-        target: LatLng(widget.report.latitude, widget.report.longitude),
-        zoom: 9.0);
-    _currentMapType = MapType.normal;
-    markers.add(
-      Marker(
-        markerId: MarkerId(
-          '${widget.report.name}99899',
-        ),
-        position: LatLng(
-          widget.report.latitude,
-          widget.report.longitude,
-        ),
-        icon: markerIcon,
-      ),
-    );
+    // _initialCameraPosition = CameraPosition(
+    //     target: LatLng(widget.report.latitude, widget.report.longitude),
+    //     zoom: 9.0);
+    //_currentMapType = MapType.normal;
+    // markers.add(
+    //   Marker(
+    //     markerId: MarkerId(
+    //       '${widget.report.name}99899',
+    //     ),
+    //     position: LatLng(
+    //       widget.report.latitude,
+    //       widget.report.longitude,
+    //     ),
+    //     icon: markerIcon,
+    //   ),
+    // );
     statusWidget = InformationScreenWidgetUtils()
         .getStatusWidget(widget.report.status, widget.width);
     firstStageWidget = getFirstStageWidget();
@@ -117,13 +119,14 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
     finalStageWidget = getFinalStageWidget();
     firstStageLineHeight = calculateFirstStageDottedLineHeight();
     thirdStageLineHeight = calculateThirdStageDottedLineHeight();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Title(
       title: "Pranešimo informacija",
-      color: Colors.green,
+      color: const Color.fromRGBO(28, 63, 58, 1),
       child: Scaffold(
         body: SingleChildScrollView(
           child: Stack(
@@ -131,7 +134,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
               Container(
                 width: widget.width,
                 height: widget.width * 0.8666,
-                color: const Color.fromRGBO(57, 97, 84, 1),
+                color: const Color.fromRGBO(28, 63, 58, 1),
               ),
               Padding(
                 padding: EdgeInsets.all(widget.width * 0.0444),
@@ -142,12 +145,11 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        DepartmentLogoMobile(
-                          width: widget.width,
-                          onTap: () {
-                            context.goNamed("home");
-                          },
-                        ),
+                        LogoButton(
+                            width: widget.width * 0.4615,
+                            onTap: () {
+                              context.goNamed('home');
+                            }),
                         IconButton(
                             onPressed: () => _showDialog(),
                             icon: Icon(
@@ -217,37 +219,53 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                             const BorderRadius.all(Radius.circular(8)),
                         child: Stack(
                           children: [
-                            GoogleMap(
-                              mapType: _currentMapType,
-                              initialCameraPosition: _initialCameraPosition,
-                              markers: markers,
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(bottom: 110, right: 10),
-                              child: Align(
-                                  alignment: Alignment.bottomRight,
-                                  child: GoogleMapTypeButton(
-                                    height: 40,
-                                    width: 40,
-                                    onPressed: () {
-                                      showDialog<String>(
-                                          context: context,
-                                          builder: (BuildContext context) =>
-                                              MapTypeChangeDialog(
-                                                  width: widget.width,
-                                                  currentMapType:
-                                                      _currentMapType,
-                                                  onHover: (isHover) {},
-                                                  onChangeTap:
-                                                      (MapType mapType) {
-                                                    setState(() {
-                                                      _currentMapType = mapType;
-                                                    });
-                                                  }));
-                                    },
-                                  )),
-                            ),
+                            // GoogleMap(
+                            //   mapType: _currentMapType,
+                            //   initialCameraPosition: _initialCameraPosition,
+                            //   markers: markers,
+                            // ),
+                            FlutterMap(
+                                options: MapOptions(
+                                    initialZoom: 14,
+                                    initialCenter: LatLng(
+                                        widget.report.latitude,
+                                        widget.report.longitude)),
+                                children: [
+                                  openStreetMapTileLayer,
+                                  MarkerLayer(markers: [
+                                    Marker(
+                                        point: LatLng(widget.report.latitude,
+                                            widget.report.longitude),
+                                        child: SvgPicture.asset(
+                                            'assets/svg/pin_icon.svg'))
+                                  ])
+                                ]),
+                            // Padding(
+                            //   padding:
+                            //       const EdgeInsets.only(bottom: 110, right: 10),
+                            //   child: Align(
+                            //       alignment: Alignment.bottomRight,
+                            //       child: GoogleMapTypeButton(
+                            //         height: 40,
+                            //         width: 40,
+                            //         onPressed: () {
+                            //           showDialog<String>(
+                            //               context: context,
+                            //               builder: (BuildContext context) =>
+                            //                   MapTypeChangeDialog(
+                            //                     width: widget.width,
+                            //                     currentMapType: _currentMapType,
+                            //                     onHover: (isHover) {},
+                            //                     onChangeTap: (MapType mapType) {
+                            //                       setState(() {
+                            //                         _currentMapType = mapType;
+                            //                       });
+                            //                     },
+                            //                     isMobile: true,
+                            //                   ));
+                            //         },
+                            //       )),
+                            // ),
                           ],
                         ),
                       ),
@@ -481,7 +499,9 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                     imageUrls: FormatterUtils().formatImageUrls(
                         widget.report.officerImageUrls.toList()),
                     context: context,
-                    width: widget.width * 0.7)
+                    width: widget.width * 0.7,
+                    titlesEnabled: false,
+                  )
                 : const SizedBox.shrink(),
           ],
         )
@@ -572,7 +592,9 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                       imageUrls: FormatterUtils().formatImageUrls(
                           widget.report.officerImageUrls.toList()),
                       context: context,
-                      width: widget.width * 0.7)
+                      width: widget.width * 0.7,
+                      titlesEnabled: false,
+                    )
                   : const SizedBox.shrink(),
             ],
             SizedBox(height: widget.width * 0.1111),
@@ -761,7 +783,9 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                     imageUrls: FormatterUtils()
                         .formatImageUrls(widget.report.imageUrls.toList()),
                     context: context,
-                    width: widget.width * 0.7)
+                    width: widget.width * 0.7,
+                    titlesEnabled: false,
+                  )
                 : const SizedBox.shrink(),
           ],
         )
@@ -777,15 +801,15 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
         .formatDate(statusRecord?.date ?? widget.report.reportDate);
   }
 
-  void addCustomIcon() {
-    BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(), 'assets/svg/pin_icon.svg')
-        .then((icon) {
-      setState(() {
-        markerIcon = icon;
-      });
-    });
-  }
+  // void addCustomIcon() {
+  //   BitmapDescriptor.asset(
+  //           const ImageConfiguration(), 'assets/svg/pin_icon.svg')
+  //       .then((icon) {
+  //     setState(() {
+  //       markerIcon = icon;
+  //     });
+  //   });
+  // }
 
   void _showDialog() {
     showGeneralDialog(
@@ -838,13 +862,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                                   )),
                             ),
                             SizedBox(height: widget.width * 0.0555),
-                            FooterDescriptionMobile(width: widget.width * 0.9),
-                            SizedBox(height: widget.width * 0.0654),
-                            FooterContactsMobile(width: widget.width * 0.9),
-                            SizedBox(height: widget.width * 0.0444),
-                            FooterConsultMobile(width: widget.width * 0.85),
-                            SizedBox(height: widget.width * 0.04722),
-                            FooterSupportMobile(width: widget.width * 0.9),
+                            Footer(width: widget.width * 0.9, isMobile: true)
                           ],
                         ),
                       ),

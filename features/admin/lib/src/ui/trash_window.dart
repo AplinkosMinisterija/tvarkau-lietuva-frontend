@@ -57,7 +57,7 @@ class _TrashWindowState extends State<TrashWindow> {
           widget.trash.latitude,
           widget.trash.longitude,
         ),
-        icon: await BitmapDescriptor.fromAssetImage(
+        icon: await BitmapDescriptor.asset(
             const ImageConfiguration(size: Size(50, 50)),
             'assets/svg/pin_icon.svg'));
     setState(() {
@@ -219,6 +219,7 @@ class _TrashWindowState extends State<TrashWindow> {
                   imageUrls: imageUrls,
                   context: context,
                   width: 700,
+                  titlesEnabled: false,
                 ),
               ],
               24.heightBox,
@@ -244,6 +245,7 @@ class _TrashWindowState extends State<TrashWindow> {
                         imageUrls: officerImageUrls,
                         context: context,
                         width: 700,
+                        titlesEnabled: false,
                       )
                     : 10.heightBox,
                 10.heightBox,
@@ -393,6 +395,7 @@ class _TrashWindowState extends State<TrashWindow> {
                 imageUrls: imageUrls,
                 context: context,
                 width: 700,
+                titlesEnabled: false,
               ),
             ],
             15.heightBox,
@@ -418,6 +421,7 @@ class _TrashWindowState extends State<TrashWindow> {
                       imageUrls: officerImageUrls,
                       context: context,
                       width: 700,
+                      titlesEnabled: false,
                     )
                   : 10.heightBox,
               10.heightBox,
