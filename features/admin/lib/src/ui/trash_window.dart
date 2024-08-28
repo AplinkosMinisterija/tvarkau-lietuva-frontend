@@ -1,9 +1,11 @@
 import 'dart:typed_data';
 
+import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:core/utils/extensions.dart';
 import 'package:api_client/api_client.dart';
 import 'package:core/utils/image_display/image_display.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../common/custom_colors.dart';
 import '../common/custom_styles.dart';
@@ -19,6 +21,8 @@ class TrashWindow extends StatefulWidget {
   final VoidCallback onBackPress;
   final Function(String name, String comment, String status, bool isVisible,
       List<Uint8List> officerImages) onUpdate;
+  final Function(String refId, String name, double longitude, double latitude,
+      String status, DateTime reportDate, String email) onTransfer;
   final VoidCallback onDelete;
   final VoidCallback onRestore;
 
@@ -28,6 +32,7 @@ class TrashWindow extends StatefulWidget {
     required this.onUpdate,
     required this.onDelete,
     required this.onRestore,
+    required this.onTransfer,
     super.key,
   });
 
@@ -119,6 +124,7 @@ class _TrashWindowState extends State<TrashWindow> {
                           color: CustomColors.white,
                         ),
                       ),
+                      8.widthBox,
                     ],
                   ),
                   48.heightBox,
@@ -244,6 +250,12 @@ class _TrashWindowState extends State<TrashWindow> {
                     : 10.heightBox,
                 10.heightBox,
               ],
+              10.heightBox,
+              _BuildAadisSection(
+                report: trash,
+                onTransfer: widget.onTransfer,
+              ),
+              24.heightBox,
               !trash.isDeleted
                   ? CustomButton(
                       text: 'Trinti pranešimą',
@@ -444,6 +456,11 @@ class _TrashWindowState extends State<TrashWindow> {
             widget.onUpdate(name, comment, status, isVisible, officerImages);
           },
         ),
+        10.heightBox,
+        _BuildAadisSection(
+          report: trash,
+          onTransfer: widget.onTransfer,
+        ),
         24.heightBox,
         !trash.isDeleted
             ? CustomButton(
@@ -490,4 +507,108 @@ class _BuildMap extends StatelessWidget {
       ),
     );
   }
+}
+
+class _BuildAadisSection extends StatefulWidget {
+  const _BuildAadisSection({
+    required this.report,
+    required this.onTransfer,
+  });
+
+  final FullReportDto report;
+  final Function(String refId, String name, double longitude, double latitude,
+      String status, DateTime reportDate, String email) onTransfer;
+
+  @override
+  State<_BuildAadisSection> createState() => _BuildAadisSectionState();
+}
+
+class _BuildAadisSectionState extends State<_BuildAadisSection> {
+  String selectedItem = '';
+  Map<String, String> itemList = {};
+
+  @override
+  void initState() {
+    if (widget.report.isTransferred != true) {
+      itemList = getEmployeeList(widget.report.category);
+    }
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.report.isTransferred != true
+        ? Column(
+            children: [
+              SizedBox(
+                height: 100,
+                child: CustomDropdown<String>(
+                  hintText: 'Pasirinkite savivaldybę',
+                  overlayHeight: 250,
+                  decoration: CustomDropdownDecoration(
+                    listItemStyle: GoogleFonts.roboto(fontSize: 13),
+                    closedBorder: Border.all(color: Colors.black, width: 1),
+                    expandedBorder: Border.all(color: Colors.black, width: 1),
+                    hintStyle: GoogleFonts.roboto(fontSize: 13),
+                    headerStyle: GoogleFonts.roboto(fontSize: 13),
+                  ),
+                  items: itemList.keys.toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      selectedItem = itemList[value] ?? '';
+                    });
+                  },
+                ),
+              ),
+              CustomButton(
+                text: 'Siųsti į AADIS',
+                buttonType: ButtonType.outlined,
+                color: selectedItem != ''
+                    ? CustomColors.primary
+                    : CustomColors.primaryLight,
+                onPressed: selectedItem != ''
+                    ? () {
+                        widget.onTransfer(
+                            widget.report.refId,
+                            widget.report.name,
+                            widget.report.longitude,
+                            widget.report.latitude,
+                            widget.report.status,
+                            widget.report.reportDate,
+                            selectedItem);
+                      }
+                    : null,
+              ),
+            ],
+          )
+        : const SizedBox.shrink();
+  }
+}
+
+Map<String, String> getEmployeeList(FullReportDtoCategoryEnum category) {
+  const trashList = {
+    'Alytus': 'reda.baubliene@aad.am.lt',
+    'Kaunas': 'vytautas.januska@aad.am.lt',
+    'Klaipėda': 'laura.dagiliene@aad.am.lt',
+    'Gargždai': 'laura.mazalskiene@aad.am.lt',
+    'Šilutė': 'ligita.budrikiene@aad.am.lt',
+    'Jūros AAS': 'vidmantas.tilvikas@aad.am.lt',
+    'Biržai': 'elona.pipiraite@aad.am.lt',
+    'Panevėžys': 'viktorija.gliaudeliene@aad.am.lt',
+    'Ignalina': 'viktoras.ksenzovas@aad.am.lt',
+    'Utena': 'eimantas.puodziukas@aad.am.lt',
+    'Pakruojis': 'robertas@jagminas@aad.am.lt',
+    'Šiauliai': 'valdas.glazauskis@aad.am.lt',
+    'Telšiai': 'renata.stakuviene@aad.am.lt',
+    'Trakai': 'egidijus.kirkliauskas@aad.am.lt',
+    'Vilniaus miestas': 'edgaras.skrebe@aad.am.lt',
+    'Vilniaus rajonas': 'pavel.jakubovskij@aad.am.lt'
+  };
+  const forestList = {
+    'Kaunas': 'gintaras.zukauskas@aad.am.lt',
+    'Vilnius': 'marijonas.juskauskas@aad.am.lt',
+    'Klaipėda': 'robertas.paulauskas@aad.am.lt',
+    'Panevėžys': 'albertas.mikasauskas@aad.am.lt',
+  };
+  return category == FullReportDtoCategoryEnum.trash ? trashList : forestList;
 }

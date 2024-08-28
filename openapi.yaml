@@ -96,6 +96,31 @@ paths:
           description: Dump not found
       tags: *ref_0
       security: *ref_1
+  /admin/reports/transfer:
+    post:
+      operationId: AdminController_transferReport
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferReportDto'
+      responses:
+        '200':
+          description: Report has been successfully transferred
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransferReportDto'
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FullReportDto'
+      tags: *ref_0
+      security: *ref_1
   /admin/dumps:
     get:
       operationId: AdminController_getAllDumps
@@ -353,10 +378,19 @@ components:
           format: double
         email:
           type: string
+        inspection:
+          type: string
+          nullable: true
+        inspectionId:
+          type: string
+          nullable: true
         isVisible:
           type: boolean
         isDeleted:
           type: boolean
+        isTransferred:
+          type: boolean
+          nullable: true
         comment:
           type: string
         status:
@@ -474,6 +508,34 @@ components:
         - officerImageUrls
         - imageUrls
         - images
+    TransferReportDto:
+      type: object
+      properties:
+        refId:
+          type: string
+        name:
+          type: string
+        longitude:
+          type: number
+          format: double
+        latitude:
+          type: number
+          format: double
+        status:
+          type: string
+        reportDate:
+          format: date-time
+          type: string
+        email:
+          type: string
+      required:
+        - refId
+        - name
+        - longitude
+        - latitude
+        - status
+        - reportDate
+        - email
     UpdateDumpDto:
       type: object
       properties:

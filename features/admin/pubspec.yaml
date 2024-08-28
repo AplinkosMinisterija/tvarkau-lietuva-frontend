@@ -29,6 +29,7 @@ dependencies:
   syncfusion_flutter_core: 24.1.41
   syncfusion_flutter_datagrid: 24.1.41
   collection: ^1.17.2
+  animated_custom_dropdown: ^3.0.0
 
 dev_dependencies:
   flutter_test:

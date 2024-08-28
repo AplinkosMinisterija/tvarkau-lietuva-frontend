@@ -32,7 +32,7 @@ abstract class PublicReportDto
 
   @BuiltValueField(wireName: r'category')
   PublicReportDtoCategoryEnum get category;
-  // enum categoryEnum {  trash,  forest,  beetle,  };
+  // enum categoryEnum {  trash,  forest,  beetle,  permits,  };
 
   @BuiltValueField(wireName: r'refId')
   String get refId;
@@ -281,9 +281,12 @@ class PublicReportDtoCategoryEnum extends EnumClass {
   @BuiltValueEnumConst(wireName: r'forest')
   static const PublicReportDtoCategoryEnum forest =
       _$publicReportDtoCategoryEnum_forest;
-  @BuiltValueEnumConst(wireName: r'beetle', fallback: true)
+  @BuiltValueEnumConst(wireName: r'beetle')
   static const PublicReportDtoCategoryEnum beetle =
       _$publicReportDtoCategoryEnum_beetle;
+  @BuiltValueEnumConst(wireName: r'permits', fallback: true)
+  static const PublicReportDtoCategoryEnum permits =
+      _$publicReportDtoCategoryEnum_permits;
 
   static Serializer<PublicReportDtoCategoryEnum> get serializer =>
       _$publicReportDtoCategoryEnumSerializer;
