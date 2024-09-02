@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
+import 'package:core/utils/permit.dart';
 
 part 'report_event.dart';
 
@@ -31,10 +32,15 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
 
       final FullReportDto trashReport =
           await ApiProvider().getFullTrashReportById(event.refId);
+      Permit? permits;
+      if (trashReport.category == FullReportDtoCategoryEnum.permits) {
+        permits = await ApiProvider().getAllPermits();
+      }
 
       emit(
         ContentState(
           trashReport: trashReport,
+          permits: permits,
         ),
       );
     } catch (e) {

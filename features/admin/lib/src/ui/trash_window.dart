@@ -4,6 +4,8 @@ import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:core/utils/extensions.dart';
 import 'package:api_client/api_client.dart';
 import 'package:core/utils/image_display/image_display.dart';
+import 'package:core/utils/permit.dart';
+import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -18,6 +20,7 @@ import '../widgets/dump_tabs.dart';
 
 class TrashWindow extends StatefulWidget {
   final FullReportDto trash;
+  final Permit? permits;
   final VoidCallback onBackPress;
   final Function(String name, String comment, String status, bool isVisible,
       List<Uint8List> officerImages) onUpdate;
@@ -33,6 +36,7 @@ class TrashWindow extends StatefulWidget {
     required this.onDelete,
     required this.onRestore,
     required this.onTransfer,
+    this.permits,
     super.key,
   });
 
@@ -191,6 +195,7 @@ class _TrashWindowState extends State<TrashWindow> {
               _BuildMap(
                 height: height.toDouble(),
                 markers: markers,
+                permits: widget.permits,
                 initialTarget: LatLng(
                   trash.latitude,
                   trash.longitude,
@@ -367,6 +372,7 @@ class _TrashWindowState extends State<TrashWindow> {
             _BuildMap(
               height: height.toDouble(),
               markers: markers,
+              permits: widget.permits,
               initialTarget: LatLng(
                 trash.latitude,
                 trash.longitude,
@@ -482,30 +488,126 @@ class _TrashWindowState extends State<TrashWindow> {
   }
 }
 
-class _BuildMap extends StatelessWidget {
+class _BuildMap extends StatefulWidget {
   const _BuildMap({
     required this.height,
     required this.markers,
     required this.initialTarget,
+    required this.permits,
   });
 
   final double height;
   final Set<Marker> markers;
   final LatLng initialTarget;
+  final Permit? permits;
+
+  @override
+  State<_BuildMap> createState() => _BuildMapState();
+}
+
+class _BuildMapState extends State<_BuildMap> {
+  Set<Polygon> polygons = {};
+
+  @override
+  void initState() {
+    if (widget.permits != null) {
+      mapPolygons(widget.permits!);
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: height.toDouble(),
+      height: widget.height.toDouble(),
       child: GoogleMap(
         mapType: MapType.none,
-        markers: markers,
+        markers: widget.markers,
+        polygons: polygons,
         initialCameraPosition: CameraPosition(
-          target: initialTarget,
+          target: widget.initialTarget,
           zoom: 13,
         ),
       ),
     );
+  }
+
+  Future<void> mapPolygons(Permit permit) async {
+    Set<Polygon> tempPolygons = {};
+    for (var i = 0; i < permit.features!.length; i++) {
+      List<LatLng> coordinates = [];
+      for (var j = 0;
+          j < permit.features![i].geometry!.coordinates![0][0].length;
+          j++) {
+        coordinates.add(LatLng(
+            permit.features![i].geometry!.coordinates![0][0][j][1],
+            permit.features![i].geometry!.coordinates![0][0][j][0]));
+      }
+      tempPolygons.add(
+        Polygon(
+          polygonId: PolygonId("P-$i"),
+          points: coordinates,
+          fillColor: const Color.fromRGBO(255, 106, 61, 0.3),
+          strokeWidth: 1,
+          strokeColor: const Color.fromRGBO(255, 106, 61, 1),
+          onTap: () {
+            showDialog(
+                context: context,
+                barrierColor: Colors.white.withOpacity(0),
+                builder: (context) {
+                  return Align(
+                    alignment: Alignment.topLeft,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 10,
+                      ),
+                      child: Material(
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                        ),
+                        child: InfoPermitWindowBox(
+                          width: 1200,
+                          isMobile: false,
+                          type: permit.features![i].properties!.tipas ?? '',
+                          issuedFrom:
+                              permit.features![i].properties!.galiojaNuo ?? '',
+                          issuedTo:
+                              permit.features![i].properties!.galiojaIki ?? '',
+                          cadastralNumber:
+                              permit.features![i].properties!.kadastrinisNr ??
+                                  '',
+                          subdivision:
+                              permit.features![i].properties!.vmuPadalinys ??
+                                  '',
+                          forestryDistrict:
+                              permit.features![i].properties!.girininkija ?? '',
+                          block: permit.features![i].properties!.kvartalas,
+                          plot: permit.features![i].properties!.sklypas ?? '',
+                          cuttableArea:
+                              permit.features![i].properties!.kertamasPlotas,
+                          dominantTree: permit.features![i].properties!
+                                  .vyraujantysMedziai ??
+                              '',
+                          cuttingType:
+                              permit.features![i].properties!.kirtimoRusis ??
+                                  '',
+                          reinstatementType:
+                              permit.features![i].properties!.atkurimoBudas ??
+                                  '',
+                        ),
+                      ),
+                    ),
+                  );
+                });
+          },
+        ),
+      );
+    }
+    setState(() {
+      polygons = tempPolygons;
+      tempPolygons = {};
+    });
   }
 }
 

@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:admin/src/ui/trash_window.dart';
+import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
@@ -111,6 +112,10 @@ class _TrashScreenState extends State<TrashScreen> {
                             reportDate: reportDate,
                             email: email));
                       },
+                      permits: state.trashReport.category ==
+                              FullReportDtoCategoryEnum.permits
+                          ? state.permits
+                          : null,
                     );
                   } else if (state is LoadingState) {
                     return LoaderWidget().loader();
