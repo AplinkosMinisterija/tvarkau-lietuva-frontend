@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:admin/src/ui/trash_window.dart';
+import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
@@ -95,6 +96,26 @@ class _TrashScreenState extends State<TrashScreen> {
                               officerImageFiles: [],
                             ));
                       },
+                      onTransfer: (String refId,
+                          String name,
+                          double longitude,
+                          double latitude,
+                          String status,
+                          DateTime reportDate,
+                          String email) {
+                        context.read<ReportBloc>().add(TransferReport(
+                            refId: refId,
+                            name: name,
+                            longitude: longitude,
+                            latitude: latitude,
+                            status: status,
+                            reportDate: reportDate,
+                            email: email));
+                      },
+                      permits: state.trashReport.category ==
+                              FullReportDtoCategoryEnum.permits
+                          ? state.permits
+                          : null,
                     );
                   } else if (state is LoadingState) {
                     return LoaderWidget().loader();

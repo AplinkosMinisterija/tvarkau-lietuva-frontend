@@ -8,9 +8,11 @@ class LoadingState implements ReportState {}
 
 class ContentState implements ReportState {
   final FullReportDto trashReport;
+  final Permit? permits;
 
   ContentState({
     required this.trashReport,
+    this.permits,
   });
 }
 

@@ -1,6 +1,9 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:api_client/api_client.dart';
 import 'package:built_collection/built_collection.dart';
 import 'package:core/core.dart';
+import 'package:core/utils/permit.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:collection/collection.dart';
@@ -146,6 +149,28 @@ class ApiProvider {
   }
 
 
+  Future<TransferReportDto> transferTrashReport({
+    required String refId,
+    required String name,
+    required double longitude,
+    required double latitude,
+    required String status,
+    required DateTime reportDate,
+    required String email,
+  }) async {
+    final response = await adminApi.adminControllerTransferReport(
+        transferReportDto: TransferReportDto((builder) {
+      builder.refId = refId;
+      builder.name = name;
+      builder.longitude = longitude;
+      builder.latitude = latitude;
+      builder.status = status;
+      builder.reportDate = reportDate;
+      builder.email = email;
+    }));
+    return response.data!;
+  }
+
   Future<FullReportDto> updateTrashReport({
     required String id,
     required String refId,
@@ -199,6 +224,13 @@ class ApiProvider {
       builder.isVisible = isVisible;
     }));
     return response.data!;
+  }
+
+  Future<Permit> getAllPermits() async {
+    final response =
+        await http.get(Uri.parse(GlobalConstants.woodcuttingPermitsUrl));
+
+    return Permit.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
   }
 
   BuiltList<MultipartFile> _toMultiPartFiles(List<Uint8List> files) {

@@ -45,7 +45,7 @@ class _DumpWindowState extends State<DumpWindow> {
           widget.dump.latitude,
           widget.dump.longitude,
         ),
-        icon: await BitmapDescriptor.fromAssetImage(
+        icon: await BitmapDescriptor.asset(
             const ImageConfiguration(size: Size(50, 50)),
             'assets/svg/pin_icon.svg'));
     setState(() {

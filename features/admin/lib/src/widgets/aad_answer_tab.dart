@@ -74,7 +74,7 @@ class AddAnswerTab extends StatelessWidget {
                 },
               ),
             ],
-          )
+          ),
         ],
       ),
     );
