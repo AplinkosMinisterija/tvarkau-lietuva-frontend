@@ -639,51 +639,52 @@ class _BuildAadisSectionState extends State<_BuildAadisSection> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.report.isTransferred != true
-        ? Column(
-            children: [
-              SizedBox(
-                height: 100,
-                child: CustomDropdown<String>(
-                  hintText: 'Pasirinkite savivaldybę',
-                  overlayHeight: 250,
-                  decoration: CustomDropdownDecoration(
-                    listItemStyle: GoogleFonts.roboto(fontSize: 13),
-                    closedBorder: Border.all(color: Colors.black, width: 1),
-                    expandedBorder: Border.all(color: Colors.black, width: 1),
-                    hintStyle: GoogleFonts.roboto(fontSize: 13),
-                    headerStyle: GoogleFonts.roboto(fontSize: 13),
-                  ),
-                  items: itemList.keys.toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      selectedItem = itemList[value] ?? '';
-                    });
-                  },
-                ),
-              ),
-              CustomButton(
-                text: 'Siųsti į AADIS',
-                buttonType: ButtonType.outlined,
-                color: selectedItem != ''
-                    ? CustomColors.primary
-                    : CustomColors.primaryLight,
-                onPressed: selectedItem != ''
-                    ? () {
-                        widget.onTransfer(
-                            widget.report.refId,
-                            widget.report.name,
-                            widget.report.longitude,
-                            widget.report.latitude,
-                            widget.report.status,
-                            widget.report.reportDate,
-                            selectedItem);
-                      }
-                    : null,
-              ),
-            ],
-          )
-        : const SizedBox.shrink();
+    return const SizedBox.shrink();
+    // return widget.report.isTransferred != true
+    //     ? Column(
+    //         children: [
+    //           SizedBox(
+    //             height: 100,
+    //             child: CustomDropdown<String>(
+    //               hintText: 'Pasirinkite savivaldybę',
+    //               overlayHeight: 250,
+    //               decoration: CustomDropdownDecoration(
+    //                 listItemStyle: GoogleFonts.roboto(fontSize: 13),
+    //                 closedBorder: Border.all(color: Colors.black, width: 1),
+    //                 expandedBorder: Border.all(color: Colors.black, width: 1),
+    //                 hintStyle: GoogleFonts.roboto(fontSize: 13),
+    //                 headerStyle: GoogleFonts.roboto(fontSize: 13),
+    //               ),
+    //               items: itemList.keys.toList(),
+    //               onChanged: (value) {
+    //                 setState(() {
+    //                   selectedItem = itemList[value] ?? '';
+    //                 });
+    //               },
+    //             ),
+    //           ),
+    //           CustomButton(
+    //             text: 'Siųsti į AADIS',
+    //             buttonType: ButtonType.outlined,
+    //             color: selectedItem != ''
+    //                 ? CustomColors.primary
+    //                 : CustomColors.primaryLight,
+    //             onPressed: selectedItem != ''
+    //                 ? () {
+    //                     widget.onTransfer(
+    //                         widget.report.refId,
+    //                         widget.report.name,
+    //                         widget.report.longitude,
+    //                         widget.report.latitude,
+    //                         widget.report.status,
+    //                         widget.report.reportDate,
+    //                         selectedItem);
+    //                   }
+    //                 : null,
+    //           ),
+    //         ],
+    //       )
+    //     : const SizedBox.shrink();
   }
 }
 
