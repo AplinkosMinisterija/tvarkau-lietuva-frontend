@@ -48,7 +48,6 @@ class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
   bool isShowMarkers = true;
   bool isMapDisabled = false;
   bool isImagesSizeValid = true;
-
   String currentTextValue = '';
   String currentEmailValue = '';
   Set<Marker> markers = {};

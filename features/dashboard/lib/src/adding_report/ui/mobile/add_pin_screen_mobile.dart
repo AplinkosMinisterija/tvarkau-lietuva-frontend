@@ -325,7 +325,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
                 bottom: size.height / 2,
                 left: size.width / 2,
                 child: SvgPicture.asset(
-                  'assets/svg/pin_icon.svg',
+                  'assets/svg/forest_pin_icon.svg',
                   height: 35,
                   width: 25,
                 ),
