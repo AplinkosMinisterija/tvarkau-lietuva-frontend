@@ -20,7 +20,7 @@ class BaseAdminScreen extends StatelessWidget {
           children: <Widget>[
             Container(
               width: width,
-              height: height * 0.4,
+              height: height * 0.6,
               color: CustomColors.primary,
             ),
             child
