@@ -558,7 +558,7 @@ packages:
     source: hosted
     version: "4.0.2"
   image_downloader_web:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: image_downloader_web
       sha256: "11290f6ef5bd5afcb3c623c5a10c16da53a2f41a9bf238d9e20f7ff77407e39e"
@@ -1123,7 +1123,7 @@ packages:
     source: hosted
     version: "2.2.2"
   url_launcher:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: url_launcher
       sha256: "21b704ce5fa560ea9f3b525b43601c678728ba46725bab9b01187b4831377ed3"
