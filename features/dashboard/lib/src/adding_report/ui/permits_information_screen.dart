@@ -80,6 +80,7 @@ class PermitsInformationScreen extends StatelessWidget {
                     context: context,
                     width: 300,
                     titlesEnabled: true,
+                    isDownloadEnabled: false,
                     titles: [
                       'Atvejiniai kirtimai po pirmojo kirtimų etapo',
                       'Atvejiniai kirtimai po antrojo kirtimų etapo',

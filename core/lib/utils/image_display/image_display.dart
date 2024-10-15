@@ -3,6 +3,7 @@ import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'image_preview_memory.dart';
 import 'image_preview_network.dart';
+import 'package:image_downloader_web/image_downloader_web.dart';
 
 class ImageGallery {
   static final ImageGallery _instance = ImageGallery._();
@@ -16,6 +17,7 @@ class ImageGallery {
     required BuildContext context,
     required double width,
     required bool titlesEnabled,
+    required bool isDownloadEnabled,
     List<String>? titles,
   }) {
     return Padding(
@@ -40,52 +42,83 @@ class ImageGallery {
                             imageUrls: imageUrls, activeImageIndex: i);
                       });
                 },
-                child: titlesEnabled
-                    ? Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: AspectRatio(
-                              aspectRatio: 1,
-                              child: MouseRegion(
-                                cursor: SystemMouseCursors.zoomIn,
-                                child: AppNetworkImage(
-                                  url: imageUrls[i],
-                                  fit: BoxFit.cover,
+                child: Stack(children: [
+                  titlesEnabled
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(8),
+                              child: AspectRatio(
+                                aspectRatio: 1,
+                                child: MouseRegion(
+                                  cursor: SystemMouseCursors.zoomIn,
+                                  child: AppNetworkImage(
+                                    url: imageUrls[i],
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          Text(
-                            titles?[i] ?? '',
-                            textAlign: TextAlign.start,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      )
-                    : ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: AspectRatio(
-                          aspectRatio: 1,
-                          child: MouseRegion(
-                            cursor: SystemMouseCursors.zoomIn,
-                            child: AppNetworkImage(
-                              url: imageUrls[i],
-                              fit: BoxFit.cover,
+                            Text(
+                              titles?[i] ?? '',
+                              textAlign: TextAlign.start,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(fontWeight: FontWeight.bold),
+                            )
+                          ],
+                        )
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: AspectRatio(
+                            aspectRatio: 1,
+                            child: MouseRegion(
+                              cursor: SystemMouseCursors.zoomIn,
+                              child: AppNetworkImage(
+                                url: imageUrls[i],
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
                         ),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      margin: const EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.white.withOpacity(0.7),
+                          border: Border.all(
+                            color: Colors.black,
+                            width: 1,
+                          )),
+                      child: MouseRegion(
+                        cursor: SystemMouseCursors.progress,
+                        child: IconButton(
+                          onPressed: () {
+                            _downloadImage(imageUrls[i]);
+                          },
+                          icon: const Icon(Icons.download_outlined),
+                        ),
                       ),
+                    ),
+                  ),
+                ]),
               ),
             ]
           ],
         ),
       ),
     );
+  }
+
+  Future<void> _downloadImage(url) async {
+    await WebImageDownloader.downloadImageFromWeb(url,
+        name: url.split('upload/')[1]);
   }
 
   Stack buildPickerImage({
