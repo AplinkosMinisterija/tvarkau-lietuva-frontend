@@ -62,6 +62,7 @@ class BeetleInformationScreen extends StatelessWidget {
                     context: context,
                     width: 300,
                     titlesEnabled: false,
+                    isDownloadEnabled: false,
                   ),
                   const SizedBox(height: 15),
                   Text(

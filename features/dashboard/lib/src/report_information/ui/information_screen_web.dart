@@ -500,6 +500,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                     context: context,
                     width: widget.width * 0.7,
                     titlesEnabled: false,
+                    isDownloadEnabled: false,
                   )
                 : const SizedBox.shrink(),
           ],
@@ -593,6 +594,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                       context: context,
                       width: widget.width * 0.7,
                       titlesEnabled: false,
+                      isDownloadEnabled: false,
                     )
                   : const SizedBox.shrink(),
             ],
@@ -784,6 +786,7 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                     context: context,
                     width: widget.width * 0.7,
                     titlesEnabled: false,
+                    isDownloadEnabled: false,
                   )
                 : const SizedBox.shrink(),
           ],

@@ -225,6 +225,7 @@ class _TrashWindowState extends State<TrashWindow> {
                   context: context,
                   width: 700,
                   titlesEnabled: false,
+                  isDownloadEnabled: true,
                 ),
               ],
               24.heightBox,
@@ -251,6 +252,7 @@ class _TrashWindowState extends State<TrashWindow> {
                         context: context,
                         width: 700,
                         titlesEnabled: false,
+                        isDownloadEnabled: true,
                       )
                     : 10.heightBox,
                 10.heightBox,
@@ -402,6 +404,7 @@ class _TrashWindowState extends State<TrashWindow> {
                 context: context,
                 width: 700,
                 titlesEnabled: false,
+                isDownloadEnabled: true,
               ),
             ],
             15.heightBox,
@@ -428,6 +431,7 @@ class _TrashWindowState extends State<TrashWindow> {
                       context: context,
                       width: 700,
                       titlesEnabled: false,
+                      isDownloadEnabled: true,
                     )
                   : 10.heightBox,
               10.heightBox,

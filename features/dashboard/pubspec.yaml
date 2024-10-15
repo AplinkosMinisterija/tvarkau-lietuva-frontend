@@ -35,6 +35,7 @@ dependencies:
   flutter_map_cancellable_tile_provider: ^3.0.0
   flutter_map_marker_cluster_2: ^1.0.4
   google_maps_flutter: ^2.5.3
+  url_launcher: ^6.1.11
 
 dev_dependencies:
   flutter_test:
