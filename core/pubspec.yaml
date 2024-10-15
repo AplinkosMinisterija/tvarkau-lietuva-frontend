@@ -31,6 +31,7 @@ dependencies:
   sentry_dio: ^7.16.1
   google_maps_flutter: ^2.5.3
   http: ^1.2.0
+  image_downloader_web: ^2.0.6
 
 dev_dependencies:
   flutter_test:

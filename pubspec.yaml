@@ -27,6 +27,7 @@ dependencies:
   go_router: ^13.2.0
   sentry_flutter: ^7.10.1
   openapi_generator_annotations: ^5.0.2
+  url_launcher: ^6.3.0
 
 dev_dependencies:
   flutter_test:

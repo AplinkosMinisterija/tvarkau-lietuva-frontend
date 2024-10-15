@@ -158,8 +158,8 @@ class _AdminWindowState extends State<AdminWindow> {
           padding: const EdgeInsets.symmetric(),
           child: Center(
             child: Container(
-              constraints: const BoxConstraints(
-                maxWidth: 1300,
+              constraints: BoxConstraints(
+                maxWidth: constraints.maxWidth * 0.95,
               ),
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Column(
@@ -188,7 +188,7 @@ class _AdminWindowState extends State<AdminWindow> {
                                   isEmailBoundToBeetle(widget.email),
                             )
                           : Opacity(
-                              opacity: 0.3,
+                              opacity: 0.9,
                               child: AdminReportTypeSwitch(
                                   activeCategory: widget.activeCategory,
                                   onReportCategoryChange: (String value) {},
@@ -196,7 +196,21 @@ class _AdminWindowState extends State<AdminWindow> {
                                   isEmailBoundToBeetle:
                                       isEmailBoundToBeetle(widget.email)),
                             ),
-                      20.widthBox,
+                      const Spacer(),
+                      if (!isShowDeleted)
+                        AdminViewTypeSwitch(
+                          isMapView: isMapView,
+                          onIsMapViewChange: (value) {
+                            setState(() {
+                              isMapView = value;
+                            });
+                          },
+                        ),
+                    ],
+                  ),
+                  8.heightBox,
+                  Row(
+                    children: [
                       if (widget.activeCategory != 'dump') ...[
                         CustomSwitch(
                           value: isShowDeleted,
@@ -219,16 +233,6 @@ class _AdminWindowState extends State<AdminWindow> {
                               .copyWith(color: CustomColors.white),
                         ),
                       ],
-                      const Spacer(),
-                      if (!isShowDeleted)
-                        AdminViewTypeSwitch(
-                          isMapView: isMapView,
-                          onIsMapViewChange: (value) {
-                            setState(() {
-                              isMapView = value;
-                            });
-                          },
-                        ),
                     ],
                   ),
                   12.heightBox,

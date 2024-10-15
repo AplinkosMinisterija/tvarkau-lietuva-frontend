@@ -36,6 +36,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
   int textLinesCount = 0;
   int departmentAnswerTextLinesCount = 0;
   int imageLineCount = 0;
+
   //late MapType _currentMapType;
   // CameraPosition _initialCameraPosition =
   //     const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 7.0);
@@ -58,7 +59,6 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
 
   @override
   void initState() {
-
     // WidgetsBinding.instance.addPostFrameCallback((_) {
     //   addCustomIcon();
     // });
@@ -501,6 +501,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                     context: context,
                     width: widget.width * 0.7,
                     titlesEnabled: false,
+                    isDownloadEnabled: false,
                   )
                 : const SizedBox.shrink(),
           ],
@@ -594,6 +595,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                       context: context,
                       width: widget.width * 0.7,
                       titlesEnabled: false,
+                      isDownloadEnabled: false,
                     )
                   : const SizedBox.shrink(),
             ],
@@ -785,6 +787,7 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                     context: context,
                     width: widget.width * 0.7,
                     titlesEnabled: false,
+                    isDownloadEnabled: false,
                   )
                 : const SizedBox.shrink(),
           ],
