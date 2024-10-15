@@ -558,7 +558,7 @@ packages:
     source: hosted
     version: "4.0.2"
   image_downloader_web:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: image_downloader_web
       sha256: "11290f6ef5bd5afcb3c623c5a10c16da53a2f41a9bf238d9e20f7ff77407e39e"
