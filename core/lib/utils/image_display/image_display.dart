@@ -83,30 +83,32 @@ class ImageGallery {
                             ),
                           ),
                         ),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: Container(
-                      height: 50,
-                      width: 50,
-                      margin: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: Colors.white.withOpacity(0.7),
-                          border: Border.all(
-                            color: Colors.black,
-                            width: 1,
-                          )),
-                      child: MouseRegion(
-                        cursor: SystemMouseCursors.progress,
-                        child: IconButton(
-                          onPressed: () {
-                            _downloadImage(imageUrls[i]);
-                          },
-                          icon: const Icon(Icons.download_outlined),
-                        ),
-                      ),
-                    ),
-                  ),
+                  isDownloadEnabled
+                      ? Align(
+                          alignment: Alignment.bottomRight,
+                          child: Container(
+                            height: 50,
+                            width: 50,
+                            margin: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Colors.white.withOpacity(0.7),
+                                border: Border.all(
+                                  color: Colors.black,
+                                  width: 1,
+                                )),
+                            child: MouseRegion(
+                              cursor: SystemMouseCursors.progress,
+                              child: IconButton(
+                                onPressed: () {
+                                  _downloadImage(imageUrls[i]);
+                                },
+                                icon: const Icon(Icons.download_outlined),
+                              ),
+                            ),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
                 ]),
               ),
             ]
