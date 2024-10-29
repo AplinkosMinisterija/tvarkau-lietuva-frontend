@@ -70,6 +70,7 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
   ) async {
     try {
       emit(LoadingState());
+
       final Permit permits = await ApiProvider().getAllPermits();
       //TODO: final source = GeoJSONFeatures.http(location: Uri.parse('...'));
 
@@ -90,9 +91,9 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
   }
 
   Future<void> _onLoadPermitsInformation(
-      LoadPermitsInformation _,
-      Emitter<AddingState> emit,
-      ) async {
+    LoadPermitsInformation _,
+    Emitter<AddingState> emit,
+  ) async {
     try {
       emit(LoadingState());
 
