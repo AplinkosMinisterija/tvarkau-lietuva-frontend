@@ -60,10 +60,12 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
   double selectedZoom = 7;
   List<Marker> markers = [];
   List<Polygon<HitValue>> polygons = [];
+  List<Polygon<HitValue>> visiblePolygons = [];
   bool isShowMarkers = true;
   bool isShowPolygons = false;
   bool isSaveButtonActive = false;
   bool isMapDisabled = false;
+  bool isMapLoaded = false;
   late void Function(Exception e) onError;
 
   final LayerHitNotifier<HitValue> _hitNotifier = ValueNotifier(null);
@@ -142,6 +144,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
     if (widget.permits != null) {
       mapPolygons(widget.permits!);
     }
+
     isLoading = true;
     _determinePosition().then((currentPosition) {
       initPosition =
@@ -156,6 +159,16 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
         },
       ),
     );
+    mapController.mapEventStream.listen((event) {
+      if (event.camera.zoom > 12) {
+        isMapLoaded = true;
+      }
+      if (isMapLoaded) {
+        if (event is MapEventMove) {
+          onCameraMoveEnd();
+        }
+      }
+    });
     super.initState();
   }
 
@@ -313,8 +326,10 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
                             },
                             child: PolygonLayer(
                               hitNotifier: _hitNotifier,
-                              simplificationTolerance: 0,
-                              polygons: polygons,
+                              simplificationTolerance: 1,
+                              polygons: visiblePolygons,
+                              useAltRendering: true,
+                              polygonCulling: true,
                             ),
                           ),
                         )
@@ -488,7 +503,6 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
                       if (selectedZoom > 1) {
                         selectedZoom = selectedZoom - 1;
                       }
-
                       mapController.move(
                           LatLng(selectedLat ?? 55, selectedLong ?? 24),
                           selectedZoom);
@@ -515,6 +529,38 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
         ],
       ),
     );
+  }
+
+  void filterPolygons(LatLngBounds bounds) {
+    visiblePolygons = polygons.where((polygon) {
+      return polygon.points.any((point) => bounds.contains(point));
+    }).toList();
+  }
+
+  LatLngBounds getCurrentBounds() {
+    final center = mapController.camera.center;
+    final zoom = mapController.camera.zoom;
+
+    final mapPixelSize = MediaQuery.of(context).size;
+
+    final latDelta = 180 / (1 << zoom.toInt()) * (mapPixelSize.height / 256);
+    final lngDelta = 360 / (1 << zoom.toInt()) * (mapPixelSize.width / 256);
+
+    final southWest = LatLng(
+      center.latitude - latDelta / 2,
+      center.longitude - lngDelta / 2,
+    );
+    final northEast = LatLng(
+      center.latitude + latDelta / 2,
+      center.longitude + lngDelta / 2,
+    );
+    return LatLngBounds(southWest, northEast);
+  }
+
+  void onCameraMoveEnd() {
+    LatLngBounds bounds = getCurrentBounds();
+    filterPolygons(bounds);
+    setState(() {});
   }
 
   Future<void> mapPolygons(Permit permit) async {
