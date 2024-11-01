@@ -148,7 +148,6 @@ class ApiProvider {
     return response.data!;
   }
 
-
   Future<TransferReportDto> transferTrashReport({
     required String refId,
     required String name,
@@ -229,7 +228,6 @@ class ApiProvider {
   Future<Permit> getAllPermits() async {
     final response =
         await http.get(Uri.parse(GlobalConstants.woodcuttingPermitsUrl));
-
     return Permit.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
   }
 

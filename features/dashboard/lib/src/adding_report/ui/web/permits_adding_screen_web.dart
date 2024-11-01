@@ -61,6 +61,7 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
   String currentEmailValue = '';
   Set<Marker> markers = {};
   Set<Polygon> polygons = {};
+  Set<Polygon> visiblePolygons = {};
   List<Marker> addedMarker = [];
   double selectedLat = 0;
   double selectedLong = 0;
@@ -98,6 +99,7 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
       mapPolygons(widget.permits!);
     }
     getLocation();
+    _onCameraIdle();
     super.initState();
   }
 
@@ -129,6 +131,7 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
         _lithuaniaCameraPosition =
             CameraPosition(target: _currentPosition!, zoom: 15);
       });
+
     }
   }
 
@@ -199,7 +202,8 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                                 initialCameraPosition: _lithuaniaCameraPosition,
                                 mapType: currentMapType,
                                 onTap: _handleTap,
-                                polygons: isShowPolygons ? polygons : {},
+                                onCameraIdle: _onCameraIdle,
+                                polygons: isShowPolygons ? visiblePolygons : {},
                                 markers: isShowMarkers
                                     ? markers
                                     : addedMarker.map((e) => e).toSet(),
@@ -385,6 +389,18 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
       selectedLat = tappedPoint.latitude;
       selectedLong = tappedPoint.longitude;
     });
+  }
+
+  _onCameraIdle() async {
+    LatLngBounds visibleBounds = await mapController.getVisibleRegion();
+    filterPolygons(visibleBounds);
+    setState(() {});
+  }
+
+  void filterPolygons(LatLngBounds bounds) {
+    visiblePolygons = polygons.where((polygon) {
+      return polygon.points.any((point) => bounds.contains(point));
+    }).toSet();
   }
 
   _handleDragEnd(LatLng tappedPoint) {
