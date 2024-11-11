@@ -2,6 +2,7 @@ import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:dashboard/src/adding_report/ui/web/confirmation_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../bloc/adding_bloc.dart';
 import 'web/trash_adding_screen_web.dart';
 import '../ui/mobile/trash_adding_screen_mobile.dart';
@@ -87,6 +88,9 @@ class AddingScreenTrash extends StatelessWidget {
                     context.read<AddingBloc>().add(
                           ReloadPage(),
                         );
+                  },
+                  onErrorReport: () {
+                    context.goNamed('error_report');
                   },
                 );
               } else {

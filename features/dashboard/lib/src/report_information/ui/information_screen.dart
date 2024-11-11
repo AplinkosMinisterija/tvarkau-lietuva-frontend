@@ -1,6 +1,7 @@
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../bloc/information_bloc.dart';
 import 'information_screen_mobile.dart';
 import 'information_screen_web.dart';
@@ -47,7 +48,9 @@ class InformationScreen extends StatelessWidget {
                         context.read<InformationBloc>().add(
                               ReloadPage(),
                             );
-                      },
+                      }, onErrorReport: (){
+                        context.goNamed('error_report');
+                    },
                     ),
                   );
                 } else {

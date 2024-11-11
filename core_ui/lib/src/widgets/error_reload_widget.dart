@@ -4,12 +4,14 @@ import '../../core_ui.dart';
 
 class ErrorReloadWidget extends StatelessWidget {
   final Function? onPressed;
+  final Function onErrorReport;
   final String? errorText;
   final String? descriptionText;
 
   const ErrorReloadWidget({
     super.key,
     this.onPressed,
+    required this.onErrorReport,
     this.errorText,
     this.descriptionText,
   });
@@ -71,6 +73,14 @@ class ErrorReloadWidget extends StatelessWidget {
               },
             ),
           ),
+          const Spacer(),
+          AppButton(
+            text: 'Pranešti apie sistemos klaidą',
+            backgroundColor: AppTheme.backgroundPrimaryColor,
+            onPressed: () {
+              onErrorReport();
+            },
+          )
         ],
       ),
     );

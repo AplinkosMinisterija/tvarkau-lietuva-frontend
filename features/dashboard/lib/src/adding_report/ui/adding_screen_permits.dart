@@ -4,6 +4,7 @@ import 'package:dashboard/src/adding_report/ui/permits_information_screen.dart';
 import 'package:dashboard/src/adding_report/ui/web/confirmation_screen.dart';
 import 'package:dashboard/src/adding_report/ui/web/permits_adding_screen_web.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../bloc/adding_bloc.dart';
 import 'mobile/confirmation_screen_mobile.dart';
 import 'mobile/permits_adding_screen_mobile.dart';
@@ -94,6 +95,9 @@ class AddingScreenPermits extends StatelessWidget {
                     context.read<AddingBloc>().add(
                           ReloadPage(),
                         );
+                  },
+                  onErrorReport: () {
+                    context.goNamed('error_report');
                   },
                 );
               } else {

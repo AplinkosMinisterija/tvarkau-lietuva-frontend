@@ -85,6 +85,10 @@ class AadApp extends StatelessWidget {
           name: 'report_category',
           path: '/pasirinkti-kategorija',
           builder: (context, state) => const ReportCategoryScreen()),
+      GoRoute(
+          name: 'error_report',
+          path: '/pranesti-apie-sistemos-klaida',
+          builder: (context, state) => const SystemErrorReportScreen()),
     ],
   );
 

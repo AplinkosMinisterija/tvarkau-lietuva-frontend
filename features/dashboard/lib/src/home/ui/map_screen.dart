@@ -139,6 +139,9 @@ class _MapScreenState extends State<MapScreen> {
                                 ReloadPage(),
                               );
                         },
+                        onErrorReport: () {
+                          context.goNamed('error_report');
+                        },
                         errorText: state.errorMessage,
                       ),
                     );
