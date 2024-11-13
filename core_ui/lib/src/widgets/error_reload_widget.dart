@@ -60,7 +60,6 @@ class ErrorReloadWidget extends StatelessWidget {
               ],
             ),
           ),
-          const Spacer(),
           Padding(
             padding: const EdgeInsets.all(24),
             child: AppButton(
@@ -73,10 +72,9 @@ class ErrorReloadWidget extends StatelessWidget {
               },
             ),
           ),
-          const Spacer(),
           AppButton(
             text: 'Pranešti apie sistemos klaidą',
-            backgroundColor: AppTheme.backgroundPrimaryColor,
+            backgroundColor: AppTheme.mainThemeColor,
             onPressed: () {
               onErrorReport();
             },

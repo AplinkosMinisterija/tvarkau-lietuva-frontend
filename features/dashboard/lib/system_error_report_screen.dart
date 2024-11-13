@@ -184,7 +184,7 @@ class _SystemErrorReportScreenState extends State<SystemErrorReportScreen> {
                               text: 'Siųsti pranešimą',
                               backgroundColor: AppTheme.mainThemeColor,
                               onPressed: () {
-                                if(_formKey.currentState!.validate()){
+                                if (_formKey.currentState!.validate()) {
                                   //TODO: Implement email sending logic
                                 }
                               },
