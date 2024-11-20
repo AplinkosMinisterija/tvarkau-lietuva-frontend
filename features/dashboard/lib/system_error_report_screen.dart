@@ -20,6 +20,7 @@ class _SystemErrorReportScreenState extends State<SystemErrorReportScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile = true;
     return Title(
       title: "Tvarkau Lietuvą",
       color: const Color.fromRGBO(28, 63, 58, 1),
@@ -28,17 +29,24 @@ class _SystemErrorReportScreenState extends State<SystemErrorReportScreen> {
           backgroundColor: const Color.fromRGBO(225, 225, 225, 1),
           child: LayoutBuilder(
             builder: (BuildContext context, BoxConstraints constraints) {
+              if (constraints.maxWidth > 800) {
+                isMobile = false;
+              }
               return Form(
                 key: _formKey,
                 child: Stack(
                   alignment: Alignment.topCenter,
                   children: [
                     BackgroundWidget(
-                      width: constraints.maxWidth,
+                      width: isMobile
+                          ? constraints.maxWidth * 2
+                          : constraints.maxWidth,
                       isMobile: false,
                     ),
                     SizedBox(
-                      width: constraints.maxWidth * 0.5,
+                      width: isMobile
+                          ? constraints.maxWidth * 0.9
+                          : constraints.maxWidth * 0.5,
                       child: Column(
                         children: <Widget>[
                           SizedBox(
@@ -47,7 +55,9 @@ class _SystemErrorReportScreenState extends State<SystemErrorReportScreen> {
                           Align(
                             alignment: Alignment.topCenter,
                             child: DepartmentLogo(
-                              width: constraints.maxWidth,
+                              width: isMobile
+                                  ? constraints.maxWidth * 2
+                                  : constraints.maxWidth,
                             ),
                           ),
                           SizedBox(
@@ -55,7 +65,7 @@ class _SystemErrorReportScreenState extends State<SystemErrorReportScreen> {
                           ),
                           Text(
                             'Tvarkau Lietuvą',
-                            style: GoogleFonts.raleway(
+                            style: GoogleFonts.roboto(
                               fontWeight: FontWeight.w800,
                               color: Colors.white,
                               fontSize: 40,
@@ -67,9 +77,11 @@ class _SystemErrorReportScreenState extends State<SystemErrorReportScreen> {
                           Align(
                             alignment: Alignment.center,
                             child: Text(
-                              'Įveskite savo el. pašto adresą ir kuo įmanoma detaliau aprašykite klaidą ar problemą, su kuria susidūrėte. Su Jumis susisieks administratorius nurodytu el. paštu.',
+                              'Įveskite savo el. pašto adresą ir kuo įmanoma detaliau aprašykite klaidą ar problemą, su kuria susidūrėte, kokiu įrenginiu naudojotės. Su Jumis susisieks administratorius nurodytu el. paštu.',
                               style: GoogleFonts.roboto(
-                                fontSize: constraints.maxWidth * 0.009,
+                                fontSize: isMobile
+                                    ? constraints.maxWidth * 0.025
+                                    : constraints.maxWidth * 0.009,
                                 fontWeight: FontWeight.w400,
                                 color: const Color.fromRGBO(255, 255, 255, 1),
                               ),
@@ -84,7 +96,9 @@ class _SystemErrorReportScreenState extends State<SystemErrorReportScreen> {
                             child: Text(
                               'Jūsų el. pašto adresas',
                               style: GoogleFonts.roboto(
-                                fontSize: constraints.maxWidth * 0.01093,
+                                fontSize: isMobile
+                                    ? constraints.maxWidth * 0.03
+                                    : constraints.maxWidth * 0.01093,
                                 fontWeight: FontWeight.w400,
                                 color: const Color.fromRGBO(255, 255, 255, 1),
                               ),
@@ -94,13 +108,17 @@ class _SystemErrorReportScreenState extends State<SystemErrorReportScreen> {
                             alignment: Alignment.center,
                             children: [
                               Container(
-                                height: constraints.maxWidth * 0.03125,
+                                height: isMobile
+                                    ? constraints.maxWidth * 0.09
+                                    : constraints.maxWidth * 0.03125,
                                 decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(4)),
                               ),
                               Container(
-                                height: constraints.maxWidth * 0.03125,
+                                height: isMobile
+                                    ? constraints.maxWidth * 0.09
+                                    : constraints.maxWidth * 0.03125,
                                 padding: EdgeInsets.symmetric(
                                   horizontal: constraints.maxWidth * 0.01,
                                 ),
@@ -124,7 +142,9 @@ class _SystemErrorReportScreenState extends State<SystemErrorReportScreen> {
                                     });
                                   },
                                   style: GoogleFonts.roboto(
-                                      fontSize: constraints.maxWidth * 0.0125,
+                                      fontSize: isMobile
+                                          ? constraints.maxWidth * 0.03
+                                          : constraints.maxWidth * 0.0125,
                                       fontWeight: FontWeight.w400,
                                       color: Colors.black),
                                   decoration: const InputDecoration(
@@ -139,14 +159,18 @@ class _SystemErrorReportScreenState extends State<SystemErrorReportScreen> {
                             child: Text(
                               'Klaidos aprašymas',
                               style: GoogleFonts.roboto(
-                                fontSize: constraints.maxWidth * 0.01093,
+                                fontSize: isMobile
+                                    ? constraints.maxWidth * 0.03
+                                    : constraints.maxWidth * 0.01093,
                                 fontWeight: FontWeight.w400,
                                 color: const Color.fromRGBO(255, 255, 255, 1),
                               ),
                             ),
                           ),
                           Container(
-                            height: constraints.maxWidth * 0.2,
+                            height: isMobile
+                                ? constraints.maxWidth * 0.5
+                                : constraints.maxWidth * 0.2,
                             padding: EdgeInsets.all(
                               constraints.maxWidth * 0.01,
                             ),
@@ -167,7 +191,9 @@ class _SystemErrorReportScreenState extends State<SystemErrorReportScreen> {
                                 });
                               },
                               style: GoogleFonts.roboto(
-                                  fontSize: constraints.maxWidth * 0.0125,
+                                  fontSize: isMobile
+                                      ? constraints.maxWidth * 0.03
+                                      : constraints.maxWidth * 0.0125,
                                   fontWeight: FontWeight.w400,
                                   color: Colors.black),
                               decoration: const InputDecoration(
@@ -179,7 +205,9 @@ class _SystemErrorReportScreenState extends State<SystemErrorReportScreen> {
                             height: constraints.maxWidth * 0.0291,
                           ),
                           SizedBox(
-                            width: constraints.maxWidth * 0.3,
+                            width: isMobile
+                                ? constraints.maxWidth * 0.6
+                                : constraints.maxWidth * 0.3,
                             child: AppButton(
                               text: 'Siųsti pranešimą',
                               backgroundColor: AppTheme.mainThemeColor,
