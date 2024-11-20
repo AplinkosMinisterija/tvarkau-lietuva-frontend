@@ -62,7 +62,6 @@ class _MapScreenState extends State<MapScreen> {
                           'id': 'TLP-A$str${refId.toUpperCase()}'
                         });
                       },
-                      //cameraPosition: state.cameraPosition,
                       isMobile: widget.isMobile,
                     );
                   case DumpsState():
@@ -78,7 +77,6 @@ class _MapScreenState extends State<MapScreen> {
                       },
                       dumps: state.dumpReports,
                       category: 'dumps',
-                      //cameraPosition: state.cameraPosition,
                       isMobile: widget.isMobile,
                     );
                   case ForestState():
@@ -102,7 +100,6 @@ class _MapScreenState extends State<MapScreen> {
                           'id': 'TLP-A$str${refId.toUpperCase()}'
                         });
                       },
-                      //cameraPosition: state.cameraPosition,
                       isMobile: widget.isMobile,
                     );
                   case PermitsState():
@@ -126,12 +123,13 @@ class _MapScreenState extends State<MapScreen> {
                           'id': 'TLP-A$str${refId.toUpperCase()}'
                         });
                       },
-                      //cameraPosition: state.cameraPosition,
                       isMobile: widget.isMobile,
                     );
                   case ErrorState():
                     return SizedBox(
-                      height: widget.width * 0.4765,
+                      height: widget.isMobile
+                          ? widget.width * 0.9
+                          : widget.width * 0.4765,
                       width: widget.width * 0.84375,
                       child: ErrorReloadWidget(
                         onPressed: () {
