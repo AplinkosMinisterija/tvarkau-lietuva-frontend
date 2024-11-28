@@ -59,6 +59,7 @@ showConsentSnackbar(BuildContext context, VoidCallback onPress,
               ])),
           const SizedBox(height: 10),
           Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               SizedBox(
                 width: 120,
