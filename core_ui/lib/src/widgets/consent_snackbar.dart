@@ -8,7 +8,6 @@ import '../../core_ui.dart';
 
 showConsentSnackbar(BuildContext context, VoidCallback onPress,
     {bool onlyShowIfNotSet = true}) async {
-  await SecureStorageProvider().deleteUserConsent();
   final existingConsentValue = await SecureStorageProvider().getUserConsent();
   if (onlyShowIfNotSet && existingConsentValue != null) {
     debugPrint(

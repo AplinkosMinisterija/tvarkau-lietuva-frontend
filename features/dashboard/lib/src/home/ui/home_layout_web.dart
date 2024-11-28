@@ -48,10 +48,6 @@ class _HomeLayoutWebState extends State<HomeLayoutWeb> {
     super.dispose();
   }
 
-  void removeSnackbar() {
-    ScaffoldMessenger.of(context).removeCurrentSnackBar();
-  }
-
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
