@@ -14,6 +14,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<LoadDumpsData>(_onLoadDumpsData);
     on<LoadPermitsData>(_onLoadPermitsData);
     on<LoadForestData>(_onLoadForestData);
+    on<LoadSystemErrorReport>(_onLoadSystemErrorReport);
     on<ReloadPage>(_onReloadEvent);
   }
 
@@ -165,6 +166,34 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     } catch (e) {
       emit(
         ErrorState(errorMessage: 'Netikėta klaida', type: 'forest'),
+      );
+    }
+  }
+
+  Future<void> _onLoadSystemErrorReport(
+    LoadSystemErrorReport event,
+    Emitter<HomeState> emit,
+  ) async {
+    try {
+      emit(SystemErrorState());
+    } catch (e) {
+      emit(
+        ErrorState(errorMessage: 'Netikėta klaida', type: 'system'),
+      );
+    }
+  }
+
+  Future<void> _onSendSystemErrorReport(
+    SendSystemErrorReport event,
+    Emitter<HomeState> emit,
+  ) async {
+    try {
+      emit(SystemErrorLoadingState());
+      final response = await ApiProvider().getAllVisibleDumpReports();
+      emit(SystemErrorSuccessState());
+    } catch (e) {
+      emit(
+        ErrorState(errorMessage: 'Sistemos klaida', type: 'system'),
       );
     }
   }

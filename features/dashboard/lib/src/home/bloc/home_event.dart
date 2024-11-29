@@ -20,4 +20,16 @@ class LoadForestData implements HomeEvent {}
 
 class LoadPermitsData implements HomeEvent {}
 
+class LoadSystemErrorReport implements HomeEvent {}
+
+class SendSystemErrorReport implements HomeEvent {
+  final String email;
+  final String description;
+
+  SendSystemErrorReport({
+    required this.email,
+    required this.description,
+  });
+}
+
 class ReloadPage implements HomeEvent {}
