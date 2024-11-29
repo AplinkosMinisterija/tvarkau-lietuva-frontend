@@ -13,6 +13,7 @@ Method | HTTP request | Description
 [**reportControllerGetAllPublicReports**](ReportsApi.md#reportcontrollergetallpublicreports) | **GET** /reports | 
 [**reportControllerGetReportById**](ReportsApi.md#reportcontrollergetreportbyid) | **GET** /reports/{refId} | 
 [**reportControllerGetReportStatistics**](ReportsApi.md#reportcontrollergetreportstatistics) | **GET** /reports/statistics | 
+[**reportControllerSendFeedbackReport**](ReportsApi.md#reportcontrollersendfeedbackreport) | **POST** /reports/feedback-report | 
 
 
 # **reportControllerCreateNewReport**
@@ -185,6 +186,47 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **reportControllerSendFeedbackReport**
+> String reportControllerSendFeedbackReport(createFeedbackReportDto)
+
+
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+
+final api = ApiClient().getReportsApi();
+final CreateFeedbackReportDto createFeedbackReportDto = ; // CreateFeedbackReportDto | 
+
+try {
+    final response = api.reportControllerSendFeedbackReport(createFeedbackReportDto);
+    print(response);
+} catch on DioException (e) {
+    print('Exception when calling ReportsApi->reportControllerSendFeedbackReport: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **createFeedbackReportDto** | [**CreateFeedbackReportDto**](CreateFeedbackReportDto.md)|  | 
+
+### Return type
+
+**String**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

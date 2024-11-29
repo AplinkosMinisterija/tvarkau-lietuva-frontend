@@ -15,6 +15,7 @@ import 'package:api_client/src/date_serializer.dart';
 import 'package:api_client/src/model/date.dart';
 
 import 'package:api_client/src/model/create_dump_dto.dart';
+import 'package:api_client/src/model/create_feedback_report_dto.dart';
 import 'package:api_client/src/model/dump_dto.dart';
 import 'package:api_client/src/model/full_dump_dto.dart';
 import 'package:api_client/src/model/full_report_dto.dart';
@@ -32,6 +33,7 @@ part 'serializers.g.dart';
 
 @SerializersFor([
   CreateDumpDto,
+  CreateFeedbackReportDto,
   DumpDto,
   FullDumpDto,
   FullReportDto,

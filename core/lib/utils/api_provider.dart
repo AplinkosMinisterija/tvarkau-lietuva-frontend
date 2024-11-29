@@ -225,6 +225,18 @@ class ApiProvider {
     return response.data!;
   }
 
+  Future<String> sendFeedbackReport({
+    required String email,
+    required String description,
+  }) async {
+    final response = await reportsApi.reportControllerSendFeedbackReport(
+        createFeedbackReportDto: CreateFeedbackReportDto((builder) {
+      builder.description = description;
+      builder.email = email;
+    }));
+    return response.data!;
+  }
+
   Future<Permit> getAllPermits() async {
     final response =
         await http.get(Uri.parse(GlobalConstants.woodcuttingPermitsUrl));

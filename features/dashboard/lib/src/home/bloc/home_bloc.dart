@@ -15,6 +15,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<LoadPermitsData>(_onLoadPermitsData);
     on<LoadForestData>(_onLoadForestData);
     on<LoadSystemErrorReport>(_onLoadSystemErrorReport);
+    on<SendSystemErrorReport>(_onSendSystemErrorReport);
     on<ReloadPage>(_onReloadEvent);
   }
 
@@ -189,7 +190,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ) async {
     try {
       emit(SystemErrorLoadingState());
-      final response = await ApiProvider().getAllVisibleDumpReports();
+      await ApiProvider().sendFeedbackReport(
+        email: event.email,
+        description: event.description,
+      );
       emit(SystemErrorSuccessState());
     } catch (e) {
       emit(
