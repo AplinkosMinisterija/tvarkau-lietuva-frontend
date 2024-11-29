@@ -54,7 +54,7 @@ class _HomeLayoutMobileState extends State<HomeLayoutMobile> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       showConsentSnackbar(context, () {
         ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      });
+      }, true);
     });
     return NotificationListener<ScrollNotification>(
       onNotification: (scrollNotification) {

@@ -6,7 +6,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../core_ui.dart';
 
-showConsentSnackbar(BuildContext context, VoidCallback onPress,
+showConsentSnackbar(BuildContext context, VoidCallback onPress, bool isMobile,
     {bool onlyShowIfNotSet = true}) async {
   final existingConsentValue = await SecureStorageProvider().getUserConsent();
   if (onlyShowIfNotSet && existingConsentValue != null) {
@@ -61,15 +61,18 @@ showConsentSnackbar(BuildContext context, VoidCallback onPress,
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              SizedBox(
-                width: 120,
-                child: AppButton(
-                  text: 'Sutinku',
-                  backgroundColor: const Color(0xffff6a3d),
-                  onPressed: () async {
-                    await SecureStorageProvider().setUserConsent('all');
-                    onPress();
-                  },
+              Padding(
+                padding: EdgeInsets.only(right: isMobile ? 0 : 35),
+                child: SizedBox(
+                  width: 120,
+                  child: AppButton(
+                    text: 'Sutinku',
+                    backgroundColor: const Color(0xffff6a3d),
+                    onPressed: () async {
+                      await SecureStorageProvider().setUserConsent('all');
+                      onPress();
+                    },
+                  ),
                 ),
               ),
             ],
