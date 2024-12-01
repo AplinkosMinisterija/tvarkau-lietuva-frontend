@@ -14,6 +14,7 @@ class SecureStorageProvider {
   static const String _activeMapLong = 'active_map_long';
   static const String _activeMapZoom = 'active_map_zoom';
   static const String _scrollOffset = 'scroll_offset';
+  static const String _userConsent = 'user_consent';
 
   setJwtToken(String jwtToken) async {
     await storage.write(
@@ -162,5 +163,20 @@ class SecureStorageProvider {
     await deleteActiveCategory();
     await deleteCameraSetup();
     await deleteScrollOffset();
+  }
+
+  setUserConsent(String consent) async {
+    await storage.write(
+      key: _userConsent,
+      value: consent,
+    );
+  }
+
+  Future<String?> getUserConsent() {
+    return storage.read(key: _userConsent);
+  }
+
+  deleteUserConsent() async {
+    await storage.delete(key: _userConsent);
   }
 }

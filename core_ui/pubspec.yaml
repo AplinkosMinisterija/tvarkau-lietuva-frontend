@@ -32,6 +32,7 @@ dependencies:
   flutter_map: ^7.0.2
   flutter_map_cancellable_tile_provider: ^3.0.0
   cached_network_image: ^3.4.1
+  url_launcher: ^6.1.11
 
 
 dev_dependencies:
