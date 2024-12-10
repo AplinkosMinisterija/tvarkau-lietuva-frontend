@@ -8,6 +8,7 @@ part of 'serializers.dart';
 
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(CreateDumpDto.serializer)
+      ..add(CreateFeedbackReportDto.serializer)
       ..add(DumpDto.serializer)
       ..add(FullDumpDto.serializer)
       ..add(FullReportDto.serializer)

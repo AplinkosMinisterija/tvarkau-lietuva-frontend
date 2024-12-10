@@ -60,6 +60,9 @@ class _DumpScreenState extends State<DumpScreen> {
                               ReloadPage(),
                             );
                       },
+                      onErrorReport: () {
+                        context.goNamed('error_report');
+                      },
                     );
                   } else if (state is DoneState) {
                     return Confirmation(onContinue: () {

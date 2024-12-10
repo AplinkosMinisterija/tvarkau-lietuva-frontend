@@ -28,9 +28,9 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/FullReportDto'
-      tags: &ref_0
+      tags:
         - admin
-      security: &ref_1
+      security:
         - bearer: []
     post:
       operationId: AdminController_updateReport
@@ -54,8 +54,10 @@ paths:
             application/json:
               schema:
                 type: object
-      tags: *ref_0
-      security: *ref_1
+      tags:
+        - admin
+      security:
+        - bearer: []
   /admin/reports/{refId}:
     get:
       operationId: AdminController_getReportById
@@ -74,8 +76,10 @@ paths:
                 $ref: '#/components/schemas/FullReportDto'
         '404':
           description: Report not found
-      tags: *ref_0
-      security: *ref_1
+      tags:
+        - admin
+      security:
+        - bearer: []
   /admin/dumps/{refId}:
     get:
       operationId: AdminController_getDumpById
@@ -94,8 +98,10 @@ paths:
                 $ref: '#/components/schemas/FullDumpDto'
         '404':
           description: Dump not found
-      tags: *ref_0
-      security: *ref_1
+      tags:
+        - admin
+      security:
+        - bearer: []
   /admin/reports/transfer:
     post:
       operationId: AdminController_transferReport
@@ -119,8 +125,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FullReportDto'
-      tags: *ref_0
-      security: *ref_1
+      tags:
+        - admin
+      security:
+        - bearer: []
   /admin/dumps:
     get:
       operationId: AdminController_getAllDumps
@@ -134,8 +142,10 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/FullDumpDto'
-      tags: *ref_0
-      security: *ref_1
+      tags:
+        - admin
+      security:
+        - bearer: []
     post:
       operationId: AdminController_updateDump
       parameters: []
@@ -158,8 +168,10 @@ paths:
             application/json:
               schema:
                 type: object
-      tags: *ref_0
-      security: *ref_1
+      tags:
+        - admin
+      security:
+        - bearer: []
     put:
       operationId: AdminController_createDump
       parameters: []
@@ -176,8 +188,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/FullDumpDto'
-      tags: *ref_0
-      security: *ref_1
+      tags:
+        - admin
+      security:
+        - bearer: []
   /dumps:
     get:
       operationId: DumpController_getAllVisibleDumps
@@ -210,7 +224,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PublicReportDto'
-      tags: &ref_2
+      tags:
         - reports
     get:
       operationId: ReportController_getAllPublicReports
@@ -234,7 +248,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/PublicReportDto'
-      tags: *ref_2
+      tags:
+        - reports
   /reports/statistics:
     get:
       operationId: ReportController_getReportStatistics
@@ -256,7 +271,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ReportStatisticsDto'
-      tags: *ref_2
+      tags:
+        - reports
   /reports/{refId}:
     get:
       operationId: ReportController_getReportById
@@ -275,7 +291,33 @@ paths:
                 $ref: '#/components/schemas/PublicReportDto'
         '404':
           description: Report not found
-      tags: *ref_2
+      tags:
+        - reports
+  /reports/feedback-report:
+    post:
+      operationId: ReportController_sendFeedbackReport
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFeedbackReportDto'
+      responses:
+        '200':
+          description: New feedback report has been successfully found
+          content:
+            application/json:
+              schema:
+                type: string
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+      tags:
+        - reports
   /auth/login:
     post:
       operationId: AuthController_login
@@ -714,6 +756,16 @@ components:
         - totalInInvestigationReports
         - totalInvestigatedReports
         - totalFalseReports
+    CreateFeedbackReportDto:
+      type: object
+      properties:
+        description:
+          type: string
+        email:
+          type: string
+      required:
+        - description
+        - email
     LoginRequestDto:
       type: object
       properties:

@@ -126,6 +126,9 @@ class _TrashScreenState extends State<TrashScreen> {
                               ReloadPage(),
                             );
                       },
+                      onErrorReport: () {
+                        context.goNamed('error_report');
+                      },
                     );
                   } else {
                     return Container(

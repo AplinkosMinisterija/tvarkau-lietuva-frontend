@@ -4,6 +4,7 @@ import 'package:dashboard/src/adding_report/ui/beetle_information_screen.dart';
 import 'package:dashboard/src/adding_report/ui/web/beetle_adding_screen_web.dart';
 import 'package:dashboard/src/adding_report/ui/web/confirmation_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../bloc/adding_bloc.dart';
 import 'mobile/beetle_adding_screen_mobile.dart';
 import 'mobile/confirmation_screen_mobile.dart';
@@ -90,6 +91,9 @@ class AddingScreenBeetle extends StatelessWidget {
                     context.read<AddingBloc>().add(
                           ReloadPage(),
                         );
+                  },
+                  onErrorReport: () {
+                    context.goNamed('error_report');
                   },
                 );
               } else {

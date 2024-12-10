@@ -6,3 +6,4 @@ export 'package:dashboard/src/adding_report/ui/adding_screen_permits.dart';
 export 'package:dashboard/src/adding_report/ui/adding_screen_beetle.dart';
 export 'package:dashboard/src/report_information/ui/information_screen.dart';
 export 'package:dashboard/src/adding_report/ui/report_category_screen.dart';
+export 'package:dashboard/system_error_report_screen.dart';

@@ -4,6 +4,7 @@ import 'package:admin/src/widgets/login_widget.dart';
 import 'package:core/core.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AdminScreen extends StatelessWidget {
   const AdminScreen({
@@ -125,6 +126,9 @@ class AdminScreen extends StatelessWidget {
                         context.read<AdminBloc>().add(
                               ReloadPage(),
                             );
+                      },
+                      onErrorReport: () {
+                        context.goNamed('error_report');
                       },
                       errorText: state.errorMessage,
                       descriptionText: state.errorDescription,

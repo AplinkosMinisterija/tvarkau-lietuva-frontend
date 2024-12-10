@@ -69,3 +69,9 @@ class ErrorState implements HomeState {
     required this.type,
   });
 }
+
+class SystemErrorState implements HomeState {}
+
+class SystemErrorSuccessState implements HomeState {}
+
+class SystemErrorLoadingState implements HomeState {}
