@@ -26,6 +26,8 @@ class _HomeLayoutMobileState extends State<HomeLayoutMobile> {
     await SecureStorageProvider().setScrollOffset(offset);
   }
 
+  late ScaffoldMessengerState _scaffoldMessengerState;
+
   @override
   void initState() {
     scrollController =
@@ -35,13 +37,25 @@ class _HomeLayoutMobileState extends State<HomeLayoutMobile> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _scaffoldMessengerState = ScaffoldMessenger.of(context);
+  }
+
+  @override
   void dispose() {
     scrollController.dispose();
+    _scaffoldMessengerState.hideCurrentSnackBar();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showConsentSnackbar(context, () {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+      }, true);
+    });
     return NotificationListener<ScrollNotification>(
       onNotification: (scrollNotification) {
         if (scrollNotification is ScrollEndNotification) {
