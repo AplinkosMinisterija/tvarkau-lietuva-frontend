@@ -865,7 +865,13 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                                   )),
                             ),
                             SizedBox(height: widget.width * 0.0555),
-                            Footer(width: widget.width * 0.9, isMobile: true)
+                            Footer(
+                              width: widget.width * 0.9,
+                              isMobile: true,
+                              onErrorReportPress: () {
+                                context.goNamed('error_report');
+                              },
+                            )
                           ],
                         ),
                       ),

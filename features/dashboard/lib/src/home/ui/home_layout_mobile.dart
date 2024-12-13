@@ -107,6 +107,9 @@ class _HomeLayoutMobileState extends State<HomeLayoutMobile> {
                   Footer(
                     width: widget.width,
                     isMobile: true,
+                    onErrorReportPress: () {
+                      context.goNamed('error_report');
+                    },
                   ),
                 ],
               ),
