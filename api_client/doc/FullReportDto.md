@@ -24,6 +24,7 @@ Name | Type | Description | Notes
 **imageUrls** | **BuiltList&lt;String&gt;** |  | 
 **historyData** | [**BuiltList&lt;HistoryDataDto&gt;**](HistoryDataDto.md) |  | 
 **statusRecords** | [**BuiltList&lt;StatusRecordsDto&gt;**](StatusRecordsDto.md) |  | 
+**emailFeedbackStage** | **double** |  | 
 **inspection** | **String** |  | [optional] 
 **inspectionId** | **String** |  | [optional] 
 **isTransferred** | **bool** |  | [optional] 
