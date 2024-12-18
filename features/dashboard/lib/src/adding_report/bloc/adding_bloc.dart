@@ -157,6 +157,7 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
         selectedLong: event.selectedLong,
         imageFiles: event.images,
         category: event.category,
+        automaticEmailsEnabled: event.automaticEmailsEnabled,
       );
 
       emit(

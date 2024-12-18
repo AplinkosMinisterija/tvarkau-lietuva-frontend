@@ -686,6 +686,8 @@ components:
             - permits
         email:
           type: string
+        automaticEmailsEnabled:
+          type: boolean
       required:
         - images
         - name
@@ -693,6 +695,7 @@ components:
         - latitude
         - category
         - email
+        - automaticEmailsEnabled
     PublicReportDto:
       type: object
       properties:

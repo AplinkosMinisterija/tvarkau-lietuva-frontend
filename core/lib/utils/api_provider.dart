@@ -136,6 +136,7 @@ class ApiProvider {
     required double selectedLong,
     required List<Uint8List> imageFiles,
     required String category,
+    required bool automaticEmailsEnabled,
   }) async {
     final response = await reportsApi.reportControllerCreateNewReport(
       name: textValue,
@@ -144,6 +145,7 @@ class ApiProvider {
       email: emailValue,
       images: _toMultiPartFiles(imageFiles),
       category: category,
+      automaticEmailsEnabled: automaticEmailsEnabled,
     );
     return response.data!;
   }

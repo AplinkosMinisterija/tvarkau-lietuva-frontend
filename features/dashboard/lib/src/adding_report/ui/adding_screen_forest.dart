@@ -31,15 +31,17 @@ class AddingScreenForest extends StatelessWidget {
                     width: width,
                     height: height,
                     reports: state.forestReports,
-                    onAddTap: (email, text, lat, long, files) {
+                    onAddTap: (email, text, lat, long, files, emailsEnabled) {
                       context.read<AddingBloc>().add(
                             AddReport(
-                                emailValue: email,
-                                textValue: text,
-                                selectedLat: lat,
-                                selectedLong: long,
-                                images: files,
-                                category: 'forest'),
+                              emailValue: email,
+                              textValue: text,
+                              selectedLat: lat,
+                              selectedLong: long,
+                              images: files,
+                              category: 'forest',
+                              automaticEmailsEnabled: emailsEnabled,
+                            ),
                           );
                     },
                     onDataSecurityTap: () {},
@@ -49,15 +51,17 @@ class AddingScreenForest extends StatelessWidget {
                     width: width,
                     height: height,
                     reports: state.forestReports,
-                    onAddTap: (email, text, lat, long, files) {
+                    onAddTap: (email, text, lat, long, files, emailsEnabled) {
                       context.read<AddingBloc>().add(
                             AddReport(
-                                emailValue: email,
-                                textValue: text,
-                                selectedLat: lat,
-                                selectedLong: long,
-                                images: files,
-                                category: 'forest'),
+                              emailValue: email,
+                              textValue: text,
+                              selectedLat: lat,
+                              selectedLong: long,
+                              images: files,
+                              category: 'forest',
+                              automaticEmailsEnabled: emailsEnabled,
+                            ),
                           );
                     },
                   );

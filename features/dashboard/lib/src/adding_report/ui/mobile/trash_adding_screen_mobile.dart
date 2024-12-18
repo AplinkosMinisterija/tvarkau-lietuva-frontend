@@ -1,4 +1,5 @@
 import 'package:api_client/api_client.dart';
+import 'package:dashboard/src/adding_report/ui/widgets/automatic_emails_option_widget.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -25,7 +26,8 @@ class TrashAddingScreenMobile extends StatefulWidget {
   final double width;
   final double height;
   final List<PublicReportDto> reports;
-  final Function(String, String, double, double, List<Uint8List>) onAddTap;
+  final Function(String, String, double, double, List<Uint8List>, bool)
+      onAddTap;
   final VoidCallback onDataSecurityTap;
 
   @override
@@ -48,6 +50,7 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
   }
 
   bool isTermsAccepted = false;
+  bool isEmailsEnabled = true;
   bool isImagesSizeValid = true;
 
   final _formKey = GlobalKey<FormState>();
@@ -426,6 +429,15 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                           },
                         ),
                       ),
+                      AutomaticEmailsOptionWidget(
+                        onTap: (value) {
+                          setState(() {
+                            isEmailsEnabled = value!;
+                          });
+                        },
+                        width: widget.width,
+                        isEmailsEnabled: isEmailsEnabled,
+                      ),
                       SizedBox(height: widget.width * 0.0488),
                       MarkButtonMobile(
                         isActive: true,
@@ -444,6 +456,7 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                                 selectedLat!,
                                 selectedLong!,
                                 _selectedImages,
+                                isEmailsEnabled,
                               );
                             }
                           }

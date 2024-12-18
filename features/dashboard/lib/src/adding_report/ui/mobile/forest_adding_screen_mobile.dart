@@ -8,6 +8,7 @@ import 'package:core_ui/core_ui.dart';
 import 'dart:typed_data';
 import 'package:core/core.dart';
 import 'package:latlong2/latlong.dart';
+import '../widgets/automatic_emails_option_widget.dart';
 import '../widgets/explanation_dialog_widget.dart';
 import 'add_pin_screen_mobile.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -24,7 +25,8 @@ class ForestAddingScreenMobile extends StatefulWidget {
   final double width;
   final double height;
   final List<PublicReportDto> reports;
-  final Function(String, String, double, double, List<Uint8List>) onAddTap;
+  final Function(String, String, double, double, List<Uint8List>, bool)
+      onAddTap;
 
   @override
   State<ForestAddingScreenMobile> createState() =>
@@ -46,6 +48,7 @@ class _ForestAddingScreenMobileState extends State<ForestAddingScreenMobile> {
   }
 
   bool isTermsAccepted = false;
+  bool isEmailsEnabled = true;
   bool isImagesSizeValid = true;
 
   final _formKey = GlobalKey<FormState>();
@@ -420,6 +423,15 @@ class _ForestAddingScreenMobileState extends State<ForestAddingScreenMobile> {
                           },
                         ),
                       ),
+                      AutomaticEmailsOptionWidget(
+                        onTap: (value) {
+                          setState(() {
+                            isEmailsEnabled = value!;
+                          });
+                        },
+                        width: widget.width,
+                        isEmailsEnabled: isEmailsEnabled,
+                      ),
                       SizedBox(height: widget.width * 0.0488),
                       MarkButtonMobile(
                         isActive: true,
@@ -438,28 +450,9 @@ class _ForestAddingScreenMobileState extends State<ForestAddingScreenMobile> {
                                 selectedLat!,
                                 selectedLong!,
                                 _selectedImages,
+                                isEmailsEnabled,
                               );
                             }
-
-                            //TODO: FIX CAPTCHA
-                            // showDialog(
-                            //     context: context,
-                            //     builder: (context) {
-                            //       return CaptchaDialog(
-                            //         onSuccess: () async {
-                            //           await Future.delayed(
-                            //               const Duration(seconds: 1));
-                            //           Navigator.of(context).pop();
-                            //           widget.onAddTap(
-                            //             currentEmailValue,
-                            //             currentTextValue,
-                            //             selectedLat,
-                            //             selectedLong,
-                            //             multipartList,
-                            //           );
-                            //         },
-                            //       );
-                            //     });
                           }
                         },
                       ),
