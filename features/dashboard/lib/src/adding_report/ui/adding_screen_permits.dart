@@ -39,15 +39,17 @@ class AddingScreenPermits extends StatelessWidget {
                     height: height,
                     permits: state.permits,
                     reports: state.permitReports,
-                    onAddTap: (email, text, lat, long, files) {
+                    onAddTap: (email, text, lat, long, files, emailsEnabled) {
                       context.read<AddingBloc>().add(
                             AddReport(
-                                emailValue: email,
-                                textValue: text,
-                                selectedLat: lat,
-                                selectedLong: long,
-                                images: files,
-                                category: 'permits'),
+                              emailValue: email,
+                              textValue: text,
+                              selectedLat: lat,
+                              selectedLong: long,
+                              images: files,
+                              category: 'permits',
+                              automaticEmailsEnabled: emailsEnabled,
+                            ),
                           );
                     },
                     onDataSecurityTap: () {},
@@ -58,15 +60,17 @@ class AddingScreenPermits extends StatelessWidget {
                     height: height,
                     permits: state.permits,
                     reports: state.permitReports,
-                    onAddTap: (email, text, lat, long, files) {
+                    onAddTap: (email, text, lat, long, files, emailsEnabled) {
                       context.read<AddingBloc>().add(
                             AddReport(
-                                emailValue: email,
-                                textValue: text,
-                                selectedLat: lat,
-                                selectedLong: long,
-                                images: files,
-                                category: 'permits'),
+                              emailValue: email,
+                              textValue: text,
+                              selectedLat: lat,
+                              selectedLong: long,
+                              images: files,
+                              category: 'permits',
+                              automaticEmailsEnabled: emailsEnabled,
+                            ),
                           );
                     },
                   );

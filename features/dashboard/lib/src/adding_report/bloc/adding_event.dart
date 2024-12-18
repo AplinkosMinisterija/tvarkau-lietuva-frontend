@@ -21,6 +21,7 @@ class AddReport implements AddingEvent {
   final double selectedLong;
   final List<Uint8List> images;
   final String category;
+  final bool automaticEmailsEnabled;
 
   AddReport({
     required this.emailValue,
@@ -29,6 +30,7 @@ class AddReport implements AddingEvent {
     required this.selectedLong,
     required this.images,
     required this.category,
+    required this.automaticEmailsEnabled,
   });
 }
 

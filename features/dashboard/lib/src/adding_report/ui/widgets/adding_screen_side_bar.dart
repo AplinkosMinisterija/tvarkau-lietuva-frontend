@@ -24,8 +24,10 @@ class AddingScreenSideBar extends StatelessWidget {
     required this.onEmailChange,
     required this.selectedImages,
     required this.onTermsChange,
+    required this.onEmailsEnabledChange,
     required this.isImagesSizeValid,
     required this.isTermsAccepted,
+    required this.isEmailsEnabled,
   });
 
   final double width;
@@ -40,9 +42,11 @@ class AddingScreenSideBar extends StatelessWidget {
   final Function(String) onTextChange;
   final Function(String) onEmailChange;
   final Function(bool) onTermsChange;
+  final Function(bool) onEmailsEnabledChange;
   final List<Uint8List> selectedImages;
   final bool isImagesSizeValid;
   final bool isTermsAccepted;
+  final bool? isEmailsEnabled;
 
   @override
   Widget build(BuildContext context) {
@@ -305,6 +309,23 @@ class AddingScreenSideBar extends StatelessWidget {
                 },
                 controlAffinity: ListTileControlAffinity.leading,
               ),
+              if (isEmailsEnabled != null) ...[
+                CheckboxListTile(
+                  activeColor: const Color.fromRGBO(57, 97, 84, 1),
+                  title: Text(
+                    'Gauti atnaujinimus el. paštu',
+                    style: GoogleFonts.roboto(
+                      fontWeight: FontWeight.w400,
+                      fontSize: width * 0.0104,
+                    ),
+                  ),
+                  value: isEmailsEnabled,
+                  onChanged: (value) {
+                    onEmailsEnabledChange(value!);
+                  },
+                  controlAffinity: ListTileControlAffinity.leading,
+                )
+              ],
               SizedBox(
                 height: width * 0.02,
                 child: TextFormField(

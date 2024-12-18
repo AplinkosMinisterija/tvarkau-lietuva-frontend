@@ -312,6 +312,7 @@ class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
                     },
                     isImagesSizeValid: isImagesSizeValid,
                     isTermsAccepted: isTermsAccepted,
+                    isEmailsEnabled: null,
                     category: 'beetle',
                     onExplanationTap: () {
                       showDialog(
@@ -325,6 +326,7 @@ class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
                             );
                           });
                     },
+                    onEmailsEnabledChange: (bool value) {},
                   )
                 ],
               ),

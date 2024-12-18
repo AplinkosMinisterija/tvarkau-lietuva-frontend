@@ -456,6 +456,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/StatusRecordsDto'
+        emailFeedbackStage:
+          type: number
+          format: double
       required:
         - _id
         - name
@@ -473,6 +476,7 @@ components:
         - imageUrls
         - historyData
         - statusRecords
+        - emailFeedbackStage
     FullDumpDto:
       type: object
       properties:
@@ -682,6 +686,8 @@ components:
             - permits
         email:
           type: string
+        automaticEmailsEnabled:
+          type: boolean
       required:
         - images
         - name
@@ -689,6 +695,7 @@ components:
         - latitude
         - category
         - email
+        - automaticEmailsEnabled
     PublicReportDto:
       type: object
       properties:

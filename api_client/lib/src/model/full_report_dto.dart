@@ -30,6 +30,7 @@ part 'full_report_dto.g.dart';
 /// * [imageUrls]
 /// * [historyData]
 /// * [statusRecords]
+/// * [emailFeedbackStage]
 /// * [inspection]
 /// * [inspectionId]
 /// * [isTransferred]
@@ -84,6 +85,9 @@ abstract class FullReportDto
 
   @BuiltValueField(wireName: r'statusRecords')
   BuiltList<StatusRecordsDto> get statusRecords;
+
+  @BuiltValueField(wireName: r'emailFeedbackStage')
+  double get emailFeedbackStage;
 
   @BuiltValueField(wireName: r'inspection')
   String? get inspection;
@@ -198,6 +202,11 @@ class _$FullReportDtoSerializer implements PrimitiveSerializer<FullReportDto> {
     yield serializers.serialize(
       object.statusRecords,
       specifiedType: const FullType(BuiltList, [FullType(StatusRecordsDto)]),
+    );
+    yield r'emailFeedbackStage';
+    yield serializers.serialize(
+      object.emailFeedbackStage,
+      specifiedType: const FullType(double),
     );
     if (object.inspection != null) {
       yield r'inspection';
@@ -358,6 +367,13 @@ class _$FullReportDtoSerializer implements PrimitiveSerializer<FullReportDto> {
                 const FullType(BuiltList, [FullType(StatusRecordsDto)]),
           ) as BuiltList<StatusRecordsDto>;
           result.statusRecords.replace(valueDes);
+          break;
+        case r'emailFeedbackStage':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(double),
+          ) as double;
+          result.emailFeedbackStage = valueDes;
           break;
         case r'inspection':
           final valueDes = serializers.deserialize(

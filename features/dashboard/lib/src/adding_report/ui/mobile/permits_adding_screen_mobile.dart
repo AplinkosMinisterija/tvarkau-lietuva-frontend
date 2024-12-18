@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:latlong2/latlong.dart';
 import 'dart:typed_data';
+import '../widgets/automatic_emails_option_widget.dart';
 import '../widgets/data_security_terms_widget.dart';
 import '../widgets/explanation_dialog_widget.dart';
 import 'add_pin_screen_mobile.dart';
@@ -29,7 +30,8 @@ class PermitsAddingScreenMobile extends StatefulWidget {
   final double height;
   final Permit permits;
   final List<PublicReportDto> reports;
-  final Function(String, String, double, double, List<Uint8List>) onAddTap;
+  final Function(String, String, double, double, List<Uint8List>, bool)
+      onAddTap;
 
   @override
   State<PermitsAddingScreenMobile> createState() =>
@@ -51,6 +53,7 @@ class _PermitsAddingScreenMobileState extends State<PermitsAddingScreenMobile> {
   }
 
   bool isTermsAccepted = false;
+  bool isEmailsEnabled = true;
   bool isImagesSizeValid = true;
 
   final _formKey = GlobalKey<FormState>();
@@ -421,6 +424,15 @@ class _PermitsAddingScreenMobileState extends State<PermitsAddingScreenMobile> {
                           },
                         ),
                       ),
+                      AutomaticEmailsOptionWidget(
+                        onTap: (value) {
+                          setState(() {
+                            isEmailsEnabled = value!;
+                          });
+                        },
+                        width: widget.width,
+                        isEmailsEnabled: isEmailsEnabled,
+                      ),
                       SizedBox(height: widget.width * 0.0488),
                       MarkButtonMobile(
                         isActive: true,
@@ -439,6 +451,7 @@ class _PermitsAddingScreenMobileState extends State<PermitsAddingScreenMobile> {
                                 selectedLat!,
                                 selectedLong!,
                                 _selectedImages,
+                                isEmailsEnabled,
                               );
                             }
                           }

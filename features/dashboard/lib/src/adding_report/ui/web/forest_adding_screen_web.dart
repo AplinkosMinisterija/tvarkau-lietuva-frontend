@@ -24,7 +24,8 @@ class ForestAddingScreenWeb extends StatefulWidget {
   final double width;
   final double height;
   final List<PublicReportDto> reports;
-  final Function(String, String, double, double, List<Uint8List>) onAddTap;
+  final Function(String, String, double, double, List<Uint8List>, bool)
+      onAddTap;
   final VoidCallback onDataSecurityTap;
 
   @override
@@ -47,6 +48,7 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
   }
 
   bool isTermsAccepted = false;
+  bool isEmailsEnabled = true;
   final _formKey = GlobalKey<FormState>();
   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
   bool isShowMarkers = true;
@@ -305,6 +307,7 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
                             selectedLat,
                             selectedLong,
                             _selectedImages,
+                            isEmailsEnabled,
                           );
                         }
                       }
@@ -328,8 +331,14 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
                         isTermsAccepted = termsValue;
                       });
                     },
+                    onEmailsEnabledChange: (emailsEnabledValue) {
+                      setState(() {
+                        isEmailsEnabled = emailsEnabledValue;
+                      });
+                    },
                     isImagesSizeValid: isImagesSizeValid,
                     isTermsAccepted: isTermsAccepted,
+                    isEmailsEnabled: isEmailsEnabled,
                     category: 'forest',
                     onExplanationTap: () {
                       showDialog(
