@@ -12,6 +12,8 @@ class AddAnswerTab extends StatelessWidget {
     super.key,
     required this.onStatusChange,
     required this.statusValue,
+    required this.onCategoryChange,
+    required this.categoryValue,
     required this.onAnswerChange,
     required this.answerValue,
     required this.onImageUpload,
@@ -21,6 +23,8 @@ class AddAnswerTab extends StatelessWidget {
 
   final Function(int value) onStatusChange;
   final int statusValue;
+  final Function(int value) onCategoryChange;
+  final int categoryValue;
   final Function(String value) onAnswerChange;
   final String answerValue;
   final Function(List<Uint8List>) onImageUpload;
@@ -43,7 +47,11 @@ class AddAnswerTab extends StatelessWidget {
             onStatusChange: (int value) {
               onStatusChange(value);
             },
-            value: statusValue,
+            statusValue: statusValue,
+            onCategoryChange: (int value) {
+              onCategoryChange(value);
+            },
+            categoryValue: categoryValue,
           ),
           14.heightBox,
           _BuildAnswerAndImageSection(
@@ -84,56 +92,109 @@ class AddAnswerTab extends StatelessWidget {
 class _BuildStatusSection extends StatelessWidget {
   const _BuildStatusSection({
     required this.onStatusChange,
-    required this.value,
+    required this.statusValue,
+    required this.onCategoryChange,
+    required this.categoryValue,
   });
 
   final Function(int value) onStatusChange;
-  final int value;
+  final int statusValue;
+  final Function(int value) onCategoryChange;
+  final int categoryValue;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
       children: [
-        Text(
-          'Statusas',
-          style: CustomStyles.body2,
-        ),
-        CustomDropdown(
-          items: const [
-            DropdownMenuItem(
-              value: 0,
-              alignment: Alignment.center,
-              child: _BuildStatus(
-                status: 'gautas',
-              ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Statusas',
+              style: CustomStyles.body2,
             ),
-            DropdownMenuItem(
-              value: 1,
-              alignment: Alignment.center,
-              child: _BuildStatus(
-                status: 'tiriamas',
-              ),
-            ),
-            DropdownMenuItem(
-              value: 2,
-              alignment: Alignment.center,
-              child: _BuildStatus(
-                status: 'išspręsta',
-              ),
-            ),
-            DropdownMenuItem(
-              value: 3,
-              alignment: Alignment.center,
-              child: _BuildStatus(
-                status: 'nepasitvirtino',
-              ),
+            CustomDropdown(
+              items: const [
+                DropdownMenuItem(
+                  value: 0,
+                  alignment: Alignment.center,
+                  child: _BuildStatus(
+                    status: 'gautas',
+                  ),
+                ),
+                DropdownMenuItem(
+                  value: 1,
+                  alignment: Alignment.center,
+                  child: _BuildStatus(
+                    status: 'tiriamas',
+                  ),
+                ),
+                DropdownMenuItem(
+                  value: 2,
+                  alignment: Alignment.center,
+                  child: _BuildStatus(
+                    status: 'išspręsta',
+                  ),
+                ),
+                DropdownMenuItem(
+                  value: 3,
+                  alignment: Alignment.center,
+                  child: _BuildStatus(
+                    status: 'nepasitvirtino',
+                  ),
+                ),
+              ],
+              onChanged: (value) {
+                onStatusChange(value ?? 1);
+              },
+              value: statusValue,
             ),
           ],
-          onChanged: (value) {
-            onStatusChange(value ?? 1);
-          },
-          value: value,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Kategorija',
+              style: CustomStyles.body2,
+            ),
+            CustomDropdown(
+              items: const [
+                DropdownMenuItem(
+                  value: 0,
+                  alignment: Alignment.center,
+                  child: _BuildCategory(
+                    category: 'trash',
+                  ),
+                ),
+                DropdownMenuItem(
+                  value: 1,
+                  alignment: Alignment.center,
+                  child: _BuildCategory(
+                    category: 'forest',
+                  ),
+                ),
+                DropdownMenuItem(
+                  value: 2,
+                  alignment: Alignment.center,
+                  child: _BuildCategory(
+                    category: 'beetle',
+                  ),
+                ),
+                DropdownMenuItem(
+                  value: 3,
+                  alignment: Alignment.center,
+                  child: _BuildCategory(
+                    category: 'permits',
+                  ),
+                ),
+              ],
+              onChanged: (value) {
+                onCategoryChange(value ?? 1);
+              },
+              value: categoryValue,
+            ),
+          ],
         ),
       ],
     );
@@ -171,6 +232,52 @@ class _BuildStatus extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
         color: color.withOpacity(.1),
+        borderRadius: BorderRadius.circular(4),
+        border: Border.all(
+          width: 1,
+          color: color,
+        ),
+      ),
+      child: Text(
+        text,
+        style: CustomStyles.body2.copyWith(
+          color: color,
+        ),
+      ),
+    );
+  }
+}
+
+class _BuildCategory extends StatelessWidget {
+  const _BuildCategory({required this.category});
+
+  final String category;
+
+  Color get color {
+    return switch (category) {
+      'trash' => CustomColors.black,
+      'forest' => CustomColors.black,
+      'beetle' => CustomColors.black,
+      'permits' => Colors.black,
+      _ => Colors.black,
+    };
+  }
+
+  String get text {
+    return switch (category) {
+      'trash' => 'Atliekos',
+      'forest' => 'Sugadinta miško paklotė ir keliai',
+      'beetle' => 'Žievėgraužis',
+      'permits' => 'Nelegalūs kirtimai',
+      _ => '',
+    };
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
         border: Border.all(
           width: 1,

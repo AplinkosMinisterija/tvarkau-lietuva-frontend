@@ -27,6 +27,8 @@ class TrashTabs extends StatefulWidget {
       required this.trash,
       required this.onStatusChange,
       required this.statusValue,
+      required this.onCategoryChange,
+      required this.categoryValue,
       required this.onAnswerChange,
       required this.answerValue,
       required this.onImageUpload,
@@ -36,6 +38,8 @@ class TrashTabs extends StatefulWidget {
   final FullReportDto trash;
   final Function(int value) onStatusChange;
   final int statusValue;
+  final Function(int value) onCategoryChange;
+  final int categoryValue;
   final Function(String value) onAnswerChange;
   final String answerValue;
   final VoidCallback onBackPress;
@@ -56,6 +60,10 @@ class _TrashTabsState extends State<TrashTabs> {
             widget.onStatusChange(value);
           },
           statusValue: widget.statusValue,
+          onCategoryChange: (int value) {
+            widget.onCategoryChange(value);
+          },
+          categoryValue: widget.categoryValue,
           onAnswerChange: (String value) {
             widget.onAnswerChange(value);
           },

@@ -305,7 +305,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **adminControllerUpdateReport**
-> FullReportDto adminControllerUpdateReport(refId, name, longitude, latitude, isVisible, isDeleted, comment, status, officerImageUrls, imageUrls, images)
+> FullReportDto adminControllerUpdateReport(refId, name, category, longitude, latitude, isVisible, isDeleted, comment, status, officerImageUrls, imageUrls, images)
 
 
 
@@ -316,6 +316,7 @@ import 'package:api_client/api.dart';
 final api = ApiClient().getAdminApi();
 final String refId = refId_example; // String | 
 final String name = name_example; // String | 
+final String category = category_example; // String | 
 final num longitude = 8.14; // num | 
 final num latitude = 8.14; // num | 
 final bool isVisible = true; // bool | 
@@ -327,7 +328,7 @@ final BuiltList<String> imageUrls = ; // BuiltList<String> |
 final BuiltList<MultipartFile> images = /path/to/file.txt; // BuiltList<MultipartFile> | 
 
 try {
-    final response = api.adminControllerUpdateReport(refId, name, longitude, latitude, isVisible, isDeleted, comment, status, officerImageUrls, imageUrls, images);
+    final response = api.adminControllerUpdateReport(refId, name, category, longitude, latitude, isVisible, isDeleted, comment, status, officerImageUrls, imageUrls, images);
     print(response);
 } catch on DioException (e) {
     print('Exception when calling AdminApi->adminControllerUpdateReport: $e\n');
@@ -340,6 +341,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **refId** | **String**|  | 
  **name** | **String**|  | 
+ **category** | **String**|  | 
  **longitude** | **num**|  | 
  **latitude** | **num**|  | 
  **isVisible** | **bool**|  | 

@@ -1,4 +1,4 @@
-// Openapi Generator last run: : 2024-11-29T17:21:47.761001
+// Openapi Generator last run: : 2024-12-31T05:56:13.277667
 import 'package:admin/admin.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:dashboard/dashboard_screen.dart';

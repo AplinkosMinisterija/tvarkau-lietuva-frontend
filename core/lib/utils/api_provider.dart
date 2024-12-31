@@ -174,6 +174,7 @@ class ApiProvider {
     required String id,
     required String refId,
     required String name,
+    required String category,
     required double reportLong,
     required double reportLat,
     required String status,
@@ -187,6 +188,7 @@ class ApiProvider {
     final response = await adminApi.adminControllerUpdateReport(
         refId: refId,
         name: name,
+        category: category,
         longitude: reportLong,
         latitude: reportLat,
         isVisible: isVisible,

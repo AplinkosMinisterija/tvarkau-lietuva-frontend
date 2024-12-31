@@ -677,6 +677,7 @@ class AdminApi {
   /// Parameters:
   /// * [refId]
   /// * [name]
+  /// * [category]
   /// * [longitude]
   /// * [latitude]
   /// * [isVisible]
@@ -698,6 +699,7 @@ class AdminApi {
   Future<Response<FullReportDto>> adminControllerUpdateReport({
     required String refId,
     required String name,
+    required String category,
     required num longitude,
     required num latitude,
     required bool isVisible,
@@ -742,6 +744,8 @@ class AdminApi {
             encodeFormParameter(_serializers, refId, const FullType(String)),
         r'name':
             encodeFormParameter(_serializers, name, const FullType(String)),
+        r'category':
+            encodeFormParameter(_serializers, category, const FullType(String)),
         r'longitude':
             encodeFormParameter(_serializers, longitude, const FullType(num)),
         r'latitude':
