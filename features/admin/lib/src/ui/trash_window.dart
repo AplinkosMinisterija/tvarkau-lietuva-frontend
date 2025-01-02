@@ -22,8 +22,8 @@ class TrashWindow extends StatefulWidget {
   final FullReportDto trash;
   final Permit? permits;
   final VoidCallback onBackPress;
-  final Function(String name, String comment, String status, bool isVisible,
-      List<Uint8List> officerImages) onUpdate;
+  final Function(String name, String comment, String status, String category,
+      bool isVisible, List<Uint8List> officerImages) onUpdate;
   final Function(String refId, String name, double longitude, double latitude,
       String status, DateTime reportDate, String email) onTransfer;
   final VoidCallback onDelete;
@@ -48,9 +48,11 @@ class _TrashWindowState extends State<TrashWindow> {
   bool isVisible = false;
   String comment = '';
   String status = '';
+  String category = '';
   String name = '';
   List<Uint8List> officerImages = [];
   int statusIndex = 0;
+  int categoryIndex = 0;
 
   Set<Marker> markers = {};
 
@@ -73,9 +75,11 @@ class _TrashWindowState extends State<TrashWindow> {
   void initState() {
     isVisible = widget.trash.isVisible;
     status = widget.trash.status;
+    category = widget.trash.category.name;
     comment = widget.trash.comment;
     name = widget.trash.name;
     setInitStatusIndex(status);
+    setInitCategoryIndex(category);
     setupMarker();
     super.initState();
   }
@@ -291,6 +295,13 @@ class _TrashWindowState extends State<TrashWindow> {
             });
           },
           statusValue: statusIndex,
+          onCategoryChange: (int value) {
+            setState(() {
+              categoryIndex = value;
+              setCategoryIndex(value);
+            });
+          },
+          categoryValue: categoryIndex,
           onAnswerChange: (String value) {
             setState(() {
               comment = value;
@@ -306,7 +317,8 @@ class _TrashWindowState extends State<TrashWindow> {
             widget.onBackPress();
           },
           onSave: () {
-            widget.onUpdate(name, comment, status, isVisible, officerImages);
+            widget.onUpdate(
+                name, comment, status, category, isVisible, officerImages);
           },
         ),
       ],
@@ -334,6 +346,30 @@ class _TrashWindowState extends State<TrashWindow> {
       status = 'išspręsta';
     } else if (index == 3) {
       status = 'nepasitvirtino';
+    }
+  }
+
+  void setInitCategoryIndex(String category) {
+    if (category == 'trash') {
+      categoryIndex = 0;
+    } else if (category == 'forest') {
+      categoryIndex = 1;
+    } else if (category == 'beetle') {
+      categoryIndex = 2;
+    } else if (category == 'permits') {
+      categoryIndex = 3;
+    }
+  }
+
+  void setCategoryIndex(int index) {
+    if (index == 0) {
+      category = 'trash';
+    } else if (index == 1) {
+      category = 'forest';
+    } else if (index == 2) {
+      category = 'beetle';
+    } else if (index == 3) {
+      category = 'permits';
     }
   }
 
@@ -448,6 +484,13 @@ class _TrashWindowState extends State<TrashWindow> {
             });
           },
           statusValue: statusIndex,
+          onCategoryChange: (int value) {
+            setState(() {
+              categoryIndex = value;
+              setCategoryIndex(value);
+            });
+          },
+          categoryValue: categoryIndex,
           onAnswerChange: (String value) {
             setState(() {
               comment = value;
@@ -463,7 +506,8 @@ class _TrashWindowState extends State<TrashWindow> {
             widget.onBackPress();
           },
           onSave: () {
-            widget.onUpdate(name, comment, status, isVisible, officerImages);
+            widget.onUpdate(
+                name, comment, status, category, isVisible, officerImages);
           },
         ),
         10.heightBox,

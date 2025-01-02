@@ -44,12 +44,13 @@ class _TrashScreenState extends State<TrashScreen> {
                       onBackPress: () {
                         context.goNamed('admin');
                       },
-                      onUpdate: (String name, String comment, String status,
+                      onUpdate: (String name, String comment, String status, String category,
                           bool isVisible, List<Uint8List> officerImages) {
                         context.read<ReportBloc>().add(UpdateReport(
                               id: state.trashReport.id,
                               refId: state.trashReport.refId,
                               name: name,
+                              category: category,
                               reportLong: state.trashReport.longitude,
                               reportLat: state.trashReport.latitude,
                               status: status,
@@ -76,7 +77,7 @@ class _TrashScreenState extends State<TrashScreen> {
                               imageUrls: state.trashReport.imageUrls.toList(),
                               officerImageUrls:
                                   state.trashReport.officerImageUrls.toList(),
-                              officerImageFiles: [],
+                              officerImageFiles: [], category: state.trashReport.category.name,
                             ));
                       },
                       onRestore: () {
@@ -93,7 +94,7 @@ class _TrashScreenState extends State<TrashScreen> {
                               imageUrls: state.trashReport.imageUrls.toList(),
                               officerImageUrls:
                                   state.trashReport.officerImageUrls.toList(),
-                              officerImageFiles: [],
+                              officerImageFiles: [], category: state.trashReport.category.name,
                             ));
                       },
                       onTransfer: (String refId,
