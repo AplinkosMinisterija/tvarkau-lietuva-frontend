@@ -517,6 +517,13 @@ components:
           type: string
         name:
           type: string
+        category:
+          enum:
+            - trash
+            - forest
+            - beetle
+            - permits
+          type: string
         longitude:
           type: number
         latitude:
@@ -545,6 +552,7 @@ components:
       required:
         - refId
         - name
+        - category
         - longitude
         - latitude
         - isVisible

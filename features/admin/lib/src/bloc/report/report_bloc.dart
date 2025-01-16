@@ -63,6 +63,7 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
         id: event.id,
         refId: event.refId,
         name: event.name,
+        category: event.category,
         reportLong: event.reportLong,
         reportLat: event.reportLat,
         status: event.status,

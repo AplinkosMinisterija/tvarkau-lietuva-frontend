@@ -106,6 +106,17 @@ class _ReportTableState extends State<ReportTable> {
                     textAlign: TextAlign.center,
                   ))),
           GridColumn(
+              columnName: 'category',
+              allowSorting: false,
+              allowFiltering: false,
+              label: Container(
+                  padding: const EdgeInsets.all(8.0),
+                  alignment: Alignment.center,
+                  child: const Text(
+                    'Kategorija',
+                    textAlign: TextAlign.center,
+                  ))),
+          GridColumn(
               columnName: 'status',
               allowSorting: true,
               allowFiltering: true,
@@ -136,6 +147,9 @@ class ReportDataSource extends DataGridSource {
                   value: FormatterUtils().formatDate(e.reportDate)),
               DataGridCell<String>(columnName: 'name', value: e.name),
               DataGridCell<String>(columnName: 'comment', value: e.comment),
+              DataGridCell<String>(
+                  columnName: 'category',
+                  value: getCategoryText(e.category.name)),
               DataGridCell<String>(columnName: 'status', value: e.status),
             ]))
         .toList();
@@ -173,7 +187,6 @@ class ReportDataSource extends DataGridSource {
                   )
                 : e.columnName == 'id'
                     ? Text(
-                        //'TLP-A${'0' * (8 - e.value.toString().length)}${e.value.toUpperCase()}',
                         e.value,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,
@@ -186,7 +199,7 @@ class ReportDataSource extends DataGridSource {
                     : Text(
                         e.value.toString(),
                         overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.start,
                         maxLines: 2,
                         style: GoogleFonts.roboto(
                           fontWeight: FontWeight.w500,
@@ -270,6 +283,16 @@ Widget getStatusWidget(String status) {
   } else {
     return const SizedBox.shrink();
   }
+}
+
+String getCategoryText(String category) {
+  return switch (category) {
+    'trash' => 'Atliekos',
+    'forest' => 'Sugadinta miško paklotė ir keliai',
+    'beetle' => 'Žievėgraužis',
+    'permits' => 'Nelegalūs kirtimai',
+    _ => '',
+  };
 }
 
 BoxDecoration getStatusBoxDecoration(Color borderColor, Color fillColor) {

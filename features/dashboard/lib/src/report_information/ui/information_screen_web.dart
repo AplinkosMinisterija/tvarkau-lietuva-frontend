@@ -335,6 +335,9 @@ class _InformationScreenWebState extends State<InformationScreenWeb> {
                     child: Footer(
                       width: widget.width * 2.6,
                       isMobile: false,
+                      onErrorReportPress: () {
+                        context.goNamed('error_report');
+                      },
                     ),
                   )
                 ],

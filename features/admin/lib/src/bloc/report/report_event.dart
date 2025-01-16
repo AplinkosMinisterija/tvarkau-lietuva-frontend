@@ -36,6 +36,7 @@ class UpdateReport implements ReportEvent {
   final String id;
   final String refId;
   final String name;
+  final String category;
   final double reportLong;
   final double reportLat;
   final String status;
@@ -50,6 +51,7 @@ class UpdateReport implements ReportEvent {
     required this.id,
     required this.refId,
     required this.name,
+    required this.category,
     required this.reportLong,
     required this.reportLat,
     required this.status,

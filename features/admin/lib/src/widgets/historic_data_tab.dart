@@ -199,6 +199,8 @@ class _BuildHistoricDataCard extends StatelessWidget {
       'reportLat' => 'Pakeista pranešimo koordinačių platuma į',
       'isVisible' => '',
       'officerImages' => 'Pridėtos pareigūnų nuotraukos. Kiekis:',
+      'category' => 'Kategorija pakeista į',
+      'emailFeedbackStage' => 'Automatinio laiško etapas:',
       _ => '',
     };
   }
@@ -221,6 +223,10 @@ class _BuildHistoricDataCard extends StatelessWidget {
     } else if (field == 'status') {
       changeText = change.toUpperCase();
     } else if (field == 'officerImages') {
+      changeText = change.toUpperCase();
+    } else if (field == 'category') {
+      changeText = change.toUpperCase();
+    } else if (field == 'emailFeedbackStage') {
       changeText = change.toUpperCase();
     } else {
       changeText = '';
