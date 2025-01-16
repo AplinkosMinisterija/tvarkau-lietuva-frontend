@@ -17,7 +17,7 @@ Method | HTTP request | Description
 
 
 # **reportControllerCreateNewReport**
-> PublicReportDto reportControllerCreateNewReport(images, name, longitude, latitude, category, email, automaticEmailsEnabled)
+> PublicReportDto reportControllerCreateNewReport(automaticEmailsEnabled, images, name, longitude, latitude, category, email)
 
 
 
@@ -26,16 +26,16 @@ Method | HTTP request | Description
 import 'package:api_client/api.dart';
 
 final api = ApiClient().getReportsApi();
+final bool automaticEmailsEnabled = true; // bool | 
 final BuiltList<MultipartFile> images = /path/to/file.txt; // BuiltList<MultipartFile> | 
 final String name = name_example; // String | 
 final num longitude = 8.14; // num | 
 final num latitude = 8.14; // num | 
 final String category = category_example; // String | 
 final String email = email_example; // String | 
-final bool automaticEmailsEnabled = true; // bool | 
 
 try {
-    final response = api.reportControllerCreateNewReport(images, name, longitude, latitude, category, email, automaticEmailsEnabled);
+    final response = api.reportControllerCreateNewReport(automaticEmailsEnabled, images, name, longitude, latitude, category, email);
     print(response);
 } catch on DioException (e) {
     print('Exception when calling ReportsApi->reportControllerCreateNewReport: $e\n');
@@ -46,13 +46,13 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **automaticEmailsEnabled** | **bool**|  | 
  **images** | [**BuiltList&lt;MultipartFile&gt;**](MultipartFile.md)|  | 
  **name** | **String**|  | 
  **longitude** | **num**|  | 
  **latitude** | **num**|  | 
  **category** | **String**|  | 
  **email** | **String**|  | 
- **automaticEmailsEnabled** | **bool**|  | 
 
 ### Return type
 

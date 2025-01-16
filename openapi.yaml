@@ -666,6 +666,8 @@ components:
     CreateReportDto:
       type: object
       properties:
+        automaticEmailsEnabled:
+          type: boolean
         images:
           type: array
           items:
@@ -686,16 +688,14 @@ components:
             - permits
         email:
           type: string
-        automaticEmailsEnabled:
-          type: boolean
       required:
+        - automaticEmailsEnabled
         - images
         - name
         - longitude
         - latitude
         - category
         - email
-        - automaticEmailsEnabled
     PublicReportDto:
       type: object
       properties:

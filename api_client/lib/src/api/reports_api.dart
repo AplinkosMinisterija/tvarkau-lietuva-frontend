@@ -25,13 +25,13 @@ class ReportsApi {
   ///
   ///
   /// Parameters:
+  /// * [automaticEmailsEnabled]
   /// * [images]
   /// * [name]
   /// * [longitude]
   /// * [latitude]
   /// * [category]
   /// * [email]
-  /// * [automaticEmailsEnabled]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -42,13 +42,13 @@ class ReportsApi {
   /// Returns a [Future] containing a [Response] with a [PublicReportDto] as data
   /// Throws [DioException] if API call or serialization fails
   Future<Response<PublicReportDto>> reportControllerCreateNewReport({
+    required bool automaticEmailsEnabled,
     required BuiltList<MultipartFile> images,
     required String name,
     required num longitude,
     required num latitude,
     required String category,
     required String email,
-    required bool automaticEmailsEnabled,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -74,6 +74,8 @@ class ReportsApi {
 
     try {
       _bodyData = FormData.fromMap(<String, dynamic>{
+        r'automaticEmailsEnabled': encodeFormParameter(
+            _serializers, automaticEmailsEnabled, const FullType(bool)),
         r'images': images.toList(),
         r'name':
             encodeFormParameter(_serializers, name, const FullType(String)),
@@ -85,8 +87,6 @@ class ReportsApi {
             encodeFormParameter(_serializers, category, const FullType(String)),
         r'email':
             encodeFormParameter(_serializers, email, const FullType(String)),
-        r'automaticEmailsEnabled': encodeFormParameter(
-            _serializers, automaticEmailsEnabled, const FullType(bool)),
       });
     } catch (error, stackTrace) {
       throw DioException(
