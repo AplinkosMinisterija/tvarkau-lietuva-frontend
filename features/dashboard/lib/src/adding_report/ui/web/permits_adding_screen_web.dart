@@ -28,7 +28,8 @@ class PermitsAddingScreenWeb extends StatefulWidget {
   final double height;
   final Permit? permits;
   final List<PublicReportDto> reports;
-  final Function(String, String, double, double, List<Uint8List>) onAddTap;
+  final Function(String, String, double, double, List<Uint8List>, bool)
+      onAddTap;
   final VoidCallback onDataSecurityTap;
 
   @override
@@ -51,6 +52,7 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
   }
 
   bool isTermsAccepted = false;
+  bool isEmailsEnabled = true;
   final _formKey = GlobalKey<FormState>();
   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
   bool isShowMarkers = true;
@@ -131,7 +133,6 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
         _lithuaniaCameraPosition =
             CameraPosition(target: _currentPosition!, zoom: 15);
       });
-
     }
   }
 
@@ -308,6 +309,7 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                             selectedLat,
                             selectedLong,
                             _selectedImages,
+                            isEmailsEnabled,
                           );
                         }
                       }
@@ -331,8 +333,14 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                         isTermsAccepted = termsValue;
                       });
                     },
+                    onEmailsEnabledChange: (emailsEnabledValue) {
+                      setState(() {
+                        isEmailsEnabled = emailsEnabledValue;
+                      });
+                    },
                     isImagesSizeValid: isImagesSizeValid,
                     isTermsAccepted: isTermsAccepted,
+                    isEmailsEnabled: isEmailsEnabled,
                     category: 'permits',
                     onExplanationTap: () {
                       showDialog(

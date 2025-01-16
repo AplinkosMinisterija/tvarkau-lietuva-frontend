@@ -23,7 +23,8 @@ class TrashAddingScreenWeb extends StatefulWidget {
   final double width;
   final double height;
   final List<PublicReportDto> reports;
-  final Function(String, String, double, double, List<Uint8List>) onAddTap;
+  final Function(String, String, double, double, List<Uint8List>, bool)
+      onAddTap;
 
   @override
   State<TrashAddingScreenWeb> createState() => _TrashAddingScreenWebState();
@@ -44,6 +45,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
   }
 
   bool isTermsAccepted = false;
+  bool isEmailsEnabled = true;
   final _formKey = GlobalKey<FormState>();
   BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
   bool isShowMarkers = true;
@@ -306,6 +308,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                             selectedLat,
                             selectedLong,
                             _selectedImages,
+                            isEmailsEnabled,
                           );
                         }
                       }
@@ -329,6 +332,11 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                         isTermsAccepted = termsValue;
                       });
                     },
+                    onEmailsEnabledChange: (emailsEnabledValue) {
+                      setState(() {
+                        isEmailsEnabled = emailsEnabledValue;
+                      });
+                    },
                     isImagesSizeValid: isImagesSizeValid,
                     isTermsAccepted: isTermsAccepted,
                     category: 'trash',
@@ -344,6 +352,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                             );
                           });
                     },
+                    isEmailsEnabled: isEmailsEnabled,
                   )
                 ],
               ),

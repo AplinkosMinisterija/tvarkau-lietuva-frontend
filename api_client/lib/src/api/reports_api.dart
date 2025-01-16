@@ -25,6 +25,7 @@ class ReportsApi {
   ///
   ///
   /// Parameters:
+  /// * [automaticEmailsEnabled]
   /// * [images]
   /// * [name]
   /// * [longitude]
@@ -41,6 +42,7 @@ class ReportsApi {
   /// Returns a [Future] containing a [Response] with a [PublicReportDto] as data
   /// Throws [DioException] if API call or serialization fails
   Future<Response<PublicReportDto>> reportControllerCreateNewReport({
+    required bool automaticEmailsEnabled,
     required BuiltList<MultipartFile> images,
     required String name,
     required num longitude,
@@ -72,6 +74,8 @@ class ReportsApi {
 
     try {
       _bodyData = FormData.fromMap(<String, dynamic>{
+        r'automaticEmailsEnabled': encodeFormParameter(
+            _serializers, automaticEmailsEnabled, const FullType(bool)),
         r'images': images.toList(),
         r'name':
             encodeFormParameter(_serializers, name, const FullType(String)),
