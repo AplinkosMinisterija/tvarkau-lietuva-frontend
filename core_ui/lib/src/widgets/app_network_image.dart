@@ -20,11 +20,11 @@ class AppNetworkImage extends StatelessWidget {
     );
     return Image(
         image: ResizeImage(
-          imageProvider,
-          width: 150,
-          height: 150,
-          policy: ResizeImagePolicy.fit,
-        ));
+      imageProvider,
+      width: 150,
+      height: 150,
+      policy: ResizeImagePolicy.fit,
+    ));
     //   CachedNetworkImage(
     //   imageUrl: url,
     //   imageBuilder: (context, imageProvider) => Container(
