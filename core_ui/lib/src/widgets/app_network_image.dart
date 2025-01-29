@@ -14,9 +14,17 @@ class AppNetworkImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    late final imageProvider = CachedNetworkImageProvider(
+      url,
+      cacheKey: url,
+    );
     return CachedNetworkImage(
+      memCacheWidth: 45,
+      memCacheHeight: 60,
+      maxHeightDiskCache: 60,
+      maxWidthDiskCache: 45,
       imageUrl: url,
-      imageBuilder: (context, imageProvider) => Container(
+      imageBuilder: (context, imageProv) => Container(
         decoration: BoxDecoration(
           image: DecorationImage(
             image: imageProvider,
