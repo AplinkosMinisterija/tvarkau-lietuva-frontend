@@ -18,13 +18,6 @@ class AppNetworkImage extends StatelessWidget {
       url,
       cacheKey: url,
     );
-    // return Image(
-    //     image: ResizeImage(
-    //   imageProvider,
-    //   width: 150,
-    //   height: 150,
-    //   policy: ResizeImagePolicy.fit,
-    // ));
     return CachedNetworkImage(
       memCacheWidth: 45,
       memCacheHeight: 60,
