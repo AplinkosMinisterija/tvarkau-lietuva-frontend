@@ -53,7 +53,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
             } catch (e) {
               emit(
                 ErrorState(
-                  errorMessage: 'Sistemos klaida',
+                  errorMessage: 'Sistemos klaida - neautorizuota',
                   errorDescription: e.toString(),
                 ),
               );
