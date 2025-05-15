@@ -401,7 +401,13 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
 
   _onCameraIdle() async {
     LatLngBounds visibleBounds = await mapController.getVisibleRegion();
-    filterPolygons(visibleBounds);
+    double cameraZoom = await mapController.getZoomLevel();
+    if (cameraZoom < 12) {
+      visiblePolygons = {};
+    } else {
+      filterPolygons(visibleBounds);
+    }
+
     setState(() {});
   }
 
