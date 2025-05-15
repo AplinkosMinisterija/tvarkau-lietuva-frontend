@@ -243,6 +243,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
                           selectedLong = position.center.longitude;
                           selectedZoom = position.zoom;
                         });
+                        onPositionChange();
                       },
                     ),
                     children: [
@@ -559,7 +560,20 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
 
   void onCameraMoveEnd() {
     LatLngBounds bounds = getCurrentBounds();
-    filterPolygons(bounds);
+    if (selectedZoom < 12) {
+      visiblePolygons = [];
+    } else {
+      filterPolygons(bounds);
+    }
+    setState(() {});
+  }
+  void onPositionChange() {
+    LatLngBounds bounds = getCurrentBounds();
+    if (selectedZoom < 12) {
+      visiblePolygons = [];
+    } else {
+      filterPolygons(bounds);
+    }
     setState(() {});
   }
 
