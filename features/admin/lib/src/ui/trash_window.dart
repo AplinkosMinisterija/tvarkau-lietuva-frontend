@@ -744,25 +744,25 @@ Map<String, String> getEmployeeList(FullReportDtoCategoryEnum category) {
     'Alytus': 'reda.baubliene@aad.am.lt',
     'Kaunas': 'vytautas.januska@aad.am.lt',
     'Klaipėda': 'laura.dagiliene@aad.am.lt',
-    'Gargždai': 'laura.mazalskiene@aad.am.lt',
-    'Šilutė': 'ligita.budrikiene@aad.am.lt',
+    'Gargždai': 'martinas.duobinis@aad.am.lt',
+    'Marijampolė': 'algimantas.paplauskas@aad.am.lt',
+    'Šilutė': 'galina.miseviciene@aad.am.lt',
     'Jūros AAS': 'vidmantas.tilvikas@aad.am.lt',
     'Biržai': 'elona.pipiraite@aad.am.lt',
-    'Panevėžys': 'viktorija.gliaudeliene@aad.am.lt',
+    'Panevėžys': 'ieva.jakupkaite@aad.am.lt',
     'Ignalina': 'viktoras.ksenzovas@aad.am.lt',
     'Utena': 'eimantas.puodziukas@aad.am.lt',
-    'Pakruojis': 'robertas@jagminas@aad.am.lt',
+    'Pakruojis': 'robertas.jagminas@aad.am.lt',
     'Šiauliai': 'valdas.glazauskis@aad.am.lt',
-    'Telšiai': 'renata.stakuviene@aad.am.lt',
+    'Telšiai': 'renata.stankuviene@aad.am.lt',
     'Trakai': 'egidijus.kirkliauskas@aad.am.lt',
     'Vilniaus miestas': 'edgaras.skrebe@aad.am.lt',
-    'Vilniaus rajonas': 'pavel.jakubovskij@aad.am.lt'
+    'Vilniaus rajonas': 'pavel.jakubovskij@aad.am.lt',
+    'Kauno MKS': 'gintaras.zukauskas@aad.am.lt',
+    'Vilniaus MKS': 'marijonas.juskauskas@aad.am.lt',
+    'Klaipėdos MKS': 'robertas.paulauskas@aad.am.lt',
+    'Panevėžio MKS': 'albertas.mikasauskas@aad.am.lt',
+
   };
-  const forestList = {
-    'Kaunas': 'gintaras.zukauskas@aad.am.lt',
-    'Vilnius': 'marijonas.juskauskas@aad.am.lt',
-    'Klaipėda': 'robertas.paulauskas@aad.am.lt',
-    'Panevėžys': 'albertas.mikasauskas@aad.am.lt',
-  };
-  return category == FullReportDtoCategoryEnum.trash ? trashList : forestList;
+  return trashList;
 }
