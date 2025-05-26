@@ -225,13 +225,24 @@ class _BuildHistoricDataCard extends StatelessWidget {
     } else if (field == 'officerImages') {
       changeText = change.toUpperCase();
     } else if (field == 'category') {
-      changeText = change.toUpperCase();
+      changeText = categoryText(change);
     } else if (field == 'emailFeedbackStage') {
       changeText = change.toUpperCase();
     } else {
       changeText = '';
     }
     return changeText;
+  }
+
+  String categoryText(String category) {
+    return switch (category) {
+      'trash' => 'Atliekos',
+      'forest' => 'Miškai',
+      'beetle' => 'Žievėgraužis',
+      'permits' => 'Kirtimo leidimai',
+      'other' => 'Kita',
+      _ => '',
+    };
   }
 
   @override
