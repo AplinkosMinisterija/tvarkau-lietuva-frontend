@@ -70,24 +70,24 @@ class PermitsInformationScreen extends StatelessWidget {
                         ?.copyWith(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 12),
-                  // ImageGallery().buildImages(
-                  //   imageUrls: [
-                  //     'https://res.cloudinary.com/dms8ku4iv/image/upload/q_auto:low/v1723138501/po_pirmojo_etapo_x9wyoq.jpg',
-                  //     'https://res.cloudinary.com/dms8ku4iv/image/upload/q_auto:low/v1723138501/po_antrojo_etapo_rlkjnr.jpg',
-                  //     'https://res.cloudinary.com/dms8ku4iv/image/upload/q_auto:low/v1723138501/retinimas_kpvtmo.jpg',
-                  //     'https://res.cloudinary.com/dms8ku4iv/image/upload/q_auto:low/v1723138501/plynas_yxpzpr.jpg',
-                  //   ],
-                  //   context: context,
-                  //   width: 300,
-                  //   titlesEnabled: true,
-                  //   isDownloadEnabled: false,
-                  //   titles: [
-                  //     'Atvejiniai kirtimai po pirmojo kirtimų etapo',
-                  //     'Atvejiniai kirtimai po antrojo kirtimų etapo',
-                  //     'Retinimo arba einamieji kirtimai',
-                  //     'Plynieji kirtimai'
-                  //   ],
-                  // ),
+                  ImageGallery().buildImages(
+                    imageUrls: [
+                      'https://res.cloudinary.com/dms8ku4iv/image/upload/q_auto:low/v1723138501/po_pirmojo_etapo_x9wyoq.jpg',
+                      'https://res.cloudinary.com/dms8ku4iv/image/upload/q_auto:low/v1723138501/po_antrojo_etapo_rlkjnr.jpg',
+                      'https://res.cloudinary.com/dms8ku4iv/image/upload/q_auto:low/v1723138501/retinimas_kpvtmo.jpg',
+                      'https://res.cloudinary.com/dms8ku4iv/image/upload/q_auto:low/v1723138501/plynas_yxpzpr.jpg',
+                    ],
+                    context: context,
+                    width: 300,
+                    titlesEnabled: true,
+                    isDownloadEnabled: false,
+                    titles: [
+                      'Atvejiniai kirtimai po pirmojo kirtimų etapo',
+                      'Atvejiniai kirtimai po antrojo kirtimų etapo',
+                      'Retinimo arba einamieji kirtimai',
+                      'Plynieji kirtimai'
+                    ],
+                  ),
                   const SizedBox(height: 30),
                 ],
               ),
