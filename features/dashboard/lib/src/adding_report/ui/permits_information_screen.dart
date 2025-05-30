@@ -72,10 +72,10 @@ class PermitsInformationScreen extends StatelessWidget {
                   const SizedBox(height: 12),
                   ImageGallery().buildImages(
                     imageUrls: [
-                      'https://res.cloudinary.com/dms8ku4iv/image/upload/q_auto:low/v1723138501/po_pirmojo_etapo_x9wyoq.jpg',
-                      'https://res.cloudinary.com/dms8ku4iv/image/upload/q_auto:low/v1723138501/po_antrojo_etapo_rlkjnr.jpg',
-                      'https://res.cloudinary.com/dms8ku4iv/image/upload/q_auto:low/v1723138501/retinimas_kpvtmo.jpg',
-                      'https://res.cloudinary.com/dms8ku4iv/image/upload/q_auto:low/v1723138501/plynas_yxpzpr.jpg',
+                      'https://res.cloudinary.com/dms8ku4iv/image/upload/v1723138501/po_pirmojo_etapo_x9wyoq.jpg',
+                      'https://res.cloudinary.com/dms8ku4iv/image/upload/v1723138501/po_antrojo_etapo_rlkjnr.jpg',
+                      'https://res.cloudinary.com/dms8ku4iv/image/upload/v1723138501/retinimas_kpvtmo.jpg',
+                      'https://res.cloudinary.com/dms8ku4iv/image/upload/v1723138501/plynas_yxpzpr.jpg',
                     ],
                     context: context,
                     width: 300,

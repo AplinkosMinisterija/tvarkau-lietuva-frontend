@@ -48,6 +48,7 @@ class _ImagePreviewNetworkState extends State<ImagePreviewNetwork> {
                             borderRadius: BorderRadius.circular(12),
                             child: AppNetworkImage(
                               url: widget.imageUrls[activeIndex],
+                              isThumbnailMode: false,
                             ))),
                     SizedBox(height: size.height * 0.022),
                     SizedBox(
@@ -91,6 +92,7 @@ class _ImagePreviewNetworkState extends State<ImagePreviewNetwork> {
                                           child: AppNetworkImage(
                                             url: widget.imageUrls[i],
                                             fit: BoxFit.cover,
+                                            isThumbnailMode: true,
                                           ),
 
                                         ),
