@@ -53,7 +53,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
             } catch (e) {
               emit(
                 ErrorState(
-                  errorMessage: 'Something went wrong',
+                  errorMessage: 'Sistemos klaida - neautorizuota',
                   errorDescription: e.toString(),
                 ),
               );
@@ -70,8 +70,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
     } catch (e) {
       emit(
         ErrorState(
-            errorMessage: 'Something went wrong',
-            errorDescription: e.toString()),
+            errorMessage: 'Sistemos klaida', errorDescription: e.toString()),
       );
     }
   }
@@ -90,8 +89,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
     } catch (e) {
       emit(
         ErrorState(
-            errorMessage: 'Something went wrong',
-            errorDescription: e.toString()),
+            errorMessage: 'Sistemos klaida', errorDescription: e.toString()),
       );
     }
   }
@@ -110,8 +108,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
     } catch (e) {
       emit(
         ErrorState(
-            errorMessage: 'Something went wrong',
-            errorDescription: e.toString()),
+            errorMessage: 'Sistemos klaida', errorDescription: e.toString()),
       );
     }
   }
@@ -128,8 +125,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
     } catch (e) {
       emit(
         ErrorState(
-            errorMessage: 'Something went wrong',
-            errorDescription: e.toString()),
+            errorMessage: 'Sistemos klaida', errorDescription: e.toString()),
       );
     }
   }
@@ -154,8 +150,8 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
       if (accessToken != null) {
         emit(
           ErrorState(
-              errorMessage: 'Something went wrong',
-              errorDescription: 'Authentication reset error'),
+              errorMessage: 'Sistemos klaida',
+              errorDescription: 'Autentifikavimo klaida'),
         );
       } else {
         add(LoadData());
@@ -163,8 +159,7 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
     } catch (e) {
       emit(
         ErrorState(
-            errorMessage: 'Something went wrong',
-            errorDescription: e.toString()),
+            errorMessage: 'Sistemos klaida', errorDescription: e.toString()),
       );
     }
   }
@@ -188,15 +183,14 @@ class AdminBloc extends Bloc<AdminEvent, AdminState> {
       } else {
         emit(
           ErrorState(
-              errorMessage: 'Something went wrong',
-              errorDescription: 'Unauthorized'),
+              errorMessage: 'Sistemos klaida',
+              errorDescription: 'Autorizacijos klaida. Pabandyti dar kartą'),
         );
       }
     } catch (e) {
       emit(
         ErrorState(
-            errorMessage: 'Something went wrong',
-            errorDescription: e.toString()),
+            errorMessage: 'Sistemos klaida', errorDescription: e.toString()),
       );
     }
   }
