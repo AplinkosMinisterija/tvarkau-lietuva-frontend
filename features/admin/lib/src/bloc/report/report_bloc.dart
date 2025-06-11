@@ -100,7 +100,7 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
       );
 
       await ApiProvider().transferTrashReport(
-          refId: 'TLP-A${'0' * (8 - event.refId.length)}${event.refId.toUpperCase()}',
+          refId: event.refId,
           name: event.name,
           longitude: event.longitude,
           latitude: event.latitude,
