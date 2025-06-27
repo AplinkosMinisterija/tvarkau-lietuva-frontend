@@ -192,7 +192,7 @@ class _BuildStatusSection extends StatelessWidget {
                   value: 4,
                   alignment: Alignment.center,
                   child: _BuildCategory(
-                    category: 'other',
+                    category: 'misc',
                   ),
                 ),
               ],
@@ -266,7 +266,7 @@ class _BuildCategory extends StatelessWidget {
       'forest' => CustomColors.black,
       'beetle' => CustomColors.black,
       'permits' => Colors.black,
-      'other' => Colors.grey,
+      'misc' => Colors.grey,
       _ => Colors.black,
     };
   }
@@ -277,7 +277,7 @@ class _BuildCategory extends StatelessWidget {
       'forest' => 'Sugadinta miško paklotė ir keliai',
       'beetle' => 'Žievėgraužis',
       'permits' => 'Nelegalūs kirtimai',
-      'other' => 'Kita',
+      'misc' => 'Kita',
       _ => '',
     };
   }

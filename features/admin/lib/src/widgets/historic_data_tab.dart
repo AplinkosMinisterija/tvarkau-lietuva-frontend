@@ -240,7 +240,7 @@ class _BuildHistoricDataCard extends StatelessWidget {
       'forest' => 'Miškai',
       'beetle' => 'Žievėgraužis',
       'permits' => 'Kirtimo leidimai',
-      'other' => 'Kita',
+      'misc' => 'Kita',
       _ => '',
     };
   }

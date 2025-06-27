@@ -358,7 +358,7 @@ class _TrashWindowState extends State<TrashWindow> {
       categoryIndex = 2;
     } else if (category == 'permits') {
       categoryIndex = 3;
-    } else if (category == 'other') {
+    } else if (category == 'misc') {
       categoryIndex = 4;
     }
   }
@@ -373,7 +373,7 @@ class _TrashWindowState extends State<TrashWindow> {
     } else if (index == 3) {
       category = 'permits';
     } else if (index == 4) {
-      category = 'other';
+      category = 'misc';
     }
   }
 

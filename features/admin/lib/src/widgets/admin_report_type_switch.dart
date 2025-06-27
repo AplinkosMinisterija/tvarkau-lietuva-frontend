@@ -74,9 +74,9 @@ class AdminReportTypeSwitch extends StatelessWidget {
                   4.widthBox,
                   _BuildButton(
                     buttonText: 'Kita',
-                    isActive: activeCategory == 'other',
+                    isActive: activeCategory == 'misc',
                     onPressed: () {
-                      onReportCategoryChange('other');
+                      onReportCategoryChange('misc');
                     },
                   ),
                 ]
