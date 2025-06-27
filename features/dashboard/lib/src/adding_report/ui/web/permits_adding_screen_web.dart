@@ -2,7 +2,6 @@ import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:core/utils/permit.dart';
 import 'package:dashboard/src/adding_report/ui/widgets/adding_screen_side_bar.dart';
-import 'package:flutter/gestures.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
