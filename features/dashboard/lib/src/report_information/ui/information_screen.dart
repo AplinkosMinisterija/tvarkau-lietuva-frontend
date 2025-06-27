@@ -16,7 +16,7 @@ class InformationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var refId = getRefId(reportId);
+    String? refId = getRefId(reportId);
     return BlocProvider(
         create: (BuildContext context) => InformationBloc(refId: refId),
         child: BlocBuilder<InformationBloc, InformationState>(
@@ -48,9 +48,10 @@ class InformationScreen extends StatelessWidget {
                         context.read<InformationBloc>().add(
                               ReloadPage(),
                             );
-                      }, onErrorReport: (){
+                      },
+                      onErrorReport: () {
                         context.goNamed('error_report');
-                    },
+                      },
                     ),
                   );
                 } else {
@@ -62,10 +63,14 @@ class InformationScreen extends StatelessWidget {
         ));
   }
 
-  String getRefId(String query) {
-    var trimmedQuery = query.replaceAll('TLP-A', '');
-    var formattedQuery = trimmedQuery.substring(
-        trimmedQuery.indexOf(RegExp(r'[1-9]')), trimmedQuery.length);
-    return formattedQuery;
+  String? getRefId(String query) {
+    try {
+      var trimmedQuery = query.replaceAll('TLP-A', '');
+      var formattedQuery = trimmedQuery.substring(
+          trimmedQuery.indexOf(RegExp(r'[1-9]')), trimmedQuery.length);
+      return formattedQuery;
+    } catch (e) {
+      return null;
+    }
   }
 }
