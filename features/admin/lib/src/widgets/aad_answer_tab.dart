@@ -188,6 +188,13 @@ class _BuildStatusSection extends StatelessWidget {
                     category: 'permits',
                   ),
                 ),
+                DropdownMenuItem(
+                  value: 4,
+                  alignment: Alignment.center,
+                  child: _BuildCategory(
+                    category: 'misc',
+                  ),
+                ),
               ],
               onChanged: (value) {
                 onCategoryChange(value ?? 1);
@@ -259,6 +266,7 @@ class _BuildCategory extends StatelessWidget {
       'forest' => CustomColors.black,
       'beetle' => CustomColors.black,
       'permits' => Colors.black,
+      'misc' => Colors.grey,
       _ => Colors.black,
     };
   }
@@ -269,6 +277,7 @@ class _BuildCategory extends StatelessWidget {
       'forest' => 'Sugadinta miško paklotė ir keliai',
       'beetle' => 'Žievėgraužis',
       'permits' => 'Nelegalūs kirtimai',
+      'misc' => 'Kita',
       _ => '',
     };
   }

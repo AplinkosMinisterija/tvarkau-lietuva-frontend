@@ -25,7 +25,7 @@ class AdminReportTypeSwitch extends StatelessWidget {
         borderRadius: BorderRadius.circular(4),
       ),
       padding: const EdgeInsets.all(4),
-      width: width*0.6,
+      width: width * 0.6,
       child: FittedBox(
         fit: BoxFit.fitWidth,
         child: Row(
@@ -69,6 +69,14 @@ class AdminReportTypeSwitch extends StatelessWidget {
                     isActive: activeCategory == 'permits',
                     onPressed: () {
                       onReportCategoryChange('permits');
+                    },
+                  ),
+                  4.widthBox,
+                  _BuildButton(
+                    buttonText: 'Kita',
+                    isActive: activeCategory == 'misc',
+                    onPressed: () {
+                      onReportCategoryChange('misc');
                     },
                   ),
                 ]

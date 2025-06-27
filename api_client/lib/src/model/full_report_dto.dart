@@ -45,7 +45,7 @@ abstract class FullReportDto
 
   @BuiltValueField(wireName: r'category')
   FullReportDtoCategoryEnum get category;
-  // enum categoryEnum {  trash,  forest,  beetle,  permits,  };
+  // enum categoryEnum {  trash,  forest,  beetle,  permits,  other,  };
 
   @BuiltValueField(wireName: r'refId')
   String get refId;
@@ -438,9 +438,12 @@ class FullReportDtoCategoryEnum extends EnumClass {
   @BuiltValueEnumConst(wireName: r'beetle')
   static const FullReportDtoCategoryEnum beetle =
       _$fullReportDtoCategoryEnum_beetle;
-  @BuiltValueEnumConst(wireName: r'permits', fallback: true)
+  @BuiltValueEnumConst(wireName: r'permits')
   static const FullReportDtoCategoryEnum permits =
       _$fullReportDtoCategoryEnum_permits;
+  @BuiltValueEnumConst(wireName: r'other', fallback: true)
+  static const FullReportDtoCategoryEnum other =
+      _$fullReportDtoCategoryEnum_other;
 
   static Serializer<FullReportDtoCategoryEnum> get serializer =>
       _$fullReportDtoCategoryEnumSerializer;
