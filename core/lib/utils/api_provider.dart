@@ -92,7 +92,9 @@ class ApiProvider {
     }
     final response =
         await reportsApi.reportControllerGetReportById(refId: refValue);
+    print('here');
     if (response.statusCode == 404) {
+      print('here2');
       return null;
     } else {
       return response.data!;

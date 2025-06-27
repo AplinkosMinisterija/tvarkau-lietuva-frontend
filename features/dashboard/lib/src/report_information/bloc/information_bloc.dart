@@ -21,15 +21,27 @@ class InformationBloc extends Bloc<InformationEvent, InformationState> {
     Emitter<InformationState> emit,
   ) async {
     try {
-      if(event.refId == null){
-        emit(ErrorState(errorMessage: 'Pranešimas nerastas'));
+      if (event.refId == null) {
+        emit(
+          NotFoundState(
+            errorMessage: 'Pranešimas nerastas',
+            descriptionMessage:
+                'Jūsų ieškomas pranešimas nebuvo rastas arba nėra viešai matomas. Pasitikrinkite ar gerai įvedėte nuorodą',
+          ),
+        );
       }
       final PublicReportDto? trashReport =
           await ApiProvider().getOneTrashReport(
         event.refId!,
       );
       if (trashReport == null) {
-        emit(ErrorState(errorMessage: 'Pranešimas nerastas'));
+        emit(
+          NotFoundState(
+            errorMessage: 'Pranešimas nerastas',
+            descriptionMessage:
+                'Jūsų ieškomas pranešimas nebuvo rastas arba nėra viešai matomas. Pasitikrinkite ar gerai įvedėte nuorodą',
+          ),
+        );
       } else {
         emit(
           ContentState(
@@ -39,7 +51,11 @@ class InformationBloc extends Bloc<InformationEvent, InformationState> {
       }
     } catch (e) {
       emit(
-        ErrorState(errorMessage: 'Netikėta klaida'),
+        NotFoundState(
+          errorMessage: 'Pranešimas nerastas',
+          descriptionMessage:
+              'Jūsų ieškomas pranešimas nebuvo rastas arba nėra viešai matomas. Pasitikrinkite ar gerai įvedėte nuorodą',
+        ),
       );
     }
   }

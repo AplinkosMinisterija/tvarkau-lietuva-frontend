@@ -54,7 +54,17 @@ class InformationScreen extends StatelessWidget {
                       },
                     ),
                   );
-                } else {
+                } else if (state is NotFoundState) {
+                  return Scaffold(
+                    body: NotFoundWidget(
+                      onPressed: () {
+                        context.goNamed('home');
+                      },
+                      errorText: state.errorMessage,
+                      descriptionText: state.descriptionMessage,
+                    ),
+                  );
+                }else {
                   return const SizedBox.shrink();
                 }
               },
