@@ -2,6 +2,7 @@ import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:core/utils/permit.dart';
 import 'package:dashboard/src/adding_report/ui/widgets/adding_screen_side_bar.dart';
+import 'package:flutter/gestures.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,6 @@ class PermitsAddingScreenWeb extends StatefulWidget {
   const PermitsAddingScreenWeb({
     required this.width,
     required this.height,
-    required this.permits,
     required this.reports,
     required this.onAddTap,
     required this.onDataSecurityTap,
@@ -26,7 +26,6 @@ class PermitsAddingScreenWeb extends StatefulWidget {
 
   final double width;
   final double height;
-  final Permit? permits;
   final List<PublicReportDto> reports;
   final Function(String, String, double, double, List<Uint8List>, bool)
       onAddTap;
@@ -63,7 +62,6 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
   String currentEmailValue = '';
   Set<Marker> markers = {};
   Set<Polygon> polygons = {};
-  Set<Polygon> visiblePolygons = {};
   List<Marker> addedMarker = [];
   double selectedLat = 0;
   double selectedLong = 0;
@@ -73,6 +71,8 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
   late GoogleMapController mapController;
   LatLng? _currentPosition;
   bool _isLoading = false;
+  bool _isMapLocked = false;
+  bool _isPermitsLoading = false;
 
   void addCustomIcon() {
     BitmapDescriptor.asset(const ImageConfiguration(size: Size(45, 45)),
@@ -97,17 +97,14 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
       addCustomIcon();
     });
     mapMarkers();
-    if (widget.permits != null) {
-      mapPolygons(widget.permits!);
-    }
     getLocation();
-    _onCameraIdle();
     super.initState();
   }
 
   getLocation() async {
     setState(() {
       _isLoading = true;
+      _isMapLocked = true;
     });
 
     LocationPermission permission;
@@ -117,6 +114,7 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
         permission == LocationPermission.deniedForever) {
       setState(() {
         _isLoading = false;
+        _isMapLocked = false;
       });
     } else {
       Position position = await Geolocator.getCurrentPosition(
@@ -129,9 +127,9 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
         selectedLong = position.longitude;
         _currentPosition = location;
         _isLoading = false;
-        _handleTap(location);
+        _isMapLocked = false;
         _lithuaniaCameraPosition =
-            CameraPosition(target: _currentPosition!, zoom: 15);
+            CameraPosition(target: _currentPosition!, zoom: 17);
       });
     }
   }
@@ -150,6 +148,9 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+    if (!_isLoading) {
+      _handleTap(LatLng(selectedLat, selectedLong));
+    }
   }
 
   @override
@@ -183,6 +184,11 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                                           _lithuaniaCameraPosition,
                                       mapType: currentMapType,
                                       onTap: null,
+                                      zoomGesturesEnabled: false,
+                                      scrollGesturesEnabled: false,
+                                      tiltGesturesEnabled: false,
+                                      rotateGesturesEnabled: false,
+                                      zoomControlsEnabled: false,
                                       markers: isShowMarkers
                                           ? markers
                                           : addedMarker.map((e) => e).toSet(),
@@ -197,22 +203,40 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                                   ),
                                 ],
                               )
-                            : GoogleMap(
-                                onMapCreated: _onMapCreated,
-                                buildingsEnabled: true,
-                                initialCameraPosition: _lithuaniaCameraPosition,
-                                mapType: currentMapType,
-                                onTap: _handleTap,
-                                onCameraIdle: _onCameraIdle,
-                                polygons: isShowPolygons ? visiblePolygons : {},
-                                markers: isShowMarkers
-                                    ? markers
-                                    : addedMarker.map((e) => e).toSet(),
+                            : Stack(
+                                children: [
+                                  GoogleMap(
+                                    onMapCreated: _onMapCreated,
+                                    buildingsEnabled: true,
+                                    initialCameraPosition:
+                                        _lithuaniaCameraPosition,
+                                    mapType: currentMapType,
+                                    onTap: _handleTap,
+                                    onCameraIdle: _onCameraIdle,
+                                    zoomControlsEnabled: false,
+                                    zoomGesturesEnabled: !_isMapLocked,
+                                    scrollGesturesEnabled: !_isMapLocked,
+                                    tiltGesturesEnabled: !_isMapLocked,
+                                    rotateGesturesEnabled: !_isMapLocked,
+                                    polygons: isShowPolygons ? polygons : {},
+                                    markers: isShowMarkers
+                                        ? markers
+                                        : addedMarker.map((e) => e).toSet(),
+                                  ),
+                                  if (_isPermitsLoading)
+                                    Center(
+                                      child: LoadingAnimationWidget
+                                          .staggeredDotsWave(
+                                        color: AppTheme.mainThemeColor,
+                                        size: 150,
+                                      ),
+                                    ),
+                                ],
                               ),
                       ),
-                      _currentPosition != null
+                      _currentPosition != null && !_isLoading
                           ? Positioned(
-                              bottom: 155,
+                              bottom: 115,
                               right: 10,
                               child: InkWell(
                                   onTap: () {},
@@ -233,56 +257,58 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                                   )),
                             )
                           : const SizedBox.shrink(),
-                      Positioned(
-                        bottom: 110,
-                        right: 10,
-                        child: InkWell(
-                          onTap: () {},
-                          onHover: (isHover) {
-                            setState(() {
-                              isMapDisabled = isHover;
-                            });
-                          },
-                          child: PointerInterceptor(
-                            child: GoogleMapTypeButton(
-                              height: 40,
-                              width: 40,
-                              onPressed: () {
-                                showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        MapTypeChangeDialog(
-                                          width: widget.width,
-                                          currentMapType: currentMapType,
-                                          onHover: (isHover) {
-                                            setState(() {
-                                              isMapDisabled = isHover;
-                                            });
-                                          },
-                                          onChangeTap: (MapType mapType) {
-                                            setState(() {
-                                              currentMapType = mapType;
-                                            });
-                                          },
-                                          onPermitsVisibilityChange: () {
-                                            setState(() {
-                                              isShowPolygons = !isShowPolygons;
-                                            });
-                                          },
-                                          onReportVisibilityChange: () {
-                                            setState(() {
-                                              isShowMarkers = !isShowMarkers;
-                                            });
-                                          },
-                                          isReportsActive: isShowMarkers,
-                                          isPermitsActive: isShowPolygons,
-                                          isMobile: false,
-                                        ));
-                              },
+                      if (!_isLoading)
+                        Positioned(
+                          bottom: 70,
+                          right: 10,
+                          child: InkWell(
+                            onTap: () {},
+                            onHover: (isHover) {
+                              setState(() {
+                                isMapDisabled = isHover;
+                              });
+                            },
+                            child: PointerInterceptor(
+                              child: GoogleMapTypeButton(
+                                height: 40,
+                                width: 40,
+                                onPressed: () {
+                                  showDialog<String>(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          MapTypeChangeDialog(
+                                            width: widget.width,
+                                            currentMapType: currentMapType,
+                                            onHover: (isHover) {
+                                              setState(() {
+                                                isMapDisabled = isHover;
+                                              });
+                                            },
+                                            onChangeTap: (MapType mapType) {
+                                              setState(() {
+                                                currentMapType = mapType;
+                                              });
+                                            },
+                                            onPermitsVisibilityChange: () {
+                                              setState(() {
+                                                isShowPolygons =
+                                                    !isShowPolygons;
+                                              });
+                                            },
+                                            onReportVisibilityChange: () {
+                                              setState(() {
+                                                isShowMarkers = !isShowMarkers;
+                                              });
+                                            },
+                                            isReportsActive: isShowMarkers,
+                                            isPermitsActive: isShowPolygons,
+                                            isMobile: false,
+                                          ));
+                                },
+                              ),
                             ),
                           ),
                         ),
-                      ),
                     ],
                   ),
                   AddingScreenSideBar(
@@ -402,19 +428,27 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
   _onCameraIdle() async {
     LatLngBounds visibleBounds = await mapController.getVisibleRegion();
     double cameraZoom = await mapController.getZoomLevel();
-    if (cameraZoom < 12) {
-      visiblePolygons = {};
-    } else {
-      filterPolygons(visibleBounds);
+    if (cameraZoom < 13) {
+      setState(() {
+        polygons = {};
+      });
+    } else if (isShowPolygons) {
+      setState(() {
+        _isMapLocked = true;
+        _isPermitsLoading = true;
+      });
+      List<Permit> polygons = await ApiProvider().getVisiblePermits(
+        minLat: visibleBounds.southwest.latitude,
+        minLong: visibleBounds.southwest.longitude,
+        maxLat: visibleBounds.northeast.latitude,
+        maxLong: visibleBounds.northeast.longitude,
+      );
+      setState(() {
+        mapPolygons(polygons, visibleBounds);
+        _isMapLocked = false;
+        _isPermitsLoading = false;
+      });
     }
-
-    setState(() {});
-  }
-
-  void filterPolygons(LatLngBounds bounds) {
-    visiblePolygons = polygons.where((polygon) {
-      return polygon.points.any((point) => bounds.contains(point));
-    }).toSet();
   }
 
   _handleDragEnd(LatLng tappedPoint) {
@@ -443,16 +477,13 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
     }
   }
 
-  Future<void> mapPolygons(Permit permit) async {
+  Future<void> mapPolygons(List<Permit> permits, LatLngBounds bounds) async {
     Set<Polygon> tempPolygons = {};
-    for (var i = 0; i < permit.features!.length; i++) {
+    for (var i = 0; i < permits.length; i++) {
       List<LatLng> coordinates = [];
-      for (var j = 0;
-          j < permit.features![i].geometry!.coordinates![0][0].length;
-          j++) {
-        coordinates.add(LatLng(
-            permit.features![i].geometry!.coordinates![0][0][j][1],
-            permit.features![i].geometry!.coordinates![0][0][j][0]));
+      for (var j = 0; j < permits[i].geometry!.coordinates![0][0].length; j++) {
+        coordinates.add(LatLng(permits[i].geometry!.coordinates![0][0][j][1],
+            permits[i].geometry!.coordinates![0][0][j][0]));
       }
       tempPolygons.add(
         Polygon(
@@ -462,9 +493,8 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
           strokeWidth: 1,
           strokeColor: const Color.fromRGBO(255, 106, 61, 1),
           onTap: () {
-            _handleTap(LatLng(
-                permit.features![i].geometry!.coordinates![0][0][0][1],
-                permit.features![i].geometry!.coordinates![0][0][0][0]));
+            _handleTap(LatLng(permits[i].geometry!.coordinates![0][0][0][1],
+                permits[i].geometry!.coordinates![0][0][0][0]));
             showDialog(
                 context: context,
                 barrierColor: Colors.white.withOpacity(0),
@@ -483,32 +513,24 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                         child: InfoPermitWindowBox(
                           width: widget.width,
                           isMobile: false,
-                          type: permit.features![i].properties!.tipas ?? '',
-                          issuedFrom:
-                              permit.features![i].properties!.galiojaNuo ?? '',
-                          issuedTo:
-                              permit.features![i].properties!.galiojaIki ?? '',
+                          type: permits[i].properties!.tipas ?? '',
+                          issuedFrom: permits[i].properties!.galiojaNuo ?? '',
+                          issuedTo: permits[i].properties!.galiojaIki ?? '',
                           cadastralNumber:
-                              permit.features![i].properties!.kadastrinisNr ??
-                                  '',
+                              permits[i].properties!.kadastrinisNr ?? '',
                           subdivision:
-                              permit.features![i].properties!.vmuPadalinys ??
-                                  '',
+                              permits[i].properties!.vmuPadalinys ?? '',
                           forestryDistrict:
-                              permit.features![i].properties!.girininkija ?? '',
-                          block: permit.features![i].properties!.kvartalas,
-                          plot: permit.features![i].properties!.sklypas ?? '',
-                          cuttableArea:
-                              permit.features![i].properties!.kertamasPlotas,
-                          dominantTree: permit.features![i].properties!
-                                  .vyraujantysMedziai ??
-                              '',
+                              permits[i].properties!.girininkija ?? '',
+                          block: permits[i].properties!.kvartalas,
+                          plot: permits[i].properties!.sklypas ?? '',
+                          cuttableArea: permits[i].properties!.kertamasPlotas,
+                          dominantTree:
+                              permits[i].properties!.vyraujantysMedziai ?? '',
                           cuttingType:
-                              permit.features![i].properties!.kirtimoRusis ??
-                                  '',
+                              permits[i].properties!.kirtimoRusis ?? '',
                           reinstatementType:
-                              permit.features![i].properties!.atkurimoBudas ??
-                                  '',
+                              permits[i].properties!.atkurimoBudas ?? '',
                         ),
                       ),
                     ),
@@ -520,6 +542,7 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
     }
     setState(() {
       polygons = tempPolygons;
+      tempPolygons = {};
     });
   }
 }

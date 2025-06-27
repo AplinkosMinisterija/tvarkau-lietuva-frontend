@@ -241,10 +241,21 @@ class ApiProvider {
     return response.data!;
   }
 
-  Future<Permit> getAllPermits() async {
-    final response =
-        await http.get(Uri.parse(GlobalConstants.woodcuttingPermitsUrl));
-    return Permit.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+  Future<List<Permit>> getVisiblePermits({
+    required double minLat,
+    required double minLong,
+    required double maxLat,
+    required double maxLong,
+  }) async {
+    final response = await http.post(Uri.parse('${GlobalConstants.basePath}/reports/geojson'), body: {
+      "minLat": minLat.toString(),
+      "maxLat": maxLat.toString(),
+      "minLong": minLong.toString(),
+      "maxLong": maxLong.toString(),
+    });
+    List<dynamic> featuresList = jsonDecode(response.body);
+    List<Permit> permits = featuresList.map((featureItem) => Permit.fromJson(featureItem)).toList();
+    return permits;
   }
 
   BuiltList<MultipartFile> _toMultiPartFiles(List<Uint8List> files) {

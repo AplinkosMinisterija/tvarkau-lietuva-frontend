@@ -15,6 +15,7 @@ import '../widgets/automatic_emails_option_widget.dart';
 import '../widgets/data_security_terms_widget.dart';
 import '../widgets/explanation_dialog_widget.dart';
 import 'add_pin_screen_mobile.dart';
+import 'add_pin_screen_permits_mobile.dart';
 
 class PermitsAddingScreenMobile extends StatefulWidget {
   const PermitsAddingScreenMobile({
@@ -160,9 +161,8 @@ class _PermitsAddingScreenMobileState extends State<PermitsAddingScreenMobile> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AddPinScreenMobile(
+                                builder: (context) => AddPinScreenPermitsMobile(
                                       width: widget.width,
-                                      permits: widget.permits,
                                       reports: widget.reports,
                                       isLayerSwitchVisible: true,
                                       isPermitSwitchVisible: true,
@@ -183,7 +183,6 @@ class _PermitsAddingScreenMobileState extends State<PermitsAddingScreenMobile> {
                                           );
                                         });
                                       },
-                                      markers: const [],
                                     )),
                           );
                         },

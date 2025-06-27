@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:api_client/api_client.dart';
+import 'package:core/core.dart';
+import 'package:core/utils/permit.dart';
 import 'package:dashboard/src/home/ui/tile_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -12,46 +14,63 @@ import 'package:latlong2/latlong.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
+typedef HitValue = ({
+  String type,
+  String issuedFrom,
+  String issuedTo,
+  String cadastralNumber,
+  String subdivision,
+  String forestryDistrict,
+  int? block,
+  String plot,
+  double? cuttableArea,
+  String dominantTree,
+  String cuttingType,
+  String reinstatementType,
+});
 
-class AddPinScreenMobile extends StatefulWidget {
-  const AddPinScreenMobile(
+class AddPinScreenPermitsMobile extends StatefulWidget {
+  const AddPinScreenPermitsMobile(
       {required this.width,
-      required this.markers,
       required this.isLayerSwitchVisible,
+      required this.isPermitSwitchVisible,
       required this.onTap,
       required this.reports,
       this.onError,
-      this.buildContext,
       super.key});
 
   final double width;
-  final List<Marker> markers;
   final bool isLayerSwitchVisible;
+  final bool isPermitSwitchVisible;
   final List<PublicReportDto> reports;
   final Function(double, double) onTap;
   final void Function(Exception e)? onError;
-  final BuildContext? buildContext;
 
   @override
-  State<AddPinScreenMobile> createState() => _AddPinScreenMobileState();
+  State<AddPinScreenPermitsMobile> createState() =>
+      _AddPinScreenPermitsMobileState();
 }
 
-class _AddPinScreenMobileState extends State<AddPinScreenMobile>
+class _AddPinScreenPermitsMobileState extends State<AddPinScreenPermitsMobile>
     with TickerProviderStateMixin {
   double? selectedLat;
   double? selectedLong;
   double selectedZoom = 7;
-  List<Marker> markers = [];
+  List<Polygon<HitValue>> polygons = [];
   bool isShowMarkers = true;
+  bool isShowPolygons = true;
   bool isSaveButtonActive = false;
-  bool isMapDisabled = false;
   bool isMapLoaded = false;
   late void Function(Exception e) onError;
 
+  final LayerHitNotifier<HitValue> _hitNotifier = ValueNotifier(null);
 
   MapController mapController = MapController();
   final bool _isLoading = false;
   bool isLoading = false;
+  bool isMapLocked = true;
+  bool isPermitsLoading = false;
+  Timer? _zoomDebounce;
 
   late AnimationController _animationController;
   LatLng initPosition = const LatLng(55, 24);
@@ -96,7 +115,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
         Tween<double>(begin: mapController.camera.zoom, end: destZoom);
     if (mounted) {
       _animationController = AnimationController(
-        duration: const Duration(seconds: 1),
+        duration: const Duration(milliseconds: 800),
         vsync: this,
       );
     }
@@ -114,11 +133,18 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
     }
   }
 
+  void _onZoomChanged() {
+    _zoomDebounce?.cancel();
+
+    _zoomDebounce = Timer(const Duration(milliseconds: 500), () async {
+      onCameraMoveEnd(mapController.camera.zoom);
+    });
+  }
+
   @override
   void initState() {
     mapController = MapController();
     onError = widget.onError ?? (e) => debugPrint(e.toString());
-    markers = widget.markers;
     mapMarkers(widget.reports);
 
     isLoading = true;
@@ -126,11 +152,16 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
       initPosition =
           LatLng(currentPosition.latitude, currentPosition.longitude);
       isLoading = false;
-      _animatedMapMove(initPosition, 18.0);
+      mapController.move(
+          LatLng(currentPosition.latitude, currentPosition.longitude), 18);
+      onCameraMoveEnd(mapController.camera.zoom);
+      isMapLocked = false;
+      isShowPolygons = true;
     }, onError: (e) => onError(e)).whenComplete(
       () => setState(
         () {
           isLoading = false;
+          isMapLocked = false;
         },
       ),
     );
@@ -138,12 +169,21 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
       if (event.camera.zoom > 12) {
         isMapLoaded = true;
       }
+      if (isMapLoaded) {
+        if (event is MapEventMoveEnd) {
+          onCameraMoveEnd(mapController.camera.zoom);
+        }
+        if (event is MapEventScrollWheelZoom) {
+          _onZoomChanged();
+        }
+      }
     });
     super.initState();
   }
 
   @override
   void dispose() {
+    _zoomDebounce?.cancel();
     mapController.dispose();
     super.dispose();
   }
@@ -201,10 +241,12 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
                     mapController: mapController,
                     options: MapOptions(
                       initialCenter: const LatLng(55, 24),
-                      interactionOptions: const InteractionOptions(
-                        flags: InteractiveFlag.pinchZoom |
-                            InteractiveFlag.drag |
-                            InteractiveFlag.scrollWheelZoom,
+                      interactionOptions: InteractionOptions(
+                        flags: isMapLocked || _isLoading
+                            ? InteractiveFlag.none
+                            : InteractiveFlag.pinchZoom |
+                                InteractiveFlag.drag |
+                                InteractiveFlag.scrollWheelZoom,
                       ),
                       initialZoom: 7,
                       onPositionChanged: (position, isFinished) {
@@ -241,7 +283,68 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
                             },
                           ),
                         ),
-
+                      if (isShowPolygons)
+                        MouseRegion(
+                          hitTestBehavior: HitTestBehavior.deferToChild,
+                          cursor: SystemMouseCursors.click,
+                          child: GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                  context: context,
+                                  barrierColor: Colors.white.withOpacity(0),
+                                  builder: (context) {
+                                    return Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: Material(
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(8),
+                                              topRight: Radius.circular(8)),
+                                        ),
+                                        child: InfoPermitWindowBox(
+                                          width: widget.width,
+                                          isMobile: true,
+                                          type: _hitNotifier
+                                              .value!.hitValues.first.type,
+                                          issuedFrom: _hitNotifier.value!
+                                              .hitValues.first.issuedFrom,
+                                          issuedTo: _hitNotifier
+                                              .value!.hitValues.first.issuedTo,
+                                          cadastralNumber: _hitNotifier.value!
+                                              .hitValues.first.cadastralNumber,
+                                          subdivision: _hitNotifier.value!
+                                              .hitValues.first.subdivision,
+                                          forestryDistrict: _hitNotifier.value!
+                                              .hitValues.first.forestryDistrict,
+                                          block: _hitNotifier
+                                              .value!.hitValues.first.block,
+                                          plot: _hitNotifier
+                                              .value!.hitValues.first.plot,
+                                          cuttableArea: _hitNotifier.value!
+                                              .hitValues.first.cuttableArea,
+                                          dominantTree: _hitNotifier.value!
+                                              .hitValues.first.dominantTree,
+                                          cuttingType: _hitNotifier.value!
+                                              .hitValues.first.cuttingType,
+                                          reinstatementType: _hitNotifier
+                                              .value!
+                                              .hitValues
+                                              .first
+                                              .reinstatementType,
+                                        ),
+                                      ),
+                                    );
+                                  });
+                            },
+                            child: PolygonLayer(
+                              hitNotifier: _hitNotifier,
+                              simplificationTolerance: 1,
+                              polygons: polygons,
+                              useAltRendering: true,
+                              polygonCulling: true,
+                            ),
+                          ),
+                        )
                       //PolygonLayer(polygons: polygons)
                     ],
                   )),
@@ -256,7 +359,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
               ),
               Align(
                 alignment: Alignment.topCenter,
-                child: _isLoading
+                child: _isLoading || isMapLocked
                     ? LoadingAnimationWidget.staggeredDotsWave(
                         color: const Color.fromRGBO(28, 63, 58, 1), size: 150)
                     : Padding(
@@ -266,11 +369,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
                             width: widget.width,
                             isActive:
                                 selectedLat != null && selectedLong != null,
-                            onHover: (isHover) {
-                              setState(() {
-                                isMapDisabled = isHover;
-                              });
-                            },
+                            onHover: (isHover) {},
                             onTap: () {
                               widget.onTap(
                                 selectedLat!,
@@ -287,11 +386,6 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
                 right: 10,
                 child: InkWell(
                     onTap: () {},
-                    onHover: (isHover) {
-                      setState(() {
-                        isMapDisabled = isHover;
-                      });
-                    },
                     child: PointerInterceptor(
                       child: LocationSearchButton(
                         width: 40,
@@ -320,11 +414,6 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
                 right: 10,
                 child: InkWell(
                   onTap: () {},
-                  onHover: (isHover) {
-                    setState(() {
-                      isMapDisabled = isHover;
-                    });
-                  },
                   child: PointerInterceptor(
                     child: GoogleMapTypeButton(
                       height: 40,
@@ -333,13 +422,25 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
                         showDialog<String>(
                             context: context,
                             builder: (BuildContext context) =>
-                                MapTypeChangeDialogOsm(
+                                widget.isPermitSwitchVisible
+                                    ? MapTypeChangeDialogOsm(
                                         width: widget.width,
-                                        onHover: (isHover) {
+                                        onPermitsVisibilityChange: () {
                                           setState(() {
-                                            isMapDisabled = isHover;
+                                            isShowPolygons = !isShowPolygons;
                                           });
                                         },
+                                        onReportVisibilityChange: () {
+                                          setState(() {
+                                            isShowMarkers = !isShowMarkers;
+                                          });
+                                        },
+                                        isReportsActive: isShowMarkers,
+                                        isPermitsActive: isShowPolygons,
+                                        isMobile: true,
+                                      )
+                                    : MapTypeChangeDialogOsm(
+                                        width: widget.width,
                                         isMobile: true,
                                         onReportVisibilityChange: () {
                                           setState(() {
@@ -418,7 +519,6 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
     );
   }
 
-
   LatLngBounds getCurrentBounds() {
     final center = mapController.camera.center;
     final zoom = mapController.camera.zoom;
@@ -439,6 +539,71 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
     return LatLngBounds(southWest, northEast);
   }
 
+  Future<void> onCameraMoveEnd(double zoomLevel) async {
+    LatLngBounds bounds = getCurrentBounds();
+    if (zoomLevel < 13) {
+      polygons = [];
+    } else if (isShowPolygons) {
+      setState(() {
+        isMapLocked = true;
+        isPermitsLoading = true;
+      });
+      List<Permit> polygons = await ApiProvider().getVisiblePermits(
+        minLat: bounds.southWest.latitude,
+        minLong: bounds.southWest.longitude,
+        maxLat: bounds.northEast.latitude,
+        maxLong: bounds.northEast.longitude,
+      );
+      setState(() {
+        mapPolygons(polygons, bounds);
+        isMapLocked = false;
+        isPermitsLoading = false;
+      });
+    }
+  }
+
+  Future<void> mapPolygons(List<Permit> permit, LatLngBounds bounds) async {
+    List<Polygon<HitValue>> tempPolygons = [];
+    for (var i = 0; i < permit.length; i++) {
+      List<LatLng> coordinates = [];
+      for (var j = 0; j < permit[i].geometry!.coordinates![0][0].length; j++) {
+        coordinates.add(LatLng(permit[i].geometry!.coordinates![0][0][j][1],
+            permit[i].geometry!.coordinates![0][0][j][0]));
+      }
+      tempPolygons.add(
+        Polygon(
+          points: coordinates,
+          color: const Color.fromRGBO(255, 106, 61, 0.3),
+          borderStrokeWidth: 1,
+          borderColor: const Color.fromRGBO(255, 106, 61, 1),
+          hitValue: (
+            type: permit[i].properties!.tipas ?? '',
+            issuedFrom: permit[i].properties!.galiojaNuo ?? '',
+            issuedTo: permit[i].properties!.galiojaIki ?? '',
+            cadastralNumber: permit[i].properties!.kadastrinisNr ?? '',
+            subdivision: permit[i].properties!.vmuPadalinys ?? '',
+            forestryDistrict: permit[i].properties!.girininkija ?? '',
+            block: permit[i].properties!.kvartalas,
+            plot: permit[i].properties!.sklypas ?? '',
+            cuttableArea: permit[i].properties!.kertamasPlotas,
+            dominantTree: permit[i].properties!.vyraujantysMedziai ?? '',
+            cuttingType: permit[i].properties!.kirtimoRusis ?? '',
+            reinstatementType: permit[i].properties!.atkurimoBudas ?? '',
+          ),
+        ),
+      );
+    }
+    List<Polygon<HitValue>> filteredPolygons = [];
+    if (tempPolygons.isNotEmpty) {
+      filteredPolygons = tempPolygons.where((polygon) {
+        return polygon.points.any((point) => bounds.contains(point));
+      }).toList();
+    }
+
+    polygons = filteredPolygons;
+    tempPolygons = [];
+    filteredPolygons = [];
+  }
 
   Future<void> mapMarkers(List<PublicReportDto> reports) async {
     List<Marker> tempMarkers = [];
@@ -449,7 +614,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
           width: 40,
           height: 40,
           child: Image.asset(
-            getTrashIconPath(reports[i].status),
+            getTrashIcon(),
             height: 20,
             width: 20,
           ),
@@ -462,17 +627,7 @@ class _AddPinScreenMobileState extends State<AddPinScreenMobile>
     });
   }
 
-  String getTrashIconPath(String status) {
-    if (status == "gautas") {
-      return 'assets/icons/marker_pins/red_marker.png';
-    } else if (status == "tiriamas") {
-      return 'assets/icons/marker_pins/orange_marker.png';
-    } else if (status == "išspręsta") {
-      return 'assets/icons/marker_pins/green_marker.png';
-    } else if (status == "nepasitvirtino") {
-      return 'assets/icons/marker_pins/gray_marker.png';
-    } else {
-      return 'assets/icons/marker_pins/red_marker.png';
-    }
+  String getTrashIcon() {
+    return 'assets/icons/marker_pins/red_marker.png';
   }
 }

@@ -20,7 +20,7 @@ import '../widgets/dump_tabs.dart';
 
 class TrashWindow extends StatefulWidget {
   final FullReportDto trash;
-  final Permit? permits;
+  final List<Permit>? permits;
   final VoidCallback onBackPress;
   final Function(String name, String comment, String status, String category,
       bool isVisible, List<Uint8List> officerImages) onUpdate;
@@ -547,7 +547,7 @@ class _BuildMap extends StatefulWidget {
   final double height;
   final Set<Marker> markers;
   final LatLng initialTarget;
-  final Permit? permits;
+  final List<Permit>? permits;
 
   @override
   State<_BuildMap> createState() => _BuildMapState();
@@ -580,16 +580,16 @@ class _BuildMapState extends State<_BuildMap> {
     );
   }
 
-  Future<void> mapPolygons(Permit permit) async {
+  Future<void> mapPolygons(List<Permit> permits) async {
     Set<Polygon> tempPolygons = {};
-    for (var i = 0; i < permit.features!.length; i++) {
+    for (var i = 0; i < permits.length; i++) {
       List<LatLng> coordinates = [];
       for (var j = 0;
-          j < permit.features![i].geometry!.coordinates![0][0].length;
+          j < permits[i].geometry!.coordinates![0][0].length;
           j++) {
         coordinates.add(LatLng(
-            permit.features![i].geometry!.coordinates![0][0][j][1],
-            permit.features![i].geometry!.coordinates![0][0][j][0]));
+            permits[i].geometry!.coordinates![0][0][j][1],
+            permits[i].geometry!.coordinates![0][0][j][0]));
       }
       tempPolygons.add(
         Polygon(
@@ -617,31 +617,31 @@ class _BuildMapState extends State<_BuildMap> {
                         child: InfoPermitWindowBox(
                           width: 1200,
                           isMobile: false,
-                          type: permit.features![i].properties!.tipas ?? '',
+                          type: permits[i].properties!.tipas ?? '',
                           issuedFrom:
-                              permit.features![i].properties!.galiojaNuo ?? '',
+                              permits[i].properties!.galiojaNuo ?? '',
                           issuedTo:
-                              permit.features![i].properties!.galiojaIki ?? '',
+                              permits[i].properties!.galiojaIki ?? '',
                           cadastralNumber:
-                              permit.features![i].properties!.kadastrinisNr ??
+                              permits[i].properties!.kadastrinisNr ??
                                   '',
                           subdivision:
-                              permit.features![i].properties!.vmuPadalinys ??
+                              permits[i].properties!.vmuPadalinys ??
                                   '',
                           forestryDistrict:
-                              permit.features![i].properties!.girininkija ?? '',
-                          block: permit.features![i].properties!.kvartalas,
-                          plot: permit.features![i].properties!.sklypas ?? '',
+                              permits[i].properties!.girininkija ?? '',
+                          block: permits[i].properties!.kvartalas,
+                          plot: permits[i].properties!.sklypas ?? '',
                           cuttableArea:
-                              permit.features![i].properties!.kertamasPlotas,
-                          dominantTree: permit.features![i].properties!
+                              permits[i].properties!.kertamasPlotas,
+                          dominantTree: permits[i].properties!
                                   .vyraujantysMedziai ??
                               '',
                           cuttingType:
-                              permit.features![i].properties!.kirtimoRusis ??
+                              permits[i].properties!.kirtimoRusis ??
                                   '',
                           reinstatementType:
-                              permit.features![i].properties!.atkurimoBudas ??
+                              permits[i].properties!.atkurimoBudas ??
                                   '',
                         ),
                       ),
