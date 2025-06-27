@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:core/utils/permit.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 part 'report_event.dart';
 
@@ -32,9 +33,19 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
 
       final FullReportDto trashReport =
           await ApiProvider().getFullTrashReportById(event.refId);
-      Permit? permits;
+      List<Permit>? permits;
+      double delta = 0.03;
+      LatLng southWest =
+          LatLng(trashReport.latitude - delta, trashReport.longitude - delta);
+      LatLng northEast =
+          LatLng(trashReport.latitude + delta, trashReport.longitude + delta);
       if (trashReport.category == FullReportDtoCategoryEnum.permits) {
-        permits = await ApiProvider().getAllPermits();
+        permits = await ApiProvider().getVisiblePermits(
+          minLat: southWest.latitude,
+          minLong: southWest.longitude,
+          maxLat: northEast.latitude,
+          maxLong: northEast.longitude,
+        );
       }
 
       emit(
