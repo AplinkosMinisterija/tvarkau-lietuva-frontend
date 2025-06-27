@@ -18,7 +18,7 @@ paths:
               - forest
               - beetle
               - permits
-              - other
+              - misc
             type: string
       responses:
         '200':
@@ -239,7 +239,7 @@ paths:
               - forest
               - beetle
               - permits
-              - other
+              - misc
             type: string
       responses:
         '200':
@@ -265,7 +265,7 @@ paths:
               - forest
               - beetle
               - permits
-              - other
+              - misc
             type: string
       responses:
         '200':
@@ -318,7 +318,32 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                type: string
+      tags:
+        - reports
+  /reports/geojson:
+    post:
+      operationId: ReportController_getGeojson
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JsonCoordsDto'
+      responses:
+        '200':
+          description: GeoJSON objects successfully fetched
+          content:
+            application/json:
+              schema:
+                type: string
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
       tags:
         - reports
   /auth/login:
@@ -412,7 +437,7 @@ components:
             - forest
             - beetle
             - permits
-            - other
+            - misc
           type: string
         refId:
           type: string
@@ -527,7 +552,7 @@ components:
             - forest
             - beetle
             - permits
-            - other
+            - misc
           type: string
         longitude:
           type: number
@@ -699,7 +724,7 @@ components:
             - forest
             - beetle
             - permits
-            - other
+            - misc
         email:
           type: string
       required:
@@ -721,7 +746,7 @@ components:
             - forest
             - beetle
             - permits
-            - other
+            - misc
           type: string
         refId:
           type: string
@@ -788,6 +813,26 @@ components:
       required:
         - description
         - email
+    JsonCoordsDto:
+      type: object
+      properties:
+        minLat:
+          type: number
+          format: double
+        maxLat:
+          type: number
+          format: double
+        minLong:
+          type: number
+          format: double
+        maxLong:
+          type: number
+          format: double
+      required:
+        - minLat
+        - maxLat
+        - minLong
+        - maxLong
     LoginRequestDto:
       type: object
       properties:
