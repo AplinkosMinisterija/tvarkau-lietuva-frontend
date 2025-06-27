@@ -136,7 +136,7 @@ class _AddPinScreenPermitsMobileState extends State<AddPinScreenPermitsMobile>
   void _onZoomChanged() {
     _zoomDebounce?.cancel();
 
-    _zoomDebounce = Timer(const Duration(milliseconds: 500), () async {
+    _zoomDebounce = Timer(const Duration(milliseconds: 800), () async {
       onCameraMoveEnd(mapController.camera.zoom);
     });
   }
@@ -541,8 +541,10 @@ class _AddPinScreenPermitsMobileState extends State<AddPinScreenPermitsMobile>
 
   Future<void> onCameraMoveEnd(double zoomLevel) async {
     LatLngBounds bounds = getCurrentBounds();
-    if (zoomLevel < 13) {
-      polygons = [];
+    if (zoomLevel < 12) {
+      setState(() {
+        polygons = [];
+      });
     } else if (isShowPolygons) {
       setState(() {
         isMapLocked = true;
