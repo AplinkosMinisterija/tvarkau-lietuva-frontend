@@ -92,9 +92,7 @@ class ApiProvider {
     }
     final response =
         await reportsApi.reportControllerGetReportById(refId: refValue);
-    print('here');
     if (response.statusCode == 404) {
-      print('here2');
       return null;
     } else {
       return response.data!;
@@ -112,7 +110,7 @@ class ApiProvider {
   Future<List<PublicReportDto>> getAllVisibleReports(String? category) async {
     final response = await reportsApi.reportControllerGetAllPublicReports(
         category: category);
-    return response.data!.toList(); //TODO: add error handling
+    return response.data!.toList();
   }
 
   Future<ReportStatisticsDto> getReportStatistics(String? category) async {

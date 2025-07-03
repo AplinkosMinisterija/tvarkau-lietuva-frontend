@@ -32,12 +32,12 @@ class NotFoundWidget extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(
-                    vertical: 18,
+                    vertical: 5,
                     horizontal: 80,
                   ),
                   child: Text(
-                    errorText ?? 'Klaida',
-                    style: AppTextTheme.ploni16medium.copyWith(
+                    'Pranešimas nerastas. Jis gali būti nerodomas, nes:',
+                    style: AppTextTheme.ploni22regular.copyWith(
                       color: AppTheme.defaultTextColor,
                     ),
                     textAlign: TextAlign.center,
@@ -49,7 +49,20 @@ class NotFoundWidget extends StatelessWidget {
                     horizontal: 80,
                   ),
                   child: Text(
-                    descriptionText ?? '',
+                    '1. Pranešime galėjo būti atskleisti asmens duomenys\n2. Dėl pranešime aprašytos situacijos vyksta tyrimas ir pranešimo paviešinimas galėtų pakenkti tyrimo eigai\n3. Pranešimas dubliavo informaciją apie jau anksčiau pateiktą pranešimą toje vietoje',
+                    style: AppTextTheme.ploni16medium.copyWith(
+                      color: AppTheme.defaultTextColor,
+                    ),
+                    textAlign: TextAlign.justify,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 18,
+                    horizontal: 80,
+                  ),
+                  child: Text(
+                    'Visais atvejais pranešimuose pateiktą informaciją vertiname ir jei reikia siekiame pašalinti žalą aplinkai, užkardyti neteisėtą veiką ir patraukti pažeidėjus atsakomybėn.',
                     style: AppTextTheme.ploni16medium.copyWith(
                       color: AppTheme.defaultTextColor,
                     ),
