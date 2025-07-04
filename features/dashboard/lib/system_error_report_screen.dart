@@ -36,30 +36,6 @@ class _SystemErrorReportScreenState extends State<SystemErrorReportScreen> {
               if (constraints.maxWidth > 800) {
                 isMobile = false;
               }
-              // return BlocProvider(
-              //     create: (BuildContext context) =>
-              //         HomeBloc()..add(LoadSystemErrorReport()),
-              //     child: BlocBuilder<HomeBloc, HomeState>(
-              //       builder: (BuildContext context, HomeState state) {
-              //         return BlocBuilder<HomeBloc, HomeState>(
-              //           builder: (BuildContext context, HomeState state) {
-              //             switch (state) {
-              //               case SystemErrorState():
-              //               return Container(color: Colors.red,);
-              //               case SystemErrorLoadingState():
-              //               return CircularProgressIndicator();
-              //               case SystemErrorSuccessState():
-              //               return Text('success');
-              //
-              //               case ErrorState():
-              //                 return Text(
-              //                     'Sistemos serveris šiuo metu patiria trikdžius. Stengiamės sutvarkyti iškilusias problemas.');
-              //             }
-              //             return const SizedBox.shrink();
-              //           },
-              //         );
-              //       },
-              //     ));
               return Form(
                 key: _formKey,
                 child: Stack(
