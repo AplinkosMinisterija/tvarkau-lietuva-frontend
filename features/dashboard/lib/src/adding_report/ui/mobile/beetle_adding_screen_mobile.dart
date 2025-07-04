@@ -153,7 +153,6 @@ class _BeetleAddingScreenMobileState extends State<BeetleAddingScreenMobile> {
                                       width: widget.width,
                                       markers: const [],
                                       isLayerSwitchVisible: false,
-                                      isPermitSwitchVisible: false,
                                       onTap: (lat, long) {
                                         setState(() {
                                           selectedLat = lat;

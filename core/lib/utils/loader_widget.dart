@@ -34,4 +34,11 @@ class LoaderWidget {
       ),
     );
   }
+
+  Widget transparentLoader() {
+    return Center(
+      child: LoadingAnimationWidget.staggeredDotsWave(
+          color: const Color.fromRGBO(28, 63, 58, 1), size: 150),
+    );
+  }
 }

@@ -1,56 +1,11 @@
 class Permit {
   String? type;
-  String? name;
-  Crs? crs;
-  List<Features>? features;
-
-  Permit({this.type, this.name, this.crs, this.features});
-
-  Permit.fromJson(Map<String, dynamic> json) {
-    type = json['type'];
-    name = json['name'];
-    crs = json['crs'] != null ? Crs.fromJson(json['crs']) : null;
-    if (json['features'] != null) {
-      features = <Features>[];
-      json['features'].forEach((v) {
-        features!.add(Features.fromJson(v));
-      });
-    }
-  }
-}
-
-class Crs {
-  String? type;
-  CrsProperties? properties;
-
-  Crs({this.type, this.properties});
-
-  Crs.fromJson(Map<String, dynamic> json) {
-    type = json['type'];
-    properties = json['properties'] != null
-        ? CrsProperties.fromJson(json['properties'])
-        : null;
-  }
-}
-
-class CrsProperties {
-  String? name;
-
-  CrsProperties({this.name});
-
-  CrsProperties.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-  }
-}
-
-class Features {
-  String? type;
   Properties? properties;
   Geometry? geometry;
 
-  Features({this.type, this.properties, this.geometry});
+  Permit({this.type, this.properties, this.geometry});
 
-  Features.fromJson(Map<String, dynamic> json) {
+  Permit.fromJson(Map<String, dynamic> json) {
     type = json['type'];
     properties = json['properties'] != null
         ? Properties.fromJson(json['properties'])

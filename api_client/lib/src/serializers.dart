@@ -21,6 +21,7 @@ import 'package:api_client/src/model/full_dump_dto.dart';
 import 'package:api_client/src/model/full_report_dto.dart';
 import 'package:api_client/src/model/history_data_dto.dart';
 import 'package:api_client/src/model/history_edits_dto.dart';
+import 'package:api_client/src/model/json_coords_dto.dart';
 import 'package:api_client/src/model/log_in_dto.dart';
 import 'package:api_client/src/model/login_request_dto.dart';
 import 'package:api_client/src/model/public_report_dto.dart';
@@ -39,6 +40,7 @@ part 'serializers.g.dart';
   FullReportDto,
   HistoryDataDto,
   HistoryEditsDto,
+  JsonCoordsDto,
   LogInDto,
   LoginRequestDto,
   PublicReportDto,
