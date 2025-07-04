@@ -56,6 +56,7 @@ class ImageGallery {
                                   child: AppNetworkImage(
                                     url: imageUrls[i],
                                     fit: BoxFit.cover,
+                                    isThumbnailMode: true,
                                   ),
                                 ),
                               ),
@@ -79,6 +80,7 @@ class ImageGallery {
                               child: AppNetworkImage(
                                 url: imageUrls[i],
                                 fit: BoxFit.cover,
+                                isThumbnailMode: true,
                               ),
                             ),
                           ),

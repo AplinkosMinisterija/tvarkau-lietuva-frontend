@@ -10,6 +10,7 @@ doc/FullDumpDto.md
 doc/FullReportDto.md
 doc/HistoryDataDto.md
 doc/HistoryEditsDto.md
+doc/JsonCoordsDto.md
 doc/LogInDto.md
 doc/LoginRequestDto.md
 doc/PublicReportDto.md
@@ -39,6 +40,7 @@ lib/src/model/full_dump_dto.dart
 lib/src/model/full_report_dto.dart
 lib/src/model/history_data_dto.dart
 lib/src/model/history_edits_dto.dart
+lib/src/model/json_coords_dto.dart
 lib/src/model/log_in_dto.dart
 lib/src/model/login_request_dto.dart
 lib/src/model/public_report_dto.dart

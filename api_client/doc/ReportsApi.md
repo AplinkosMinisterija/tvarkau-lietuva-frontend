@@ -11,6 +11,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**reportControllerCreateNewReport**](ReportsApi.md#reportcontrollercreatenewreport) | **POST** /reports | 
 [**reportControllerGetAllPublicReports**](ReportsApi.md#reportcontrollergetallpublicreports) | **GET** /reports | 
+[**reportControllerGetGeojson**](ReportsApi.md#reportcontrollergetgeojson) | **POST** /reports/geojson | 
 [**reportControllerGetReportById**](ReportsApi.md#reportcontrollergetreportbyid) | **GET** /reports/{refId} | 
 [**reportControllerGetReportStatistics**](ReportsApi.md#reportcontrollergetreportstatistics) | **GET** /reports/statistics | 
 [**reportControllerSendFeedbackReport**](ReportsApi.md#reportcontrollersendfeedbackreport) | **POST** /reports/feedback-report | 
@@ -106,6 +107,47 @@ No authorization required
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **reportControllerGetGeojson**
+> String reportControllerGetGeojson(jsonCoordsDto)
+
+
+
+### Example
+```dart
+import 'package:api_client/api.dart';
+
+final api = ApiClient().getReportsApi();
+final JsonCoordsDto jsonCoordsDto = ; // JsonCoordsDto | 
+
+try {
+    final response = api.reportControllerGetGeojson(jsonCoordsDto);
+    print(response);
+} catch on DioException (e) {
+    print('Exception when calling ReportsApi->reportControllerGetGeojson: $e\n');
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **jsonCoordsDto** | [**JsonCoordsDto**](JsonCoordsDto.md)|  | 
+
+### Return type
+
+**String**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

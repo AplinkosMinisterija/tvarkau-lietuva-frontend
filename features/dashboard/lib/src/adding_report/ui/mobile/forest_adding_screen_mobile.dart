@@ -161,7 +161,6 @@ class _ForestAddingScreenMobileState extends State<ForestAddingScreenMobile> {
                                       width: widget.width,
                                       markers: const [],
                                       isLayerSwitchVisible: true,
-                                      isPermitSwitchVisible: false,
                                       onTap: (
                                         lat,
                                         long,
