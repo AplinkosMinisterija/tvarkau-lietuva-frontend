@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:openapi_generator_annotations/openapi_generator_annotations.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:core/utils/navigation_service.dart';
 
 @Openapi(
   additionalProperties: DioProperties(
@@ -23,6 +24,7 @@ class AadApp extends StatelessWidget {
   });
 
   final _router = GoRouter(
+    navigatorKey: navigatorKey,
     initialLocation: '/',
     observers: [SentryNavigatorObserver()],
     errorBuilder: (context, state) => RouteErrorScreen(
