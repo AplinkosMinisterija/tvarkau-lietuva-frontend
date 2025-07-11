@@ -10,6 +10,8 @@ import 'package:collection/collection.dart';
 import 'package:mime/mime.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:sentry_dio/sentry_dio.dart';
+import 'package:go_router/go_router.dart';
+import 'navigation_service.dart';
 
 class ApiProvider {
   ApiProvider._(
@@ -44,7 +46,14 @@ class ApiProvider {
               if (authKey != null) {
                 options.headers['Authorization'] = 'Bearer $authKey';
               } else {
-                throw Exception('No auth key found');
+                final context = navigatorKey.currentContext;
+                if (context != null) {
+                  Future.microtask(() {
+                    context.goNamed('admin');
+                  });
+                }
+                throw DioException(
+                    message: 'Authorization error', requestOptions: options);
               }
               return handler.next(options);
             },
@@ -255,14 +264,17 @@ class ApiProvider {
     required double maxLat,
     required double maxLong,
   }) async {
-    final response = await http.post(Uri.parse('${GlobalConstants.basePath}/reports/geojson'), body: {
+    final response = await http
+        .post(Uri.parse('${GlobalConstants.basePath}/reports/geojson'), body: {
       "minLat": minLat.toString(),
       "maxLat": maxLat.toString(),
       "minLong": minLong.toString(),
       "maxLong": maxLong.toString(),
     });
     List<dynamic> featuresList = jsonDecode(response.body);
-    List<Permit> permits = featuresList.map((featureItem) => Permit.fromJson(featureItem)).toList();
+    List<Permit> permits = featuresList
+        .map((featureItem) => Permit.fromJson(featureItem))
+        .toList();
     return permits;
   }
 
