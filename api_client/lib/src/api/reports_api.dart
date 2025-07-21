@@ -8,7 +8,6 @@ import 'package:built_value/serializer.dart';
 import 'package:dio/dio.dart';
 
 import 'package:api_client/src/api_util.dart';
-import 'package:api_client/src/model/create_feedback_report_dto.dart';
 import 'package:api_client/src/model/json_coords_dto.dart';
 import 'package:api_client/src/model/public_report_dto.dart';
 import 'package:api_client/src/model/report_statistics_dto.dart';
@@ -482,7 +481,9 @@ class ReportsApi {
   ///
   ///
   /// Parameters:
-  /// * [createFeedbackReportDto]
+  /// * [description]
+  /// * [email]
+  /// * [images]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -493,7 +494,9 @@ class ReportsApi {
   /// Returns a [Future] containing a [Response] with a [String] as data
   /// Throws [DioException] if API call or serialization fails
   Future<Response<String>> reportControllerSendFeedbackReport({
-    required CreateFeedbackReportDto createFeedbackReportDto,
+    required String description,
+    required String email,
+    BuiltList<MultipartFile>? images,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -511,16 +514,20 @@ class ReportsApi {
         'secure': <Map<String, String>>[],
         ...?extra,
       },
-      contentType: 'application/json',
+      contentType: 'multipart/form-data',
       validateStatus: validateStatus,
     );
 
     dynamic _bodyData;
 
     try {
-      const _type = FullType(CreateFeedbackReportDto);
-      _bodyData =
-          _serializers.serialize(createFeedbackReportDto, specifiedType: _type);
+      _bodyData = FormData.fromMap(<String, dynamic>{
+        if (images != null) r'images': images.toList(),
+        r'description': encodeFormParameter(
+            _serializers, description, const FullType(String)),
+        r'email':
+            encodeFormParameter(_serializers, email, const FullType(String)),
+      });
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _options.compose(
