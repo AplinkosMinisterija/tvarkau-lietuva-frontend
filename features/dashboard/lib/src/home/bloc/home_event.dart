@@ -25,10 +25,12 @@ class LoadSystemErrorReport implements HomeEvent {}
 class SendSystemErrorReport implements HomeEvent {
   final String email;
   final String description;
+  final List<Uint8List>? images;
 
   SendSystemErrorReport({
     required this.email,
     required this.description,
+    this.images,
   });
 }
 

@@ -240,12 +240,18 @@ class ApiProvider {
   Future<String> sendFeedbackReport({
     required String email,
     required String description,
+    List<Uint8List>? imageFiles,
   }) async {
+    BuiltList<MultipartFile>? images;
+    if(imageFiles != null){
+      images = _toMultiPartFiles(imageFiles);
+    }
+
     final response = await reportsApi.reportControllerSendFeedbackReport(
-        createFeedbackReportDto: CreateFeedbackReportDto((builder) {
-      builder.description = description;
-      builder.email = email;
-    }));
+      images: images,
+      description: description,
+      email: email,
+    );
     return response.data!;
   }
 
@@ -255,14 +261,17 @@ class ApiProvider {
     required double maxLat,
     required double maxLong,
   }) async {
-    final response = await http.post(Uri.parse('${GlobalConstants.basePath}/reports/geojson'), body: {
+    final response = await http
+        .post(Uri.parse('${GlobalConstants.basePath}/reports/geojson'), body: {
       "minLat": minLat.toString(),
       "maxLat": maxLat.toString(),
       "minLong": minLong.toString(),
       "maxLong": maxLong.toString(),
     });
     List<dynamic> featuresList = jsonDecode(response.body);
-    List<Permit> permits = featuresList.map((featureItem) => Permit.fromJson(featureItem)).toList();
+    List<Permit> permits = featuresList
+        .map((featureItem) => Permit.fromJson(featureItem))
+        .toList();
     return permits;
   }
 
