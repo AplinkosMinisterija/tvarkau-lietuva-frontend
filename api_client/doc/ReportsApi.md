@@ -235,7 +235,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **reportControllerSendFeedbackReport**
-> String reportControllerSendFeedbackReport(createFeedbackReportDto)
+> String reportControllerSendFeedbackReport(description, email, images)
 
 
 
@@ -244,10 +244,12 @@ No authorization required
 import 'package:api_client/api.dart';
 
 final api = ApiClient().getReportsApi();
-final CreateFeedbackReportDto createFeedbackReportDto = ; // CreateFeedbackReportDto | 
+final String description = description_example; // String | 
+final String email = email_example; // String | 
+final BuiltList<MultipartFile> images = /path/to/file.txt; // BuiltList<MultipartFile> | 
 
 try {
-    final response = api.reportControllerSendFeedbackReport(createFeedbackReportDto);
+    final response = api.reportControllerSendFeedbackReport(description, email, images);
     print(response);
 } catch on DioException (e) {
     print('Exception when calling ReportsApi->reportControllerSendFeedbackReport: $e\n');
@@ -258,7 +260,9 @@ try {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **createFeedbackReportDto** | [**CreateFeedbackReportDto**](CreateFeedbackReportDto.md)|  | 
+ **description** | **String**|  | 
+ **email** | **String**|  | 
+ **images** | [**BuiltList&lt;MultipartFile&gt;**](MultipartFile.md)|  | [optional] 
 
 ### Return type
 
@@ -270,7 +274,7 @@ No authorization required
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: multipart/form-data
  - **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)

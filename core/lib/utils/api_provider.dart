@@ -249,12 +249,18 @@ class ApiProvider {
   Future<String> sendFeedbackReport({
     required String email,
     required String description,
+    List<Uint8List>? imageFiles,
   }) async {
+    BuiltList<MultipartFile>? images;
+    if(imageFiles != null){
+      images = _toMultiPartFiles(imageFiles);
+    }
+
     final response = await reportsApi.reportControllerSendFeedbackReport(
-        createFeedbackReportDto: CreateFeedbackReportDto((builder) {
-      builder.description = description;
-      builder.email = email;
-    }));
+      images: images,
+      description: description,
+      email: email,
+    );
     return response.data!;
   }
 

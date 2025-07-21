@@ -85,7 +85,6 @@ Class | Method | HTTP request | Description
 ## Documentation For Models
 
  - [CreateDumpDto](doc/CreateDumpDto.md)
- - [CreateFeedbackReportDto](doc/CreateFeedbackReportDto.md)
  - [DumpDto](doc/DumpDto.md)
  - [FullDumpDto](doc/FullDumpDto.md)
  - [FullReportDto](doc/FullReportDto.md)

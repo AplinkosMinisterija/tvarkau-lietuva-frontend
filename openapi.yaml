@@ -303,12 +303,12 @@ paths:
       requestBody:
         required: true
         content:
-          application/json:
+          multipart/form-data:
             schema:
               $ref: '#/components/schemas/CreateFeedbackReportDto'
       responses:
         '200':
-          description: New feedback report has been successfully found
+          description: New feedback report has been successfully sent
           content:
             application/json:
               schema:
@@ -806,6 +806,11 @@ components:
     CreateFeedbackReportDto:
       type: object
       properties:
+        images:
+          type: array
+          items:
+            type: string
+            format: binary
         description:
           type: string
         email:
