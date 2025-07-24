@@ -17,3 +17,13 @@ class ErrorState implements InformationState {
 
   ErrorState({required this.errorMessage});
 }
+
+class NotFoundState implements InformationState {
+  final String errorMessage;
+  final String descriptionMessage;
+
+  NotFoundState({
+    required this.errorMessage,
+    required this.descriptionMessage,
+  });
+}

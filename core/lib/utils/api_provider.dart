@@ -10,6 +10,8 @@ import 'package:collection/collection.dart';
 import 'package:mime/mime.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:sentry_dio/sentry_dio.dart';
+import 'package:go_router/go_router.dart';
+import 'navigation_service.dart';
 
 class ApiProvider {
   ApiProvider._(
@@ -44,7 +46,14 @@ class ApiProvider {
               if (authKey != null) {
                 options.headers['Authorization'] = 'Bearer $authKey';
               } else {
-                throw Exception('No auth key found');
+                final context = navigatorKey.currentContext;
+                if (context != null) {
+                  Future.microtask(() {
+                    context.goNamed('admin');
+                  });
+                }
+                throw DioException(
+                    message: 'Authorization error', requestOptions: options);
               }
               return handler.next(options);
             },
@@ -85,10 +94,18 @@ class ApiProvider {
     return response.data!;
   }
 
-  Future<PublicReportDto> getOneTrashReport(String refId) async {
+  Future<PublicReportDto?> getOneTrashReport(String refId) async {
+    int? refValue = int.tryParse(refId);
+    if (refValue == null) {
+      return null;
+    }
     final response =
-        await reportsApi.reportControllerGetReportById(refId: int.parse(refId));
-    return response.data!;
+        await reportsApi.reportControllerGetReportById(refId: refValue);
+    if (response.statusCode == 404) {
+      return null;
+    } else {
+      return response.data!;
+    }
   }
 
   Future<List<FullReportDto>> getAllRemovedReports(String? category) async {
@@ -102,7 +119,7 @@ class ApiProvider {
   Future<List<PublicReportDto>> getAllVisibleReports(String? category) async {
     final response = await reportsApi.reportControllerGetAllPublicReports(
         category: category);
-    return response.data!.toList(); //TODO: add error handling
+    return response.data!.toList();
   }
 
   Future<ReportStatisticsDto> getReportStatistics(String? category) async {
@@ -232,19 +249,39 @@ class ApiProvider {
   Future<String> sendFeedbackReport({
     required String email,
     required String description,
+    List<Uint8List>? imageFiles,
   }) async {
+    BuiltList<MultipartFile>? images;
+    if(imageFiles != null){
+      images = _toMultiPartFiles(imageFiles);
+    }
+
     final response = await reportsApi.reportControllerSendFeedbackReport(
-        createFeedbackReportDto: CreateFeedbackReportDto((builder) {
-      builder.description = description;
-      builder.email = email;
-    }));
+      images: images,
+      description: description,
+      email: email,
+    );
     return response.data!;
   }
 
-  Future<Permit> getAllPermits() async {
-    final response =
-        await http.get(Uri.parse(GlobalConstants.woodcuttingPermitsUrl));
-    return Permit.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
+  Future<List<Permit>> getVisiblePermits({
+    required double minLat,
+    required double minLong,
+    required double maxLat,
+    required double maxLong,
+  }) async {
+    final response = await http
+        .post(Uri.parse('${GlobalConstants.basePath}/reports/geojson'), body: {
+      "minLat": minLat.toString(),
+      "maxLat": maxLat.toString(),
+      "minLong": minLong.toString(),
+      "maxLong": maxLong.toString(),
+    });
+    List<dynamic> featuresList = jsonDecode(response.body);
+    List<Permit> permits = featuresList
+        .map((featureItem) => Permit.fromJson(featureItem))
+        .toList();
+    return permits;
   }
 
   BuiltList<MultipartFile> _toMultiPartFiles(List<Uint8List> files) {

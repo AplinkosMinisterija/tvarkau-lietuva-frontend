@@ -15,12 +15,12 @@ import 'package:api_client/src/date_serializer.dart';
 import 'package:api_client/src/model/date.dart';
 
 import 'package:api_client/src/model/create_dump_dto.dart';
-import 'package:api_client/src/model/create_feedback_report_dto.dart';
 import 'package:api_client/src/model/dump_dto.dart';
 import 'package:api_client/src/model/full_dump_dto.dart';
 import 'package:api_client/src/model/full_report_dto.dart';
 import 'package:api_client/src/model/history_data_dto.dart';
 import 'package:api_client/src/model/history_edits_dto.dart';
+import 'package:api_client/src/model/json_coords_dto.dart';
 import 'package:api_client/src/model/log_in_dto.dart';
 import 'package:api_client/src/model/login_request_dto.dart';
 import 'package:api_client/src/model/public_report_dto.dart';
@@ -33,12 +33,12 @@ part 'serializers.g.dart';
 
 @SerializersFor([
   CreateDumpDto,
-  CreateFeedbackReportDto,
   DumpDto,
   FullDumpDto,
   FullReportDto,
   HistoryDataDto,
   HistoryEditsDto,
+  JsonCoordsDto,
   LogInDto,
   LoginRequestDto,
   PublicReportDto,

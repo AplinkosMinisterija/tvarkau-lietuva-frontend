@@ -6,7 +6,7 @@ part 'information_event.dart';
 part 'information_state.dart';
 
 class InformationBloc extends Bloc<InformationEvent, InformationState> {
-  final String refId;
+  final String? refId;
 
   InformationBloc({
     required this.refId,
@@ -21,17 +21,41 @@ class InformationBloc extends Bloc<InformationEvent, InformationState> {
     Emitter<InformationState> emit,
   ) async {
     try {
-      final PublicReportDto trashReport = await ApiProvider().getOneTrashReport(
-        event.refId,
+      if (event.refId == null) {
+        emit(
+          NotFoundState(
+            errorMessage: 'Pranešimas nerastas',
+            descriptionMessage:
+                'Jūsų ieškomas pranešimas nebuvo rastas arba nėra viešai matomas. Pasitikrinkite ar gerai įvedėte nuorodą',
+          ),
+        );
+      }
+      final PublicReportDto? trashReport =
+          await ApiProvider().getOneTrashReport(
+        event.refId!,
       );
-      emit(
-        ContentState(
-          trashReport: trashReport,
-        ),
-      );
+      if (trashReport == null) {
+        emit(
+          NotFoundState(
+            errorMessage: 'Pranešimas nerastas',
+            descriptionMessage:
+                'Jūsų ieškomas pranešimas nebuvo rastas arba nėra viešai matomas. Pasitikrinkite ar gerai įvedėte nuorodą',
+          ),
+        );
+      } else {
+        emit(
+          ContentState(
+            trashReport: trashReport,
+          ),
+        );
+      }
     } catch (e) {
       emit(
-        ErrorState(errorMessage: 'Netikėta klaida'),
+        NotFoundState(
+          errorMessage: 'Pranešimas nerastas',
+          descriptionMessage:
+              'Jūsų ieškomas pranešimas nebuvo rastas arba nėra viešai matomas. Pasitikrinkite ar gerai įvedėte nuorodą',
+        ),
       );
     }
   }

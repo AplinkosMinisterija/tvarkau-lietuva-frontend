@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -193,6 +194,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       await ApiProvider().sendFeedbackReport(
         email: event.email,
         description: event.description,
+        imageFiles: event.images,
       );
       emit(SystemErrorSuccessState());
     } catch (e) {

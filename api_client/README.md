@@ -76,6 +76,7 @@ Class | Method | HTTP request | Description
 [*DumpsApi*](doc/DumpsApi.md) | [**dumpControllerGetAllVisibleDumps**](doc/DumpsApi.md#dumpcontrollergetallvisibledumps) | **GET** /dumps | 
 [*ReportsApi*](doc/ReportsApi.md) | [**reportControllerCreateNewReport**](doc/ReportsApi.md#reportcontrollercreatenewreport) | **POST** /reports | 
 [*ReportsApi*](doc/ReportsApi.md) | [**reportControllerGetAllPublicReports**](doc/ReportsApi.md#reportcontrollergetallpublicreports) | **GET** /reports | 
+[*ReportsApi*](doc/ReportsApi.md) | [**reportControllerGetGeojson**](doc/ReportsApi.md#reportcontrollergetgeojson) | **POST** /reports/geojson | 
 [*ReportsApi*](doc/ReportsApi.md) | [**reportControllerGetReportById**](doc/ReportsApi.md#reportcontrollergetreportbyid) | **GET** /reports/{refId} | 
 [*ReportsApi*](doc/ReportsApi.md) | [**reportControllerGetReportStatistics**](doc/ReportsApi.md#reportcontrollergetreportstatistics) | **GET** /reports/statistics | 
 [*ReportsApi*](doc/ReportsApi.md) | [**reportControllerSendFeedbackReport**](doc/ReportsApi.md#reportcontrollersendfeedbackreport) | **POST** /reports/feedback-report | 
@@ -84,12 +85,12 @@ Class | Method | HTTP request | Description
 ## Documentation For Models
 
  - [CreateDumpDto](doc/CreateDumpDto.md)
- - [CreateFeedbackReportDto](doc/CreateFeedbackReportDto.md)
  - [DumpDto](doc/DumpDto.md)
  - [FullDumpDto](doc/FullDumpDto.md)
  - [FullReportDto](doc/FullReportDto.md)
  - [HistoryDataDto](doc/HistoryDataDto.md)
  - [HistoryEditsDto](doc/HistoryEditsDto.md)
+ - [JsonCoordsDto](doc/JsonCoordsDto.md)
  - [LogInDto](doc/LogInDto.md)
  - [LoginRequestDto](doc/LoginRequestDto.md)
  - [PublicReportDto](doc/PublicReportDto.md)

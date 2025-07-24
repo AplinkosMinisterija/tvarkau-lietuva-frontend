@@ -1,4 +1,4 @@
-// Openapi Generator last run: : 2025-06-27T13:59:56.017779
+// Openapi Generator last run: : 2025-07-21T14:14:06.220245
 import 'package:admin/admin.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:dashboard/dashboard_screen.dart';
@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:openapi_generator_annotations/openapi_generator_annotations.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:core/utils/navigation_service.dart';
 
 @Openapi(
   additionalProperties: DioProperties(
@@ -23,6 +24,7 @@ class AadApp extends StatelessWidget {
   });
 
   final _router = GoRouter(
+    navigatorKey: navigatorKey,
     initialLocation: '/',
     observers: [SentryNavigatorObserver()],
     errorBuilder: (context, state) => RouteErrorScreen(

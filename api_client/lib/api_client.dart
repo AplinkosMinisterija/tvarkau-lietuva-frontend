@@ -15,12 +15,12 @@ export 'package:api_client/src/api/dumps_api.dart';
 export 'package:api_client/src/api/reports_api.dart';
 
 export 'package:api_client/src/model/create_dump_dto.dart';
-export 'package:api_client/src/model/create_feedback_report_dto.dart';
 export 'package:api_client/src/model/dump_dto.dart';
 export 'package:api_client/src/model/full_dump_dto.dart';
 export 'package:api_client/src/model/full_report_dto.dart';
 export 'package:api_client/src/model/history_data_dto.dart';
 export 'package:api_client/src/model/history_edits_dto.dart';
+export 'package:api_client/src/model/json_coords_dto.dart';
 export 'package:api_client/src/model/log_in_dto.dart';
 export 'package:api_client/src/model/login_request_dto.dart';
 export 'package:api_client/src/model/public_report_dto.dart';

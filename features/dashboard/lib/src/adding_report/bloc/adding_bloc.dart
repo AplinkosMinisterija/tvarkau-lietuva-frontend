@@ -71,9 +71,9 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
     try {
       emit(LoadingState());
 
-      final Permit permits = await ApiProvider().getAllPermits();
+      //final Permit permits = await ApiProvider().getAllPermits();
       //TODO: final source = GeoJSONFeatures.http(location: Uri.parse('...'));
-
+      final Permit permits = Permit();
       final List<PublicReportDto> permitReports =
           await ApiProvider().getAllVisibleReports('permits');
 

@@ -31,15 +31,11 @@ class InformationScreenMobile extends StatefulWidget {
 }
 
 class _InformationScreenMobileState extends State<InformationScreenMobile> {
-  //BitmapDescriptor markerIcon = BitmapDescriptor.defaultMarker;
   Set<Marker> markers = {};
   int textLinesCount = 0;
   int departmentAnswerTextLinesCount = 0;
   int imageLineCount = 0;
 
-  //late MapType _currentMapType;
-  // CameraPosition _initialCameraPosition =
-  //     const CameraPosition(target: LatLng(55.1736, 23.8948), zoom: 7.0);
   late Widget statusWidget;
   late Widget firstStageWidget;
   late Widget falseReportWidget;
@@ -59,10 +55,6 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
 
   @override
   void initState() {
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   addCustomIcon();
-    // });
-
     span = TextSpan(
         text: widget.report.name,
         style: GoogleFonts.roboto(
@@ -93,22 +85,6 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
     strLength = 8 - widget.report.refId.length;
     str = '0' * strLength;
 
-    // _initialCameraPosition = CameraPosition(
-    //     target: LatLng(widget.report.latitude, widget.report.longitude),
-    //     zoom: 9.0);
-    //_currentMapType = MapType.normal;
-    // markers.add(
-    //   Marker(
-    //     markerId: MarkerId(
-    //       '${widget.report.name}99899',
-    //     ),
-    //     position: LatLng(
-    //       widget.report.latitude,
-    //       widget.report.longitude,
-    //     ),
-    //     icon: markerIcon,
-    //   ),
-    // );
     statusWidget = InformationScreenWidgetUtils()
         .getStatusWidget(widget.report.status, widget.width);
     firstStageWidget = getFirstStageWidget();
@@ -219,11 +195,6 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                             const BorderRadius.all(Radius.circular(8)),
                         child: Stack(
                           children: [
-                            // GoogleMap(
-                            //   mapType: _currentMapType,
-                            //   initialCameraPosition: _initialCameraPosition,
-                            //   markers: markers,
-                            // ),
                             FlutterMap(
                                 options: MapOptions(
                                     initialZoom: 14,
@@ -240,32 +211,6 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
                                             'assets/svg/pin_icon.svg'))
                                   ])
                                 ]),
-                            // Padding(
-                            //   padding:
-                            //       const EdgeInsets.only(bottom: 110, right: 10),
-                            //   child: Align(
-                            //       alignment: Alignment.bottomRight,
-                            //       child: GoogleMapTypeButton(
-                            //         height: 40,
-                            //         width: 40,
-                            //         onPressed: () {
-                            //           showDialog<String>(
-                            //               context: context,
-                            //               builder: (BuildContext context) =>
-                            //                   MapTypeChangeDialog(
-                            //                     width: widget.width,
-                            //                     currentMapType: _currentMapType,
-                            //                     onHover: (isHover) {},
-                            //                     onChangeTap: (MapType mapType) {
-                            //                       setState(() {
-                            //                         _currentMapType = mapType;
-                            //                       });
-                            //                     },
-                            //                     isMobile: true,
-                            //                   ));
-                            //         },
-                            //       )),
-                            // ),
                           ],
                         ),
                       ),
@@ -716,6 +661,16 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
               ),
             ),
             SizedBox(height: widget.width * 0.0666),
+            widget.report.officerImageUrls.isNotEmpty
+                ? ImageGallery().buildImages(
+                    imageUrls: FormatterUtils().formatImageUrls(
+                        widget.report.officerImageUrls.toList()),
+                    context: context,
+                    width: widget.width * 0.7,
+                    titlesEnabled: false,
+                    isDownloadEnabled: false,
+                  )
+                : const SizedBox.shrink(),
           ],
         )
       ],
@@ -803,16 +758,6 @@ class _InformationScreenMobileState extends State<InformationScreenMobile> {
     return FormatterUtils()
         .formatDate(statusRecord?.date ?? widget.report.reportDate);
   }
-
-  // void addCustomIcon() {
-  //   BitmapDescriptor.asset(
-  //           const ImageConfiguration(), 'assets/svg/pin_icon.svg')
-  //       .then((icon) {
-  //     setState(() {
-  //       markerIcon = icon;
-  //     });
-  //   });
-  // }
 
   void _showDialog() {
     showGeneralDialog(
