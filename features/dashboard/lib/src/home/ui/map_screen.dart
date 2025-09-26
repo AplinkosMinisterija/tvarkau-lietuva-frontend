@@ -63,6 +63,7 @@ class _MapScreenState extends State<MapScreen> {
                         });
                       },
                       isMobile: widget.isMobile,
+                      cameraPosition: state.cameraPosition,
                     );
                   case DumpsState():
                     return MapWidget(
@@ -78,6 +79,7 @@ class _MapScreenState extends State<MapScreen> {
                       dumps: state.dumpReports,
                       category: 'dumps',
                       isMobile: widget.isMobile,
+                      cameraPosition: state.cameraPosition,
                     );
                   case ForestState():
                     return MapWidget(
@@ -101,6 +103,7 @@ class _MapScreenState extends State<MapScreen> {
                         });
                       },
                       isMobile: widget.isMobile,
+                      cameraPosition: state.cameraPosition,
                     );
                   case PermitsState():
                     return MapWidget(
@@ -124,6 +127,7 @@ class _MapScreenState extends State<MapScreen> {
                         });
                       },
                       isMobile: widget.isMobile,
+                      cameraPosition: state.cameraPosition,
                     );
                   case ErrorState():
                     return SizedBox(

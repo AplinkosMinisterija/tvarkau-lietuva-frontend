@@ -225,4 +225,5 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         return LoadTrashData();
     }
   }
+
 }

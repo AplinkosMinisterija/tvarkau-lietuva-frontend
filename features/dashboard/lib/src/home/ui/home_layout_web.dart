@@ -24,6 +24,7 @@ class _HomeLayoutWebState extends State<HomeLayoutWeb> {
 
   Future<void> updateScrollControllerOffset(double offset) async {
     await SecureStorageProvider().setScrollOffset(offset);
+
   }
 
   late ScaffoldMessengerState _scaffoldMessengerState;
