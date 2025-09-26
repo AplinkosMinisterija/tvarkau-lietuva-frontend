@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:animated_custom_dropdown/custom_dropdown.dart';
 import 'package:api_client/api_client.dart';
+import 'package:core/utils/secure_storage_provider.dart';
 import 'package:dashboard/src/home/ui/tile_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:core_ui/core_ui.dart';
@@ -7,6 +10,7 @@ import 'package:flutter_map_marker_cluster_2/flutter_map_marker_cluster.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart' as gmaps;
 import 'package:latlong2/latlong.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -19,6 +23,7 @@ class MapWidget extends StatefulWidget {
     this.dumps,
     this.reportStatistics,
     required this.isHovering,
+    required this.cameraPosition,
     required this.onCategoryChange,
     required this.category,
     this.onInformationTap,
@@ -32,6 +37,7 @@ class MapWidget extends StatefulWidget {
   final List<DumpDto>? dumps;
   final ReportStatisticsDto? reportStatistics;
   final ValueChanged<bool> isHovering;
+  final gmaps.CameraPosition cameraPosition;
   final Function(String) onCategoryChange;
   final Function(String)? onInformationTap;
   final void Function(Exception e)? onError;
@@ -215,14 +221,21 @@ class _MapWidgetState extends State<MapWidget> with TickerProviderStateMixin {
                         children: [
                           FlutterMap(
                               options: MapOptions(
-                                initialCenter: const latlong.LatLng(55, 24),
-                                initialZoom: 7,
+                                initialCenter: latlong.LatLng(
+                                    widget.cameraPosition.target.latitude,
+                                    widget.cameraPosition.target.longitude),
+                                initialZoom: widget.cameraPosition.zoom,
                                 onPositionChanged: (position, isFinished) {
                                   setState(() {
                                     selectedLat = position.center.latitude;
                                     selectedLong = position.center.longitude;
                                     selectedZoom = position.zoom;
                                   });
+                                  unawaited(SecureStorageProvider()
+                                      .setCameraSetup(gmaps.CameraPosition(
+                                          target: gmaps.LatLng(
+                                              selectedLat!, selectedLong!),
+                                          zoom: selectedZoom)));
                                 },
                               ),
                               mapController: mapController,
@@ -422,8 +435,10 @@ class _MapWidgetState extends State<MapWidget> with TickerProviderStateMixin {
           ReportTable(
             width: widget.width,
             reports: widget.reports!,
-            onInformationTap: (refId) {
+            onInformationTap: (refId) async {
               widget.onInformationTap!(refId);
+              unawaited(await SecureStorageProvider()
+                  .setActiveCategory(widget.category));
             },
           ),
         ]
