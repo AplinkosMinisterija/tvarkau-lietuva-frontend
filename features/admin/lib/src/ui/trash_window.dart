@@ -742,7 +742,7 @@ class _BuildAadisSectionState extends State<_BuildAadisSection> {
 Map<String, String> getEmployeeList(FullReportDtoCategoryEnum category) {
   const trashList = {
     'Alytus': 'reda.baubliene@aad.am.lt',
-    'Kaunas': 'vytautas.januska@aad.am.lt',
+    'Kaunas': 'rasa.zitkeviciute@aad.am.lt',
     'Klaipėda': 'laura.dagiliene@aad.am.lt',
     'Gargždai': 'martinas.duobinis@aad.am.lt',
     'Marijampolė': 'algimantas.paplauskas@aad.am.lt',
