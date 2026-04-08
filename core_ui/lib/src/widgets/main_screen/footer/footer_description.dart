@@ -1,5 +1,3 @@
-import 'package:core/utils/url_launcher.dart';
-import 'package:flutter/gestures.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 
