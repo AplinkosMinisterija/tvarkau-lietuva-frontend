@@ -69,6 +69,7 @@ Class | Method | HTTP request | Description
 [*AdminApi*](doc/AdminApi.md) | [**adminControllerGetAllReports**](doc/AdminApi.md#admincontrollergetallreports) | **GET** /admin/reports | 
 [*AdminApi*](doc/AdminApi.md) | [**adminControllerGetDumpById**](doc/AdminApi.md#admincontrollergetdumpbyid) | **GET** /admin/dumps/{refId} | 
 [*AdminApi*](doc/AdminApi.md) | [**adminControllerGetReportById**](doc/AdminApi.md#admincontrollergetreportbyid) | **GET** /admin/reports/{refId} | 
+[*AdminApi*](doc/AdminApi.md) | [**adminControllerGetReportCategoryAnalytics**](doc/AdminApi.md#admincontrollergetreportcategoryanalytics) | **GET** /admin/statistics/category | 
 [*AdminApi*](doc/AdminApi.md) | [**adminControllerTransferReport**](doc/AdminApi.md#admincontrollertransferreport) | **POST** /admin/reports/transfer | 
 [*AdminApi*](doc/AdminApi.md) | [**adminControllerUpdateDump**](doc/AdminApi.md#admincontrollerupdatedump) | **POST** /admin/dumps | 
 [*AdminApi*](doc/AdminApi.md) | [**adminControllerUpdateReport**](doc/AdminApi.md#admincontrollerupdatereport) | **POST** /admin/reports | 
@@ -84,6 +85,7 @@ Class | Method | HTTP request | Description
 
 ## Documentation For Models
 
+ - [CategoryBreakdownItemDto](doc/CategoryBreakdownItemDto.md)
  - [CreateDumpDto](doc/CreateDumpDto.md)
  - [DumpDto](doc/DumpDto.md)
  - [FullDumpDto](doc/FullDumpDto.md)
@@ -93,8 +95,15 @@ Class | Method | HTTP request | Description
  - [JsonCoordsDto](doc/JsonCoordsDto.md)
  - [LogInDto](doc/LogInDto.md)
  - [LoginRequestDto](doc/LoginRequestDto.md)
+ - [MonthlyTrendItemDto](doc/MonthlyTrendItemDto.md)
+ - [OverallSummaryDto](doc/OverallSummaryDto.md)
  - [PublicReportDto](doc/PublicReportDto.md)
+ - [RegionBreakdownItemDto](doc/RegionBreakdownItemDto.md)
+ - [ReportCategoryAnalyticsDto](doc/ReportCategoryAnalyticsDto.md)
  - [ReportStatisticsDto](doc/ReportStatisticsDto.md)
+ - [ResolutionPerformanceDto](doc/ResolutionPerformanceDto.md)
+ - [SlaPerformanceDto](doc/SlaPerformanceDto.md)
+ - [StatusDistributionItemDto](doc/StatusDistributionItemDto.md)
  - [StatusRecordsDto](doc/StatusRecordsDto.md)
  - [TransferReportDto](doc/TransferReportDto.md)
  - [UpdateDumpDto](doc/UpdateDumpDto.md)

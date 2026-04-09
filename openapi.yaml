@@ -193,6 +193,50 @@ paths:
         - admin
       security:
         - bearer: []
+  /admin/statistics/category:
+    get:
+      operationId: AdminController_getReportCategoryAnalytics
+      parameters:
+        - name: dateFrom
+          required: false
+          in: query
+          description: 'Start date, ex.: 2024-01-01'
+          schema:
+            type: string
+        - name: dateTo
+          required: false
+          in: query
+          description: 'End date, ex.: 2024-12-31'
+          schema:
+            type: string
+        - name: category
+          required: false
+          in: query
+          schema:
+            enum:
+              - trash
+              - forest
+              - beetle
+              - permits
+              - misc
+            type: string
+        - name: status
+          required: false
+          in: query
+          description: Filter by status string
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 'Category-sorted report analytics have been successfully fetched. '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportCategoryAnalyticsDto'
+      tags:
+        - admin
+      security:
+        - bearer: []
   /dumps:
     get:
       operationId: DumpController_getAllVisibleDumps
@@ -672,6 +716,216 @@ components:
         - name
         - reportLong
         - reportLat
+    OverallSummaryDto:
+      type: object
+      properties:
+        totalReports:
+          type: number
+        resolvedReports:
+          type: number
+        inInvestigationReports:
+          type: number
+        receivedReports:
+          type: number
+        falseReports:
+          type: number
+        resolutionRate:
+          type: number
+        avgResolutionHours:
+          type: number
+        reportsPer30Days:
+          type: number
+        reportsLast7Days:
+          type: number
+        reportsLast30Days:
+          type: number
+        reportsLast90Days:
+          type: number
+        last30DaysChangePercent:
+          type: number
+      required:
+        - totalReports
+        - resolvedReports
+        - inInvestigationReports
+        - receivedReports
+        - falseReports
+        - resolutionRate
+        - avgResolutionHours
+        - reportsPer30Days
+        - reportsLast7Days
+        - reportsLast30Days
+        - reportsLast90Days
+    StatusDistributionItemDto:
+      type: object
+      properties:
+        status:
+          type: string
+        count:
+          type: number
+        percentage:
+          type: number
+      required:
+        - status
+        - count
+        - percentage
+    CategoryBreakdownItemDto:
+      type: object
+      properties:
+        category:
+          type: string
+        count:
+          type: number
+        percentage:
+          type: number
+        avgResolutionHours:
+          type: number
+      required:
+        - category
+        - count
+        - percentage
+        - avgResolutionHours
+    RegionBreakdownItemDto:
+      type: object
+      properties:
+        region:
+          type: string
+        count:
+          type: number
+        percentage:
+          type: number
+        avgResolutionHours:
+          type: number
+        statusDistribution:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatusDistributionItemDto'
+      required:
+        - region
+        - count
+        - percentage
+        - avgResolutionHours
+        - statusDistribution
+    MonthlyTrendItemDto:
+      type: object
+      properties:
+        period:
+          type: string
+        year:
+          type: number
+        month:
+          type: number
+        count:
+          type: number
+        resolved:
+          type: number
+        avgResolutionHours:
+          type: number
+        countChangePercent:
+          type: number
+        resolvedChangePercent:
+          type: number
+        resolutionTimeChangePercent:
+          type: number
+      required:
+        - period
+        - year
+        - month
+        - count
+        - resolved
+        - avgResolutionHours
+    SlaPerformanceDto:
+      type: object
+      properties:
+        within24h:
+          type: number
+          description: Reports resolved within 24 h
+        within72h:
+          type: number
+          description: Reports resolved within 72 h
+        within7d:
+          type: number
+          description: Reports resolved within 7 days
+        within30d:
+          type: number
+          description: Reports resolved within 30 days
+        over30d:
+          type: number
+          description: Reports not yet resolved or over 30 days
+        within24hPercent:
+          type: number
+        within72hPercent:
+          type: number
+        within7dPercent:
+          type: number
+        within30dPercent:
+          type: number
+      required:
+        - within24h
+        - within72h
+        - within7d
+        - within30d
+        - over30d
+        - within24hPercent
+        - within72hPercent
+        - within7dPercent
+        - within30dPercent
+    ResolutionPerformanceDto:
+      type: object
+      properties:
+        avgResolutionHours:
+          type: number
+        medianResolutionHours:
+          type: number
+        minResolutionHours:
+          type: number
+        maxResolutionHours:
+          type: number
+        sla:
+          $ref: '#/components/schemas/SlaPerformanceDto'
+        resolvedCount:
+          type: number
+          description: Resolved report count used for calculation
+      required:
+        - avgResolutionHours
+        - medianResolutionHours
+        - minResolutionHours
+        - maxResolutionHours
+        - sla
+        - resolvedCount
+    ReportCategoryAnalyticsDto:
+      type: object
+      properties:
+        summary:
+          $ref: '#/components/schemas/OverallSummaryDto'
+        statusDistribution:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatusDistributionItemDto'
+        categoryBreakdown:
+          type: array
+          items:
+            $ref: '#/components/schemas/CategoryBreakdownItemDto'
+        geographicBreakdown:
+          type: array
+          items:
+            $ref: '#/components/schemas/RegionBreakdownItemDto'
+        monthlyTrends:
+          type: array
+          items:
+            $ref: '#/components/schemas/MonthlyTrendItemDto'
+        resolutionPerformance:
+          $ref: '#/components/schemas/ResolutionPerformanceDto'
+        generatedAt:
+          type: string
+          description: ISO timestamp of when analytics were computed
+      required:
+        - summary
+        - statusDistribution
+        - categoryBreakdown
+        - geographicBreakdown
+        - monthlyTrends
+        - resolutionPerformance
+        - generatedAt
     DumpDto:
       type: object
       properties:

@@ -79,13 +79,6 @@ class AdminTableDumps extends StatelessWidget {
               width: 140,
               label: const _BuildHeaderLabel('Matomumas'),
             ),
-            GridColumn(
-              columnName: 'edit',
-              allowSorting: false,
-              allowFiltering: false,
-              width: 160,
-              label: const _BuildHeaderLabel('Veiksmai'),
-            ),
           ],
           gridLinesVisibility: GridLinesVisibility.horizontal,
           headerGridLinesVisibility: GridLinesVisibility.none,
@@ -127,7 +120,6 @@ class ReportDataSourceAdmin extends DataGridSource {
               DataGridCell<String>(
                   columnName: 'visibility',
                   value: e.isVisible ? 'Rodomas' : 'Nerodomas'),
-              const DataGridCell<String>(columnName: 'edit', value: 'edit'),
             ]))
         .toList();
   }
@@ -160,31 +152,7 @@ class ReportDataSourceAdmin extends DataGridSource {
         alignment: Alignment.centerLeft,
         child: e.columnName == 'visibility'
             ? getVisibilityWidget(e.value)
-            : e.columnName == 'edit'
-                ? CustomButton(
-                    padding: EdgeInsets.zero,
-                    height: 32,
-                    width: 110,
-                    text: 'Redaguoti',
-                    textStyle: CustomStyles.button2.copyWith(
-                      color: CustomColors.primary,
-                    ),
-                    onPressed: () {
-                      final int index = effectiveRows.indexOf(row);
-                      final FullDumpDto dump = reportData[index];
-
-                      context.goNamed('dump_admin', queryParameters: {
-                        'id': dump.refId,
-                      });
-                    },
-                    icon: const Icon(
-                      Icons.edit,
-                      size: 14,
-                      color: CustomColors.primary,
-                    ),
-                    buttonType: ButtonType.outlined,
-                  )
-                : SelectionArea(
+            : SelectionArea(
                     child: Text(e.value.toString(),
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.left,

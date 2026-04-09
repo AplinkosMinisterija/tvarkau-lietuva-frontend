@@ -128,6 +128,13 @@ class ApiProvider {
     return response.data!;
   }
 
+  Future<ReportCategoryAnalyticsDto> getReportCategoryAnalytics(
+      String dateFrom, String dateTo, String? category, String? status) async {
+    final response = await adminApi.adminControllerGetReportCategoryAnalytics(
+        dateFrom: dateFrom, dateTo: dateTo, category: category, status: status);
+    return response.data!;
+  }
+
   Future<List<FullDumpDto>> getAllDumpReports() async {
     final response = await adminApi.adminControllerGetAllDumps();
     return response.data!.toList();
@@ -252,7 +259,7 @@ class ApiProvider {
     List<Uint8List>? imageFiles,
   }) async {
     BuiltList<MultipartFile>? images;
-    if(imageFiles != null){
+    if (imageFiles != null) {
       images = _toMultiPartFiles(imageFiles);
     }
 
