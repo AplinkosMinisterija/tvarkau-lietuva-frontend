@@ -64,9 +64,7 @@ class AadApp extends StatelessWidget {
                 name: 'analytics',
                 path: 'statistika',
                 builder: (context, state) {
-                  return DumpScreen(
-                    refId: state.uri.queryParameters['id'] ?? '1',
-                  );
+                  return const AnalyticsScreen();
                 }),
           ]),
       GoRoute(

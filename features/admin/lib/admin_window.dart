@@ -1,3 +1,4 @@
+import 'package:admin/src/widgets/custom_button.dart';
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
@@ -173,7 +174,30 @@ class _AdminWindowState extends State<AdminWindow> {
                     },
                   ),
                   48.heightBox,
-                  Text("Administracinė konsolė", style: CustomStyles.h2),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Administracinė konsolė", style: CustomStyles.h2),
+                      CustomButton(
+                        padding: EdgeInsets.zero,
+                        height: 45,
+                        width: 130,
+                        text: 'Statistika',
+                        textStyle: CustomStyles.button1.copyWith(
+                          color: CustomColors.primary,
+                        ),
+                        onPressed: () {
+                          context.goNamed('analytics');
+                        },
+                        icon: const Icon(
+                          Icons.analytics_outlined,
+                          size: 30,
+                          color: CustomColors.primary,
+                        ),
+                        buttonType: ButtonType.outlined,
+                      )
+                    ],
+                  ),
                   40.heightBox,
                   Row(
                     children: [
