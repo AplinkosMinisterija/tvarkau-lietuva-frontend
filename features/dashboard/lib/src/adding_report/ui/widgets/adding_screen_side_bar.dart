@@ -22,6 +22,7 @@ class AddingScreenSideBar extends StatelessWidget {
     required this.onExplanationTap,
     required this.onTextChange,
     required this.onEmailChange,
+    required this.onPhoneNumberChange,
     required this.selectedImages,
     required this.onTermsChange,
     required this.onEmailsEnabledChange,
@@ -41,6 +42,7 @@ class AddingScreenSideBar extends StatelessWidget {
   final Function(int) onImageRemoveTap;
   final Function(String) onTextChange;
   final Function(String) onEmailChange;
+  final Function(String) onPhoneNumberChange;
   final Function(bool) onTermsChange;
   final Function(bool) onEmailsEnabledChange;
   final List<Uint8List> selectedImages;
@@ -181,6 +183,50 @@ class AddingScreenSideBar extends StatelessWidget {
                 ],
               ),
               SizedBox(height: width * 0.0125),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Jūsų tel. numeris',
+                  style: GoogleFonts.roboto(
+                    fontSize: width * 0.01093,
+                    fontWeight: FontWeight.w400,
+                    color: const Color.fromRGBO(0, 0, 0, 1),
+                  ),
+                ),
+              ),
+              SizedBox(height: width * 0.00468),
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    height: width * 0.03125,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(4)),
+                  ),
+                  Container(
+                    height: width * 0.03125,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: width * 0.01,
+                    ),
+                    child: TextFormField(
+                      maxLines: 1,
+                      textAlignVertical: TextAlignVertical.top,
+                      onChanged: (phoneNumber) {
+                        onPhoneNumberChange(phoneNumber);
+                      },
+                      style: GoogleFonts.roboto(
+                          fontSize: width * 0.0125,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black),
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: width * 0.00468),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(

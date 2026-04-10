@@ -31,6 +31,7 @@ part 'full_report_dto.g.dart';
 /// * [historyData]
 /// * [statusRecords]
 /// * [emailFeedbackStage]
+/// * [phoneNumber]
 /// * [inspection]
 /// * [inspectionId]
 /// * [isTransferred]
@@ -45,9 +46,7 @@ abstract class FullReportDto
 
   @BuiltValueField(wireName: r'category')
   FullReportDtoCategoryEnum get category;
-
   // enum categoryEnum {  trash,  forest,  beetle,  permits,  misc,  };
-
 
   @BuiltValueField(wireName: r'refId')
   String get refId;
@@ -90,6 +89,9 @@ abstract class FullReportDto
 
   @BuiltValueField(wireName: r'emailFeedbackStage')
   double get emailFeedbackStage;
+
+  @BuiltValueField(wireName: r'phoneNumber')
+  String get phoneNumber;
 
   @BuiltValueField(wireName: r'inspection')
   String? get inspection;
@@ -209,6 +211,11 @@ class _$FullReportDtoSerializer implements PrimitiveSerializer<FullReportDto> {
     yield serializers.serialize(
       object.emailFeedbackStage,
       specifiedType: const FullType(double),
+    );
+    yield r'phoneNumber';
+    yield serializers.serialize(
+      object.phoneNumber,
+      specifiedType: const FullType(String),
     );
     if (object.inspection != null) {
       yield r'inspection';
@@ -377,6 +384,13 @@ class _$FullReportDtoSerializer implements PrimitiveSerializer<FullReportDto> {
           ) as double;
           result.emailFeedbackStage = valueDes;
           break;
+        case r'phoneNumber':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType(String),
+          ) as String;
+          result.phoneNumber = valueDes;
+          break;
         case r'inspection':
           final valueDes = serializers.deserialize(
             value,
@@ -446,7 +460,6 @@ class FullReportDtoCategoryEnum extends EnumClass {
   @BuiltValueEnumConst(wireName: r'misc', fallback: true)
   static const FullReportDtoCategoryEnum misc =
       _$fullReportDtoCategoryEnum_misc;
-
 
   static Serializer<FullReportDtoCategoryEnum> get serializer =>
       _$fullReportDtoCategoryEnumSerializer;
