@@ -22,6 +22,7 @@ class AddReport implements AddingEvent {
   final List<Uint8List> images;
   final String category;
   final bool automaticEmailsEnabled;
+  final String? phoneNumber;
 
   AddReport({
     required this.emailValue,
@@ -31,6 +32,7 @@ class AddReport implements AddingEvent {
     required this.images,
     required this.category,
     required this.automaticEmailsEnabled,
+    this.phoneNumber,
   });
 }
 

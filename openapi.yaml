@@ -488,6 +488,8 @@ components:
         emailFeedbackStage:
           type: number
           format: double
+        phoneNumber:
+          type: string
       required:
         - _id
         - name
@@ -506,6 +508,7 @@ components:
         - historyData
         - statusRecords
         - emailFeedbackStage
+        - phoneNumber
     FullDumpDto:
       type: object
       properties:
@@ -726,6 +729,8 @@ components:
             - permits
             - misc
         email:
+          type: string
+        phoneNumber:
           type: string
       required:
         - automaticEmailsEnabled

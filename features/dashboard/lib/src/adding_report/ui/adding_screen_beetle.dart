@@ -37,7 +37,7 @@ class AddingScreenBeetle extends StatelessWidget {
                   return BeetleAddingScreenWeb(
                     width: width,
                     height: height,
-                    onAddTap: (email, text, lat, long, files) {
+                    onAddTap: (email, text, lat, long, files, phoneNumber) {
                       context.read<AddingBloc>().add(
                             AddReport(
                               emailValue: email,
@@ -47,6 +47,7 @@ class AddingScreenBeetle extends StatelessWidget {
                               images: files,
                               category: 'beetle',
                               automaticEmailsEnabled: false,
+                              phoneNumber: phoneNumber,
                             ),
                           );
                     },
@@ -56,7 +57,7 @@ class AddingScreenBeetle extends StatelessWidget {
                   return BeetleAddingScreenMobile(
                     width: width,
                     height: height,
-                    onAddTap: (email, text, lat, long, files) {
+                    onAddTap: (email, text, lat, long, files, phoneNumber) {
                       context.read<AddingBloc>().add(
                             AddReport(
                               emailValue: email,
@@ -66,6 +67,7 @@ class AddingScreenBeetle extends StatelessWidget {
                               images: files,
                               category: 'beetle',
                               automaticEmailsEnabled: false,
+                              phoneNumber: phoneNumber,
                             ),
                           );
                     },
