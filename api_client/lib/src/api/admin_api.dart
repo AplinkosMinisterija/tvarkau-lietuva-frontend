@@ -11,6 +11,7 @@ import 'package:api_client/src/api_util.dart';
 import 'package:api_client/src/model/create_dump_dto.dart';
 import 'package:api_client/src/model/full_dump_dto.dart';
 import 'package:api_client/src/model/full_report_dto.dart';
+import 'package:api_client/src/model/report_category_analytics_dto.dart';
 import 'package:api_client/src/model/transfer_report_dto.dart';
 import 'package:api_client/src/model/update_dump_dto.dart';
 import 'package:built_collection/built_collection.dart';
@@ -457,6 +458,111 @@ class AdminApi {
     }
 
     return Response<FullReportDto>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// adminControllerGetReportCategoryAnalytics
+  ///
+  ///
+  /// Parameters:
+  /// * [dateFrom] - Start date, ex.: 2024-01-01
+  /// * [dateTo] - End date, ex.: 2024-12-31
+  /// * [category]
+  /// * [status] - Filter by status string
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [ReportCategoryAnalyticsDto] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<ReportCategoryAnalyticsDto>>
+      adminControllerGetReportCategoryAnalytics({
+    String? dateFrom,
+    String? dateTo,
+    String? category,
+    String? status,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/admin/statistics/category';
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'Bearer',
+            'name': 'bearer',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _queryParameters = <String, dynamic>{
+      if (dateFrom != null)
+        r'dateFrom': encodeQueryParameter(
+            _serializers, dateFrom, const FullType(String)),
+      if (dateTo != null)
+        r'dateTo':
+            encodeQueryParameter(_serializers, dateTo, const FullType(String)),
+      if (category != null)
+        r'category': encodeQueryParameter(
+            _serializers, category, const FullType(String)),
+      if (status != null)
+        r'status':
+            encodeQueryParameter(_serializers, status, const FullType(String)),
+    };
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      queryParameters: _queryParameters,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    ReportCategoryAnalyticsDto? _responseData;
+
+    try {
+      final rawResponse = _response.data;
+      _responseData = rawResponse == null
+          ? null
+          : _serializers.deserialize(
+              rawResponse,
+              specifiedType: const FullType(ReportCategoryAnalyticsDto),
+            ) as ReportCategoryAnalyticsDto;
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<ReportCategoryAnalyticsDto>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,

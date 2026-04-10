@@ -120,7 +120,7 @@ class _BeetleAddingScreenMobileState extends State<BeetleAddingScreenMobile> {
                           onTap: () {
                             showDialog(
                                 context: context,
-                                barrierColor: Colors.white.withOpacity(0),
+                                barrierColor: Colors.white.withValues(alpha: 0),
                                 builder: (context) {
                                   return ExplanationDialogWidget(
                                     width: widget.width,
@@ -269,7 +269,7 @@ class _BeetleAddingScreenMobileState extends State<BeetleAddingScreenMobile> {
                               if (value == null || value.isEmpty) {
                                 return 'Prašome įvesti el. pašto adresą';
                               } else if (RegExp(
-                                      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+                                      r'^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
                                   .hasMatch(value)) {
                                 return null;
                               } else {

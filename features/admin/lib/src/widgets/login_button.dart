@@ -49,7 +49,7 @@ class _LoginButtonState extends State<LoginButton> {
             borderRadius: BorderRadius.circular(45),
             boxShadow: [
               BoxShadow(
-                color: Colors.white.withOpacity(0.1),
+                color: Colors.white.withValues(alpha: 0.1),
                 spreadRadius: 5,
                 blurRadius: 7,
                 offset: const Offset(0, 3),

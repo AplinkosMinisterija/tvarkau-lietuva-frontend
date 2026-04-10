@@ -1,4 +1,4 @@
-// Openapi Generator last run: : 2025-07-21T14:14:06.220245
+// Openapi Generator last run: : 2026-04-09T23:42:16.591348
 import 'package:admin/admin.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:dashboard/dashboard_screen.dart';
@@ -59,6 +59,12 @@ class AadApp extends StatelessWidget {
                   return DumpScreen(
                     refId: state.uri.queryParameters['id'] ?? '1',
                   );
+                }),
+            GoRoute(
+                name: 'analytics',
+                path: 'statistika',
+                builder: (context, state) {
+                  return const AnalyticsScreen();
                 }),
           ]),
       GoRoute(

@@ -1,0 +1,20 @@
+# api_client.model.ResolutionPerformanceDto
+
+## Load the model package
+```dart
+import 'package:api_client/api.dart';
+```
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**avgResolutionHours** | **num** |  | 
+**medianResolutionHours** | **num** |  | 
+**minResolutionHours** | **num** |  | 
+**maxResolutionHours** | **num** |  | 
+**sla** | [**SlaPerformanceDto**](SlaPerformanceDto.md) |  | 
+**resolvedCount** | **num** | Resolved report count used for calculation | 
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+

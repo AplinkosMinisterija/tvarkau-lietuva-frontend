@@ -157,7 +157,7 @@ class _BuildTab extends StatelessWidget {
         borderRadius: const BorderRadius.vertical(
           top: Radius.circular(8),
         ),
-        hoverColor: CustomColors.primary.withOpacity(0.05),
+        hoverColor: CustomColors.primary.withValues(alpha: 0.05),
         onTap: onTap,
         child: Container(
           height: 54,

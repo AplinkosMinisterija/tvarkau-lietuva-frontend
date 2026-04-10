@@ -49,7 +49,9 @@ class ApiProvider {
                 final context = navigatorKey.currentContext;
                 if (context != null) {
                   Future.microtask(() {
-                    context.goNamed('admin');
+                    if(context.mounted){
+                      context.goNamed('admin');
+                    }
                   });
                 }
                 throw DioException(
@@ -125,6 +127,13 @@ class ApiProvider {
   Future<ReportStatisticsDto> getReportStatistics(String? category) async {
     final response = await reportsApi.reportControllerGetReportStatistics(
         category: category);
+    return response.data!;
+  }
+
+  Future<ReportCategoryAnalyticsDto> getReportCategoryAnalytics(
+      String dateFrom, String? dateTo, String? category, String? status) async {
+    final response = await adminApi.adminControllerGetReportCategoryAnalytics(
+        dateFrom: dateFrom, dateTo: dateTo, category: category);
     return response.data!;
   }
 
@@ -252,7 +261,7 @@ class ApiProvider {
     List<Uint8List>? imageFiles,
   }) async {
     BuiltList<MultipartFile>? images;
-    if(imageFiles != null){
+    if (imageFiles != null) {
       images = _toMultiPartFiles(imageFiles);
     }
 

@@ -370,7 +370,7 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                     onExplanationTap: () {
                       showDialog(
                           context: context,
-                          barrierColor: Colors.white.withOpacity(0),
+                          barrierColor: Colors.white.withValues(alpha: 0),
                           builder: (context) {
                             return ExplanationDialogWidget(
                               width: widget.width,
@@ -496,7 +496,7 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                 permits[i].geometry!.coordinates![0][0][0][0]));
             showDialog(
                 context: context,
-                barrierColor: Colors.white.withOpacity(0),
+                barrierColor: Colors.white.withValues(alpha: 0),
                 builder: (context) {
                   return Align(
                     alignment: Alignment.topLeft,

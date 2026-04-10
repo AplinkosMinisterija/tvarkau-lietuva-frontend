@@ -14,6 +14,7 @@ import 'package:built_value/iso_8601_date_time_serializer.dart';
 import 'package:api_client/src/date_serializer.dart';
 import 'package:api_client/src/model/date.dart';
 
+import 'package:api_client/src/model/category_breakdown_item_dto.dart';
 import 'package:api_client/src/model/create_dump_dto.dart';
 import 'package:api_client/src/model/dump_dto.dart';
 import 'package:api_client/src/model/full_dump_dto.dart';
@@ -23,8 +24,15 @@ import 'package:api_client/src/model/history_edits_dto.dart';
 import 'package:api_client/src/model/json_coords_dto.dart';
 import 'package:api_client/src/model/log_in_dto.dart';
 import 'package:api_client/src/model/login_request_dto.dart';
+import 'package:api_client/src/model/monthly_trend_item_dto.dart';
+import 'package:api_client/src/model/overall_summary_dto.dart';
 import 'package:api_client/src/model/public_report_dto.dart';
+import 'package:api_client/src/model/region_breakdown_item_dto.dart';
+import 'package:api_client/src/model/report_category_analytics_dto.dart';
 import 'package:api_client/src/model/report_statistics_dto.dart';
+import 'package:api_client/src/model/resolution_performance_dto.dart';
+import 'package:api_client/src/model/sla_performance_dto.dart';
+import 'package:api_client/src/model/status_distribution_item_dto.dart';
 import 'package:api_client/src/model/status_records_dto.dart';
 import 'package:api_client/src/model/transfer_report_dto.dart';
 import 'package:api_client/src/model/update_dump_dto.dart';
@@ -32,6 +40,7 @@ import 'package:api_client/src/model/update_dump_dto.dart';
 part 'serializers.g.dart';
 
 @SerializersFor([
+  CategoryBreakdownItemDto,
   CreateDumpDto,
   DumpDto,
   FullDumpDto,
@@ -41,8 +50,15 @@ part 'serializers.g.dart';
   JsonCoordsDto,
   LogInDto,
   LoginRequestDto,
+  MonthlyTrendItemDto,
+  OverallSummaryDto,
   PublicReportDto,
+  RegionBreakdownItemDto,
+  ReportCategoryAnalyticsDto,
   ReportStatisticsDto,
+  ResolutionPerformanceDto,
+  SlaPerformanceDto,
+  StatusDistributionItemDto,
   StatusRecordsDto,
   TransferReportDto,
   UpdateDumpDto,

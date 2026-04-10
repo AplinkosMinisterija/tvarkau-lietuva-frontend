@@ -94,7 +94,7 @@ class ImageGallery {
                             margin: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
-                                color: Colors.white.withOpacity(0.7),
+                                color: Colors.white.withValues(alpha: 0.7),
                                 border: Border.all(
                                   color: Colors.black,
                                   width: 1,

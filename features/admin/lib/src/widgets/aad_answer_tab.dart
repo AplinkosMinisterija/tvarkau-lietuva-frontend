@@ -238,7 +238,7 @@ class _BuildStatus extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: color.withOpacity(.1),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(4),
         border: Border.all(
           width: 1,
@@ -351,7 +351,7 @@ class _BuildAnswerAndImageSectionState
               widget.onAnswerChange(value);
             },
             decoration: InputDecoration(
-              hoverColor: CustomColors.primary.withOpacity(0.05),
+              hoverColor: CustomColors.primary.withValues(alpha: 0.05),
               fillColor: CustomColors.white,
               filled: true,
               border: InputBorder.none,

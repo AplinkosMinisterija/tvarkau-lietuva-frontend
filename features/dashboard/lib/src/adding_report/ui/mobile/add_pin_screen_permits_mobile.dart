@@ -291,7 +291,8 @@ class _AddPinScreenPermitsMobileState extends State<AddPinScreenPermitsMobile>
                             onTap: () {
                               showDialog(
                                   context: context,
-                                  barrierColor: Colors.white.withOpacity(0),
+                                  barrierColor:
+                                      Colors.white.withValues(alpha: 0),
                                   builder: (context) {
                                     return Align(
                                       alignment: Alignment.bottomCenter,
