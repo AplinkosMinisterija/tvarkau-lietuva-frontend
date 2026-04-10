@@ -1,9 +1,5 @@
-import 'dart:typed_data';
-
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
-import 'package:core/utils/permit.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 part 'analytics_event.dart';
 part 'analytics_state.dart';
@@ -42,12 +38,12 @@ class AnalyticsBloc extends Bloc<AnalyticsEvent, AnalyticsState> {
         LoadingState(),
       );
 
-      final ReportCategoryAnalyticsDto? analytics =
+      final ReportCategoryAnalyticsDto analytics =
           await ApiProvider().getReportCategoryAnalytics(
         event.dateFrom,
         event.dateTo,
-        event.status,
         event.category,
+        event.status,
       );
 
       emit(

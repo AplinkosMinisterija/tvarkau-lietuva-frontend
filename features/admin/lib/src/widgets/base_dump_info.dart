@@ -22,7 +22,8 @@ class BaseTrashInfo extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _BuildColumn(
-            title: 'Data', value: FormatterUtils().formatDate(trash.reportDate)),
+            title: 'Data',
+            value: FormatterUtils().formatDate(trash.reportDate)),
         _BuildColumn(title: 'El. paštas', value: trash.email),
         _BuildColumn(
           title: 'Platuma',
@@ -65,7 +66,7 @@ class _BuildColumn extends StatelessWidget {
           title,
           overflow: TextOverflow.ellipsis,
           style: CustomStyles.body2.copyWith(
-            color: CustomColors.white.withOpacity(.64),
+            color: CustomColors.white.withValues(alpha: 0.64),
           ),
         ),
         SelectionArea(

@@ -30,7 +30,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                       onBackPress: () {
                         context.goNamed('admin');
                       },
-                      onLoadAnalytics: (String dateFrom, String dateTo,
+                      onLoadAnalytics: (String dateFrom, String? dateTo,
                           String? status, String? category) {
                         context.read<AnalyticsBloc>().add(UpdateAnalyticsData(
                             dateFrom: dateFrom,

@@ -8,7 +8,7 @@ class ReloadPage implements AnalyticsEvent {}
 
 class UpdateAnalyticsData implements AnalyticsEvent {
   final String dateFrom;
-  final String dateTo;
+  final String? dateTo;
   final String? status;
   final String? category;
 

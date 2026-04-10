@@ -49,7 +49,9 @@ class ApiProvider {
                 final context = navigatorKey.currentContext;
                 if (context != null) {
                   Future.microtask(() {
-                    context.goNamed('admin');
+                    if(context.mounted){
+                      context.goNamed('admin');
+                    }
                   });
                 }
                 throw DioException(
@@ -129,9 +131,9 @@ class ApiProvider {
   }
 
   Future<ReportCategoryAnalyticsDto> getReportCategoryAnalytics(
-      String dateFrom, String dateTo, String? category, String? status) async {
+      String dateFrom, String? dateTo, String? category, String? status) async {
     final response = await adminApi.adminControllerGetReportCategoryAnalytics(
-        dateFrom: dateFrom, dateTo: dateTo, category: category, status: status);
+        dateFrom: dateFrom, dateTo: dateTo, category: category);
     return response.data!;
   }
 
