@@ -242,9 +242,10 @@ class _TrendTable extends StatelessWidget {
   ];
 
   Widget _pctCell(double? pct) {
-    if (pct == null)
+    if (pct == null) {
       return const Text('—',
           style: TextStyle(color: AppColors.textMuted, fontSize: 12));
+    }
     final isUp = pct >= 0;
     final color = isUp ? AppColors.primary : AppColors.accentRed;
     return Row(
@@ -399,7 +400,6 @@ class _RegionPieChart extends StatelessWidget {
   Widget build(BuildContext context) {
     final top = items.take(6).toList();
     final otherCount = items.skip(6).fold(0, (a, b) => a + b.count.toInt());
-    final total = items.fold(0, (a, b) => a + b.count.toInt());
 
     return SizedBox(
       height: 220,
@@ -427,7 +427,7 @@ class _RegionPieChart extends StatelessWidget {
             if (otherCount > 0)
               PieChartSectionData(
                 value: otherCount.toDouble(),
-                color: AppColors.textMuted.withOpacity(0.4),
+                color: AppColors.textMuted.withValues(alpha: 0.4),
                 radius: 44,
                 showTitle: false,
               ),

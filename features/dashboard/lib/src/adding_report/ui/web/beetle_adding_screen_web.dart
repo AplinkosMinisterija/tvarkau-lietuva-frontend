@@ -317,7 +317,7 @@ class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
                     onExplanationTap: () {
                       showDialog(
                           context: context,
-                          barrierColor: Colors.white.withOpacity(0),
+                          barrierColor: Colors.white.withValues(alpha: 0),
                           builder: (context) {
                             return ExplanationDialogWidget(
                               width: widget.width,

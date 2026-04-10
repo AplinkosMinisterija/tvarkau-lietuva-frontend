@@ -1,11 +1,9 @@
 import 'package:api_client/api_client.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import '../common/custom_colors.dart';
 import '../common/custom_styles.dart';
-import 'custom_button.dart';
 
 class AdminTableDumps extends StatelessWidget {
   const AdminTableDumps({
@@ -153,14 +151,14 @@ class ReportDataSourceAdmin extends DataGridSource {
         child: e.columnName == 'visibility'
             ? getVisibilityWidget(e.value)
             : SelectionArea(
-                    child: Text(e.value.toString(),
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.left,
-                        maxLines: 2,
-                        style: CustomStyles.button1.copyWith(
-                          color: CustomColors.black,
-                        )),
-                  ),
+                child: Text(e.value.toString(),
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.left,
+                    maxLines: 2,
+                    style: CustomStyles.button1.copyWith(
+                      color: CustomColors.black,
+                    )),
+              ),
       );
     }).toList());
   }

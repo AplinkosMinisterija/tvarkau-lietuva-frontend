@@ -39,7 +39,7 @@ class Header extends StatelessWidget {
                   email,
                   style: CustomStyles.body1.copyWith(
                       fontWeight: FontWeight.w500,
-                      color: CustomColors.white.withOpacity(.53)),
+                      color: CustomColors.white.withValues(alpha: 0.53)),
                 )
               ],
             ),

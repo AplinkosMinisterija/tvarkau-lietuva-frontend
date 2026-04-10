@@ -37,11 +37,10 @@ class _StatCardState extends State<StatCard>
     super.initState();
     _ctrl = AnimationController(
         vsync: this, duration: const Duration(milliseconds: 500));
-    _scaleAnim =
-        Tween<double>(begin: 0.92, end: 1.0).animate(CurvedAnimation(
-          parent: _ctrl,
-          curve: Curves.easeOutCubic,
-        ));
+    _scaleAnim = Tween<double>(begin: 0.92, end: 1.0).animate(CurvedAnimation(
+      parent: _ctrl,
+      curve: Curves.easeOutCubic,
+    ));
     _fadeAnim = Tween<double>(begin: 0, end: 1).animate(CurvedAnimation(
       parent: _ctrl,
       curve: const Interval(0.2, 1.0, curve: Curves.easeOut),
@@ -76,17 +75,27 @@ class _StatCardState extends State<StatCard>
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               decoration: BoxDecoration(
-                color: _hovered
-                    ? AppColors.surfaceElevated
-                    : AppColors.surface,
+                color: _hovered ? AppColors.surfaceElevated : AppColors.surface,
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
-                  color: _hovered ? accent.withOpacity(0.5) : AppColors.border,
+                  color: _hovered
+                      ? accent.withValues(alpha: 0.5)
+                      : AppColors.border,
                   width: 1,
                 ),
                 boxShadow: _hovered
-                    ? [BoxShadow(color: accent.withOpacity(0.15), blurRadius: 24, spreadRadius: 0)]
-                    : [BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 8, offset: const Offset(0, 2))],
+                    ? [
+                        BoxShadow(
+                            color: accent.withValues(alpha: 0.15),
+                            blurRadius: 24,
+                            spreadRadius: 0)
+                      ]
+                    : [
+                        BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.2),
+                            blurRadius: 8,
+                            offset: const Offset(0, 2))
+                      ],
               ),
               padding: const EdgeInsets.all(15),
               child: Column(
@@ -113,20 +122,20 @@ class _StatCardState extends State<StatCard>
                   Text(
                     widget.value,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      color: AppColors.textPrimary,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 28,
-                      letterSpacing: -0.5,
-                    ),
+                          color: AppColors.textPrimary,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 28,
+                          letterSpacing: -0.5,
+                        ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     widget.label,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AppColors.textSecondary,
-                      fontSize: 12,
-                      letterSpacing: 0.3,
-                    ),
+                          color: AppColors.textSecondary,
+                          fontSize: 12,
+                          letterSpacing: 0.3,
+                        ),
                   ),
                   if (widget.subtitle != null) ...[
                     const SizedBox(height: 8),
@@ -138,9 +147,9 @@ class _StatCardState extends State<StatCard>
                     Text(
                       widget.subtitle!,
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AppColors.textMuted,
-                        fontSize: 11,
-                      ),
+                            color: AppColors.textMuted,
+                            fontSize: 11,
+                          ),
                     ),
                   ],
                 ],
@@ -155,6 +164,7 @@ class _StatCardState extends State<StatCard>
 
 class _ChangeBadge extends StatelessWidget {
   final double percent;
+
   const _ChangeBadge({required this.percent});
 
   @override
@@ -164,7 +174,7 @@ class _ChangeBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.12),
+        color: color.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
@@ -223,24 +233,20 @@ class ChartCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(title,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleLarge
-                              ?.copyWith(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 15,
-                            color: AppColors.textPrimary,
-                          )),
+                          style:
+                              Theme.of(context).textTheme.titleLarge?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 15,
+                                    color: AppColors.textPrimary,
+                                  )),
                       if (subtitle != null) ...[
                         const SizedBox(height: 2),
                         Text(subtitle!,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodySmall
-                                ?.copyWith(
-                              color: AppColors.textMuted,
-                              fontSize: 11,
-                            )),
+                            style:
+                                Theme.of(context).textTheme.bodySmall?.copyWith(
+                                      color: AppColors.textMuted,
+                                      fontSize: 11,
+                                    )),
                       ],
                     ],
                   ),

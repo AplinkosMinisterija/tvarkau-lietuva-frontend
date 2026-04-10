@@ -243,9 +243,9 @@ class _AdminWindowState extends State<AdminWindow> {
                           activeThumbColor: CustomColors.orange,
                           activeTrackColor: CustomColors.white,
                           inactiveTrackColor:
-                              CustomColors.white.withOpacity(.1),
+                              CustomColors.white.withValues(alpha: 0.1),
                           inactiveThumbColor:
-                              CustomColors.primary.withOpacity(.4),
+                              CustomColors.primary.withValues(alpha: 0.4),
                           onChanged: (value) {
                             widget.onDeletedChange(widget.activeCategory);
                           },

@@ -57,8 +57,8 @@ class CustomButton extends StatelessWidget {
           child: InkWell(
             borderRadius: borderRadius,
             hoverColor: buttonType == ButtonType.solid
-                ? CustomColors.white.withOpacity(0.1)
-                : color.withOpacity(0.05),
+                ? CustomColors.white.withValues(alpha: 0.1)
+                : color.withValues(alpha: 0.05),
             onTap: onPressed,
             child: Padding(
               padding: padding ??

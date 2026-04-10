@@ -359,7 +359,7 @@ class _BuildInput extends StatelessWidget {
               onChanged(val);
             },
             decoration: InputDecoration(
-                hoverColor: CustomColors.primary.withOpacity(0.05),
+                hoverColor: CustomColors.primary.withValues(alpha: 0.05),
                 fillColor: CustomColors.white,
                 filled: true,
                 border: InputBorder.none,

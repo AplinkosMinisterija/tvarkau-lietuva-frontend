@@ -148,14 +148,15 @@ class _AnalyticsWindowState extends State<AnalyticsWindow>
                                       : null,
                                   null,
                                   filterCategory);
-                            }, onClear: () {
+                            },
+                            onClear: () {
                               setState(() {
                                 filterDateFrom = null;
                                 filterDateTo = null;
                                 filterCategory = null;
                                 isPending = false;
                               });
-                          },
+                            },
                           ),
                         ),
                         if (widget.analytics != null) ...[
@@ -374,7 +375,6 @@ class _GeneratedAtBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (analytics == null) return const SizedBox();
     final ts = DateTime.tryParse(analytics.generatedAt);
     final label = ts != null
         ? '${ts.hour.toString().padLeft(2, '0')}:${ts.minute.toString().padLeft(2, '0')}'
@@ -776,14 +776,14 @@ class _DropdownChipState extends State<_DropdownChip>
             padding: const EdgeInsets.symmetric(horizontal: 12),
             decoration: BoxDecoration(
               color: _active
-                  ? _accentColor.withOpacity(0.1)
+                  ? _accentColor.withValues(alpha: 0.1)
                   : _hovered
                       ? AppColors.surfaceElevated
-                      : AppColors.surfaceElevated.withOpacity(0.6),
+                      : AppColors.surfaceElevated.withValues(alpha: 0.6),
               borderRadius: BorderRadius.circular(8),
               border: Border.all(
                 color: _active
-                    ? _accentColor.withOpacity(0.4)
+                    ? _accentColor.withValues(alpha: 0.4)
                     : _hovered
                         ? AppColors.borderLight
                         : AppColors.border,
@@ -791,7 +791,7 @@ class _DropdownChipState extends State<_DropdownChip>
               boxShadow: _active
                   ? [
                       BoxShadow(
-                        color: _accentColor.withOpacity(0.15),
+                        color: _accentColor.withValues(alpha: 0.15),
                         blurRadius: 8,
                       )
                     ]
@@ -822,7 +822,7 @@ class _DropdownChipState extends State<_DropdownChip>
                         size: 12, color: _accentColor),
                   )
                 else
-                  Icon(Icons.keyboard_arrow_down_rounded,
+                  const Icon(Icons.keyboard_arrow_down_rounded,
                       size: 14, color: AppColors.textMuted),
               ],
             ),
@@ -924,12 +924,12 @@ class _ResetButtonState extends State<_ResetButton> {
           padding: const EdgeInsets.symmetric(horizontal: 12),
           decoration: BoxDecoration(
             color: _hovered
-                ? AppColors.accentRed.withOpacity(0.1)
+                ? AppColors.accentRed.withValues(alpha: 0.1)
                 : Colors.transparent,
             borderRadius: BorderRadius.circular(8),
             border: Border.all(
               color: _hovered
-                  ? AppColors.accentRed.withOpacity(0.3)
+                  ? AppColors.accentRed.withValues(alpha: 0.3)
                   : AppColors.border,
             ),
           ),
@@ -971,9 +971,7 @@ class _ApplyButton extends StatefulWidget {
 
 class _ApplyButtonState extends State<_ApplyButton>
     with SingleTickerProviderStateMixin {
-  bool _hovered = false;
   late AnimationController _pulseCtrl;
-  late Animation<double> _pulse;
 
   @override
   void initState() {
@@ -1008,8 +1006,6 @@ class _ApplyButtonState extends State<_ApplyButton>
     final active = widget.pending && !widget.loading;
 
     return MouseRegion(
-      onEnter: (_) => setState(() => _hovered = true),
-      onExit: (_) => setState(() => _hovered = false),
       cursor: active ? SystemMouseCursors.click : SystemMouseCursors.basic,
       child: GestureDetector(
         onTap: active ? widget.onTap : null,
@@ -1146,7 +1142,7 @@ class _DropdownMenuState extends State<_DropdownMenu>
               border: Border.all(color: AppColors.borderLight),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.4),
+                  color: Colors.black.withValues(alpha: 0.4),
                   blurRadius: 24,
                   offset: const Offset(0, 8),
                 ),
@@ -1204,9 +1200,9 @@ class _MenuItemState extends State<_MenuItem> {
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
           decoration: BoxDecoration(
             color: widget.isSelected
-                ? AppColors.accentPurple.withOpacity(0.12)
+                ? AppColors.accentPurple.withValues(alpha: 0.12)
                 : _hovered
-                    ? AppColors.border.withOpacity(0.5)
+                    ? AppColors.border.withValues(alpha: 0.5)
                     : Colors.transparent,
             borderRadius: BorderRadius.circular(8),
           ),

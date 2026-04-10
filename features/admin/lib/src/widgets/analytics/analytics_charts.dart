@@ -80,7 +80,8 @@ class _StatusDonutChartState extends State<StatusDonutChart>
                       final color = AppColors.statusColor(item.status);
                       return PieChartSectionData(
                         value: item.count.toDouble() * _anim.value,
-                        color: isTouched ? color : color.withOpacity(0.85),
+                        color:
+                            isTouched ? color : color.withValues(alpha: 0.85),
                         radius: isTouched ? 56 : 48,
                         showTitle: false,
                         badgeWidget: isTouched
@@ -151,9 +152,9 @@ class _Badge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.2),
+        color: color.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.5)),
+        border: Border.all(color: color.withValues(alpha: 0.5)),
       ),
       child: Text('${pct.toStringAsFixed(1)}%',
           style: TextStyle(
@@ -175,7 +176,6 @@ class _MonthlyTrendChartState extends State<MonthlyTrendChart>
     with SingleTickerProviderStateMixin {
   late AnimationController _ctrl;
   late Animation<double> _anim;
-  int? _hovered;
 
   @override
   void initState() {
@@ -273,8 +273,9 @@ class _MonthlyTrendChartState extends State<MonthlyTrendChart>
                     interval: 1,
                     getTitlesWidget: (v, _) {
                       final idx = v.toInt();
-                      if (idx < 0 || idx >= widget.trends.length)
+                      if (idx < 0 || idx >= widget.trends.length) {
                         return const SizedBox();
+                      }
                       return Padding(
                         padding: const EdgeInsets.only(top: 6),
                         child: Text(
@@ -328,8 +329,8 @@ class _MonthlyTrendChartState extends State<MonthlyTrendChart>
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        AppColors.primary.withOpacity(0.20),
-                        AppColors.primary.withOpacity(0.00),
+                        AppColors.primary.withValues(alpha: 0.20),
+                        AppColors.primary.withValues(alpha: 0.00),
                       ],
                     ),
                   ),
@@ -454,8 +455,9 @@ class _CategoryBarChartState extends State<CategoryBarChart>
                     showTitles: true,
                     getTitlesWidget: (v, _) {
                       final idx = v.toInt();
-                      if (idx < 0 || idx >= widget.items.length)
+                      if (idx < 0 || idx >= widget.items.length) {
                         return const SizedBox();
+                      }
                       return Padding(
                         padding: const EdgeInsets.only(top: 6),
                         child: Text(_catLabel(widget.items[idx].category),
@@ -495,7 +497,7 @@ class _CategoryBarChartState extends State<CategoryBarChart>
                       backDrawRodData: BackgroundBarChartRodData(
                         show: true,
                         toY: maxY,
-                        color: AppColors.border.withOpacity(0.3),
+                        color: AppColors.border.withValues(alpha: 0.3),
                       ),
                     ),
                   ],
@@ -600,7 +602,7 @@ class _SlaChartState extends State<SlaChart>
                               color: item.color,
                               boxShadow: [
                                 BoxShadow(
-                                    color: item.color.withOpacity(0.4),
+                                    color: item.color.withValues(alpha: 0.4),
                                     blurRadius: 6)
                               ],
                             ),
@@ -698,11 +700,11 @@ class _RegionChartState extends State<RegionChart>
                               height: 8,
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
-                                  colors: [color, color.withOpacity(0.6)],
+                                  colors: [color, color.withValues(alpha: 0.6)],
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                      color: color.withOpacity(0.3),
+                                      color: color.withValues(alpha: 0.3),
                                       blurRadius: 4)
                                 ],
                               ),
@@ -770,7 +772,7 @@ class TrendBadgeRow extends StatelessWidget {
           decoration: BoxDecoration(
             color: color.withValues(alpha: 0.08),
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: color.withOpacity(0.2)),
+            border: Border.all(color: color.withValues(alpha: 0.2)),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
