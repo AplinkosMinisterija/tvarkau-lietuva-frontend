@@ -9,6 +9,7 @@ import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:pointer_interceptor/pointer_interceptor.dart';
 import '../common/custom_colors.dart';
 import '../common/custom_styles.dart';
 import '../widgets/base_admin_screen.dart';
@@ -143,12 +144,14 @@ class _TrashWindowState extends State<TrashWindow> {
                         widget.trash,
                         markers,
                         height.toDouble(),
+                        width * 2.4,
                       );
                     } else {
                       return _buildDesktopLayout(
                         widget.trash,
                         markers,
                         height.toDouble(),
+                        width,
                       );
                     }
                   })
@@ -162,7 +165,7 @@ class _TrashWindowState extends State<TrashWindow> {
   }
 
   Widget _buildDesktopLayout(
-      FullReportDto trash, Set<Marker> markers, double height) {
+      FullReportDto trash, Set<Marker> markers, double height, double width) {
     final List<String> imageUrls = [];
     final List<String> officerImageUrls = [];
     if (trash.imageUrls.isNotEmpty) {
@@ -204,6 +207,7 @@ class _TrashWindowState extends State<TrashWindow> {
                   trash.latitude,
                   trash.longitude,
                 ),
+                width: width,
               ),
               16.heightBox,
               TextFormField(
@@ -378,7 +382,7 @@ class _TrashWindowState extends State<TrashWindow> {
   }
 
   Widget _buildMobileLayout(
-      FullReportDto trash, Set<Marker> markers, double height) {
+      FullReportDto trash, Set<Marker> markers, double height, double width) {
     final List<String> imageUrls = [];
     final List<String> officerImageUrls = [];
     if (trash.imageUrls.isNotEmpty) {
@@ -419,6 +423,7 @@ class _TrashWindowState extends State<TrashWindow> {
                 trash.latitude,
                 trash.longitude,
               ),
+              width: width,
             ),
             32.heightBox,
             TextFormField(
@@ -543,12 +548,14 @@ class _TrashWindowState extends State<TrashWindow> {
 class _BuildMap extends StatefulWidget {
   const _BuildMap({
     required this.height,
+    required this.width,
     required this.markers,
     required this.initialTarget,
     required this.permits,
   });
 
   final double height;
+  final double width;
   final Set<Marker> markers;
   final LatLng initialTarget;
   final List<Permit>? permits;
@@ -559,6 +566,7 @@ class _BuildMap extends StatefulWidget {
 
 class _BuildMapState extends State<_BuildMap> {
   Set<Polygon> polygons = {};
+  MapType currentMapType = MapType.normal;
 
   @override
   void initState() {
@@ -572,14 +580,45 @@ class _BuildMapState extends State<_BuildMap> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: widget.height.toDouble(),
-      child: GoogleMap(
-        mapType: MapType.none,
-        markers: widget.markers,
-        polygons: polygons,
-        initialCameraPosition: CameraPosition(
-          target: widget.initialTarget,
-          zoom: 13,
-        ),
+      child: Stack(
+        children: [
+          GoogleMap(
+            mapType: currentMapType,
+            markers: widget.markers,
+            polygons: polygons,
+            initialCameraPosition: CameraPosition(
+              target: widget.initialTarget,
+              zoom: 13,
+            ),
+          ),
+          Positioned(
+            bottom: 24,
+            right: 55,
+            child: InkWell(
+              child: PointerInterceptor(
+                child: GoogleMapTypeButton(
+                  height: 40,
+                  width: 40,
+                  onPressed: () {
+                    showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => MapTypeChangeDialog(
+                              width: widget.width,
+                              currentMapType: currentMapType,
+                              onChangeTap: (MapType mapType) {
+                                setState(() {
+                                  currentMapType = mapType;
+                                });
+                              },
+                              isReportsActive: false,
+                              isMobile: false,
+                            ));
+                  },
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -588,11 +627,8 @@ class _BuildMapState extends State<_BuildMap> {
     Set<Polygon> tempPolygons = {};
     for (var i = 0; i < permits.length; i++) {
       List<LatLng> coordinates = [];
-      for (var j = 0;
-          j < permits[i].geometry!.coordinates![0][0].length;
-          j++) {
-        coordinates.add(LatLng(
-            permits[i].geometry!.coordinates![0][0][j][1],
+      for (var j = 0; j < permits[i].geometry!.coordinates![0][0].length; j++) {
+        coordinates.add(LatLng(permits[i].geometry!.coordinates![0][0][j][1],
             permits[i].geometry!.coordinates![0][0][j][0]));
       }
       tempPolygons.add(
@@ -622,31 +658,23 @@ class _BuildMapState extends State<_BuildMap> {
                           width: 1200,
                           isMobile: false,
                           type: permits[i].properties!.tipas ?? '',
-                          issuedFrom:
-                              permits[i].properties!.galiojaNuo ?? '',
-                          issuedTo:
-                              permits[i].properties!.galiojaIki ?? '',
+                          issuedFrom: permits[i].properties!.galiojaNuo ?? '',
+                          issuedTo: permits[i].properties!.galiojaIki ?? '',
                           cadastralNumber:
-                              permits[i].properties!.kadastrinisNr ??
-                                  '',
+                              permits[i].properties!.kadastrinisNr ?? '',
                           subdivision:
-                              permits[i].properties!.vmuPadalinys ??
-                                  '',
+                              permits[i].properties!.vmuPadalinys ?? '',
                           forestryDistrict:
                               permits[i].properties!.girininkija ?? '',
                           block: permits[i].properties!.kvartalas,
                           plot: permits[i].properties!.sklypas ?? '',
-                          cuttableArea:
-                              permits[i].properties!.kertamasPlotas,
-                          dominantTree: permits[i].properties!
-                                  .vyraujantysMedziai ??
-                              '',
+                          cuttableArea: permits[i].properties!.kertamasPlotas,
+                          dominantTree:
+                              permits[i].properties!.vyraujantysMedziai ?? '',
                           cuttingType:
-                              permits[i].properties!.kirtimoRusis ??
-                                  '',
+                              permits[i].properties!.kirtimoRusis ?? '',
                           reinstatementType:
-                              permits[i].properties!.atkurimoBudas ??
-                                  '',
+                              permits[i].properties!.atkurimoBudas ?? '',
                         ),
                       ),
                     ),
@@ -762,7 +790,6 @@ Map<String, String> getEmployeeList(FullReportDtoCategoryEnum category) {
     'Vilniaus MKS': 'marijonas.juskauskas@aad.am.lt',
     'Klaipėdos MKS': 'robertas.paulauskas@aad.am.lt',
     'Panevėžio MKS': 'albertas.mikasauskas@aad.am.lt',
-
   };
   return trashList;
 }
