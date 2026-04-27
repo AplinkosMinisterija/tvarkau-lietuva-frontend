@@ -95,6 +95,13 @@ class AdminTableReports extends StatelessWidget {
               label: const _BuildHeaderLabel('Matomumas'),
             ),
             GridColumn(
+              columnName: 'isTransferred',
+              allowSorting: true,
+              allowFiltering: true,
+              width: 140,
+              label: const _BuildHeaderLabel('AADIS statusas'),
+            ),
+            GridColumn(
               columnName: 'edit',
               allowSorting: false,
               allowFiltering: false,
@@ -141,6 +148,9 @@ class ReportDataSourceAdmin extends DataGridSource {
               DataGridCell<String>(
                   columnName: 'visibility',
                   value: e.isVisible ? 'Rodomas' : 'Nerodomas'),
+              DataGridCell<String>(
+                  columnName: 'isTransferred',
+                  value: e.isTransferred! ? 'Perduota' : 'Neperduota'),
               const DataGridCell<String>(columnName: 'edit', value: 'edit'),
             ]))
         .toList();
@@ -176,39 +186,41 @@ class ReportDataSourceAdmin extends DataGridSource {
             ? _BuildStatus(status: e.value)
             : e.columnName == 'visibility'
                 ? getVisibilityWidget(e.value)
-                : e.columnName == 'edit'
-                    ? CustomButton(
-                        padding: EdgeInsets.zero,
-                        height: 32,
-                        width: 110,
-                        text: 'Redaguoti',
-                        textStyle: CustomStyles.button2.copyWith(
-                          color: CustomColors.primary,
-                        ),
-                        onPressed: () {
-                          final String reportId =
-                              row.getCells()[0].value.toString();
-                          String str = '0' * (8 - reportId.length);
-                          context.goNamed('report_admin', queryParameters: {
-                            'id': 'TLP-A$str${reportId.toUpperCase()}'
-                          });
-                        },
-                        icon: const Icon(
-                          Icons.edit,
-                          size: 14,
-                          color: CustomColors.primary,
-                        ),
-                        buttonType: ButtonType.outlined,
-                      )
-                    : SelectionArea(
-                        child: Text(e.value.toString(),
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            maxLines: 2,
-                            style: CustomStyles.button1.copyWith(
-                              color: CustomColors.black,
-                            )),
-                      ),
+                : e.columnName == 'isTransferred'
+                    ? getTransferredWidget(e.value)
+                    : e.columnName == 'edit'
+                        ? CustomButton(
+                            padding: EdgeInsets.zero,
+                            height: 32,
+                            width: 110,
+                            text: 'Redaguoti',
+                            textStyle: CustomStyles.button2.copyWith(
+                              color: CustomColors.primary,
+                            ),
+                            onPressed: () {
+                              final String reportId =
+                                  row.getCells()[0].value.toString();
+                              String str = '0' * (8 - reportId.length);
+                              context.goNamed('report_admin', queryParameters: {
+                                'id': 'TLP-A$str${reportId.toUpperCase()}'
+                              });
+                            },
+                            icon: const Icon(
+                              Icons.edit,
+                              size: 14,
+                              color: CustomColors.primary,
+                            ),
+                            buttonType: ButtonType.outlined,
+                          )
+                        : SelectionArea(
+                            child: Text(e.value.toString(),
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.left,
+                                maxLines: 2,
+                                style: CustomStyles.button1.copyWith(
+                                  color: CustomColors.black,
+                                )),
+                          ),
       );
     }).toList());
   }
@@ -225,6 +237,36 @@ Widget getVisibilityWidget(String isVisible) {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: isVisible == 'Rodomas'
+                  ? CustomColors.primary
+                  : CustomColors.red,
+            ),
+            height: 12,
+            width: 12,
+          ),
+          const SizedBox(width: 8),
+          Text(
+            isVisible,
+            style: CustomStyles.button1.copyWith(
+              color: CustomColors.black,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget getTransferredWidget(String isVisible) {
+  return SizedBox(
+    child: FittedBox(
+      fit: BoxFit.fitWidth,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: isVisible == 'Perduota'
                   ? CustomColors.primary
                   : CustomColors.red,
             ),
