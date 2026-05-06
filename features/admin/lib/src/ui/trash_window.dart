@@ -143,12 +143,14 @@ class _TrashWindowState extends State<TrashWindow> {
                         widget.trash,
                         markers,
                         height.toDouble(),
+                        width,
                       );
                     } else {
                       return _buildDesktopLayout(
                         widget.trash,
                         markers,
                         height.toDouble(),
+                        width,
                       );
                     }
                   })
@@ -162,7 +164,7 @@ class _TrashWindowState extends State<TrashWindow> {
   }
 
   Widget _buildDesktopLayout(
-      FullReportDto trash, Set<Marker> markers, double height) {
+      FullReportDto trash, Set<Marker> markers, double height, double width) {
     final List<String> imageUrls = [];
     final List<String> officerImageUrls = [];
     if (trash.imageUrls.isNotEmpty) {
@@ -242,12 +244,13 @@ class _TrashWindowState extends State<TrashWindow> {
                 Text(
                   'AAD atsakymas ir inspektorių nuotraukos',
                   style: CustomStyles.h2
-                      .copyWith(color: Colors.black, fontSize: 20),
+                      .copyWith(color: Colors.black, fontSize: width * 0.01),
                 ),
                 10.heightBox,
                 Text(
                   trash.comment,
-                  style: CustomStyles.body1,
+                  style: CustomStyles.body1
+                      .copyWith(color: Colors.black, fontSize: width * 0.01),
                 ),
                 10.heightBox,
                 trash.officerImageUrls.isNotEmpty
@@ -378,7 +381,7 @@ class _TrashWindowState extends State<TrashWindow> {
   }
 
   Widget _buildMobileLayout(
-      FullReportDto trash, Set<Marker> markers, double height) {
+      FullReportDto trash, Set<Marker> markers, double height, double width) {
     final List<String> imageUrls = [];
     final List<String> officerImageUrls = [];
     if (trash.imageUrls.isNotEmpty) {
@@ -588,11 +591,8 @@ class _BuildMapState extends State<_BuildMap> {
     Set<Polygon> tempPolygons = {};
     for (var i = 0; i < permits.length; i++) {
       List<LatLng> coordinates = [];
-      for (var j = 0;
-          j < permits[i].geometry!.coordinates![0][0].length;
-          j++) {
-        coordinates.add(LatLng(
-            permits[i].geometry!.coordinates![0][0][j][1],
+      for (var j = 0; j < permits[i].geometry!.coordinates![0][0].length; j++) {
+        coordinates.add(LatLng(permits[i].geometry!.coordinates![0][0][j][1],
             permits[i].geometry!.coordinates![0][0][j][0]));
       }
       tempPolygons.add(
@@ -622,31 +622,23 @@ class _BuildMapState extends State<_BuildMap> {
                           width: 1200,
                           isMobile: false,
                           type: permits[i].properties!.tipas ?? '',
-                          issuedFrom:
-                              permits[i].properties!.galiojaNuo ?? '',
-                          issuedTo:
-                              permits[i].properties!.galiojaIki ?? '',
+                          issuedFrom: permits[i].properties!.galiojaNuo ?? '',
+                          issuedTo: permits[i].properties!.galiojaIki ?? '',
                           cadastralNumber:
-                              permits[i].properties!.kadastrinisNr ??
-                                  '',
+                              permits[i].properties!.kadastrinisNr ?? '',
                           subdivision:
-                              permits[i].properties!.vmuPadalinys ??
-                                  '',
+                              permits[i].properties!.vmuPadalinys ?? '',
                           forestryDistrict:
                               permits[i].properties!.girininkija ?? '',
                           block: permits[i].properties!.kvartalas,
                           plot: permits[i].properties!.sklypas ?? '',
-                          cuttableArea:
-                              permits[i].properties!.kertamasPlotas,
-                          dominantTree: permits[i].properties!
-                                  .vyraujantysMedziai ??
-                              '',
+                          cuttableArea: permits[i].properties!.kertamasPlotas,
+                          dominantTree:
+                              permits[i].properties!.vyraujantysMedziai ?? '',
                           cuttingType:
-                              permits[i].properties!.kirtimoRusis ??
-                                  '',
+                              permits[i].properties!.kirtimoRusis ?? '',
                           reinstatementType:
-                              permits[i].properties!.atkurimoBudas ??
-                                  '',
+                              permits[i].properties!.atkurimoBudas ?? '',
                         ),
                       ),
                     ),
@@ -762,7 +754,6 @@ Map<String, String> getEmployeeList(FullReportDtoCategoryEnum category) {
     'Vilniaus MKS': 'marijonas.juskauskas@aad.am.lt',
     'Klaipėdos MKS': 'robertas.paulauskas@aad.am.lt',
     'Panevėžio MKS': 'albertas.mikasauskas@aad.am.lt',
-
   };
   return trashList;
 }
