@@ -21,7 +21,7 @@ class BeetleAddingScreenWeb extends StatefulWidget {
 
   final double width;
   final double height;
-  final Function(String, String, double, double, List<Uint8List>) onAddTap;
+  final Function(String, String, double, double, List<Uint8List>, String?) onAddTap;
   final VoidCallback onDataSecurityTap;
 
   @override
@@ -50,6 +50,7 @@ class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
   bool isImagesSizeValid = true;
   String currentTextValue = '';
   String currentEmailValue = '';
+  String? phoneNumberValue;
   Set<Marker> markers = {};
   List<Marker> addedMarker = [];
   double selectedLat = 0;
@@ -287,6 +288,7 @@ class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
                             selectedLat,
                             selectedLong,
                             _selectedImages,
+                            phoneNumberValue,
                           );
                         }
                       }
@@ -326,7 +328,9 @@ class _BeetleAddingScreenWebState extends State<BeetleAddingScreenWeb> {
                             );
                           });
                     },
-                    onEmailsEnabledChange: (bool value) {},
+                    onEmailsEnabledChange: (bool value) {}, onPhoneNumberChange: (String phone) { setState(() {
+                    phoneNumberValue = phone;
+                  }); },
                   )
                 ],
               ),
