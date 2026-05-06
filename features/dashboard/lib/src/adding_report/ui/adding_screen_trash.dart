@@ -31,7 +31,8 @@ class AddingScreenTrash extends StatelessWidget {
                     width: width,
                     height: height,
                     reports: state.trashReports,
-                    onAddTap: (email, text, lat, long, files, emailsEnabled) {
+                    onAddTap: (email, text, lat, long, files, emailsEnabled,
+                        phoneNumber) {
                       context.read<AddingBloc>().add(
                             AddReport(
                               emailValue: email,
@@ -41,6 +42,7 @@ class AddingScreenTrash extends StatelessWidget {
                               images: files,
                               category: 'trash',
                               automaticEmailsEnabled: emailsEnabled,
+                              phoneNumber: phoneNumber,
                             ),
                           );
                     },
@@ -50,7 +52,8 @@ class AddingScreenTrash extends StatelessWidget {
                     width: width,
                     height: height,
                     reports: state.trashReports,
-                    onAddTap: (email, text, lat, long, files, emailsEnabled) {
+                    onAddTap: (email, text, lat, long, files, emailsEnabled,
+                        phoneNumber) {
                       context.read<AddingBloc>().add(
                             AddReport(
                               emailValue: email,
@@ -60,6 +63,7 @@ class AddingScreenTrash extends StatelessWidget {
                               images: files,
                               category: 'trash',
                               automaticEmailsEnabled: emailsEnabled,
+                              phoneNumber: phoneNumber,
                             ),
                           );
                     },

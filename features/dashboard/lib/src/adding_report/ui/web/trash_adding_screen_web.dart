@@ -23,7 +23,7 @@ class TrashAddingScreenWeb extends StatefulWidget {
   final double width;
   final double height;
   final List<PublicReportDto> reports;
-  final Function(String, String, double, double, List<Uint8List>, bool)
+  final Function(String, String, double, double, List<Uint8List>, bool, String?)
       onAddTap;
 
   @override
@@ -54,6 +54,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
 
   String currentTextValue = '';
   String currentEmailValue = '';
+  String? phoneNumberValue;
   Set<Marker> markers = {};
   List<Marker> addedMarker = [];
   double selectedLat = 0;
@@ -309,6 +310,7 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                             selectedLong,
                             _selectedImages,
                             isEmailsEnabled,
+                            phoneNumberValue,
                           );
                         }
                       }
@@ -352,7 +354,9 @@ class _TrashAddingScreenWebState extends State<TrashAddingScreenWeb> {
                             );
                           });
                     },
-                    isEmailsEnabled: isEmailsEnabled,
+                    isEmailsEnabled: isEmailsEnabled, onPhoneNumberChange: (String phone) { setState(() {
+                      phoneNumberValue = phone;
+                    }); },
                   )
                 ],
               ),

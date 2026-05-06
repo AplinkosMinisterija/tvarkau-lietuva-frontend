@@ -21,7 +21,8 @@ class BeetleAddingScreenMobile extends StatefulWidget {
 
   final double width;
   final double height;
-  final Function(String, String, double, double, List<Uint8List>) onAddTap;
+  final Function(String, String, double, double, List<Uint8List>, String?)
+      onAddTap;
 
   @override
   State<BeetleAddingScreenMobile> createState() =>
@@ -48,6 +49,7 @@ class _BeetleAddingScreenMobileState extends State<BeetleAddingScreenMobile> {
   final _formKey = GlobalKey<FormState>();
   String currentTextValue = '';
   String currentEmailValue = '';
+  String? currentPhoneNumberValue;
   List<Marker> markers = [];
   double? selectedLat;
   double? selectedLong;
@@ -297,6 +299,47 @@ class _BeetleAddingScreenMobileState extends State<BeetleAddingScreenMobile> {
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
+                          'Jūsų tel. numeris',
+                          style: GoogleFonts.roboto(
+                              fontSize: widget.width * 0.03888,
+                              fontWeight: FontWeight.w400),
+                        ),
+                      ),
+                      SizedBox(height: widget.width * 0.0111),
+                      Container(
+                        width: widget.width * 0.911,
+                        height: widget.width * 0.111,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(4)),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: widget.width * 0.033,
+                        ),
+                        child: Center(
+                          child: TextFormField(
+                            maxLines: 1,
+                            textAlignVertical: TextAlignVertical.center,
+                            onChanged: (phoneValue) {
+                              setState(() {
+                                currentPhoneNumberValue = phoneValue;
+                              });
+                            },
+                            style: GoogleFonts.roboto(
+                                fontWeight: FontWeight.w400,
+                                fontSize: widget.width * 0.03333,
+                                color: Colors.black),
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: widget.width * 0.0444),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
                           'Įkelkite bent 2 žievėgraužio nuotraukas',
                           style: GoogleFonts.roboto(
                               fontSize: widget.width * 0.03888,
@@ -429,6 +472,7 @@ class _BeetleAddingScreenMobileState extends State<BeetleAddingScreenMobile> {
                                 selectedLat!,
                                 selectedLong!,
                                 _selectedImages,
+                                currentPhoneNumberValue,
                               );
                             }
 

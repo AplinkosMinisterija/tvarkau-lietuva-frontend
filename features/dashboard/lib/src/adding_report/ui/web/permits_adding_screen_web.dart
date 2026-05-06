@@ -26,7 +26,7 @@ class PermitsAddingScreenWeb extends StatefulWidget {
   final double width;
   final double height;
   final List<PublicReportDto> reports;
-  final Function(String, String, double, double, List<Uint8List>, bool)
+  final Function(String, String, double, double, List<Uint8List>, bool, String?)
       onAddTap;
   final VoidCallback onDataSecurityTap;
 
@@ -59,6 +59,7 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
   bool isShowPolygons = true;
   String currentTextValue = '';
   String currentEmailValue = '';
+  String? phoneNumberValue;
   Set<Marker> markers = {};
   Set<Polygon> polygons = {};
   List<Marker> addedMarker = [];
@@ -335,6 +336,7 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                             selectedLong,
                             _selectedImages,
                             isEmailsEnabled,
+                            phoneNumberValue,
                           );
                         }
                       }
@@ -378,7 +380,9 @@ class _PermitsAddingScreenWebState extends State<PermitsAddingScreenWeb> {
                               isMobile: false,
                             );
                           });
-                    },
+                    }, onPhoneNumberChange: (String phone) { setState(() {
+                    phoneNumberValue = phone;
+                  }); },
                   )
                 ],
               ),

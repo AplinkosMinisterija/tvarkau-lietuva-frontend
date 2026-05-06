@@ -25,6 +25,7 @@ Name | Type | Description | Notes
 **historyData** | [**BuiltList&lt;HistoryDataDto&gt;**](HistoryDataDto.md) |  | 
 **statusRecords** | [**BuiltList&lt;StatusRecordsDto&gt;**](StatusRecordsDto.md) |  | 
 **emailFeedbackStage** | **double** |  | 
+**phoneNumber** | **String** |  | 
 **inspection** | **String** |  | [optional] 
 **inspectionId** | **String** |  | [optional] 
 **isTransferred** | **bool** |  | [optional] 

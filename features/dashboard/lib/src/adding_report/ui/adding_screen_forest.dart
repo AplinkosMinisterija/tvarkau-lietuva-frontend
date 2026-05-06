@@ -31,7 +31,8 @@ class AddingScreenForest extends StatelessWidget {
                     width: width,
                     height: height,
                     reports: state.forestReports,
-                    onAddTap: (email, text, lat, long, files, emailsEnabled) {
+                    onAddTap: (email, text, lat, long, files, emailsEnabled,
+                        phoneNumber) {
                       context.read<AddingBloc>().add(
                             AddReport(
                               emailValue: email,
@@ -41,6 +42,7 @@ class AddingScreenForest extends StatelessWidget {
                               images: files,
                               category: 'forest',
                               automaticEmailsEnabled: emailsEnabled,
+                              phoneNumber: phoneNumber,
                             ),
                           );
                     },
@@ -51,7 +53,8 @@ class AddingScreenForest extends StatelessWidget {
                     width: width,
                     height: height,
                     reports: state.forestReports,
-                    onAddTap: (email, text, lat, long, files, emailsEnabled) {
+                    onAddTap: (email, text, lat, long, files, emailsEnabled,
+                        phoneNumber) {
                       context.read<AddingBloc>().add(
                             AddReport(
                               emailValue: email,
@@ -61,6 +64,7 @@ class AddingScreenForest extends StatelessWidget {
                               images: files,
                               category: 'forest',
                               automaticEmailsEnabled: emailsEnabled,
+                              phoneNumber: phoneNumber,
                             ),
                           );
                     },
