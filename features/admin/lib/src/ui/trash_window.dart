@@ -9,6 +9,7 @@ import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:pointer_interceptor/pointer_interceptor.dart';
 import '../common/custom_colors.dart';
 import '../common/custom_styles.dart';
 import '../widgets/base_admin_screen.dart';
@@ -143,7 +144,7 @@ class _TrashWindowState extends State<TrashWindow> {
                         widget.trash,
                         markers,
                         height.toDouble(),
-                        width,
+                        width * 2.4,
                       );
                     } else {
                       return _buildDesktopLayout(
@@ -206,6 +207,7 @@ class _TrashWindowState extends State<TrashWindow> {
                   trash.latitude,
                   trash.longitude,
                 ),
+                width: width,
               ),
               16.heightBox,
               TextFormField(
@@ -422,6 +424,7 @@ class _TrashWindowState extends State<TrashWindow> {
                 trash.latitude,
                 trash.longitude,
               ),
+              width: width,
             ),
             32.heightBox,
             TextFormField(
@@ -546,12 +549,14 @@ class _TrashWindowState extends State<TrashWindow> {
 class _BuildMap extends StatefulWidget {
   const _BuildMap({
     required this.height,
+    required this.width,
     required this.markers,
     required this.initialTarget,
     required this.permits,
   });
 
   final double height;
+  final double width;
   final Set<Marker> markers;
   final LatLng initialTarget;
   final List<Permit>? permits;
@@ -562,6 +567,7 @@ class _BuildMap extends StatefulWidget {
 
 class _BuildMapState extends State<_BuildMap> {
   Set<Polygon> polygons = {};
+  MapType currentMapType = MapType.normal;
 
   @override
   void initState() {
@@ -575,14 +581,45 @@ class _BuildMapState extends State<_BuildMap> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: widget.height.toDouble(),
-      child: GoogleMap(
-        mapType: MapType.none,
-        markers: widget.markers,
-        polygons: polygons,
-        initialCameraPosition: CameraPosition(
-          target: widget.initialTarget,
-          zoom: 13,
-        ),
+      child: Stack(
+        children: [
+          GoogleMap(
+            mapType: currentMapType,
+            markers: widget.markers,
+            polygons: polygons,
+            initialCameraPosition: CameraPosition(
+              target: widget.initialTarget,
+              zoom: 13,
+            ),
+          ),
+          Positioned(
+            bottom: 24,
+            right: 55,
+            child: InkWell(
+              child: PointerInterceptor(
+                child: GoogleMapTypeButton(
+                  height: 40,
+                  width: 40,
+                  onPressed: () {
+                    showDialog<String>(
+                        context: context,
+                        builder: (BuildContext context) => MapTypeChangeDialog(
+                              width: widget.width,
+                              currentMapType: currentMapType,
+                              onChangeTap: (MapType mapType) {
+                                setState(() {
+                                  currentMapType = mapType;
+                                });
+                              },
+                              isReportsActive: false,
+                              isMobile: false,
+                            ));
+                  },
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
