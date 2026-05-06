@@ -31,6 +31,7 @@ class ReportsApi {
   /// * [latitude]
   /// * [category]
   /// * [email]
+  /// * [phoneNumber]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -48,6 +49,7 @@ class ReportsApi {
     required num latitude,
     required String category,
     required String email,
+    String? phoneNumber,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -86,6 +88,9 @@ class ReportsApi {
             encodeFormParameter(_serializers, category, const FullType(String)),
         r'email':
             encodeFormParameter(_serializers, email, const FullType(String)),
+        if (phoneNumber != null)
+          r'phoneNumber': encodeFormParameter(
+              _serializers, phoneNumber, const FullType(String)),
       });
     } catch (error, stackTrace) {
       throw DioException(

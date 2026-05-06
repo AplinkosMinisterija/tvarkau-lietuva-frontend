@@ -18,7 +18,7 @@ Method | HTTP request | Description
 
 
 # **reportControllerCreateNewReport**
-> PublicReportDto reportControllerCreateNewReport(automaticEmailsEnabled, images, name, longitude, latitude, category, email)
+> PublicReportDto reportControllerCreateNewReport(automaticEmailsEnabled, images, name, longitude, latitude, category, email, phoneNumber)
 
 
 
@@ -34,9 +34,10 @@ final num longitude = 8.14; // num |
 final num latitude = 8.14; // num | 
 final String category = category_example; // String | 
 final String email = email_example; // String | 
+final String phoneNumber = phoneNumber_example; // String | 
 
 try {
-    final response = api.reportControllerCreateNewReport(automaticEmailsEnabled, images, name, longitude, latitude, category, email);
+    final response = api.reportControllerCreateNewReport(automaticEmailsEnabled, images, name, longitude, latitude, category, email, phoneNumber);
     print(response);
 } catch on DioException (e) {
     print('Exception when calling ReportsApi->reportControllerCreateNewReport: $e\n');
@@ -54,6 +55,7 @@ Name | Type | Description  | Notes
  **latitude** | **num**|  | 
  **category** | **String**|  | 
  **email** | **String**|  | 
+ **phoneNumber** | **String**|  | [optional] 
 
 ### Return type
 

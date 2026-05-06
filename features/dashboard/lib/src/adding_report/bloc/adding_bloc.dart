@@ -158,6 +158,7 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
         imageFiles: event.images,
         category: event.category,
         automaticEmailsEnabled: event.automaticEmailsEnabled,
+        phoneNumber: event.phoneNumber,
       );
 
       emit(

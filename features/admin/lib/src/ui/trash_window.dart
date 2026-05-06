@@ -246,12 +246,13 @@ class _TrashWindowState extends State<TrashWindow> {
                 Text(
                   'AAD atsakymas ir inspektorių nuotraukos',
                   style: CustomStyles.h2
-                      .copyWith(color: Colors.black, fontSize: 20),
+                      .copyWith(color: Colors.black, fontSize: width * 0.01),
                 ),
                 10.heightBox,
                 Text(
                   trash.comment,
-                  style: CustomStyles.body1,
+                  style: CustomStyles.body1
+                      .copyWith(color: Colors.black, fontSize: width * 0.01),
                 ),
                 10.heightBox,
                 trash.officerImageUrls.isNotEmpty
@@ -770,7 +771,7 @@ class _BuildAadisSectionState extends State<_BuildAadisSection> {
 Map<String, String> getEmployeeList(FullReportDtoCategoryEnum category) {
   const trashList = {
     'Alytus': 'reda.baubliene@aad.am.lt',
-    'Kaunas': 'vytautas.januska@aad.am.lt',
+    'Kaunas': 'rasa.zitkeviciute@aad.am.lt',
     'Klaipėda': 'laura.dagiliene@aad.am.lt',
     'Gargždai': 'martinas.duobinis@aad.am.lt',
     'Marijampolė': 'algimantas.paplauskas@aad.am.lt',
@@ -784,8 +785,8 @@ Map<String, String> getEmployeeList(FullReportDtoCategoryEnum category) {
     'Šiauliai': 'valdas.glazauskis@aad.am.lt',
     'Telšiai': 'renata.stankuviene@aad.am.lt',
     'Trakai': 'egidijus.kirkliauskas@aad.am.lt',
-    'Vilniaus miestas': 'viktorija.ivickyte@aad.am.lt',
-    'Vilniaus rajonas': 'pavel.jakubovskij@aad.am.lt',
+    'Vilniaus miestas': 'edgaras.skrebe@aad.am.lt',
+    'Vilniaus rajonas': 'mindaugas.kanisauskas@aad.am.lt',
     'Kauno MKS': 'gintaras.zukauskas@aad.am.lt',
     'Vilniaus MKS': 'marijonas.juskauskas@aad.am.lt',
     'Klaipėdos MKS': 'robertas.paulauskas@aad.am.lt',

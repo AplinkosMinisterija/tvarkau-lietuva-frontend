@@ -24,7 +24,7 @@ class ForestAddingScreenWeb extends StatefulWidget {
   final double width;
   final double height;
   final List<PublicReportDto> reports;
-  final Function(String, String, double, double, List<Uint8List>, bool)
+  final Function(String, String, double, double, List<Uint8List>, bool, String?)
       onAddTap;
   final VoidCallback onDataSecurityTap;
 
@@ -56,6 +56,7 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
   bool isImagesSizeValid = true;
   String currentTextValue = '';
   String currentEmailValue = '';
+  String? phoneNumberValue;
   Set<Marker> markers = {};
   List<Marker> addedMarker = [];
   double selectedLat = 0;
@@ -308,6 +309,7 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
                             selectedLong,
                             _selectedImages,
                             isEmailsEnabled,
+                            phoneNumberValue,
                           );
                         }
                       }
@@ -351,7 +353,9 @@ class _ForestAddingScreenWebState extends State<ForestAddingScreenWeb> {
                               isMobile: false,
                             );
                           });
-                    },
+                    }, onPhoneNumberChange: (String phone) { setState(() {
+                    phoneNumberValue = phone;
+                  }); },
                   )
                 ],
               ),
