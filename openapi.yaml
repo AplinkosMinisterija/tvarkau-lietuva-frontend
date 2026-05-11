@@ -490,6 +490,7 @@ components:
           format: double
         phoneNumber:
           type: string
+          nullable: true
       required:
         - _id
         - name
@@ -508,7 +509,6 @@ components:
         - historyData
         - statusRecords
         - emailFeedbackStage
-        - phoneNumber
     FullDumpDto:
       type: object
       properties:

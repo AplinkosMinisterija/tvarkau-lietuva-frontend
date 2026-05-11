@@ -117,13 +117,13 @@ class _$FullReportDto extends FullReportDto {
   @override
   final double emailFeedbackStage;
   @override
-  final String phoneNumber;
-  @override
   final String? inspection;
   @override
   final String? inspectionId;
   @override
   final bool? isTransferred;
+  @override
+  final String? phoneNumber;
 
   factory _$FullReportDto([void Function(FullReportDtoBuilder)? updates]) =>
       (new FullReportDtoBuilder()..update(updates))._build();
@@ -146,10 +146,10 @@ class _$FullReportDto extends FullReportDto {
       required this.historyData,
       required this.statusRecords,
       required this.emailFeedbackStage,
-      required this.phoneNumber,
       this.inspection,
       this.inspectionId,
-      this.isTransferred})
+      this.isTransferred,
+      this.phoneNumber})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, r'FullReportDto', 'id');
     BuiltValueNullFieldError.checkNotNull(name, r'FullReportDto', 'name');
@@ -179,8 +179,6 @@ class _$FullReportDto extends FullReportDto {
         statusRecords, r'FullReportDto', 'statusRecords');
     BuiltValueNullFieldError.checkNotNull(
         emailFeedbackStage, r'FullReportDto', 'emailFeedbackStage');
-    BuiltValueNullFieldError.checkNotNull(
-        phoneNumber, r'FullReportDto', 'phoneNumber');
   }
 
   @override
@@ -211,10 +209,10 @@ class _$FullReportDto extends FullReportDto {
         historyData == other.historyData &&
         statusRecords == other.statusRecords &&
         emailFeedbackStage == other.emailFeedbackStage &&
-        phoneNumber == other.phoneNumber &&
         inspection == other.inspection &&
         inspectionId == other.inspectionId &&
-        isTransferred == other.isTransferred;
+        isTransferred == other.isTransferred &&
+        phoneNumber == other.phoneNumber;
   }
 
   @override
@@ -237,10 +235,10 @@ class _$FullReportDto extends FullReportDto {
     _$hash = $jc(_$hash, historyData.hashCode);
     _$hash = $jc(_$hash, statusRecords.hashCode);
     _$hash = $jc(_$hash, emailFeedbackStage.hashCode);
-    _$hash = $jc(_$hash, phoneNumber.hashCode);
     _$hash = $jc(_$hash, inspection.hashCode);
     _$hash = $jc(_$hash, inspectionId.hashCode);
     _$hash = $jc(_$hash, isTransferred.hashCode);
+    _$hash = $jc(_$hash, phoneNumber.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -265,10 +263,10 @@ class _$FullReportDto extends FullReportDto {
           ..add('historyData', historyData)
           ..add('statusRecords', statusRecords)
           ..add('emailFeedbackStage', emailFeedbackStage)
-          ..add('phoneNumber', phoneNumber)
           ..add('inspection', inspection)
           ..add('inspectionId', inspectionId)
-          ..add('isTransferred', isTransferred))
+          ..add('isTransferred', isTransferred)
+          ..add('phoneNumber', phoneNumber))
         .toString();
   }
 }
@@ -355,10 +353,6 @@ class FullReportDtoBuilder
   set emailFeedbackStage(double? emailFeedbackStage) =>
       _$this._emailFeedbackStage = emailFeedbackStage;
 
-  String? _phoneNumber;
-  String? get phoneNumber => _$this._phoneNumber;
-  set phoneNumber(String? phoneNumber) => _$this._phoneNumber = phoneNumber;
-
   String? _inspection;
   String? get inspection => _$this._inspection;
   set inspection(String? inspection) => _$this._inspection = inspection;
@@ -371,6 +365,10 @@ class FullReportDtoBuilder
   bool? get isTransferred => _$this._isTransferred;
   set isTransferred(bool? isTransferred) =>
       _$this._isTransferred = isTransferred;
+
+  String? _phoneNumber;
+  String? get phoneNumber => _$this._phoneNumber;
+  set phoneNumber(String? phoneNumber) => _$this._phoneNumber = phoneNumber;
 
   FullReportDtoBuilder() {
     FullReportDto._defaults(this);
@@ -396,10 +394,10 @@ class FullReportDtoBuilder
       _historyData = $v.historyData.toBuilder();
       _statusRecords = $v.statusRecords.toBuilder();
       _emailFeedbackStage = $v.emailFeedbackStage;
-      _phoneNumber = $v.phoneNumber;
       _inspection = $v.inspection;
       _inspectionId = $v.inspectionId;
       _isTransferred = $v.isTransferred;
+      _phoneNumber = $v.phoneNumber;
       _$v = null;
     }
     return this;
@@ -451,10 +449,10 @@ class FullReportDtoBuilder
               historyData: historyData.build(),
               statusRecords: statusRecords.build(),
               emailFeedbackStage: BuiltValueNullFieldError.checkNotNull(emailFeedbackStage, r'FullReportDto', 'emailFeedbackStage'),
-              phoneNumber: BuiltValueNullFieldError.checkNotNull(phoneNumber, r'FullReportDto', 'phoneNumber'),
               inspection: inspection,
               inspectionId: inspectionId,
-              isTransferred: isTransferred);
+              isTransferred: isTransferred,
+              phoneNumber: phoneNumber);
     } catch (_) {
       late String _$failedField;
       try {

@@ -31,10 +31,10 @@ part 'full_report_dto.g.dart';
 /// * [historyData]
 /// * [statusRecords]
 /// * [emailFeedbackStage]
-/// * [phoneNumber]
 /// * [inspection]
 /// * [inspectionId]
 /// * [isTransferred]
+/// * [phoneNumber]
 @BuiltValue()
 abstract class FullReportDto
     implements Built<FullReportDto, FullReportDtoBuilder> {
@@ -90,9 +90,6 @@ abstract class FullReportDto
   @BuiltValueField(wireName: r'emailFeedbackStage')
   double get emailFeedbackStage;
 
-  @BuiltValueField(wireName: r'phoneNumber')
-  String get phoneNumber;
-
   @BuiltValueField(wireName: r'inspection')
   String? get inspection;
 
@@ -101,6 +98,9 @@ abstract class FullReportDto
 
   @BuiltValueField(wireName: r'isTransferred')
   bool? get isTransferred;
+
+  @BuiltValueField(wireName: r'phoneNumber')
+  String? get phoneNumber;
 
   FullReportDto._();
 
@@ -212,11 +212,6 @@ class _$FullReportDtoSerializer implements PrimitiveSerializer<FullReportDto> {
       object.emailFeedbackStage,
       specifiedType: const FullType(double),
     );
-    yield r'phoneNumber';
-    yield serializers.serialize(
-      object.phoneNumber,
-      specifiedType: const FullType(String),
-    );
     if (object.inspection != null) {
       yield r'inspection';
       yield serializers.serialize(
@@ -236,6 +231,13 @@ class _$FullReportDtoSerializer implements PrimitiveSerializer<FullReportDto> {
       yield serializers.serialize(
         object.isTransferred,
         specifiedType: const FullType.nullable(bool),
+      );
+    }
+    if (object.phoneNumber != null) {
+      yield r'phoneNumber';
+      yield serializers.serialize(
+        object.phoneNumber,
+        specifiedType: const FullType.nullable(String),
       );
     }
   }
@@ -384,13 +386,6 @@ class _$FullReportDtoSerializer implements PrimitiveSerializer<FullReportDto> {
           ) as double;
           result.emailFeedbackStage = valueDes;
           break;
-        case r'phoneNumber':
-          final valueDes = serializers.deserialize(
-            value,
-            specifiedType: const FullType(String),
-          ) as String;
-          result.phoneNumber = valueDes;
-          break;
         case r'inspection':
           final valueDes = serializers.deserialize(
             value,
@@ -414,6 +409,14 @@ class _$FullReportDtoSerializer implements PrimitiveSerializer<FullReportDto> {
           ) as bool?;
           if (valueDes == null) continue;
           result.isTransferred = valueDes;
+          break;
+        case r'phoneNumber':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.phoneNumber = valueDes;
           break;
         default:
           unhandled.add(key);

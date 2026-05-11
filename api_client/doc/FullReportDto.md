@@ -25,10 +25,10 @@ Name | Type | Description | Notes
 **historyData** | [**BuiltList&lt;HistoryDataDto&gt;**](HistoryDataDto.md) |  | 
 **statusRecords** | [**BuiltList&lt;StatusRecordsDto&gt;**](StatusRecordsDto.md) |  | 
 **emailFeedbackStage** | **double** |  | 
-**phoneNumber** | **String** |  | 
 **inspection** | **String** |  | [optional] 
 **inspectionId** | **String** |  | [optional] 
 **isTransferred** | **bool** |  | [optional] 
+**phoneNumber** | **String** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
