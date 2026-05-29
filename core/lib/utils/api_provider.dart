@@ -176,7 +176,8 @@ class ApiProvider {
     required double latitude,
     required String status,
     required DateTime reportDate,
-    required String email,
+    required String? email,
+    required String severityCategory,
   }) async {
     final response = await adminApi.adminControllerTransferReport(
         transferReportDto: TransferReportDto((builder) {
@@ -187,6 +188,7 @@ class ApiProvider {
       builder.status = status;
       builder.reportDate = reportDate;
       builder.email = email;
+      builder.severityCategory = severityCategory;
     }));
     return response.data!;
   }

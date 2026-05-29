@@ -14,7 +14,8 @@ Name | Type | Description | Notes
 **latitude** | **double** |  | 
 **status** | **String** |  | 
 **reportDate** | [**DateTime**](DateTime.md) |  | 
-**email** | **String** |  | 
+**severityCategory** | **String** |  | 
+**email** | **String** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

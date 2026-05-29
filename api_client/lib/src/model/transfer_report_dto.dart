@@ -17,6 +17,7 @@ part 'transfer_report_dto.g.dart';
 /// * [latitude]
 /// * [status]
 /// * [reportDate]
+/// * [severityCategory]
 /// * [email]
 @BuiltValue()
 abstract class TransferReportDto
@@ -39,8 +40,11 @@ abstract class TransferReportDto
   @BuiltValueField(wireName: r'reportDate')
   DateTime get reportDate;
 
+  @BuiltValueField(wireName: r'severityCategory')
+  String get severityCategory;
+
   @BuiltValueField(wireName: r'email')
-  String get email;
+  String? get email;
 
   TransferReportDto._();
 
@@ -98,11 +102,18 @@ class _$TransferReportDtoSerializer
       object.reportDate,
       specifiedType: const FullType(DateTime),
     );
-    yield r'email';
+    yield r'severityCategory';
     yield serializers.serialize(
-      object.email,
+      object.severityCategory,
       specifiedType: const FullType(String),
     );
+    if (object.email != null) {
+      yield r'email';
+      yield serializers.serialize(
+        object.email,
+        specifiedType: const FullType.nullable(String),
+      );
+    }
   }
 
   @override
@@ -170,11 +181,19 @@ class _$TransferReportDtoSerializer
           ) as DateTime;
           result.reportDate = valueDes;
           break;
-        case r'email':
+        case r'severityCategory':
           final valueDes = serializers.deserialize(
             value,
             specifiedType: const FullType(String),
           ) as String;
+          result.severityCategory = valueDes;
+          break;
+        case r'email':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
           result.email = valueDes;
           break;
         default:

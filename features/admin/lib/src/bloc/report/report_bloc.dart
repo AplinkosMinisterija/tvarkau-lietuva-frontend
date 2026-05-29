@@ -111,13 +111,15 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
       );
 
       await ApiProvider().transferTrashReport(
-          refId: event.refId,
-          name: event.name,
-          longitude: event.longitude,
-          latitude: event.latitude,
-          status: event.status,
-          reportDate: event.reportDate,
-          email: event.email);
+        refId: event.refId,
+        name: event.name,
+        longitude: event.longitude,
+        latitude: event.latitude,
+        status: event.status,
+        reportDate: event.reportDate,
+        email: event.email,
+        severityCategory: event.severityCategory,
+      );
 
       final FullReportDto trashReport =
           await ApiProvider().getFullTrashReportById(event.refId);

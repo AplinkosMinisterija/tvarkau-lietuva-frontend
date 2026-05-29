@@ -23,10 +23,24 @@ class TrashWindow extends StatefulWidget {
   final FullReportDto trash;
   final List<Permit>? permits;
   final VoidCallback onBackPress;
-  final Function(String name, String comment, String status, String category,
-      bool isVisible, List<Uint8List> officerImages) onUpdate;
-  final Function(String refId, String name, double longitude, double latitude,
-      String status, DateTime reportDate, String email) onTransfer;
+  final Function(
+    String name,
+    String comment,
+    String status,
+    String category,
+    bool isVisible,
+    List<Uint8List> officerImages,
+  ) onUpdate;
+  final Function(
+    String refId,
+    String name,
+    double longitude,
+    double latitude,
+    String status,
+    DateTime reportDate,
+    String? email,
+    String severityCategory,
+  ) onTransfer;
   final VoidCallback onDelete;
   final VoidCallback onRestore;
 
@@ -325,6 +339,10 @@ class _TrashWindowState extends State<TrashWindow> {
             widget.onUpdate(
                 name, comment, status, category, isVisible, officerImages);
           },
+        ),
+        _BuildSeverityCategorySection(
+          report: trash,
+          onTransfer: widget.onTransfer,
         ),
       ],
     );
@@ -699,21 +717,31 @@ class _BuildAadisSection extends StatefulWidget {
   });
 
   final FullReportDto report;
-  final Function(String refId, String name, double longitude, double latitude,
-      String status, DateTime reportDate, String email) onTransfer;
+  final Function(
+      String refId,
+      String name,
+      double longitude,
+      double latitude,
+      String status,
+      DateTime reportDate,
+      String email,
+      String severityCategory) onTransfer;
 
   @override
   State<_BuildAadisSection> createState() => _BuildAadisSectionState();
 }
 
 class _BuildAadisSectionState extends State<_BuildAadisSection> {
-  String selectedItem = '';
-  Map<String, String> itemList = {};
+  String selectedEmployeeItem = '';
+  String selectedSeverityCategoryItem = '';
+  Map<String, String> employeeItemList = {};
+  Map<String, String> severityCategoryItemList = {};
 
   @override
   void initState() {
     if (widget.report.isTransferred != true) {
-      itemList = getEmployeeList(widget.report.category);
+      employeeItemList = getEmployeeList(widget.report.category);
+      severityCategoryItemList = getSeverityCategoryList();
     }
     super.initState();
   }
@@ -735,10 +763,31 @@ class _BuildAadisSectionState extends State<_BuildAadisSection> {
                     hintStyle: GoogleFonts.roboto(fontSize: 13),
                     headerStyle: GoogleFonts.roboto(fontSize: 13),
                   ),
-                  items: itemList.keys.toList(),
+                  items: employeeItemList.keys.toList(),
                   onChanged: (value) {
                     setState(() {
-                      selectedItem = itemList[value] ?? '';
+                      selectedEmployeeItem = employeeItemList[value] ?? '';
+                    });
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 100,
+                child: CustomDropdown<String>(
+                  hintText: 'Pasirinkite svarbos kategoriją',
+                  overlayHeight: 250,
+                  decoration: CustomDropdownDecoration(
+                    listItemStyle: GoogleFonts.roboto(fontSize: 13),
+                    closedBorder: Border.all(color: Colors.black, width: 1),
+                    expandedBorder: Border.all(color: Colors.black, width: 1),
+                    hintStyle: GoogleFonts.roboto(fontSize: 13),
+                    headerStyle: GoogleFonts.roboto(fontSize: 13),
+                  ),
+                  items: severityCategoryItemList.keys.toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      selectedSeverityCategoryItem =
+                          severityCategoryItemList[value] ?? '';
                     });
                   },
                 ),
@@ -746,19 +795,112 @@ class _BuildAadisSectionState extends State<_BuildAadisSection> {
               CustomButton(
                 text: 'Siųsti į AADIS',
                 buttonType: ButtonType.outlined,
-                color: selectedItem != ''
+                color: selectedEmployeeItem != '' &&
+                        selectedSeverityCategoryItem != ''
                     ? CustomColors.primary
                     : CustomColors.primaryLight,
-                onPressed: selectedItem != ''
+                onPressed: selectedEmployeeItem != '' &&
+                        selectedSeverityCategoryItem != ''
                     ? () {
                         widget.onTransfer(
-                            widget.report.refId,
-                            widget.report.name,
-                            widget.report.longitude,
-                            widget.report.latitude,
-                            widget.report.status,
-                            widget.report.reportDate,
-                            selectedItem);
+                          widget.report.refId,
+                          widget.report.name,
+                          widget.report.longitude,
+                          widget.report.latitude,
+                          widget.report.status,
+                          widget.report.reportDate,
+                          selectedEmployeeItem,
+                          selectedSeverityCategoryItem,
+                        );
+                      }
+                    : null,
+              ),
+            ],
+          )
+        : const SizedBox.shrink();
+  }
+}
+
+class _BuildSeverityCategorySection extends StatefulWidget {
+  const _BuildSeverityCategorySection({
+    required this.report,
+    required this.onTransfer,
+  });
+
+  final FullReportDto report;
+  final Function(String refId, String name, double longitude, double latitude,
+      String status, DateTime reportDate, String? email, String severityCategory) onTransfer;
+
+  @override
+  State<_BuildSeverityCategorySection> createState() =>
+      _BuildSeverityCategorySectionState();
+}
+
+class _BuildSeverityCategorySectionState
+    extends State<_BuildSeverityCategorySection> {
+  String selectedSeverityCategoryItem = '';
+  Map<String, String> severityCategoryItemList = {};
+
+  @override
+  void initState() {
+    if (widget.report.isTransferred == true) {
+      severityCategoryItemList = getSeverityCategoryList();
+      selectedSeverityCategoryItem = severityCategoryItemList.entries
+          .firstWhere((e) => e.value == widget.report.severityCategory!)
+          .key;
+    }
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.report.isTransferred != true
+        ? Column(
+            children: [
+              SizedBox(
+                height: 100,
+                child: CustomDropdown<String>(
+                  hintText: 'Pasirinkite svarbos kategoriją',
+                  overlayHeight: 250,
+                  decoration: CustomDropdownDecoration(
+                    listItemStyle: GoogleFonts.roboto(fontSize: 13),
+                    closedBorder: Border.all(color: Colors.black, width: 1),
+                    expandedBorder: Border.all(color: Colors.black, width: 1),
+                    hintStyle: GoogleFonts.roboto(fontSize: 13),
+                    headerStyle: GoogleFonts.roboto(fontSize: 13),
+                  ),
+                  initialItem: selectedSeverityCategoryItem,
+                  items: severityCategoryItemList.keys.toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      selectedSeverityCategoryItem =
+                          severityCategoryItemList[value] ?? '';
+                    });
+                  },
+                ),
+              ),
+              CustomButton(
+                text: 'Atnaujinti svarbos kategoriją',
+                buttonType: ButtonType.outlined,
+                color: selectedSeverityCategoryItem != '' &&
+                        selectedSeverityCategoryItem !=
+                            widget.report.severityCategory
+                    ? CustomColors.primary
+                    : CustomColors.primaryLight,
+                onPressed: selectedSeverityCategoryItem != '' &&
+                        selectedSeverityCategoryItem !=
+                            widget.report.severityCategory
+                    ? () {
+                        widget.onTransfer(
+                          widget.report.refId,
+                          widget.report.name,
+                          widget.report.longitude,
+                          widget.report.latitude,
+                          widget.report.status,
+                          widget.report.reportDate,
+                          null,
+                          selectedSeverityCategoryItem,
+                        );
                       }
                     : null,
               ),
@@ -793,4 +935,15 @@ Map<String, String> getEmployeeList(FullReportDtoCategoryEnum category) {
     'Panevėžio MKS': 'albertas.mikasauskas@aad.am.lt',
   };
   return trashList;
+}
+
+Map<String, String> getSeverityCategoryList() {
+  const severityCategoryList = {
+    'A kategorija': 'A',
+    'B kategorija': 'B',
+    'C kategorija': 'C',
+    'D kategorija': 'D',
+    'E kategorija': 'E',
+  };
+  return severityCategoryList;
 }

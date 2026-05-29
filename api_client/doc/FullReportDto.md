@@ -29,6 +29,7 @@ Name | Type | Description | Notes
 **inspectionId** | **String** |  | [optional] 
 **isTransferred** | **bool** |  | [optional] 
 **phoneNumber** | **String** |  | [optional] 
+**severityCategory** | **String** |  | [optional] 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

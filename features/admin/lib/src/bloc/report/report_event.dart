@@ -19,7 +19,8 @@ class TransferReport implements ReportEvent {
   final double latitude;
   final String status;
   final DateTime reportDate;
-  final String email;
+  final String? email;
+  final String severityCategory;
 
   TransferReport({
     required this.refId,
@@ -29,6 +30,7 @@ class TransferReport implements ReportEvent {
     required this.status,
     required this.reportDate,
     required this.email,
+    required this.severityCategory,
   });
 }
 
