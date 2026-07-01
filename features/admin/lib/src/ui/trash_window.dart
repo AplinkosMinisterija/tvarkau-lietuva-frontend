@@ -305,44 +305,48 @@ class _TrashWindowState extends State<TrashWindow> {
           ),
         ),
         40.widthBox,
-        TrashTabs(
-          trash: trash,
-          onStatusChange: (int value) {
-            setState(() {
-              statusIndex = value;
-              setStatusIndex(value);
-            });
-          },
-          statusValue: statusIndex,
-          onCategoryChange: (int value) {
-            setState(() {
-              categoryIndex = value;
-              setCategoryIndex(value);
-            });
-          },
-          categoryValue: categoryIndex,
-          onAnswerChange: (String value) {
-            setState(() {
-              comment = value;
-            });
-          },
-          answerValue: comment,
-          onImageUpload: (uploadedOfficerImages) {
-            setState(() {
-              officerImages = uploadedOfficerImages;
-            });
-          },
-          onBackPress: () {
-            widget.onBackPress();
-          },
-          onSave: () {
-            widget.onUpdate(
-                name, comment, status, category, isVisible, officerImages);
-          },
-        ),
-        _BuildSeverityCategorySection(
-          report: trash,
-          onTransfer: widget.onTransfer,
+        Column(
+          children: [
+            TrashTabs(
+              trash: trash,
+              onStatusChange: (int value) {
+                setState(() {
+                  statusIndex = value;
+                  setStatusIndex(value);
+                });
+              },
+              statusValue: statusIndex,
+              onCategoryChange: (int value) {
+                setState(() {
+                  categoryIndex = value;
+                  setCategoryIndex(value);
+                });
+              },
+              categoryValue: categoryIndex,
+              onAnswerChange: (String value) {
+                setState(() {
+                  comment = value;
+                });
+              },
+              answerValue: comment,
+              onImageUpload: (uploadedOfficerImages) {
+                setState(() {
+                  officerImages = uploadedOfficerImages;
+                });
+              },
+              onBackPress: () {
+                widget.onBackPress();
+              },
+              onSave: () {
+                widget.onUpdate(
+                    name, comment, status, category, isVisible, officerImages);
+              },
+            ),
+            _BuildSeverityCategorySection(
+              report: trash,
+              onTransfer: widget.onTransfer,
+            ),
+          ],
         ),
       ],
     );
@@ -537,6 +541,10 @@ class _TrashWindowState extends State<TrashWindow> {
             widget.onUpdate(
                 name, comment, status, category, isVisible, officerImages);
           },
+        ),
+        _BuildSeverityCategorySection(
+          report: trash,
+          onTransfer: widget.onTransfer,
         ),
         10.heightBox,
         _BuildAadisSection(
@@ -828,8 +836,15 @@ class _BuildSeverityCategorySection extends StatefulWidget {
   });
 
   final FullReportDto report;
-  final Function(String refId, String name, double longitude, double latitude,
-      String status, DateTime reportDate, String? email, String severityCategory) onTransfer;
+  final Function(
+      String refId,
+      String name,
+      double longitude,
+      double latitude,
+      String status,
+      DateTime reportDate,
+      String? email,
+      String severityCategory) onTransfer;
 
   @override
   State<_BuildSeverityCategorySection> createState() =>
@@ -839,6 +854,7 @@ class _BuildSeverityCategorySection extends StatefulWidget {
 class _BuildSeverityCategorySectionState
     extends State<_BuildSeverityCategorySection> {
   String selectedSeverityCategoryItem = '';
+  String selectedSeverityCategoryValue = '';
   Map<String, String> severityCategoryItemList = {};
 
   @override
@@ -848,63 +864,80 @@ class _BuildSeverityCategorySectionState
       selectedSeverityCategoryItem = severityCategoryItemList.entries
           .firstWhere((e) => e.value == widget.report.severityCategory!)
           .key;
+      selectedSeverityCategoryValue = widget.report.severityCategory!;
     }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.report.isTransferred != true
-        ? Column(
-            children: [
-              SizedBox(
-                height: 100,
-                child: CustomDropdown<String>(
-                  hintText: 'Pasirinkite svarbos kategoriją',
-                  overlayHeight: 250,
-                  decoration: CustomDropdownDecoration(
-                    listItemStyle: GoogleFonts.roboto(fontSize: 13),
-                    closedBorder: Border.all(color: Colors.black, width: 1),
-                    expandedBorder: Border.all(color: Colors.black, width: 1),
-                    hintStyle: GoogleFonts.roboto(fontSize: 13),
-                    headerStyle: GoogleFonts.roboto(fontSize: 13),
+    return widget.report.isTransferred == true
+        ? SizedBox(
+            width: 480,
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Svarbos kategorija',
+                    style: CustomStyles.body1.copyWith(
+                      color: CustomColors.primary,
+                    ),
                   ),
-                  initialItem: selectedSeverityCategoryItem,
-                  items: severityCategoryItemList.keys.toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      selectedSeverityCategoryItem =
-                          severityCategoryItemList[value] ?? '';
-                    });
-                  },
                 ),
-              ),
-              CustomButton(
-                text: 'Atnaujinti svarbos kategoriją',
-                buttonType: ButtonType.outlined,
-                color: selectedSeverityCategoryItem != '' &&
-                        selectedSeverityCategoryItem !=
-                            widget.report.severityCategory
-                    ? CustomColors.primary
-                    : CustomColors.primaryLight,
-                onPressed: selectedSeverityCategoryItem != '' &&
-                        selectedSeverityCategoryItem !=
-                            widget.report.severityCategory
-                    ? () {
-                        widget.onTransfer(
-                          widget.report.refId,
-                          widget.report.name,
-                          widget.report.longitude,
-                          widget.report.latitude,
-                          widget.report.status,
-                          widget.report.reportDate,
-                          null,
-                          selectedSeverityCategoryItem,
-                        );
-                      }
-                    : null,
-              ),
-            ],
+                SizedBox(
+                  height: 70,
+                  child: CustomDropdown<String>(
+                    hintText: 'Pasirinkite svarbos kategoriją',
+                    overlayHeight: 250,
+                    decoration: CustomDropdownDecoration(
+                      listItemStyle: GoogleFonts.roboto(fontSize: 13),
+                      closedBorder: Border.all(color: Colors.black, width: 1),
+                      expandedBorder: Border.all(color: Colors.black, width: 1),
+                      hintStyle: GoogleFonts.roboto(fontSize: 13),
+                      headerStyle: GoogleFonts.roboto(fontSize: 13),
+                    ),
+                    initialItem: selectedSeverityCategoryItem,
+                    items: severityCategoryItemList.keys.toList(),
+                    onChanged: (key) {
+                      setState(() {
+                        selectedSeverityCategoryItem = key!;
+                        selectedSeverityCategoryValue = severityCategoryItemList
+                            .entries
+                            .firstWhere((e) => e.key == key)
+                            .value;
+                      });
+                    },
+                  ),
+                ),
+                CustomButton(
+                  width: 300,
+                  text: 'Atnaujinti svarbos kategoriją',
+                  buttonType: ButtonType.outlined,
+                  color: selectedSeverityCategoryValue != '' &&
+                          selectedSeverityCategoryValue !=
+                              widget.report.severityCategory
+                      ? CustomColors.primary
+                      : CustomColors.primaryLight,
+                  onPressed: selectedSeverityCategoryValue != '' &&
+                          selectedSeverityCategoryValue !=
+                              widget.report.severityCategory
+                      ? () {
+                          widget.onTransfer(
+                            widget.report.refId,
+                            widget.report.name,
+                            widget.report.longitude,
+                            widget.report.latitude,
+                            widget.report.status,
+                            widget.report.reportDate,
+                            null,
+                            selectedSeverityCategoryValue,
+                          );
+                        }
+                      : null,
+                ),
+              ],
+            ),
           )
         : const SizedBox.shrink();
   }

@@ -256,7 +256,7 @@ class ApiProvider {
     List<Uint8List>? imageFiles,
   }) async {
     BuiltList<MultipartFile>? images;
-    if(imageFiles != null){
+    if (imageFiles != null) {
       images = _toMultiPartFiles(imageFiles);
     }
 
