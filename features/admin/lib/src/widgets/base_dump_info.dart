@@ -22,8 +22,12 @@ class BaseTrashInfo extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _BuildColumn(
-            title: 'Data', value: FormatterUtils().formatDate(trash.reportDate)),
+            title: 'Data',
+            value: FormatterUtils().formatDate(trash.reportDate)),
         _BuildColumn(title: 'El. paštas', value: trash.email),
+        if (trash.phoneNumber != null) ...[
+          _BuildColumn(title: 'Tel. numeris', value: trash.phoneNumber!)
+        ],
         _BuildColumn(
           title: 'Platuma',
           value: latitude,
