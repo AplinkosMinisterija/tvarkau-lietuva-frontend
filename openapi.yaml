@@ -491,6 +491,9 @@ components:
         phoneNumber:
           type: string
           nullable: true
+        severityCategory:
+          type: string
+          nullable: true
       required:
         - _id
         - name
@@ -615,6 +618,9 @@ components:
           type: string
         email:
           type: string
+          nullable: true
+        severityCategory:
+          type: string
       required:
         - refId
         - name
@@ -622,7 +628,7 @@ components:
         - latitude
         - status
         - reportDate
-        - email
+        - severityCategory
     UpdateDumpDto:
       type: object
       properties:

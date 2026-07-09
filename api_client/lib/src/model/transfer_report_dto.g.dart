@@ -20,7 +20,9 @@ class _$TransferReportDto extends TransferReportDto {
   @override
   final DateTime reportDate;
   @override
-  final String email;
+  final String severityCategory;
+  @override
+  final String? email;
 
   factory _$TransferReportDto(
           [void Function(TransferReportDtoBuilder)? updates]) =>
@@ -33,7 +35,8 @@ class _$TransferReportDto extends TransferReportDto {
       required this.latitude,
       required this.status,
       required this.reportDate,
-      required this.email})
+      required this.severityCategory,
+      this.email})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(refId, r'TransferReportDto', 'refId');
     BuiltValueNullFieldError.checkNotNull(name, r'TransferReportDto', 'name');
@@ -45,7 +48,8 @@ class _$TransferReportDto extends TransferReportDto {
         status, r'TransferReportDto', 'status');
     BuiltValueNullFieldError.checkNotNull(
         reportDate, r'TransferReportDto', 'reportDate');
-    BuiltValueNullFieldError.checkNotNull(email, r'TransferReportDto', 'email');
+    BuiltValueNullFieldError.checkNotNull(
+        severityCategory, r'TransferReportDto', 'severityCategory');
   }
 
   @override
@@ -66,6 +70,7 @@ class _$TransferReportDto extends TransferReportDto {
         latitude == other.latitude &&
         status == other.status &&
         reportDate == other.reportDate &&
+        severityCategory == other.severityCategory &&
         email == other.email;
   }
 
@@ -78,6 +83,7 @@ class _$TransferReportDto extends TransferReportDto {
     _$hash = $jc(_$hash, latitude.hashCode);
     _$hash = $jc(_$hash, status.hashCode);
     _$hash = $jc(_$hash, reportDate.hashCode);
+    _$hash = $jc(_$hash, severityCategory.hashCode);
     _$hash = $jc(_$hash, email.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -92,6 +98,7 @@ class _$TransferReportDto extends TransferReportDto {
           ..add('latitude', latitude)
           ..add('status', status)
           ..add('reportDate', reportDate)
+          ..add('severityCategory', severityCategory)
           ..add('email', email))
         .toString();
   }
@@ -125,6 +132,11 @@ class TransferReportDtoBuilder
   DateTime? get reportDate => _$this._reportDate;
   set reportDate(DateTime? reportDate) => _$this._reportDate = reportDate;
 
+  String? _severityCategory;
+  String? get severityCategory => _$this._severityCategory;
+  set severityCategory(String? severityCategory) =>
+      _$this._severityCategory = severityCategory;
+
   String? _email;
   String? get email => _$this._email;
   set email(String? email) => _$this._email = email;
@@ -142,6 +154,7 @@ class TransferReportDtoBuilder
       _latitude = $v.latitude;
       _status = $v.status;
       _reportDate = $v.reportDate;
+      _severityCategory = $v.severityCategory;
       _email = $v.email;
       _$v = null;
     }
@@ -177,8 +190,9 @@ class TransferReportDtoBuilder
                 status, r'TransferReportDto', 'status'),
             reportDate: BuiltValueNullFieldError.checkNotNull(
                 reportDate, r'TransferReportDto', 'reportDate'),
-            email: BuiltValueNullFieldError.checkNotNull(
-                email, r'TransferReportDto', 'email'));
+            severityCategory: BuiltValueNullFieldError.checkNotNull(
+                severityCategory, r'TransferReportDto', 'severityCategory'),
+            email: email);
     replace(_$result);
     return _$result;
   }

@@ -44,8 +44,12 @@ class _TrashScreenState extends State<TrashScreen> {
                       onBackPress: () {
                         context.goNamed('admin');
                       },
-                      onUpdate: (String name, String comment, String status, String category,
-                          bool isVisible, List<Uint8List> officerImages) {
+                      onUpdate: (String name,
+                          String comment,
+                          String status,
+                          String category,
+                          bool isVisible,
+                          List<Uint8List> officerImages) {
                         context.read<ReportBloc>().add(UpdateReport(
                               id: state.trashReport.id,
                               refId: state.trashReport.refId,
@@ -77,7 +81,8 @@ class _TrashScreenState extends State<TrashScreen> {
                               imageUrls: state.trashReport.imageUrls.toList(),
                               officerImageUrls:
                                   state.trashReport.officerImageUrls.toList(),
-                              officerImageFiles: [], category: state.trashReport.category.name,
+                              officerImageFiles: [],
+                              category: state.trashReport.category.name,
                             ));
                       },
                       onRestore: () {
@@ -94,24 +99,30 @@ class _TrashScreenState extends State<TrashScreen> {
                               imageUrls: state.trashReport.imageUrls.toList(),
                               officerImageUrls:
                                   state.trashReport.officerImageUrls.toList(),
-                              officerImageFiles: [], category: state.trashReport.category.name,
+                              officerImageFiles: [],
+                              category: state.trashReport.category.name,
                             ));
                       },
-                      onTransfer: (String refId,
-                          String name,
-                          double longitude,
-                          double latitude,
-                          String status,
-                          DateTime reportDate,
-                          String email) {
+                      onTransfer: (
+                        String refId,
+                        String name,
+                        double longitude,
+                        double latitude,
+                        String status,
+                        DateTime reportDate,
+                        String? email,
+                        String severityCategory,
+                      ) {
                         context.read<ReportBloc>().add(TransferReport(
-                            refId: refId,
-                            name: name,
-                            longitude: longitude,
-                            latitude: latitude,
-                            status: status,
-                            reportDate: reportDate,
-                            email: email));
+                              refId: refId,
+                              name: name,
+                              longitude: longitude,
+                              latitude: latitude,
+                              status: status,
+                              reportDate: reportDate,
+                              email: email,
+                              severityCategory: severityCategory,
+                            ));
                       },
                       permits: state.trashReport.category ==
                               FullReportDtoCategoryEnum.permits

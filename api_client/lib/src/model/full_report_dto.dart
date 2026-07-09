@@ -35,6 +35,7 @@ part 'full_report_dto.g.dart';
 /// * [inspectionId]
 /// * [isTransferred]
 /// * [phoneNumber]
+/// * [severityCategory]
 @BuiltValue()
 abstract class FullReportDto
     implements Built<FullReportDto, FullReportDtoBuilder> {
@@ -101,6 +102,9 @@ abstract class FullReportDto
 
   @BuiltValueField(wireName: r'phoneNumber')
   String? get phoneNumber;
+
+  @BuiltValueField(wireName: r'severityCategory')
+  String? get severityCategory;
 
   FullReportDto._();
 
@@ -237,6 +241,13 @@ class _$FullReportDtoSerializer implements PrimitiveSerializer<FullReportDto> {
       yield r'phoneNumber';
       yield serializers.serialize(
         object.phoneNumber,
+        specifiedType: const FullType.nullable(String),
+      );
+    }
+    if (object.severityCategory != null) {
+      yield r'severityCategory';
+      yield serializers.serialize(
+        object.severityCategory,
         specifiedType: const FullType.nullable(String),
       );
     }
@@ -417,6 +428,14 @@ class _$FullReportDtoSerializer implements PrimitiveSerializer<FullReportDto> {
           ) as String?;
           if (valueDes == null) continue;
           result.phoneNumber = valueDes;
+          break;
+        case r'severityCategory':
+          final valueDes = serializers.deserialize(
+            value,
+            specifiedType: const FullType.nullable(String),
+          ) as String?;
+          if (valueDes == null) continue;
+          result.severityCategory = valueDes;
           break;
         default:
           unhandled.add(key);

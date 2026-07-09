@@ -124,6 +124,8 @@ class _$FullReportDto extends FullReportDto {
   final bool? isTransferred;
   @override
   final String? phoneNumber;
+  @override
+  final String? severityCategory;
 
   factory _$FullReportDto([void Function(FullReportDtoBuilder)? updates]) =>
       (new FullReportDtoBuilder()..update(updates))._build();
@@ -149,7 +151,8 @@ class _$FullReportDto extends FullReportDto {
       this.inspection,
       this.inspectionId,
       this.isTransferred,
-      this.phoneNumber})
+      this.phoneNumber,
+      this.severityCategory})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(id, r'FullReportDto', 'id');
     BuiltValueNullFieldError.checkNotNull(name, r'FullReportDto', 'name');
@@ -212,7 +215,8 @@ class _$FullReportDto extends FullReportDto {
         inspection == other.inspection &&
         inspectionId == other.inspectionId &&
         isTransferred == other.isTransferred &&
-        phoneNumber == other.phoneNumber;
+        phoneNumber == other.phoneNumber &&
+        severityCategory == other.severityCategory;
   }
 
   @override
@@ -239,6 +243,7 @@ class _$FullReportDto extends FullReportDto {
     _$hash = $jc(_$hash, inspectionId.hashCode);
     _$hash = $jc(_$hash, isTransferred.hashCode);
     _$hash = $jc(_$hash, phoneNumber.hashCode);
+    _$hash = $jc(_$hash, severityCategory.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
   }
@@ -266,7 +271,8 @@ class _$FullReportDto extends FullReportDto {
           ..add('inspection', inspection)
           ..add('inspectionId', inspectionId)
           ..add('isTransferred', isTransferred)
-          ..add('phoneNumber', phoneNumber))
+          ..add('phoneNumber', phoneNumber)
+          ..add('severityCategory', severityCategory))
         .toString();
   }
 }
@@ -370,6 +376,11 @@ class FullReportDtoBuilder
   String? get phoneNumber => _$this._phoneNumber;
   set phoneNumber(String? phoneNumber) => _$this._phoneNumber = phoneNumber;
 
+  String? _severityCategory;
+  String? get severityCategory => _$this._severityCategory;
+  set severityCategory(String? severityCategory) =>
+      _$this._severityCategory = severityCategory;
+
   FullReportDtoBuilder() {
     FullReportDto._defaults(this);
   }
@@ -398,6 +409,7 @@ class FullReportDtoBuilder
       _inspectionId = $v.inspectionId;
       _isTransferred = $v.isTransferred;
       _phoneNumber = $v.phoneNumber;
+      _severityCategory = $v.severityCategory;
       _$v = null;
     }
     return this;
@@ -452,7 +464,8 @@ class FullReportDtoBuilder
               inspection: inspection,
               inspectionId: inspectionId,
               isTransferred: isTransferred,
-              phoneNumber: phoneNumber);
+              phoneNumber: phoneNumber,
+              severityCategory: severityCategory);
     } catch (_) {
       late String _$failedField;
       try {
