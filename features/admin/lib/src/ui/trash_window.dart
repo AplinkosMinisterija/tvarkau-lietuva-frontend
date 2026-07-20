@@ -749,7 +749,7 @@ class _BuildAadisSectionState extends State<_BuildAadisSection> {
   void initState() {
     if (widget.report.isTransferred != true) {
       employeeItemList = getEmployeeList(widget.report.category);
-      severityCategoryItemList = getSeverityCategoryList();
+      severityCategoryItemList = getSeverityCategoryList(false);
     }
     super.initState();
   }
@@ -860,11 +860,17 @@ class _BuildSeverityCategorySectionState
   @override
   void initState() {
     if (widget.report.isTransferred == true) {
-      severityCategoryItemList = getSeverityCategoryList();
-      selectedSeverityCategoryItem = severityCategoryItemList.entries
-          .firstWhere((e) => e.value == widget.report.severityCategory!)
-          .key;
-      selectedSeverityCategoryValue = widget.report.severityCategory!;
+      if (widget.report.severityCategory == null) {
+        severityCategoryItemList = getSeverityCategoryList(true);
+        selectedSeverityCategoryItem = '-';
+        selectedSeverityCategoryValue = '-';
+      } else {
+        severityCategoryItemList = getSeverityCategoryList(true);
+        selectedSeverityCategoryItem = severityCategoryItemList.entries
+            .firstWhere((e) => e.value == widget.report.severityCategory!)
+            .key;
+        selectedSeverityCategoryValue = widget.report.severityCategory!;
+      }
     }
     super.initState();
   }
@@ -915,11 +921,13 @@ class _BuildSeverityCategorySectionState
                   text: 'Atnaujinti svarbos kategoriją',
                   buttonType: ButtonType.outlined,
                   color: selectedSeverityCategoryValue != '' &&
+                          selectedSeverityCategoryValue != '-' &&
                           selectedSeverityCategoryValue !=
                               widget.report.severityCategory
                       ? CustomColors.primary
                       : CustomColors.primaryLight,
                   onPressed: selectedSeverityCategoryValue != '' &&
+                          selectedSeverityCategoryValue != '-' &&
                           selectedSeverityCategoryValue !=
                               widget.report.severityCategory
                       ? () {
@@ -970,7 +978,7 @@ Map<String, String> getEmployeeList(FullReportDtoCategoryEnum category) {
   return trashList;
 }
 
-Map<String, String> getSeverityCategoryList() {
+Map<String, String> getSeverityCategoryList(bool isNullable) {
   const severityCategoryList = {
     'A kategorija': 'A',
     'B kategorija': 'B',
@@ -978,5 +986,13 @@ Map<String, String> getSeverityCategoryList() {
     'D kategorija': 'D',
     'E kategorija': 'E',
   };
-  return severityCategoryList;
+  const severityCategoryListNullable = {
+    '-': '-',
+    'A kategorija': 'A',
+    'B kategorija': 'B',
+    'C kategorija': 'C',
+    'D kategorija': 'D',
+    'E kategorija': 'E',
+  };
+  return isNullable ? severityCategoryListNullable : severityCategoryList;
 }
