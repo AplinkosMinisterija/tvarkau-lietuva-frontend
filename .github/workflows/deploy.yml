@@ -45,16 +45,28 @@ jobs:
       - name: Build production web
         run: flutter build web --release --web-renderer canvaskit --source-maps --build-number ${{ github.run_number }} --dart-define="SENTRY_ENVIRONMENT=${{ github.ref == 'refs/heads/main' && 'production' ||  'preview'  }}" --dart-define="SENTRY_RELEASE=${{ github.sha }}"
 
+      # cloudflare/pages-action was removed from GitHub in September 2026;
+      # wrangler-action is Cloudflare's replacement. Wrangler is installed in an
+      # empty directory so the Flutter checkout and build output stay untouched.
+      - name: Prepare an isolated Wrangler workspace
+        run: mkdir -p "${RUNNER_TEMP}/wrangler"
+
       - name: Publish to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
+        uses: cloudflare/wrangler-action@v4
         id: cloudflare
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: tvarkau-lietuva
-          directory: build/web
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          wranglerVersion: '3'
+          wranglerVersion: '4'
+          packageManager: npm
+          workingDirectory: ${{ runner.temp }}/wrangler
+          command: >-
+            pages deploy ${{ github.workspace }}/build/web
+            --project-name=tvarkau-lietuva
+            --branch=${{ github.head_ref || github.ref_name }}
+            --commit-hash=${{ github.event.pull_request.head.sha || github.sha }}
+            --commit-dirty=true
 
       - name: Comment deploy url
         uses: mshick/add-pr-comment@v2
@@ -68,8 +80,8 @@ jobs:
             |---------------------------------|------------------------|
             |<span aria-hidden="true">🔨</span> Latest commit | ${{ github.sha }} |
             |<span aria-hidden="true">🔍</span> Latest deploy log | ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} |
-            |<span aria-hidden="true">😎</span> Deploy Preview Url | [${{ steps.cloudflare.outputs.url }}](${{ steps.cloudflare.outputs.url }}) |
-            |<span aria-hidden="true">🌳</span> Environment | ${{ steps.cloudflare.outputs.environment }} |
+            |<span aria-hidden="true">😎</span> Deploy Preview Url | [${{ steps.cloudflare.outputs.deployment-url }}](${{ steps.cloudflare.outputs.deployment-url }}) |
+            |<span aria-hidden="true">🌳</span> Environment | ${{ steps.cloudflare.outputs.pages-environment }} |
             ---
 
       - name: Create Sentry release
