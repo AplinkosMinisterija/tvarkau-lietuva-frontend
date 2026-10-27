@@ -968,7 +968,7 @@ Map<String, String> getEmployeeList(FullReportDtoCategoryEnum category) {
     'Šiauliai': 'valdas.glazauskis@aad.am.lt',
     'Telšiai': 'renata.stankuviene@aad.am.lt',
     'Trakai': 'egidijus.kirkliauskas@aad.am.lt',
-    'Vilniaus miestas': 'edgaras.skrebe@aad.am.lt',
+    'Vilniaus miestas': 'aliona.vilcinskiene@aad.am.lt',
     'Vilniaus rajonas': 'mindaugas.kanisauskas@aad.am.lt',
     'Kauno MKS': 'gintaras.zukauskas@aad.am.lt',
     'Vilniaus MKS': 'vaidas.jasevicius@aad.am.lt',
