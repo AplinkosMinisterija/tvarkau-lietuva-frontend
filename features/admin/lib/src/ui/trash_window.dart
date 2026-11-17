@@ -905,7 +905,10 @@ class _BuildSeverityCategorySectionState
                     ),
                     initialItem: selectedSeverityCategoryItem,
                     items: severityCategoryItemList.keys.toList(),
-                    onChanged: (key) {
+                    onChanged: (String? key) {
+                      if (key == null) {
+                        return;
+                      }
                       setState(() {
                         selectedSeverityCategoryItem = key;
                         selectedSeverityCategoryValue = severityCategoryItemList
