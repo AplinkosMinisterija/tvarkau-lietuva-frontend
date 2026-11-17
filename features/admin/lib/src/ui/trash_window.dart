@@ -907,7 +907,7 @@ class _BuildSeverityCategorySectionState
                     items: severityCategoryItemList.keys.toList(),
                     onChanged: (key) {
                       setState(() {
-                        selectedSeverityCategoryItem = key!;
+                        selectedSeverityCategoryItem = key;
                         selectedSeverityCategoryValue = severityCategoryItemList
                             .entries
                             .firstWhere((e) => e.key == key)
