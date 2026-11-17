@@ -971,12 +971,13 @@ Map<String, String> getEmployeeList(FullReportDtoCategoryEnum category) {
     'Šiauliai': 'valdas.glazauskis@aad.am.lt',
     'Telšiai': 'renata.stankuviene@aad.am.lt',
     'Trakai': 'egidijus.kirkliauskas@aad.am.lt',
-    'Vilniaus miestas': 'edgaras.skrebe@aad.am.lt',
-    'Vilniaus rajonas': 'mindaugas.kanisauskas@aad.am.lt',
+    'Vilniaus miestas': 'aliona.vilcinskiene@aad.am.lt',
+    'Vilniaus rajonas': 'algirdas.miliauskas@aad.am.lt',
     'Kauno MKS': 'gintaras.zukauskas@aad.am.lt',
     'Vilniaus MKS': 'vaidas.jasevicius@aad.am.lt',
     'Klaipėdos MKS': 'robertas.paulauskas@aad.am.lt',
     'Panevėžio MKS': 'albertas.mikasauskas@aad.am.lt',
+    'AKD TPCMKS': 'viktorija.ivickyte@aad.am.lt',
   };
   return trashList;
 }
