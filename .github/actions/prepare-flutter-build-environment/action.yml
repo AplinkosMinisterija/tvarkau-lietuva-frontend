@@ -5,7 +5,7 @@ runs:
   using: composite
   steps:
     - name: Detect Flutter version from FVM
-      uses: kuhnroyal/flutter-fvm-config-action@v2
+      uses: kuhnroyal/flutter-fvm-config-action/config@c378498f1d1962d33039c3989411093ef8a17b2c # v3.3
       id: fvm-config-action
 
     - name: Set up Flutter
