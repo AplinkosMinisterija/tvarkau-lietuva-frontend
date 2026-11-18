@@ -22,7 +22,7 @@ jobs:
     steps:
       - name: Comment deploy start
         if: github.event_name != 'push'
-        uses: mshick/add-pr-comment@v2
+        uses: mshick/add-pr-comment@ec328af66588ab8f77cdeb2c264f14aba45bbf59 # v3.12.0
         with:
           message-id: cloudflare-deploy
           message: |
@@ -69,7 +69,7 @@ jobs:
             --commit-dirty=true
 
       - name: Comment deploy url
-        uses: mshick/add-pr-comment@v2
+        uses: mshick/add-pr-comment@ec328af66588ab8f77cdeb2c264f14aba45bbf59 # v3.12.0
         if: github.event_name != 'push'
         with:
           message-id: cloudflare-deploy
