@@ -24,10 +24,34 @@ jobs:
 
       - run: flutter analyze --write=flutter_analyze.log
 
-      - if: ${{ !cancelled() }}
-        uses: yorifuji/flutter-analyze-commenter@v1
+      # The upstream v1.4.0 wrapper still uses Node.js 20. Keep its comment
+      # implementation, but run it with the Node.js 24 GitHub Script action.
+      - name: Fetch Flutter analyzer comment script
+        if: ${{ !cancelled() && github.event_name == 'pull_request' }}
+        id: analyze-commenter-source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          analyze-log: flutter_analyze.log    # file path for analyze log
+          repository: yorifuji/flutter-analyze-commenter
+          ref: 814ea7389bc518170c93b4c967c680b28e5e047e # v1.4.0
+          path: .github/.flutter-analyze-commenter
+          persist-credentials: false
+
+      - name: Comment Flutter analyzer results
+        if: ${{ !cancelled() && github.event_name == 'pull_request' && steps.analyze-commenter-source.outcome == 'success' }}
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8.0.0
+        with:
+          retries: 3
+          script: |
+            const path = require('path');
+            const workingDir = process.env.GITHUB_WORKSPACE;
+            const comment = require(path.join(workingDir, '.github/.flutter-analyze-commenter/index.js'));
+            await comment({
+              core, github, context, workingDir,
+              analyzeLog: 'flutter_analyze.log',
+              customLintLog: '',
+              verboseLogging: false,
+              maxIssues: 10
+            });
 
   validate-openapi:
     name: Validate OpenApi contract
