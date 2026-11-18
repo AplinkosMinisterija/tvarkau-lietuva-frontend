@@ -18,7 +18,7 @@ dependencies:
     path: ../../api_client
 
   flutter_bloc: ^8.1.4
-  loading_animation_widget: ^1.2.0+4
+  loading_animation_widget: ^1.3.0
   cupertino_icons: ^1.0.2
   google_fonts: ^6.1.0
   google_maps_flutter: ^2.7.0
