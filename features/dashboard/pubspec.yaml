@@ -18,11 +18,11 @@ dependencies:
     path: ../../api_client
 
   flutter_bloc: ^8.1.4
-  loading_animation_widget: ^1.2.0+4
+  loading_animation_widget: ^1.3.0
   cupertino_icons: ^1.0.2
   auto_size_text: ^3.0.0
   google_fonts: ^6.1.0
-  dotted_line: ^3.2.2
+  dotted_line: ^3.3.0
   pointer_interceptor: ^0.10.1
   geolocator: ^11.0.0
   go_router: ^13.2.0
@@ -35,7 +35,7 @@ dependencies:
   flutter_map_cancellable_tile_provider: ^3.0.0
   flutter_map_marker_cluster_2: ^1.0.4
   google_maps_flutter: ^2.5.3
-  url_launcher: ^6.1.11
+  url_launcher: ^6.3.1
 
 dev_dependencies:
   flutter_test:
