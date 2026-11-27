@@ -7,6 +7,7 @@ export 'src/widgets/app_error_dialog.dart';
 export 'src/widgets/error_reload_widget.dart';
 export 'src/widgets/app_network_image.dart';
 export 'src/widgets/not_found_widget.dart';
+export 'src/widgets/report_text_field.dart';
 
 //Adding screen
 export 'src/widgets/adding_screen/cancel_button.dart';
