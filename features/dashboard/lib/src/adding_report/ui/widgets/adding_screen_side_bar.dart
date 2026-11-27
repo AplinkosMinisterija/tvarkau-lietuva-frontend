@@ -98,21 +98,15 @@ class AddingScreenSideBar extends StatelessWidget {
               ),
               SizedBox(height: width * 0.00468),
               Container(
-                height: width * 0.09375,
+                constraints: BoxConstraints(minHeight: width * 0.09375),
                 padding: EdgeInsets.all(
                   width * 0.01,
                 ),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(4)),
-                child: TextFormField(
-                  maxLines: 10,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Prašome įvesti pranešimo turinį';
-                    }
-                    return null;
-                  },
+                child: ReportTextField(
+                  maxLines: 5,
                   onChanged: (textValue) {
                     onTextChange(textValue);
                   },
