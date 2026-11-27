@@ -5,6 +5,7 @@ import 'package:core/utils/extensions.dart';
 import 'package:api_client/api_client.dart';
 import 'package:core/utils/image_display/image_display.dart';
 import 'package:core/utils/permit.dart';
+import 'package:core/utils/report_text.dart';
 import 'package:core_ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -70,6 +71,17 @@ class _TrashWindowState extends State<TrashWindow> {
   int categoryIndex = 0;
 
   Set<Marker> markers = {};
+
+  void _saveReport() {
+    // An unchanged legacy report may still be updated without losing its text.
+    if (name != widget.trash.name && ReportText.isTooLong(name)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text(ReportText.tooLongMessage)),
+      );
+      return;
+    }
+    widget.onUpdate(name, comment, status, category, isVisible, officerImages);
+  }
 
   Future<void> setupMarker() async {
     final marker = Marker(
@@ -224,8 +236,10 @@ class _TrashWindowState extends State<TrashWindow> {
                 width: width,
               ),
               16.heightBox,
-              TextFormField(
+              ReportTextField(
                 initialValue: name,
+                validateLength: false,
+                requireText: false,
                 onChanged: (String value) {
                   setState(() {
                     name = value;
@@ -283,6 +297,7 @@ class _TrashWindowState extends State<TrashWindow> {
               10.heightBox,
               _BuildAadisSection(
                 report: trash,
+                hasUnsavedText: name != trash.name,
                 onTransfer: widget.onTransfer,
               ),
               24.heightBox,
@@ -337,10 +352,7 @@ class _TrashWindowState extends State<TrashWindow> {
               onBackPress: () {
                 widget.onBackPress();
               },
-              onSave: () {
-                widget.onUpdate(
-                    name, comment, status, category, isVisible, officerImages);
-              },
+              onSave: _saveReport,
             ),
             _BuildSeverityCategorySection(
               report: trash,
@@ -449,8 +461,10 @@ class _TrashWindowState extends State<TrashWindow> {
               width: width,
             ),
             32.heightBox,
-            TextFormField(
+            ReportTextField(
               initialValue: name,
+              validateLength: false,
+              requireText: false,
               onChanged: (String value) {
                 setState(() {
                   name = value;
@@ -537,10 +551,7 @@ class _TrashWindowState extends State<TrashWindow> {
           onBackPress: () {
             widget.onBackPress();
           },
-          onSave: () {
-            widget.onUpdate(
-                name, comment, status, category, isVisible, officerImages);
-          },
+          onSave: _saveReport,
         ),
         _BuildSeverityCategorySection(
           report: trash,
@@ -549,6 +560,7 @@ class _TrashWindowState extends State<TrashWindow> {
         10.heightBox,
         _BuildAadisSection(
           report: trash,
+          hasUnsavedText: name != trash.name,
           onTransfer: widget.onTransfer,
         ),
         24.heightBox,
@@ -722,9 +734,11 @@ class _BuildAadisSection extends StatefulWidget {
   const _BuildAadisSection({
     required this.report,
     required this.onTransfer,
+    required this.hasUnsavedText,
   });
 
   final FullReportDto report;
+  final bool hasUnsavedText;
   final Function(
       String refId,
       String name,
@@ -756,9 +770,23 @@ class _BuildAadisSectionState extends State<_BuildAadisSection> {
 
   @override
   Widget build(BuildContext context) {
+    final textError = widget.hasUnsavedText
+        ? 'Prieš siųsdami į AADIS išsaugokite pranešimo teksto pakeitimus.'
+        : ReportText.isTooLong(widget.report.name)
+            ? ReportText.tooLongMessage
+            : null;
     return widget.report.isTransferred != true
         ? Column(
             children: [
+              if (textError != null)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: Text(
+                    textError,
+                    style:
+                        TextStyle(color: Theme.of(context).colorScheme.error),
+                  ),
+                ),
               SizedBox(
                 height: 100,
                 child: CustomDropdown<String>(
@@ -804,11 +832,13 @@ class _BuildAadisSectionState extends State<_BuildAadisSection> {
                 text: 'Siųsti į AADIS',
                 buttonType: ButtonType.outlined,
                 color: selectedEmployeeItem != '' &&
-                        selectedSeverityCategoryItem != ''
+                        selectedSeverityCategoryItem != '' &&
+                        textError == null
                     ? CustomColors.primary
                     : CustomColors.primaryLight,
                 onPressed: selectedEmployeeItem != '' &&
-                        selectedSeverityCategoryItem != ''
+                        selectedSeverityCategoryItem != '' &&
+                        textError == null
                     ? () {
                         widget.onTransfer(
                           widget.report.refId,

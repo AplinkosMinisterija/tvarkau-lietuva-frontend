@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:core/utils/permit.dart';
+import 'package:core/utils/report_text_error.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 part 'report_event.dart';
@@ -96,7 +97,9 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
       );
     } catch (e) {
       emit(
-        ErrorState(errorMessage: 'Įvyko netikėta klaida'),
+        ErrorState(
+          errorMessage: reportTextErrorMessage(e) ?? 'Įvyko netikėta klaida',
+        ),
       );
     }
   }
@@ -131,7 +134,9 @@ class ReportBloc extends Bloc<ReportEvent, ReportState> {
       );
     } catch (e) {
       emit(
-        ErrorState(errorMessage: 'Įvyko netikėta klaida'),
+        ErrorState(
+          errorMessage: reportTextErrorMessage(e) ?? 'Įvyko netikėta klaida',
+        ),
       );
     }
   }

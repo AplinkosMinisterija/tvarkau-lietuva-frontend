@@ -133,6 +133,7 @@ class _TrashScreenState extends State<TrashScreen> {
                     return LoaderWidget().loader();
                   } else if (state is ErrorState) {
                     return ErrorReloadWidget(
+                      errorText: state.errorMessage,
                       onPressed: () {
                         context.read<ReportBloc>().add(
                               ReloadPage(),

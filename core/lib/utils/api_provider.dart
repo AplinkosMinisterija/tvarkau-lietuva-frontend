@@ -156,6 +156,9 @@ class ApiProvider {
     required bool automaticEmailsEnabled,
     required String? phoneNumber,
   }) async {
+    if (ReportText.isTooLong(textValue)) {
+      throw AppException(ReportText.tooLongMessage);
+    }
     final response = await reportsApi.reportControllerCreateNewReport(
       name: textValue,
       longitude: selectedLong,
@@ -179,6 +182,9 @@ class ApiProvider {
     required String? email,
     required String severityCategory,
   }) async {
+    if (ReportText.isTooLong(name)) {
+      throw AppException(ReportText.tooLongMessage);
+    }
     final response = await adminApi.adminControllerTransferReport(
         transferReportDto: TransferReportDto((builder) {
       builder.refId = refId;

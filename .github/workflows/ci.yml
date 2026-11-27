@@ -24,6 +24,9 @@ jobs:
 
       - run: flutter analyze --write=flutter_analyze.log
 
+      - name: Test report text validation
+        run: flutter test test core/test/report_text_error_test.dart
+
       # The upstream v1.4.0 wrapper still uses Node.js 20. Keep its comment
       # implementation, but run it with the Node.js 24 GitHub Script action.
       - name: Fetch Flutter analyzer comment script

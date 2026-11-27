@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:api_client/api_client.dart';
 import 'package:core/core.dart';
 import 'package:core/utils/permit.dart';
+import 'package:core/utils/report_text_error.dart';
 
 part 'adding_event.dart';
 
@@ -166,7 +167,9 @@ class AddingBloc extends Bloc<AddingEvent, AddingState> {
       );
     } catch (e) {
       emit(
-        ErrorState(errorMessage: 'Įvyko netikėta klaida'),
+        ErrorState(
+          errorMessage: reportTextErrorMessage(e) ?? 'Įvyko netikėta klaida',
+        ),
       );
     }
   }
