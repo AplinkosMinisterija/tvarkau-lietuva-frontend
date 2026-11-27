@@ -226,7 +226,8 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                       SizedBox(height: widget.width * 0.0138),
                       Container(
                         width: widget.width * 0.911,
-                        height: widget.width * 0.333,
+                        constraints:
+                            BoxConstraints(minHeight: widget.width * 0.333),
                         padding: EdgeInsets.symmetric(
                           horizontal: widget.width * 0.033,
                         ),
@@ -234,14 +235,8 @@ class _TrashAddingScreenMobileState extends State<TrashAddingScreenMobile> {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(4)),
                         child: Center(
-                          child: TextFormField(
-                            maxLines: 10,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Prašome įvesti pranešimo turinį';
-                              }
-                              return null;
-                            },
+                          child: ReportTextField(
+                            maxLines: 5,
                             onChanged: (textValue) {
                               setState(() {
                                 currentTextValue = textValue;
