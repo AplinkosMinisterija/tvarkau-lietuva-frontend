@@ -18,7 +18,7 @@ class CopyrightSupportTag extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          '© 2024, Tvarkau Lietuvą',
+          '© ${DateTime.now().year}, Tvarkau Lietuvą',
           style: GoogleFonts.roboto(
             fontSize: isMobile ? width * 0.033 : width * 0.01094,
             fontWeight: FontWeight.w400,
